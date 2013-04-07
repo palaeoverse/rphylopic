@@ -1,6 +1,6 @@
 #' Get image
 #' 
-#' @import RCurl png
+#' @import RCurl png sacbox
 #' @param uuids One to many uuids, possibly from the function search_images
 #' @seealso \code{\link{search_images}}
 #' @examples
@@ -10,6 +10,9 @@
 #' @export
 get_image <- function(uuids, size)
 {
+  if(class(uuids)=="list")
+    uuids <- unnest(uuids)$all
+  
   out <- lapply(uuids, function(x) readPNG(getURLContent(paste0("http://phylopic.org/assets/images/submissions/", x, ".", size, ".png"))))
   return( out )
 }

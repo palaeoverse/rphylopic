@@ -16,7 +16,8 @@ Depends:
     RJSONIO,
     RCurl,
     ape,
-    adephylo
+    adephylo, 
+    sacbox
 Suggests:
     testthat,
     roxygen2
