@@ -16,3 +16,15 @@ theme_phylo_blank2 <- function()
     axis.ticks = element_blank()
   )
 }
+
+#' Unnest a nested list
+#' @export
+unnest <- function(x) 
+{
+  if(is.null(names(x))) {
+    list(unname(unlist(x)))
+  }
+  else {
+    c(list(all=unname(unlist(x))), do.call(c, lapply(x, unnest)))
+  }
+}
