@@ -1,6 +1,6 @@
 #' Get image
 #' 
-#' @import RCurl png sacbox
+#' @import RCurl png
 #' @param uuids One to many uuids, possibly from the function search_images
 #' @seealso \code{\link{search_images}}
 #' @examples
