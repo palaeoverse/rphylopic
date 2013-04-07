@@ -1,6 +1,6 @@
 #' Make phylogeny with Phylopic images
 #'
-#' @import ggplot2 ggphylo ape
+#' @import ggplot2 ggphylo ape adephylo
 #' @param pngobj Object from get_image function
 #' @param phytheme The ggplot2 style layout. You can write your own theme and pass 
 #'    it in to the function. See example below.

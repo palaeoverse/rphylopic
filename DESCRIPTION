@@ -15,7 +15,8 @@ Depends:
     httr,
     RJSONIO,
     RCurl,
-    ape
+    ape,
+    adephylo
 Suggests:
     testthat,
     roxygen2
