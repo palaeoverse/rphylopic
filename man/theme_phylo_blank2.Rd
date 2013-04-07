@@ -1,0 +1,10 @@
+\name{theme_phylo_blank2}
+\alias{theme_phylo_blank2}
+\title{Fixed phylogeny blank theme for ggphylo}
+\usage{
+  theme_phylo_blank2()
+}
+\description{
+  Fixed phylogeny blank theme for ggphylo
+}
+

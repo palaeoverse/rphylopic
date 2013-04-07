@@ -1,0 +1,28 @@
+Package: fylopic
+Maintainer: Scott Chamberlain <myrmecocystus@gmail.com>
+Author: Scott Chamberlain
+Version: 0.1
+License: CC0
+Title: Get silhouettes of organisms from Phylopic.
+Description: Get silhouettes of organisms from Phylopic.
+URL: https://github.com/schamberlain/fylopic
+BugReports: https://github.com/schamberlain/fylopic/issues
+Depends:
+    ggplot2,
+    ggphylo,
+    plyr,
+    png,
+    httr,
+    RJSONIO,
+    RCurl,
+    ape
+Suggests:
+    testthat,
+    roxygen2
+Collate:
+    'fylopic-package.r'
+    'zzz.r'
+    'get_image.r'
+    'make_phylo.r'
+    'search_images.r'
+    'search_text.r'
