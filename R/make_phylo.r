@@ -4,7 +4,7 @@
 #' @param pngobj Object from get_image function
 #' @param phytheme The ggplot2 style layout. You can write your own theme and pass 
 #'    it in to the function. See example below.
-#' @examples
+#' @examples \dontrun{
 #' toget <- c("27356f15-3cf8-47e8-ab41-71c6260b2724", "bd88f674-6976-4cb2-a46e-e6a12a8ba463", "e547cd01-7dd1-495b-8239-52cf9971a609", "9c6af553-390c-4bdd-baeb-6992cbc540b1", "e547cd01-7dd1-495b-8239-52cf9971a609", "bd88f674-6976-4cb2-a46e-e6a12a8ba463")
 #' myobjs <- get_image(uuids = toget, size = "thumb") 
 #' make_phylo(pngobj=myobjs)
@@ -19,8 +19,12 @@
 #' # The use case starting from a text search
 #' searchres <- search_text(text = "Homo sapiens", options = "names")
 #' output <- search_images(uuid=searchres, options=c("pngFiles", "credit", "canonicalName"))
-#' myobjs <- get_image(uuids = output, size = "thumb") 
+#' myobjs <- get_image(uuids = output, size = "128") 
 #' make_phylo(pngobj=myobjs)
+#' 
+#' # Another example
+#' searchres <- search_text(text = "Bradypus tridactylus", options = "names")
+#' }
 #' @export
 make_phylo <- function(pngobj, phytheme = theme_phylo_blank2())
 {

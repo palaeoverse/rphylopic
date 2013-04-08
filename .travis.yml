@@ -1,0 +1,23 @@
+# modified from Yihui's code for knitr
+language: python
+
+# environment variables
+env:
+  - R_LIBS_USER=~/R
+
+# install dependencies
+install:
+  - sudo apt-add-repository -y ppa:marutter/rdev
+  - sudo apt-get update
+  - sudo apt-get install r-base-dev
+  - "[ ! -d ~/R ] && mkdir ~/R"
+  - R --version
+  - R -e '.libPaths(); sessionInfo()'
+  - Rscript -e 'install.packages("devtools", dep = TRUE, repos = "http://cran.rstudio.org")'
+  - Rscript -e 'library(devtools)'
+  - Rscript -e 'install_github("fylopic","ropensci")'
+
+# run tests
+script:
+  - make install
+  - make check

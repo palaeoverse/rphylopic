@@ -18,7 +18,7 @@ theme_phylo_blank2 <- function()
 }
 
 #' Unnest a nested list
-#' @export
+#' @param x A nested list
 unnest <- function(x) 
 {
   if(is.null(names(x))) {

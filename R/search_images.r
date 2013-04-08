@@ -6,12 +6,13 @@
 #' @param supertaxa If not set to "false", includes supertaxa in the search.
 #' @param options Space-separated list of options for the result value.
 #' @param cleanoutput If TRUE, remove elements with no data.
-#' @examples 
+#' @examples \dontrun{
 #' someuuids <- search_text(text = "Homo sapiens", options = "names")
 #' search_images(uuid=someuuids[[12]], options=c("pngFiles", "credit", "canonicalName"))
 #' 
 #' # all of them
 #' search_images(uuid=someuuids, options=c("pngFiles", "credit", "canonicalName"))
+#' }
 #' @export
 search_images <- function(uuid, subtaxa = NULL, options = NULL, cleanoutput = TRUE)
 {  

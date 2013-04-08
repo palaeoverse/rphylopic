@@ -4,6 +4,9 @@
 \usage{
   unnest(x)
 }
+\arguments{
+  \item{x}{A nested list}
+}
 \description{
   Unnest a nested list
 }

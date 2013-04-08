@@ -5,15 +5,17 @@
   search_text(text, options)
 }
 \arguments{
-  \item{text}{}
+  \item{text}{Search string, see examples}
 
-  \item{options}{}
+  \item{options}{See here for options}
 }
 \description{
   These aren't necessarily ones with images though. See
   example
 }
 \examples{
+\dontrun{
 search_text(text = "Homo sapiens", options = "names")
+}
 }
 

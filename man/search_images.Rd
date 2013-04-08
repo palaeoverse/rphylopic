@@ -24,10 +24,12 @@
   Search for images for the taxa
 }
 \examples{
+\dontrun{
 someuuids <- search_text(text = "Homo sapiens", options = "names")
 search_images(uuid=someuuids[[12]], options=c("pngFiles", "credit", "canonicalName"))
 
 # all of them
 search_images(uuid=someuuids, options=c("pngFiles", "credit", "canonicalName"))
+}
 }
 
