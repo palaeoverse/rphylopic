@@ -13,9 +13,7 @@ install:
   - "[ ! -d ~/R ] && mkdir ~/R"
   - R --version
   - R -e '.libPaths(); sessionInfo()'
-  - Rscript -e 'install.packages("devtools", dep = TRUE, repos = "http://cran.rstudio.org")'
-  - Rscript -e 'library(devtools)'
-  - Rscript -e 'install_github("fylopic","schamberlain")'
+  - Rscript -e 'install.packages(c("ggplot2","plyr","png","httr","RJSONIO","RCurl","ape","adephylo","devtools"), repos = "http://cran.rstudio.org"); library(devtools); install_github("ggphylo","gjuggler"); install_github("fylopic","schamberlain")'
 
 # run tests
 script:
