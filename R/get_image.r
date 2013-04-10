@@ -12,7 +12,7 @@
 get_image <- function(uuids, size)
 {
   if(class(uuids)=="list")
-    uuids <- fylopic::unnest(uuids)$all
+    uuids <- fylopic:::unnest(uuids)$all
   
   out <- lapply(uuids, function(x) readPNG(getURLContent(paste0("http://phylopic.org/assets/images/submissions/", x, ".", size, ".png"))))
   return( out )

@@ -1,8 +1,6 @@
 fylopic
 =======
 
-[![Build Status](https://api.travis-ci.org/SChamberlain/fylopic.png)](https://api.travis-ci.org/SChamberlain/fylopic.png)
-
 ## Get silhouettes of organisms from Phylopic.
 
 ## Info
