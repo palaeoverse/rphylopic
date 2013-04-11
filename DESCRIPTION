@@ -29,3 +29,6 @@ Collate:
     'search_text.r'
     'get_names.r'
     'make_phylo_names.r'
+    'add_phylopic.r'
+    'list_images.r'
+    'phylopic_count.r'

@@ -17,7 +17,7 @@ toget <- c("27356f15-3cf8-47e8-ab41-71c6260b2724", "bd88f674-6976-4cb2-a46e-e6a1
 get_image(uuids = toget, size = "512")
 get_image(uuids = toget, size = "thumb")
 
-# Plot a
+# Put a silhouette behind a plot
 library(ggplot2)
 img <- get_image("27356f15-3cf8-47e8-ab41-71c6260b2724", size = "512")[[1]]
 qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") + add_phylopic(img)

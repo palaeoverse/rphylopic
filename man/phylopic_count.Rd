@@ -1,0 +1,15 @@
+\name{phylopic_count}
+\alias{phylopic_count}
+\title{Get the total number of PhyloPic images.}
+\usage{
+  phylopic_count()
+}
+\description{
+  Get the total number of PhyloPic images.
+}
+\examples{
+\dontrun{
+phylopic_count()
+}
+}
+

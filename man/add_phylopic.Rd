@@ -12,4 +12,12 @@
   Input an image and create a ggplot2 layer to add to an
   existing plot
 }
+\examples{
+\dontrun{
+# Put a silhouette behind a plot
+library(ggplot2)
+img <- get_image("27356f15-3cf8-47e8-ab41-71c6260b2724", size = "512")[[1]]
+qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") + add_phylopic(img)
+}
+}
 

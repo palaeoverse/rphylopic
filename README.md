@@ -5,7 +5,7 @@ fylopic
 
 ## Important!
 
-I plan to be able to get a phylogeny using the NCBI taxonomy, but it's not easily available yet. The example below just creates a random phylogeny using `ape::rcoal`.
+I plan to be able to get a phylogeny for taxa associatd with Phylopic silhouettes  using the NCBI taxonomy, but it's not easily available yet (though see [Ben Morris' phylofile](https://github.com/bendmorris/phylofile)). The first example below creates a phylogeny using `ape::rcoal`.
 
 ## Info
 + Phylopic website: [http://phylopic.org/](http://phylopic.org/)
