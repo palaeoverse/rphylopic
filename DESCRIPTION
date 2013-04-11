@@ -32,3 +32,4 @@ Collate:
     'add_phylopic.r'
     'list_images.r'
     'phylopic_count.r'
+    'minimal_supertaxa.r'
