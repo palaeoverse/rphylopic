@@ -1,7 +1,11 @@
 fylopic
 =======
 
+![](http://phylopic.org/assets/images/submissions/bedd622a-4de2-4067-8c70-4aa44326d229.128.png)
+
 ## Get silhouettes of organisms from Phylopic.
+
+The idea here is to create modular bits and pieces to allow you to add silhouettes to not only ggplot2 plots, but base plots as well. Some people prefer base plots while others prefer ggplot2 plots (me!), so it wouuld be nice to have both options. 
 
 ## Important!
 
@@ -44,3 +48,8 @@ qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") + add_phylopic(img
 ```
 
 ![phylo](/inst/assets/img/img_behind_plot.png)
+
+
+## Built on the shoulders of
+
+This wouldn't have been possible without the great work of [Hadley Wickham](http://had.co.nz/) building [ggplot2](https://github.com/hadley/ggplot2), and [Greg Jordan](https://github.com/gjuggler) building [ggphylo](https://github.com/gjuggler/ggphylo) on top of `ggplot2`.
