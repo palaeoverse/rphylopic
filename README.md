@@ -13,7 +13,7 @@ I plan to be able to get a phylogeny using the NCBI taxonomy, but it's not easil
 
 ## Quick start
 
-##### Install
+#### Install
 ```r
 install_github("devtools")
 library(devtools)
@@ -21,7 +21,10 @@ install_github("fylopic", "schamberlain")
 library(fylopic)
 ```
 
-##### A quick example 
+#### A few quick examples
+
+##### Plot a phylogeny with silhouettes at the tips
+
 ```r
 searchres <- search_text(text = "Homo sapiens", options = "names")
 output <- search_images(uuid=searchres, options=c("pngFiles", "credit", "canonicalName"))
@@ -30,3 +33,14 @@ make_phylo(pngobj=myobjs)
 ```
 
 ![phylo](/inst/assets/img/readme_image.png)
+
+
+##### Plot a silhouette behind a plot
+
+```r
+library(ggplot2)
+img <- get_image("27356f15-3cf8-47e8-ab41-71c6260b2724", size = "512")[[1]]
+qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") + add_phylopic(img)
+```
+
+![phylo](/inst/assets/img/img_behind_plot.png)

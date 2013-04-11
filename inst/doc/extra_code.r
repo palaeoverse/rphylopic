@@ -7,7 +7,7 @@ qplot(1:10, rnorm(10), geom = "blank") +
   geom_point()
 
 shit <- readPNG(getURLContent("http://phylopic.org/assets/images/submissions/9fae30cd-fb59-4a81-a39c-e1826a35f612.thumb.png"))
-shit <- readPNG(getURLContent("http://phylopic.org/assets/images/submissions/27356f15-3cf8-47e8-ab41-71c6260b2724.512.png"))
+img <- readPNG(getURLContent("http://phylopic.org/assets/images/submissions/27356f15-3cf8-47e8-ab41-71c6260b2724.512.png"))
 shit_butt <- matrix(rgb(shit[,,1],shit[,,2],shit[,,3], shit[,,4] * 0.2), nrow=dim(shit)[1]) #0.2 is alpha
 
 qplot(1:10, rnorm(10), geom = "blank") +

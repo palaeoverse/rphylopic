@@ -1,3 +1,4 @@
+export(add_phylopic)
 export(get_image)
 export(get_names)
 export(make_phylo_names)
