@@ -18,7 +18,9 @@ theme_phylo_blank2 <- function()
 }
 
 #' Unnest a nested list
+#' 
 #' @param x A nested list
+#' @keywords internal
 unnest <- function(x) 
 {
   if(is.null(names(x))) {
@@ -28,3 +30,31 @@ unnest <- function(x)
     c(list(all=unname(unlist(x))), do.call(c, lapply(x, unnest)))
   }
 }
+
+#' Replaces null with "none"
+#' 
+#' @param x A list
+#' @keywords internal
+replacenull <- function(x){
+  x$canonicalName[sapply(x$canonicalName, function(x) is.null(x))] <- "none"
+  x
+}
+
+#' Convert citation null to number 1
+#' 
+#' @keywords internal
+citationtonumber <- function(x){
+  make1 <- function(x){
+    if(x$canonicalName$citationStart == "none")
+      x$canonicalName$citationStart <- 1
+    x
+  }
+  make1(x)
+}
+
+#' Strip authority
+#' 
+#' @param x A string
+#' @param y Another string
+#' @keywords internal
+stripauth <- function(x, y){ if(!y == 1){ str_sub(x, 1, y-1) } else { x } }

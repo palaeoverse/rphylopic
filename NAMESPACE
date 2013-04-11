@@ -1,4 +1,6 @@
 export(get_image)
+export(get_names)
+export(make_phylo_names)
 export(make_phylo)
 export(search_images)
 export(search_text)

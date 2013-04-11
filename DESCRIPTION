@@ -27,3 +27,5 @@ Collate:
     'make_phylo.r'
     'search_images.r'
     'search_text.r'
+    'get_names.r'
+    'make_phylo_names.r'

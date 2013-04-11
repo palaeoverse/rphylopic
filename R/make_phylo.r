@@ -21,9 +21,6 @@
 #' output <- search_images(uuid=searchres, options=c("pngFiles", "credit", "canonicalName"))
 #' myobjs <- get_image(uuids = output, size = "128") 
 #' make_phylo(pngobj=myobjs)
-#' 
-#' # Another example
-#' searchres <- search_text(text = "Bradypus tridactylus", options = "names")
 #' }
 #' @export
 make_phylo <- function(pngobj, phytheme = theme_phylo_blank2())

@@ -32,9 +32,6 @@ searchres <- search_text(text = "Homo sapiens", options = "names")
 output <- search_images(uuid=searchres, options=c("pngFiles", "credit", "canonicalName"))
 myobjs <- get_image(uuids = output, size = "128")
 make_phylo(pngobj=myobjs)
-
-# Another example
-searchres <- search_text(text = "Bradypus tridactylus", options = "names")
 }
 }
 
