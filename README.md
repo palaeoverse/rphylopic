@@ -15,6 +15,8 @@ I plan to be able to get a phylogeny for taxa associatd with Phylopic silhouette
 + Phylopic website: [http://phylopic.org/](http://phylopic.org/)
 + Phylopic dev documentation: [http://phylopic.org/api/](http://phylopic.org/api/)
 
+## Check out the wrapper for Python by Ben Morris [here](https://github.com/bendmorris/python-phylopic)
+
 ## Quick start
 
 #### Install
