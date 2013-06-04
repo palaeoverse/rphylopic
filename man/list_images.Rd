@@ -1,8 +1,8 @@
 \name{list_images}
 \alias{list_images}
-\title{Input an image and create a ggplot2 layer to add to an existing plot}
+\title{Lists images in chronological order of submission, from most to least recent.}
 \usage{
-  list_images(start, length)
+  list_images(start, length, options = NULL)
 }
 \arguments{
   \item{start}{The index to start with. Using 0 starts with
@@ -13,8 +13,8 @@
   \item{options}{See details for the options for options.}
 }
 \description{
-  Input an image and create a ggplot2 layer to add to an
-  existing plot
+  Lists images in chronological order of submission, from
+  most to least recent.
 }
 \details{
   Here are the options for the options argument: \itemize{

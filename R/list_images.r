@@ -1,6 +1,5 @@
-#' Input an image and create a ggplot2 layer to add to an existing plot
+#' Lists images in chronological order of submission, from most to least recent.
 #' 
-#' @import httr
 #' @param start The index to start with. Using 0 starts with the most recently-submitted image.
 #' @param length The number of images to list.
 #' @param options See details for the options for options.
@@ -20,7 +19,9 @@
 #' list_images(start=1, length=10)
 #' }
 #' @export
-list_images <- function(start, length){
+list_images <- function(start, length, options=NULL){
+  if(!is.null(options))
+    stop("Options aren't implemented yet, sorry...or send a pull request to fix this!")
   url = "http://phylopic.org/api/a/image/list/"
   fylopic:::unnest(content(GET(paste(url,start,"/",length,sep="")))$result)[[1]]
 }
