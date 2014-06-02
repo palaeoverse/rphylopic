@@ -1,5 +1,6 @@
 #' Input an image and create a ggplot2 layer to add to an existing plot
 #'
+#' @import grid
 #' @export
 #' @param img A png object, e.g, from using \code{get_image}
 #' @examples \dontrun{
