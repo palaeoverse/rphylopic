@@ -3,14 +3,13 @@ Maintainer: Scott Chamberlain <myrmecocystus@gmail.com>
 Author: Scott Chamberlain
 Version: 0.1
 Date: 2014-06-02
-License: CC0
+License: MIT + file LICENSE
 Title: Get silhouettes of organisms from Phylopic.
 Description: Get silhouettes of organisms from Phylopic.
 URL: https://github.com/sckott/rphylopic
 BugReports: https://github.com/sckott/rphylopic/issues
 Imports:
     ggplot2,
-    ggphylo,
     plyr,
     png,
     httr,
