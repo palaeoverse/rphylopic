@@ -1,5 +1,5 @@
-#' fylopic
+#' rphylopic
 #'
-#' @name fylopic
+#' @name rphylopic
 #' @docType package
 NULL

@@ -1,14 +1,14 @@
 #' Get names for uuids.
-#' 
+#'
 #' @import httr RJSONIO plyr
 #' @param text Search string, see examples
-#' @param subtaxa If immediate, returns data for immediate subtaxa ("children"). 
+#' @param subtaxa If immediate, returns data for immediate subtaxa ("children").
 #'    Otherwise, does not include subtaxa.
-#' @param supertaxa If immediate, returns data for immediate supertaxa ("parents"). 
-#'    If all, returns data for all supertaxa ("ancestors"). Otherwise, does not 
+#' @param supertaxa If immediate, returns data for immediate supertaxa ("parents").
+#'    If all, returns data for all supertaxa ("ancestors"). Otherwise, does not
 #'    include supertaxa.
 #' @param options See details for the options for options, get it, ha.
-#' @param stripauthority If TRUE (default) the authority is stripped off of the 
+#' @param stripauthority If TRUE (default) the authority is stripped off of the
 #'    scientific name.
 #' @details Here are the options for the options argument:
 #' \itemize{
@@ -49,17 +49,17 @@ get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, stripaut
 #     }
 #     make1(x)
 #   }
-  stuff2 <- llply(stuff, fylopic:::replacenull)
-  stuff2 <- llply(stuff2, fylopic:::citationtonumber)
-  
+  stuff2 <- llply(stuff, rphylopic:::replacenull)
+  stuff2 <- llply(stuff2, rphylopic:::citationtonumber)
+
   temp <- ldply(stuff2, function(x) data.frame(x$canonicalName))
-  
+
 #   stripauth <- function(x,y){ if(!y==1){ str_sub(x, 1, y-1) } else { x } }
-  
+
   if(stripauthority){
     temp$rows <- 1:nrow(temp)
-    temp <- ddply(temp, .(rows), transform, name = fylopic:::stripauth(string, citationStart))
+    temp <- ddply(temp, .(rows), transform, name = rphylopic:::stripauth(string, citationStart))
   }
-    
-  return( temp[,!names(temp) %in% c("citationStart","rows")] )  
+
+  return( temp[,!names(temp) %in% c("citationStart","rows")] )
 }

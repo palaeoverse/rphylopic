@@ -1,11 +1,11 @@
-fylopic
+rphylopic
 =======
 
 ![](http://phylopic.org/assets/images/submissions/bedd622a-4de2-4067-8c70-4aa44326d229.128.png)
 
 ## Get silhouettes of organisms from Phylopic.
 
-The idea here is to create modular bits and pieces to allow you to add silhouettes to not only ggplot2 plots, but base plots as well. Some people prefer base plots while others prefer ggplot2 plots (me!), so it wouuld be nice to have both options. 
+The idea here is to create modular bits and pieces to allow you to add silhouettes to not only ggplot2 plots, but base plots as well. Some people prefer base plots while others prefer ggplot2 plots (me!), so it wouuld be nice to have both options.
 
 ## Important!
 
@@ -23,8 +23,8 @@ I plan to be able to get a phylogeny for taxa associatd with Phylopic silhouette
 ```r
 install_github("devtools")
 library(devtools)
-install_github("fylopic", "schamberlain")
-library(fylopic)
+install_github("sckott/rphylopic")
+library(rphylopic)
 ```
 
 #### A few quick examples
@@ -34,7 +34,7 @@ library(fylopic)
 ```r
 searchres <- search_text(text = "Homo sapiens", options = "names")
 output <- search_images(uuid=searchres, options=c("pngFiles", "credit", "canonicalName"))
-myobjs <- get_image(uuids = output, size = "128") 
+myobjs <- get_image(uuids = output, size = "128")
 make_phylo(pngobj=myobjs)
 ```
 
