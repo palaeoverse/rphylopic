@@ -1,6 +1,6 @@
 #' Search for images for the taxa
 #' 
-#' @import httr jsonlite
+#' @import httr jsonlite assertthat
 #' @export
 #' @param uuid The UUID of the taxonomic name.
 #' @param subtaxa If set to "true", includes subtaxa in the search.

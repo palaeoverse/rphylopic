@@ -4,8 +4,9 @@
 #' 
 #' @import httr jsonlite
 #' @export
-#' @param text Search string, see examples
-#' @param options See here for options
+#' @param text (character) Search string, see examples
+#' @param options (character) See here for options
+#' @param simplify (logical) Simplify result
 #' @param ... Further args passed on to GET. See examples.
 #' @return A list. You always get back the UUID, and any other fields requested.
 #' @examples \dontrun{

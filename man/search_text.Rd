@@ -6,9 +6,11 @@
 search_text(text, options = "string", simplify = TRUE, ...)
 }
 \arguments{
-\item{text}{Search string, see examples}
+\item{text}{(character) Search string, see examples}
 
-\item{options}{See here for options}
+\item{options}{(character) See here for options}
+
+\item{simplify}{(logical) Simplify result}
 
 \item{...}{Further args passed on to GET. See examples.}
 }
