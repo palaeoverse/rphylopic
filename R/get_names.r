@@ -1,7 +1,8 @@
 #' Get names for uuids.
 #'
 #' @import httr RJSONIO plyr
-#' @param text Search string, see examples
+#' @export
+#' @param uuid UUID to get names for
 #' @param subtaxa If immediate, returns data for immediate subtaxa ("children").
 #'    Otherwise, does not include subtaxa.
 #' @param supertaxa If immediate, returns data for immediate supertaxa ("parents").
@@ -27,7 +28,7 @@
 #' get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="immediate", options=c("string namebankID"))
 #' get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", options="string")
 #' }
-#' @export
+
 get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, stripauthority=TRUE)
 {
   url <- "http://phylopic.org/api/a/name/"

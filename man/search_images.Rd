@@ -3,7 +3,8 @@
 \alias{search_images}
 \title{Search for images for the taxa}
 \usage{
-search_images(uuid, subtaxa = NULL, options = NULL, cleanoutput = TRUE)
+search_images(uuid, subtaxa = NULL, supertaxa = NULL, options = NULL,
+  cleanoutput = TRUE)
 }
 \arguments{
 \item{uuid}{The UUID of the taxonomic name.}

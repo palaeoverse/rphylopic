@@ -7,7 +7,7 @@ get_names(uuid, supertaxa = NULL, subtaxa = NULL, options = NULL,
   stripauthority = TRUE)
 }
 \arguments{
-\item{text}{Search string, see examples}
+\item{uuid}{UUID to get names for}
 
 \item{subtaxa}{If immediate, returns data for immediate subtaxa ("children").
 Otherwise, does not include subtaxa.}

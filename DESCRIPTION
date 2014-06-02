@@ -1,7 +1,7 @@
 Package: rphylopic
 Maintainer: Scott Chamberlain <myrmecocystus@gmail.com>
 Author: Scott Chamberlain
-Version: 0.1
+Version: 0.1.1
 Date: 2014-06-02
 License: MIT + file LICENSE
 Title: Get silhouettes of organisms from Phylopic.
@@ -15,8 +15,6 @@ Imports:
     httr,
     RJSONIO,
     RCurl,
-    ape,
-    adephylo,
     grid
 Suggests:
     testthat,

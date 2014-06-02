@@ -7,6 +7,8 @@ get_image(uuids, size)
 }
 \arguments{
 \item{uuids}{One to many uuids, possibly from the function search_images}
+
+\item{size}{Size of the image}
 }
 \description{
 Get an image from a uuid.

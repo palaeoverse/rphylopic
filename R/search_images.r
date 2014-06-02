@@ -1,6 +1,7 @@
 #' Search for images for the taxa
 #' 
 #' @import httr plyr
+#' @export
 #' @param uuid The UUID of the taxonomic name.
 #' @param subtaxa If set to "true", includes subtaxa in the search.
 #' @param supertaxa If not set to "false", includes supertaxa in the search.
@@ -13,8 +14,8 @@
 #' # all of them
 #' search_images(uuid=someuuids, options=c("pngFiles", "credit", "canonicalName"))
 #' }
-#' @export
-search_images <- function(uuid, subtaxa = NULL, options = NULL, cleanoutput = TRUE)
+
+search_images <- function(uuid, subtaxa = NULL, supertaxa = NULL, options = NULL, cleanoutput = TRUE)
 {  
   url <- "http://phylopic.org/api/a/name/"
   
