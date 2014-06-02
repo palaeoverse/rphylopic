@@ -42,6 +42,7 @@ replacenull <- function(x){
 
 #' Convert citation null to number 1
 #' 
+#' @param x Input thing
 #' @keywords internal
 citationtonumber <- function(x){
   make1 <- function(x){
@@ -58,3 +59,10 @@ citationtonumber <- function(x){
 #' @param y Another string
 #' @keywords internal
 stripauth <- function(x, y){ if(!y == 1){ str_sub(x, 1, y-1) } else { x } }
+
+
+#' This pkgs version of compact
+#' 
+#' @param l Input list
+#' @keywords internal
+phy_compact <- function (l) Filter(Negate(is.null), l)

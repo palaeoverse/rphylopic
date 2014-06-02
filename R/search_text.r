@@ -3,12 +3,13 @@
 #' These aren't necessarily ones with images though. See example
 #' 
 #' @import httr RJSONIO plyr
+#' @export
 #' @param text Search string, see examples
 #' @param options See here for options
 #' @examples \dontrun{
 #' search_text(text = "Homo sapiens", options = "names")
 #' }
-#' @export
+
 search_text <- function(text, options)
 {
   url <- "http://phylopic.org/api/a/name/search"

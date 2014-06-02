@@ -5,6 +5,9 @@
 \usage{
 citationtonumber(x)
 }
+\arguments{
+\item{x}{Input thing}
+}
 \description{
 Convert citation null to number 1
 }
