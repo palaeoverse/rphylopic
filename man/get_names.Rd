@@ -4,7 +4,7 @@
 \title{Get names for uuids.}
 \usage{
 get_names(uuid, supertaxa = NULL, subtaxa = NULL, options = NULL,
-  stripauthority = TRUE)
+  stripauthority = TRUE, ...)
 }
 \arguments{
 \item{uuid}{UUID to get names for}
@@ -20,6 +20,8 @@ include supertaxa.}
 
 \item{stripauthority}{If TRUE (default) the authority is stripped off of the
 scientific name.}
+
+\item{...}{Further args passed on to GET. See examples.}
 }
 \description{
 Get names for uuids.

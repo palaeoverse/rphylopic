@@ -4,7 +4,7 @@
 \title{Search for images for the taxa}
 \usage{
 search_images(uuid, subtaxa = NULL, supertaxa = NULL, options = NULL,
-  cleanoutput = TRUE)
+  cleanoutput = TRUE, ...)
 }
 \arguments{
 \item{uuid}{The UUID of the taxonomic name.}
@@ -16,6 +16,8 @@ search_images(uuid, subtaxa = NULL, supertaxa = NULL, options = NULL,
 \item{options}{Space-separated list of options for the result value.}
 
 \item{cleanoutput}{If TRUE, remove elements with no data.}
+
+\item{...}{Further args passed on to GET. See examples.}
 }
 \description{
 Search for images for the taxa
@@ -23,7 +25,7 @@ Search for images for the taxa
 \examples{
 \dontrun{
 someuuids <- search_text(text = "Homo sapiens", options = "names")
-search_images(uuid=someuuids[[12]], options=c("pngFiles", "credit", "canonicalName"))
+search_images(uuid=someuuids[[4]], options=c("pngFiles", "credit", "canonicalName"))
 
 # all of them
 search_images(uuid=someuuids, options=c("pngFiles", "credit", "canonicalName"))

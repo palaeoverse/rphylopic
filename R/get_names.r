@@ -1,6 +1,6 @@
 #' Get names for uuids.
 #'
-#' @import httr RJSONIO plyr
+#' @import httr plyr stringr
 #' @export
 #' @param uuid UUID to get names for
 #' @param subtaxa If immediate, returns data for immediate subtaxa ("children").
@@ -11,6 +11,7 @@
 #' @param options See details for the options for options, get it, ha.
 #' @param stripauthority If TRUE (default) the authority is stripped off of the
 #'    scientific name.
+#' @param ... Further args passed on to GET. See examples.
 #' @details Here are the options for the options argument:
 #' \itemize{
 #'  \item{citationStart}{[optional] Integer Indicates where in the string the citation starts. May be null.}
@@ -29,15 +30,19 @@
 #' get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", options="string")
 #' }
 
-get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, stripauthority=TRUE)
+get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, stripauthority=TRUE, ...)
 {
   url <- "http://phylopic.org/api/a/name/"
   url2 <- paste(url, uuid, "/taxonomy", sep="")
   if(stripauthority)
     options <- paste(options, "citationStart", sep=" ")
-  args <- compact(list(supertaxa=supertaxa, subtaxa=subtaxa, options=options))
-  output <- content(GET(url2, query=args), as="text")
-  stuff <- RJSONIO::fromJSON(output)$result$taxa
+  args <- phy_compact(list(supertaxa=supertaxa, subtaxa=subtaxa, options=options))
+  tt <- GET(url2, query=args, ...)
+  assert_that(tt$status_code < 203)
+  assert_that(tt$headers$`content-type` == "application/json; charset=utf-8")
+  res <- content(tt, as = "text")
+  out <- fromJSON(res, FALSE)
+  stuff <- out$result$taxa
 #   replacenull <- function(x){
 #     x$canonicalName[sapply(x$canonicalName, function(x) is.null(x))] <- "none"
 #     x

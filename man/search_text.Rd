@@ -3,19 +3,32 @@
 \alias{search_text}
 \title{Text search for uuids}
 \usage{
-search_text(text, options)
+search_text(text, options = "string", simplify = TRUE, ...)
 }
 \arguments{
 \item{text}{Search string, see examples}
 
 \item{options}{See here for options}
+
+\item{...}{Further args passed on to GET. See examples.}
+}
+\value{
+A list. You always get back the UUID, and any other fields requested.
 }
 \description{
 These aren't necessarily ones with images though. See example
 }
 \examples{
 \dontrun{
+search_text(text = "Homo sapiens")
 search_text(text = "Homo sapiens", options = "names")
+search_text(text = "Homo sapiens", options = "type")
+search_text(text = "Homo sapiens", options = "namebankID")
+search_text(text = "Homo sapiens", options = "root")
+search_text(text = "Homo sapiens", options = "uri")
+search_text(text = "Homo sapiens", options = c("string","type","uri"))
+library("httr")
+search_text(text = "Homo sapiens", options = "names", config=verbose())
 }
 }
 

@@ -13,9 +13,11 @@ Imports:
     plyr,
     png,
     httr,
-    RJSONIO,
+    jsonlite,
     RCurl,
-    grid
+    grid,
+    assertthat,
+    stringr
 Suggests:
     testthat,
     roxygen2

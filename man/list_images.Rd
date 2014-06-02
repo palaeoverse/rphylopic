@@ -3,7 +3,7 @@
 \alias{list_images}
 \title{Lists images in chronological order of submission, from most to least recent.}
 \usage{
-list_images(start, length, options = NULL)
+list_images(start, length, options = NULL, ...)
 }
 \arguments{
 \item{start}{The index to start with. Using 0 starts with the most recently-submitted image.}
@@ -11,6 +11,8 @@ list_images(start, length, options = NULL)
 \item{length}{The number of images to list.}
 
 \item{options}{See details for the options for options.}
+
+\item{...}{Further args passed on to GET. See examples.}
 }
 \description{
 Lists images in chronological order of submission, from most to least recent.
@@ -32,6 +34,8 @@ Here are the options for the options argument:
 \examples{
 \dontrun{
 list_images(start=1, length=10)
+list_images(start=1, length=10, options=c('string','taxa'))
+list_images(start=500, length=10)
 }
 }
 
