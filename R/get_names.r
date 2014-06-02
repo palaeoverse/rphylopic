@@ -49,8 +49,8 @@ get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, stripaut
 #     }
 #     make1(x)
 #   }
-  stuff2 <- llply(stuff, rphylopic:::replacenull)
-  stuff2 <- llply(stuff2, rphylopic:::citationtonumber)
+  stuff2 <- llply(stuff, replacenull)
+  stuff2 <- llply(stuff2, citationtonumber)
 
   temp <- ldply(stuff2, function(x) data.frame(x$canonicalName))
 
@@ -58,7 +58,7 @@ get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, stripaut
 
   if(stripauthority){
     temp$rows <- 1:nrow(temp)
-    temp <- ddply(temp, .(rows), transform, name = rphylopic:::stripauth(string, citationStart))
+    temp <- ddply(temp, .(rows), transform, name = stripauth(string, citationStart))
   }
 
   return( temp[,!names(temp) %in% c("citationStart","rows")] )

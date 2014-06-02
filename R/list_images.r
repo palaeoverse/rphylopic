@@ -23,5 +23,5 @@ list_images <- function(start, length, options=NULL){
   if(!is.null(options))
     stop("Options aren't implemented yet, sorry...or send a pull request to fix this!")
   url = "http://phylopic.org/api/a/image/list/"
-  rphylopic:::unnest(content(GET(paste(url,start,"/",length,sep="")))$result)[[1]]
+  unnest(content(GET(paste(url,start,"/",length,sep="")))$result)[[1]]
 }
