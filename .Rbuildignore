@@ -1,0 +1,9 @@
+.gitignore
+^Makefile$
+.travis.yml
+man-roxygen
+^.*\.Rproj$
+^\.Rproj\.user$
+CONTRIBUTING.md
+README.html
+inst/stuff/
