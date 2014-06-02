@@ -7,7 +7,7 @@ Title: Get silhouettes of organisms from Phylopic.
 Description: Get silhouettes of organisms from Phylopic.
 URL: https://github.com/sckott/rphylopic
 BugReports: https://github.com/sckott/rphylopic/issues
-Depends:
+Imports:
     ggplot2,
     ggphylo,
     plyr,
@@ -20,16 +20,3 @@ Depends:
 Suggests:
     testthat,
     roxygen2
-Collate:
-    'rphylopic-package.r'
-    'zzz.r'
-    'get_image.r'
-    'make_phylo.r'
-    'search_images.r'
-    'search_text.r'
-    'get_names.r'
-    'make_phylo_names.r'
-    'add_phylopic.r'
-    'list_images.r'
-    'phylopic_count.r'
-    'minimal_supertaxa.r'
