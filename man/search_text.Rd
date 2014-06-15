@@ -29,6 +29,9 @@ search_text(text = "Homo sapiens", options = "namebankID")
 search_text(text = "Homo sapiens", options = "root")
 search_text(text = "Homo sapiens", options = "uri")
 search_text(text = "Homo sapiens", options = c("string","type","uri"))
+search_text(text = "Homo sapiens", options = c("string","type","uri"), simplify=FALSE)
+
+# pass in curl options
 library("httr")
 search_text(text = "Homo sapiens", options = "names", config=verbose())
 }
