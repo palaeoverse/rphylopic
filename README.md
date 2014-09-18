@@ -20,11 +20,11 @@ I plan to be able to get a phylogeny for taxa associatd with Phylopic silhouette
 ## Quick start
 
 #### Install
+
 ```r
 install_github("devtools")
-library(devtools)
-install_github("sckott/rphylopic")
-library(rphylopic)
+devtools::install_github("sckott/rphylopic")
+library('rphylopic')
 ```
 
 #### A few quick examples
