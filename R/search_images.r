@@ -13,7 +13,7 @@
 #' search_images(uuid=someuuids[[4]], options=c("pngFiles", "credit", "canonicalName"))
 #' 
 #' # all of them
-#' search_images(uuid=someuuids, options=c("pngFiles", "credit", "canonicalName"))
+#' search_images(uuid=someuuids[1:5], options=c("pngFiles", "credit", "canonicalName"))
 #' }
 
 search_images <- function(uuid, subtaxa = NULL, supertaxa = NULL, options = NULL, 
@@ -30,13 +30,10 @@ search_images <- function(uuid, subtaxa = NULL, supertaxa = NULL, options = NULL
     assert_that(tt$status_code < 203)
     assert_that(tt$headers$`content-type` == "application/json; charset=utf-8")
     res <- content(tt, as = "text")
-    out <- fromJSON(res, FALSE)
+    out <- jsonlite::fromJSON(res, FALSE)
     
-#     other <- as.character(sapply(out$result$other, function(x) x[[1]]))
     other <- lenzerotonull(out$result$other)
-#     supertaxa <- as.character(sapply(out$result$supertaxa, function(x) x[[1]]))
     supertaxa <- lenzerotonull(out$result$supertaxa)
-#     subtaxa <- as.character(sapply(out$result$subtaxa, function(x) x[[1]]))
     subtaxa <- lenzerotonull(out$result$subtaxa)
     same <- lenzerotonull(out$result$same)
     
@@ -44,10 +41,21 @@ search_images <- function(uuid, subtaxa = NULL, supertaxa = NULL, options = NULL
   }
   temp <- lapply(uuid, foo)
   names(temp) <- uuid
-  if(cleanoutput)
-    temp[!sapply(temp, function(x) length(x))==0]
-  else
-    return( temp )
+  if(cleanoutput){
+    temp2 <- temp[!sapply(temp, function(x) length(x))==0]
+    res <- parse_png_info(temp2)
+  } else { res <- parse_png_info(temp2) }
+  class(res) <- c('image_info','data.frame')
+  return( res )
 }
 
 lenzerotonull <- function(x) if(length(x)==0) NULL else x
+
+parse_png_info <- function(x){
+  tmp <- lapply(x, function(z){
+    do.call(rbind, lapply(z[[1]][[1]]$pngFiles, data.frame, stringsAsFactors = FALSE))
+  })
+  tmp2 <- ldply(tmp)
+  names(tmp2)[1] <- "uuid"
+  tmp2
+}

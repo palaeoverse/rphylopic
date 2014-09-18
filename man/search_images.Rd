@@ -28,7 +28,7 @@ someuuids <- search_text(text = "Homo sapiens", options = "names")
 search_images(uuid=someuuids[[4]], options=c("pngFiles", "credit", "canonicalName"))
 
 # all of them
-search_images(uuid=someuuids, options=c("pngFiles", "credit", "canonicalName"))
+search_images(uuid=someuuids[1:5], options=c("pngFiles", "credit", "canonicalName"))
 }
 }
 
