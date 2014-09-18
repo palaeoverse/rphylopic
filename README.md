@@ -38,7 +38,7 @@ myobjs <- get_image(uuids = output, size = "128")
 make_phylo(pngobj=myobjs)
 ```
 
-![phylo](/inst/assets/img/readme_image.png)
+![phylo](inst/assets/img/readme_image.png)
 
 
 ##### Plot a silhouette behind a plot
@@ -49,8 +49,20 @@ img <- get_image("27356f15-3cf8-47e8-ab41-71c6260b2724", size = "512")[[1]]
 qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") + add_phylopic(img)
 ```
 
-![phylo](/inst/assets/img/img_behind_plot.png)
+![phylo1](inst/assets/img/img_behind_plot.png)
 
+##### Plot images as points in a plot
+
+```r
+library('ggplot2')
+uuid <- "c089caae-43ef-4e4e-bf26-973dd4cb65c5"
+img <- get_image(uuid, size = "64")[[1]]
+(p <- ggplot(mtcars, aes(drat, wt)) + geom_blank() + theme_grey(base_size=18))
+for(i in 1:nrow(mtcars)) p <- p + add_phylopic(img, 1, mtcars$drat[i], mtcars$wt[i], ysize = 0.3)
+p
+```
+
+![phylo2](inst/assets/img/img_as_points.png)
 
 ## Built on the shoulders of
 
