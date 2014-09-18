@@ -5,11 +5,11 @@ rphylopic
 
 ## Get silhouettes of organisms from Phylopic.
 
-The idea here is to create modular bits and pieces to allow you to add silhouettes to not only ggplot2 plots, but base plots as well. Some people prefer base plots while others prefer ggplot2 plots (me!), so it wouuld be nice to have both options.
+The idea here is to create modular bits and pieces to allow you to add silhouettes to not only ggplot2 plots, but base plots as well. Some people prefer base plots while others prefer ggplot2 plots (me!), so it would be nice to have both options.
 
 ## Important!
 
-I plan to be able to get a phylogeny for taxa associatd with Phylopic silhouettes  using the NCBI taxonomy, but it's not easily available yet (though see [Ben Morris' phylofile](https://github.com/bendmorris/python-phylopic)). The first example below creates a phylogeny using `ape::rcoal`.
+I plan to be able to get a phylogeny for taxa associated with Phylopic silhouettes  using the NCBI taxonomy, but it's not easily available yet (though see [Ben Morris' phylofile](https://github.com/bendmorris/python-phylopic)). The first example below creates a phylogeny using `ape::rcoal`.
 
 ## Info
 + Phylopic website: [http://phylopic.org/](http://phylopic.org/)
