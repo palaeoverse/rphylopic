@@ -14,10 +14,12 @@
 #' @param ... Further args passed on to GET. See examples.
 #' @details Here are the options for the options argument:
 #' \itemize{
-#'  \item{citationStart}{[optional] Integer Indicates where in the string the citation starts. May be null.}
+#'  \item{citationStart}{[optional] Integer Indicates where in the string the citation starts. 
+#'  May be null.}
 #'  \item{html}{[optional] StringHTML version of the name.}
 #'  \item{namebankID}{[optional] StringuBio Namebank identifier. May be null.}
-#'  \item{root}{[optional] Boolean If true, this name has no hyperonyms (names of supertaxa). (Should only be true for Panbiota/Vitae.)}
+#'  \item{root}{[optional] Boolean If true, this name has no hyperonyms (names of supertaxa). 
+#'  (Should only be true for Panbiota/Vitae.)}
 #'  \item{string}{[optional] String The text of the name, including the citation, if any.}
 #'  \item{type}{[optional] String Either "scientific or "vernacular.}
 #'  \item{uid}{[always] String Universally unique identifier.}
@@ -26,7 +28,8 @@
 #' }
 #' @examples \dontrun{
 #' get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string")
-#' get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="immediate", options=c("string namebankID"))
+#' get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="immediate", 
+#'    options=c("string namebankID"))
 #' get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", options="string")
 #' }
 
