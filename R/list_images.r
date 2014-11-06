@@ -30,8 +30,8 @@ list_images <- function(start, length, options=NULL, ...)
   url <- "http://phylopic.org/api/a/image/list/"
   args <- phy_compact(list(options = options))
   tt <- GET(paste(url,start,"/",length,sep=""), query=args, ...)
-  assert_that(tt$status_code < 203)
-  assert_that(tt$headers$`content-type` == "application/json; charset=utf-8")
+  stopifnot(tt$status_code < 203)
+  stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")
   res <- content(tt, as = "text")
   out <- fromJSON(res, FALSE)
   out$result

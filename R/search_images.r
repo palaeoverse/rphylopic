@@ -1,6 +1,6 @@
-#' Search for images for the taxa
+#' Search for images for a taxon (via its uuid)
 #' 
-#' @import httr jsonlite assertthat
+#' @import httr jsonlite
 #' @export
 #' @param uuid The UUID of the taxonomic name.
 #' @param subtaxa If set to "true", includes subtaxa in the search.
@@ -27,8 +27,8 @@ search_images <- function(uuid, subtaxa = NULL, supertaxa = NULL, options = NULL
     options <- paste0(options, collapse = " ")
     args <- phy_compact(list(subtaxa=subtaxa, options=options))
     tt <- GET(url2, query=args, ...)
-    assert_that(tt$status_code < 203)
-    assert_that(tt$headers$`content-type` == "application/json; charset=utf-8")
+    stopifnot(tt$status_code < 203)
+    stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")
     res <- content(tt, as = "text")
     out <- jsonlite::fromJSON(res, FALSE)
     

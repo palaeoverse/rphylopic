@@ -41,8 +41,8 @@ get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, stripaut
     options <- paste(options, "citationStart", sep=" ")
   args <- phy_compact(list(supertaxa=supertaxa, subtaxa=subtaxa, options=options))
   tt <- GET(url2, query=args, ...)
-  assert_that(tt$status_code < 203)
-  assert_that(tt$headers$`content-type` == "application/json; charset=utf-8")
+  stopifnot(tt$status_code < 203)
+  stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")
   res <- content(tt, as = "text")
   out <- fromJSON(res, FALSE)
   stuff <- out$result$taxa
