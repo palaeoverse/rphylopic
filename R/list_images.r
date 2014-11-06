@@ -28,7 +28,7 @@ list_images <- function(start, length, options=NULL, ...)
 {
   options <- paste0(options, collapse = " ")
   url <- "http://phylopic.org/api/a/image/list/"
-  args <- phy_compact(list(options = options))
+  args <- pc(list(options = options))
   tt <- GET(paste(url,start,"/",length,sep=""), query=args, ...)
   stopifnot(tt$status_code < 203)
   stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")

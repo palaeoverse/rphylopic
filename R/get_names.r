@@ -39,7 +39,7 @@ get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, stripaut
   url2 <- paste(url, uuid, "/taxonomy", sep="")
   if(stripauthority)
     options <- paste(options, "citationStart", sep=" ")
-  args <- phy_compact(list(supertaxa=supertaxa, subtaxa=subtaxa, options=options))
+  args <- pc(list(supertaxa=supertaxa, subtaxa=subtaxa, options=options))
   tt <- GET(url2, query=args, ...)
   stopifnot(tt$status_code < 203)
   stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")

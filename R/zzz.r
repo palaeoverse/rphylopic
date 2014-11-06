@@ -1,6 +1,6 @@
 #' Fixed phylogeny blank theme for ggphylo
 #' @import ggplot2
-#' @export 
+#' @export
 theme_phylo_blank2 <- function()
 {
   element_blank <- ggplot2::element_blank
@@ -18,10 +18,10 @@ theme_phylo_blank2 <- function()
 }
 
 #' Unnest a nested list
-#' 
+#'
 #' @param x A nested list
 #' @keywords internal
-unnest <- function(x) 
+unnest <- function(x)
 {
   if(is.null(names(x))) {
     list(unname(unlist(x)))
@@ -32,7 +32,7 @@ unnest <- function(x)
 }
 
 #' Replaces null with "none"
-#' 
+#'
 #' @param x A list
 #' @keywords internal
 replacenull <- function(x){
@@ -41,7 +41,7 @@ replacenull <- function(x){
 }
 
 #' Convert citation null to number 1
-#' 
+#'
 #' @param x Input thing
 #' @keywords internal
 citationtonumber <- function(x){
@@ -54,7 +54,7 @@ citationtonumber <- function(x){
 }
 
 #' Strip authority
-#' 
+#'
 #' @param x A string
 #' @param y Another string
 #' @keywords internal
@@ -62,7 +62,7 @@ stripauth <- function(x, y){ if(!y == 1){ str_sub(x, 1, y-1) } else { x } }
 
 
 #' This pkgs version of compact
-#' 
+#'
 #' @param l Input list
 #' @keywords internal
-phy_compact <- function (l) Filter(Negate(is.null), l)
+pc <- function (l) Filter(Negate(is.null), l)

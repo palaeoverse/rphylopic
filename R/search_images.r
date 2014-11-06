@@ -25,7 +25,7 @@ search_images <- function(uuid, subtaxa = NULL, supertaxa = NULL, options = NULL
     url2 <- paste0(url, inputuuid, "/images")
     
     options <- paste0(options, collapse = " ")
-    args <- phy_compact(list(subtaxa=subtaxa, options=options))
+    args <- pc(list(subtaxa=subtaxa, options=options))
     tt <- GET(url2, query=args, ...)
     stopifnot(tt$status_code < 203)
     stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")
@@ -37,7 +37,7 @@ search_images <- function(uuid, subtaxa = NULL, supertaxa = NULL, options = NULL
     subtaxa <- lenzerotonull(out$result$subtaxa)
     same <- lenzerotonull(out$result$same)
     
-    phy_compact(list(other=other, supertaxa=supertaxa, subtaxa=subtaxa, same=same))
+    pc(list(other=other, supertaxa=supertaxa, subtaxa=subtaxa, same=same))
   }
   temp <- lapply(uuid, foo)
   names(temp) <- uuid

@@ -29,7 +29,7 @@ search_text <- function(text, options="string", simplify=TRUE, ...)
   url <- "http://phylopic.org/api/a/name/search"
   opts <- length(options)
   options <- paste0(options, collapse = " ")
-  args <- phy_compact(list(text = text, options = options))
+  args <- pc(list(text = text, options = options))
   tt <- GET(url, query=args, ...)
   stopifnot(tt$status_code < 203)
   stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")
