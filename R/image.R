@@ -1,6 +1,24 @@
 #' Perform actions with images.
 #'
 #' @name image
+#' @param uuid One or more name UUIDs.
+#' @param options (character) One or more of citationStart, html, namebankID, root, string,
+#' type, uid, uri, and/or votes
+#' @param timestamp Either \code{modified} (to go by the last time the image file was modified) 
+#' or \code{submitted} (to go by the time the image was first submitted).
+#' @param from  timestamp string, in "YYYY-MM-DD-HH-MM-SS" format, telling the earliest time to 
+#' retrieve images for. All numbers past the year are optional. For example, these are 
+#' acceptable: "2011-10-29-20-30", "2011-10-29-20", "2011-10-29", "2011-10", and "2011". 
+#' Omitted numbers indicate the lowest possible value for that number, for example, "2011" 
+#' indicates "2011-01-01-00-00-00" (2011 January 1, midnight). Numbers in the string do not 
+#' need to be padded. For example, this is acceptable: "2011-1-1-0-0-0". The image list will 
+#' include any images dated at the indicated time. 
+#' @param to A date-time string, in "YYYY-MM-DD-HH-MM-SS" format, telling the earliest time to 
+#' retrieve images for. See the from parameter for more details on the format. The image list 
+#' will include any images dated up to, but not including, the indicated time. 
+#' @param start The index to start with. Using 0 starts with the most recently-submitted image.
+#' @param length Number of images to list.
+#' @param ... Curl options passed on to \code{\link[httr]{GET}}
 #' @details I'm not adding methods for modifying images, including add, edit, updated, delete, and
 #' transfer, because I can't imagine doing those things from R. Am I wrong?
 #'

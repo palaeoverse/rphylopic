@@ -4,6 +4,15 @@
 #' @param uuid One or more name UUIDs.
 #' @param options (character) One or more of citationStart, html, namebankID, root, string,
 #' type, uid, uri, and/or votes
+#' @param subtaxa If immediate, returns data for immediate subtaxa ("children").
+#' Otherwise, does not include subtaxa.
+#' @param supertaxa If immediate, returns data for immediate supertaxa ("parents").
+#' If all, returns data for all supertaxa ("ancestors"). Otherwise, does not
+#' include supertaxa.
+#' @param other If set to TRUE, includes related taxa in the search.
+#' @param text (character) The text string to search on.
+#' @param useUBio (logical) If TRUE, and there is pending data from uBio that needs to be cached, 
+#' a list of commands will be passed back instead of the normal result.
 #' @param ... Curl options passed on to \code{\link[httr]{GET}}
 #' @details I'm not adding methods for modifying names, including add, edit, or toggle, because
 #' I can't imagine doing those things from R. Am I wrong?
@@ -53,7 +62,8 @@
 #' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", options="string")
 #' 
 #' # Collects taxonomic data for multiple names.
-#' name_taxonomy_many(uuid = c("f3254fbd-284f-46c1-ae0f-685549a6a373", "1ee65cf3-53db-4a52-9960-a9f7093d845d"))
+#' name_taxonomy_many(uuid = c("f3254fbd-284f-46c1-ae0f-685549a6a373", 
+#'  "1ee65cf3-53db-4a52-9960-a9f7093d845d"))
 #' 
 #' # Collects data about the sources for a name's taxonomy.
 #' name_taxonomy_sources(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373")

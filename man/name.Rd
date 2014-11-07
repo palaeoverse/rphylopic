@@ -33,6 +33,20 @@ name_taxonomy_sources(uuid, options = NULL, ...)
 type, uid, uri, and/or votes}
 
 \item{...}{Curl options passed on to \code{\link[httr]{GET}}}
+
+\item{subtaxa}{If immediate, returns data for immediate subtaxa ("children").
+Otherwise, does not include subtaxa.}
+
+\item{supertaxa}{If immediate, returns data for immediate supertaxa ("parents").
+If all, returns data for all supertaxa ("ancestors"). Otherwise, does not
+include supertaxa.}
+
+\item{other}{If set to TRUE, includes related taxa in the search.}
+
+\item{text}{(character) The text string to search on.}
+
+\item{useUBio}{(logical) If TRUE, and there is pending data from uBio that needs to be cached,
+a list of commands will be passed back instead of the normal result.}
 }
 \description{
 Perform actions with names.
@@ -88,7 +102,8 @@ name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="immediat
 name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", options="string")
 
 # Collects taxonomic data for multiple names.
-name_taxonomy_many(uuid = c("f3254fbd-284f-46c1-ae0f-685549a6a373", "1ee65cf3-53db-4a52-9960-a9f7093d845d"))
+name_taxonomy_many(uuid = c("f3254fbd-284f-46c1-ae0f-685549a6a373",
+ "1ee65cf3-53db-4a52-9960-a9f7093d845d"))
 
 # Collects data about the sources for a name's taxonomy.
 name_taxonomy_sources(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373")
