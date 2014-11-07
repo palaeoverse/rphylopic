@@ -1,7 +1,7 @@
 #' Finds the minimal common supertaxa for a list of names.
 #' 
 #' @import httr jsonlite
-#' @export
+#' @keywords internal
 #' @param nameUIDs Space-separated list of UUIDs for taxonomic names.
 #' @param options Space-separated list of options for the result value.
 #' @param ... Further args passed on to GET. See examples.

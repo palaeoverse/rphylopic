@@ -1,7 +1,7 @@
 #' Lists images in chronological order of submission, from most to least recent.
 #'
 #' @import httr jsonlite
-#' @export
+#' @keywords internal
 #' @param start The index to start with. Using 0 starts with the most recently-submitted image.
 #' @param length The number of images to list.
 #' @param options See details for the options for options.

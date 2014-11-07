@@ -13,4 +13,5 @@ Get the total number of PhyloPic images.
 phylopic_count()
 }
 }
+\keyword{internal}
 
