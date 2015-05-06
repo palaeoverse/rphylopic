@@ -18,9 +18,6 @@ type, uid, uri, and/or votes}
 Perform actions with uBio data.
 }
 \details{
-I'm not adding methods for adding names because I can't imagine doing that in R.
-Am I wrong?
-
 There is only one function for working with uBio data right now, \code{ubio_get()}
 
 Options for the \code{options} parameter: Same as those for \code{name_*()} functions.

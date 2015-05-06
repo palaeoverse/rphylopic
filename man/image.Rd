@@ -2,6 +2,7 @@
 \name{image}
 \alias{image}
 \alias{image_count}
+\alias{image_data}
 \alias{image_get}
 \alias{image_list}
 \alias{image_timerange}
@@ -15,6 +16,8 @@ image_timerange(timestamp = "modified", from = NULL, to = NULL,
   options = NULL, ...)
 
 image_count(...)
+
+image_data(input, size)
 }
 \arguments{
 \item{uuid}{One or more name UUIDs.}
@@ -42,6 +45,10 @@ include any images dated at the indicated time.}
 \item{to}{A date-time string, in "YYYY-MM-DD-HH-MM-SS" format, telling the earliest time to
 retrieve images for. See the from parameter for more details on the format. The image list
 will include any images dated up to, but not including, the indicated time.}
+
+\item{input}{Either a vector of uuids or the output from the function \code{search_images}}
+
+\item{size}{Height of the image, one of 64, 128, 256, 512, 1024, "thumb", or "icon"}
 }
 \description{
 Perform actions with images.
@@ -74,6 +81,31 @@ image_list(start=1, length=10, options="taxa")
 image_timerange(from="2013-05-11")
 image_timerange(from="2013-05-11", to="2013-05-12")
 image_timerange(from="2013-05-11", to="2013-05-12", options='credit')
+
+# Get data for an image
+## input uuids
+toget <- c("c089caae-43ef-4e4e-bf26-973dd4cb65c5", "41b127f6-0824-4594-a941-5ff571f32378",
+   "9c6af553-390c-4bdd-baeb-6992cbc540b1")
+get_image(toget, size = "64")
+get_image(toget, size = "thumb")
+
+## input the output from search_images
+searchres <- search_text(text = "Homo sapiens", options = "names")
+output <- search_images(uuid=searchres, options=c("pngFiles", "credit", "canonicalName"))
+get_image(output, size = "icon")
+
+## Put a silhouette behind a plot
+library('ggplot2')
+img <- get_image("27356f15-3cf8-47e8-ab41-71c6260b2724", size = "512")[[1]]
+qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") + add_phylopic(img)
+
+## Use as points in a ggplot plot
+library('ggplot2')
+uuid <- "c089caae-43ef-4e4e-bf26-973dd4cb65c5"
+img <- get_image(uuid, size = "64")[[1]]
+(p <- ggplot(mtcars, aes(drat, wt)) + geom_blank())
+for(i in 1:nrow(mtcars)) p <- p + add_phylopic(img, 1, mtcars$drat[i], mtcars$wt[i], ysize = 0.3)
+p
 }
 }
 

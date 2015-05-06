@@ -35,6 +35,7 @@
 
 get_image <- function(input, size)
 {
+  .Deprecated("image_data", "rphylopic", "Function will be removed soon. See image_data()")
   size <- match.arg(as.character(size), c("64", "128", "256", "512", "1024", "thumb", "icon"))
   
   if(is(input, "image_info")){

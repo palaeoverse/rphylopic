@@ -46,24 +46,12 @@ get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, stripaut
   res <- content(tt, as = "text")
   out <- fromJSON(res, FALSE)
   stuff <- out$result$taxa
-#   replacenull <- function(x){
-#     x$canonicalName[sapply(x$canonicalName, function(x) is.null(x))] <- "none"
-#     x
-#   }
-#   citationtonumber <- function(x){
-#     make1 <- function(x){
-#       if(x$canonicalName$citationStart == "none")
-#       x$canonicalName$citationStart <- 1
-#       x
-#     }
-#     make1(x)
-#   }
   stuff2 <- llply(stuff, replacenull)
   stuff2 <- llply(stuff2, citationtonumber)
 
   temp <- ldply(stuff2, function(x) data.frame(x$canonicalName))
 
-#   stripauth <- function(x,y){ if(!y==1){ str_sub(x, 1, y-1) } else { x } }
+  stripauth <- function(x,y){ if(!y==1){ str_sub(x, 1, y-1) } else { x } }
 
   if(stripauthority){
     temp$rows <- 1:nrow(temp)
