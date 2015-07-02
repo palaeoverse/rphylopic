@@ -6,4 +6,5 @@ man-roxygen
 ^\.Rproj\.user$
 CONTRIBUTING.md
 README.html
+README.Rmd
 inst/stuff/
