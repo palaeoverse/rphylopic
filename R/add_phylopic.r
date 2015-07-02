@@ -17,14 +17,14 @@
 #' library(ggplot2)
 #' img <- get_image("27356f15-3cf8-47e8-ab41-71c6260b2724", size = "512")[[1]]
 #' qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") + add_phylopic(img)
-#' 
+#'
 #' # Put a silhouette anywhere
 #' library(ggplot2)
 #' posx <- runif(50, 0, 10)
 #' posy <- runif(50, 0, 10)
 #' sizey <- runif(50, 0.4, 2)
 #' cols <- sample(c("black", "darkorange", "grey42", "white"), 50, replace = TRUE)
-#' 
+#'
 #' cat <- get_image("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 128)[[1]]
 #' (p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) + 
 #'  geom_point(color = rgb(0,0,0,0)))
@@ -35,21 +35,10 @@
 #' }
 
 add_phylopic <- function(img, alpha = 0.2, x = NULL, y = NULL, ysize = NULL, color = NULL){
-  if (is.null(color)) {
-    mat <- matrix(rgb(img[,,1], img[,,2], img[,,3], img[,,4] * alpha), nrow = dim(img)[1])
-  } else {
-    cols <- col2rgb(color)
-    imglen <- length(img[,,1])
-    mat <- matrix(ifelse(img[,,4] > 0, rgb(rep(cols[1,1], imglen), 
-                                           rep(cols[2,1], imglen), 
-                                           rep(cols[3,1], imglen), 
-                                           img[,,4]*255*alpha, maxColorValue = 255),
-                         rgb(rep(1, imglen), 
-                             rep(1, imglen), 
-                             rep(1, imglen), 
-                             img[,,4]*alpha)), ## make background white for devices 
-                  nrow = dim(img)[1])       ## that do not support alpha channel 
-  }
+
+  # color and alpha the animal
+  mat <- recolor_phylopic(img, alpha, color)
+
   if (!is.null(x) && !is.null(y) && !is.null(ysize)){
     aspratio <- nrow(mat) / ncol(mat) ## get aspect ratio of original image
     ymin <- y - ysize / 2
