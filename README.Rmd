@@ -125,6 +125,8 @@ qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") +
 
 ### Plot images as points in a plot
 
+For `ggplot2` graphics...
+
 ```{r tidy=FALSE}
 library('ggplot2')
 img <- image_data("c089caae-43ef-4e4e-bf26-973dd4cb65c5", size = "64")[[1]]
@@ -133,6 +135,14 @@ p <- ggplot(mtcars, aes(drat, wt)) +
       theme_grey(base_size=18)
 for(i in 1:nrow(mtcars)) p <- p + add_phylopic(img, 1, mtcars$drat[i], mtcars$wt[i], ysize = 0.3)
 p
+```
+
+and the same plot in base R graphics:
+
+```{r tidy=FALSE}
+img <- image_data("c089caae-43ef-4e4e-bf26-973dd4cb65c5", size = "64")[[1]]
+plot(mtcars$drat, mtcars$wt, type="n")
+add_phylopic_base(img, 1, mtcars$drat, mtcars$wt, ysize = 0.3)
 ```
 
 ## Built on the shoulders of
