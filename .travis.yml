@@ -1,21 +1,14 @@
-# modified from Yihui's code for knitr
-language: python
+language: r
+sudo: required
+warnings_are_errors: true
 
-# environment variables
-env:
-  - R_LIBS_USER=~/R
+r_github_packages:
+  - jimhester/covr
 
-# install dependencies
-install:
-  - sudo apt-add-repository -y ppa:marutter/rdev
-  - sudo apt-get update
-  - sudo apt-get install r-base-dev
-  - "[ ! -d ~/R ] && mkdir ~/R"
-  - R --version
-  - R -e '.libPaths(); sessionInfo()'
-  - Rscript -e 'install.packages(c("ggplot2","plyr","png","httr","RJSONIO","RCurl","ape","adephylo","devtools"), repos = "http://cran.rstudio.org"); library(devtools); install_github("gjuggler/ggphylo"); install_github("sckott/rphylopic")'
+after_success:
+  - Rscript -e 'covr::codecov()'
 
-# run tests
-script:
-  - make install
-  - make check
+notifications:
+  email:
+    on_success: change
+    on_failure: change

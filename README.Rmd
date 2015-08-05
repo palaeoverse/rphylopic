@@ -6,10 +6,13 @@ knitr::opts_chunk$set(
   fig.path = "inst/assets/img/",
   comment = "#>",
   collapse = TRUE,
-  warning = FALSE, 
+  warning = FALSE,
   message = FALSE
 )
 ```
+
+[![Build Status](https://api.travis-ci.org/sckott/rphylopic.png)](https://travis-ci.org/sckott/rphylopic)
+[![codecov.io](https://codecov.io/github/sckott/rphylopic/coverage.svg?branch=master)](https://codecov.io/github/sckott/rphylopic?branch=master)
 
 ![](http://phylopic.org/assets/images/submissions/bedd622a-4de2-4067-8c70-4aa44326d229.128.png)
 
@@ -103,7 +106,7 @@ image_list(start=1, length=2)
 ```
 
 Lists images within a given time range, from most to least recent
- 
+
 ```{r}
 image_timerange(from="2013-05-11", to="2013-05-12", options='credit')[1:2]
 ```
@@ -119,7 +122,7 @@ ubio_get(namebankID = 109086)
 ```{r tidy=FALSE}
 library('ggplot2')
 img <- image_data("27356f15-3cf8-47e8-ab41-71c6260b2724", size = "512")[[1]]
-qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") + 
+qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") +
   add_phylopic(img)
 ```
 
@@ -130,8 +133,8 @@ For `ggplot2` graphics...
 ```{r tidy=FALSE}
 library('ggplot2')
 img <- image_data("c089caae-43ef-4e4e-bf26-973dd4cb65c5", size = "64")[[1]]
-p <- ggplot(mtcars, aes(drat, wt)) + 
-      geom_blank() + 
+p <- ggplot(mtcars, aes(drat, wt)) +
+      geom_blank() +
       theme_grey(base_size=18)
 for(i in 1:nrow(mtcars)) p <- p + add_phylopic(img, 1, mtcars$drat[i], mtcars$wt[i], ysize = 0.3)
 p
