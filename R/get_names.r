@@ -48,7 +48,7 @@ get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, stripaut
   stuff2 <- llply(stuff, replacenull)
   stuff2 <- llply(stuff2, citationtonumber)
 
-  temp <- ldply(stuff2, function(x) data.frame(x$canonicalName))
+  temp <- ldply(stuff2, function(x) data.frame(x$canonicalName, stringsAsFactors = FALSE))
 
   if (stripauthority) {
     temp$rows <- 1:nrow(temp)
