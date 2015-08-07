@@ -1,8 +1,6 @@
 #' Fixed phylogeny blank theme for ggphylo
-#' @import ggplot2
 #' @export
-theme_phylo_blank2 <- function()
-{
+theme_phylo_blank2 <- function() {
   element_blank <- ggplot2::element_blank
   ggplot2::theme(
     panel.grid.major = element_blank(),
@@ -17,12 +15,8 @@ theme_phylo_blank2 <- function()
   )
 }
 
-#' Unnest a nested list
-#'
-#' @param x A nested list
-#' @keywords internal
-unnest <- function(x)
-{
+# Unnest a nested list
+unnest <- function(x) {
   if(is.null(names(x))) {
     list(unname(unlist(x)))
   }
@@ -31,20 +25,14 @@ unnest <- function(x)
   }
 }
 
-#' Replaces null with "none"
-#'
-#' @param x A list
-#' @keywords internal
-replacenull <- function(x){
+# Replaces null with "none"
+replacenull <- function(x) {
   x$canonicalName[sapply(x$canonicalName, function(x) is.null(x))] <- "none"
   x
 }
 
-#' Convert citation null to number 1
-#'
-#' @param x Input thing
-#' @keywords internal
-citationtonumber <- function(x){
+# Convert citation null to number 1
+citationtonumber <- function(x) {
   make1 <- function(x){
     if(x$canonicalName$citationStart == "none")
       x$canonicalName$citationStart <- 1
@@ -53,16 +41,7 @@ citationtonumber <- function(x){
   make1(x)
 }
 
-#' Strip authority
-#'
-#' @param x A string
-#' @param y Another string
-#' @keywords internal
+# Strip authority
 stripauth <- function(x, y){ if(!y == 1){ str_sub(x, 1, y-1) } else { x } }
 
-
-#' This pkgs version of compact
-#'
-#' @param l Input list
-#' @keywords internal
 pc <- function (l) Filter(Negate(is.null), l)

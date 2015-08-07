@@ -8,4 +8,9 @@
 \description{
 rphylopic
 }
+\author{
+Scott Chamberlain \email{myrmecocystus@gmail.com}
+
+David Miller \email{dave@ninepointeightone.net}
+}
 

@@ -1,6 +1,5 @@
 #' Input an image and create a ggplot2 layer to add to an existing plot
 #'
-#' @import grid
 #' @export
 #' @param img A png object, e.g, from using \code{get_image}.
 #' @param alpha A value between 0 and 1, specifying the opacity of the silhouette.
@@ -34,12 +33,11 @@
 #' p + ggtitle("R Cat Herd!!")
 #' }
 
-add_phylopic <- function(img, alpha = 0.2, x = NULL, y = NULL, ysize = NULL, color = NULL){
-
+add_phylopic <- function(img, alpha = 0.2, x = NULL, y = NULL, ysize = NULL, color = NULL) {
   # color and alpha the animal
   mat <- recolor_phylopic(img, alpha, color)
 
-  if (!is.null(x) && !is.null(y) && !is.null(ysize)){
+  if (!is.null(x) && !is.null(y) && !is.null(ysize)) {
     aspratio <- nrow(mat) / ncol(mat) ## get aspect ratio of original image
     ymin <- y - ysize / 2
     ymax <- y + ysize / 2

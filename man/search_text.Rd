@@ -19,7 +19,10 @@ search_text(text, options = "string", simplify = TRUE, ...)
 A list. You always get back the UUID, and any other fields requested.
 }
 \description{
-These aren't necessarily ones with images though. See example
+Text search for uuids
+}
+\details{
+These aren't necessarily ones with images though. See examples
 }
 \examples{
 \dontrun{

@@ -86,21 +86,21 @@ name_get <- function(uuid, options=NULL, ...) phy_GET(paste0(nbase(), uuid), col
 #' @export
 #' @rdname name
 name_images <- function(uuid, subtaxa=NULL, supertaxa=NULL, other=FALSE, options=NULL, ...){
-  args <- pc(c(collops(options), subtaxa=subtaxa, supertaxa=supertaxa, other=other))
+  args <- pc(c(collops(options), subtaxa = subtaxa, supertaxa = supertaxa, other = other))
   phy_GET(sprintf("%s%s/%s", nbase(), uuid, "images"), args, ...)$result
 }
 
 #' @export
 #' @rdname name
 name_minsuptaxa <- function(uuid, options=NULL, ...){
-  args <- c(collops(options), nameUIDs=paste(uuid, collapse=" "))
+  args <- c(collops(options), nameUIDs = paste(uuid, collapse = " "))
   phy_GET(paste0(nbase(), 'minSupertaxa'), args, ...)$result
 }
 
 #' @export
 #' @rdname name
 name_search <- function(text, options=NULL, as="table", ...){
-  args <- c(collops(options), text=text)
+  args <- c(collops(options), text = text)
   res <- phy_GET2(paste0(nbase(), 'search'), args, ...)
   mswitch(as, res)
 }
@@ -108,17 +108,17 @@ name_search <- function(text, options=NULL, as="table", ...){
 #' @export
 #' @rdname name
 name_taxonomy <- function(uuid, subtaxa=NULL, supertaxa=NULL, useUBio=FALSE, options=NULL, 
-  as="table", ...)
-{
-  args <- c(collops(options), subtaxa=subtaxa, supertaxa=supertaxa, useUBio=useUBio)
+  as="table", ...) {
+  
+  args <- c(collops(options), subtaxa = subtaxa, supertaxa = supertaxa, useUBio = useUBio)
   res <- phy_GET2(paste0(nbase(), uuid, '/taxonomy'), args, ...)
   mswitch(as, res)
 }
 
 #' @export
 #' @rdname name
-name_taxonomy_many <- function(uuid, options=NULL, as="table", ...){
-  res <- phy_GET2(paste0(nbase(), 'taxonomy/multiple'), c(collops(options), nameUIDs=paste0(uuid, collapse = " ")), ...)
+name_taxonomy_many <- function(uuid, options=NULL, as="table", ...) {
+  res <- phy_GET2(paste0(nbase(), 'taxonomy/multiple'), c(collops(options), nameUIDs = paste0(uuid, collapse = " ")), ...)
   mswitch(as, res)
 }
 
@@ -131,7 +131,7 @@ name_taxonomy_sources <- function(uuid, options=NULL, as="list", ...){
 
 nbase <- function() "http://phylopic.org/api/a/name/"
 
-collops <- function(x) if(!is.null(x)) list(options = paste0(x, collapse = " ")) else list()
+collops <- function(x) if (!is.null(x)) list(options = paste0(x, collapse = " ")) else list()
 
 name_parse <- function(x){
   x <- lapply(x, replacenull)

@@ -1,6 +1,5 @@
 #' Finds the minimal common supertaxa for a list of names.
 #' 
-#' @import httr jsonlite
 #' @keywords internal
 #' @param nameUIDs Space-separated list of UUIDs for taxonomic names.
 #' @param options Space-separated list of options for the result value.
@@ -23,13 +22,11 @@
 #' minimal_supertaxa(nameUIDs=c("1ee65cf3-53db-4a52-9960-a9f7093d845d", 
 #'    "08141cfc-ef1f-4d0e-a061-b1347f5297a0"))
 #' }
-
-minimal_supertaxa <- function(nameUIDs, options=NULL, ...)
-{
+minimal_supertaxa <- function(nameUIDs, options = NULL, ...) {
   url = "http://phylopic.org/api/a/name/minSupertaxa/"
-  nameUIDs <- paste(nameUIDs, collapse=" ")
-  args <- pc(list(nameUIDs=nameUIDs, options=options))
-  tt <- GET(url, query=args, ...)
+  nameUIDs <- paste(nameUIDs, collapse = " ")
+  args <- pc(list(nameUIDs = nameUIDs, options = options))
+  tt <- GET(url, query = args, ...)
   stopifnot(tt$status_code < 203)
   stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")
   res <- content(tt, as = "text")

@@ -1,11 +1,12 @@
-#' Lists images in chronological order of submission, from most to least recent.
+#' @title List images
+#' 
+#' @description Lists images in chronological order of submission, from most to least recent.
 #'
-#' @import httr jsonlite
 #' @keywords internal
 #' @param start The index to start with. Using 0 starts with the most recently-submitted image.
 #' @param length The number of images to list.
 #' @param options See details for the options for options.
-#' @param ... Further args passed on to GET. See examples.
+#' @param ... Curl options passed on to \code{\link[httr]{GET}}
 #' @details Here are the options for the options argument:
 #' \itemize{
 #'  \item{citationStart}{[optional] Integer Indicates where in the string the citation starts. May be null.}
@@ -23,16 +24,13 @@
 #' list_images(start=1, length=10, options=c('string','taxa'))
 #' list_images(start=500, length=10)
 #' }
-
-list_images <- function(start, length, options=NULL, ...)
-{
+list_images <- function(start, length, options=NULL, ...) {
   options <- paste0(options, collapse = " ")
   url <- "http://phylopic.org/api/a/image/list/"
   args <- pc(list(options = options))
-  tt <- GET(paste(url,start,"/",length,sep=""), query=args, ...)
+  tt <- GET(paste(url, start, "/", length, sep = ""), query = args, ...)
   stopifnot(tt$status_code < 203)
   stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")
   res <- content(tt, as = "text")
-  out <- fromJSON(res, FALSE)
-  out$result
+  fromJSON(res, FALSE)$result
 }

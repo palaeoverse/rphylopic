@@ -1,6 +1,5 @@
 #' Search for images for a taxon (via its uuid)
 #' 
-#' @import httr jsonlite
 #' @export
 #' @param uuid The UUID of the taxonomic name.
 #' @param subtaxa If set to "true", includes subtaxa in the search.
@@ -17,16 +16,16 @@
 #' }
 
 search_images <- function(uuid, subtaxa = NULL, supertaxa = NULL, options = NULL, 
-  cleanoutput = TRUE, ...)
-{  
+  cleanoutput = TRUE, ...) {
+  
   url <- "http://phylopic.org/api/a/name/"
   
   foo <- function(inputuuid){  
     url2 <- paste0(url, inputuuid, "/images")
     
     options <- paste0(options, collapse = " ")
-    args <- pc(list(subtaxa=subtaxa, options=options))
-    tt <- GET(url2, query=args, ...)
+    args <- pc(list(subtaxa = subtaxa, options = options))
+    tt <- GET(url2, query = args, ...)
     stopifnot(tt$status_code < 203)
     stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")
     res <- content(tt, as = "text")
@@ -37,19 +36,21 @@ search_images <- function(uuid, subtaxa = NULL, supertaxa = NULL, options = NULL
     subtaxa <- lenzerotonull(out$result$subtaxa)
     same <- lenzerotonull(out$result$same)
     
-    pc(list(other=other, supertaxa=supertaxa, subtaxa=subtaxa, same=same))
+    pc(list(other = other, supertaxa = supertaxa, subtaxa = subtaxa, same = same))
   }
   temp <- lapply(uuid, foo)
   names(temp) <- uuid
-  if(cleanoutput){
-    temp2 <- temp[!sapply(temp, function(x) length(x))==0]
+  if (cleanoutput) {
+    temp2 <- temp[!sapply(temp, function(x) length(x)) == 0]
     res <- parse_png_info(temp2)
-  } else { res <- parse_png_info(temp2) }
+  } else { 
+    res <- parse_png_info(temp2) 
+  }
   class(res) <- c('image_info','data.frame')
   return( res )
 }
 
-lenzerotonull <- function(x) if(length(x)==0) NULL else x
+lenzerotonull <- function(x) if (length(x) == 0) NULL else x
 
 parse_png_info <- function(x){
   tmp <- lapply(x, function(z){

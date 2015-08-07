@@ -1,6 +1,5 @@
 #' Perform actions with images.
 #'
-#' @import RCurl png 
 #' @name image
 #' @param uuid One or more name UUIDs.
 #' @param options (character) One or more of citationStart, html, namebankID, root, string,
@@ -76,22 +75,22 @@
 
 #' @export
 #' @rdname image
-image_get <- function(uuid, options=NULL, ...){
-  args <- if(!is.null(options)) list(options = paste0(options, collapse = " ")) else list()
+image_get <- function(uuid, options=NULL, ...) {
+  args <- if (!is.null(options)) list(options = paste0(options, collapse = " ")) else list()
   phy_GET(paste0(ibase(), uuid), args, ...)$result
 }
 
 #' @export
 #' @rdname image
-image_list <- function(start=1, length=10, options=NULL, ...){
-  args <- if(!is.null(options)) list(options = paste0(options, collapse = " ")) else list()
+image_list <- function(start=1, length=10, options=NULL, ...) {
+  args <- if (!is.null(options)) list(options = paste0(options, collapse = " ")) else list()
   phy_GET(sprintf("%s%s/%s/%s", ibase(), "list", start, length), args, ...)$result
 }
 
 #' @export
 #' @rdname image
-image_timerange <- function(timestamp="modified", from=NULL, to=NULL, options=NULL, ...){
-  args <- if(!is.null(options)) list(options = paste0(options, collapse = " ")) else list()
+image_timerange <- function(timestamp="modified", from=NULL, to=NULL, options=NULL, ...) {
+  args <- if (!is.null(options)) list(options = paste0(options, collapse = " ")) else list()
   url <- sprintf("%s%s/%s/", ibase(), "list", timestamp)
   url <- paste0(url, from, "/", to)
   phy_GET(url, args, ...)$result
@@ -99,18 +98,18 @@ image_timerange <- function(timestamp="modified", from=NULL, to=NULL, options=NU
 
 #' @export
 #' @rdname image
-image_count <- function(...){
+image_count <- function(...) {
   content(GET(paste0(ibase(), "count"), ...))$result
 }
 
-phy_GET <- function(url, args, ...){
-  res <- GET(url, query=args, ...)
+phy_GET <- function(url, args, ...) {
+  res <- GET(url, query = args, ...)
   stop_for_status(res)
   jsonlite::fromJSON(content(res, "text"), FALSE)
 }
 
-phy_GET2 <- function(url, args, ...){
-  res <- GET(url, query=args, ...)
+phy_GET2 <- function(url, args, ...) {
+  res <- GET(url, query = args, ...)
   stop_for_status(res)
   content(res, "text")
 }
@@ -119,10 +118,10 @@ ibase <- function() "http://phylopic.org/api/a/image/"
 
 #' @export
 #' @rdname image
-image_data <- function(input, size){
+image_data <- function(input, size) {
   size <- match.arg(as.character(size), c("64", "128", "256", "512", "1024", "thumb", "icon"))
-  if(is(input, "image_info")){
-    if(!size %in% c('thumb','icon')){
+  if (is(input, "image_info")) {
+    if (!size %in% c('thumb','icon')) {
       urls <- input[ as.character(input$height) == size , "url" ]
       urls <- sapply(urls, function(x) file.path("http://phylopic.org", x), USE.NAMES = FALSE)
     } else {

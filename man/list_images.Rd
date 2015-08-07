@@ -2,7 +2,7 @@
 % Please edit documentation in R/list_images.R
 \name{list_images}
 \alias{list_images}
-\title{Lists images in chronological order of submission, from most to least recent.}
+\title{List images}
 \usage{
 list_images(start, length, options = NULL, ...)
 }
@@ -13,7 +13,7 @@ list_images(start, length, options = NULL, ...)
 
 \item{options}{See details for the options for options.}
 
-\item{...}{Further args passed on to GET. See examples.}
+\item{...}{Curl options passed on to \code{\link[httr]{GET}}}
 }
 \description{
 Lists images in chronological order of submission, from most to least recent.
