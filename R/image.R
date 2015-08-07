@@ -128,8 +128,14 @@ image_data <- function(input, size) {
       urls <- paste0(gsub("\\.64\\.png", "", unname(daply(input, .(uuid), function(x) x$url[1]))), sprintf(".%s.png", size))
       urls <- sapply(urls, function(x) file.path("http://phylopic.org", x), USE.NAMES = FALSE)
     }
-    lapply(urls, function(x) readPNG(getURLContent(x)))
+    lapply(urls, getpng)
   } else {
-    lapply(input, function(x) readPNG(getURLContent(paste0("http://phylopic.org/assets/images/submissions/", x, ".", size, ".png"))))    
+    lapply(input, function(x) getpng(paste0("http://phylopic.org/assets/images/submissions/", x, ".", size, ".png")))
   }
+}
+
+getpng <- function(x) {
+  tmp <- GET(x)
+  stop_for_status(tmp)
+  content(tmp)
 }
