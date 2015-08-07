@@ -1,6 +1,6 @@
 context("get_names")
 
-test_that("returns the correct class", {
+test_that("get_names works", {
   skip_on_cran()
   
   aa <- get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string")

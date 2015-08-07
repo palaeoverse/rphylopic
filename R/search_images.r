@@ -46,17 +46,19 @@ search_images <- function(uuid, subtaxa = NULL, supertaxa = NULL, options = NULL
   } else { 
     res <- parse_png_info(temp2) 
   }
-  class(res) <- c('image_info','data.frame')
-  return( res )
+  structure(res, class = c('image_info','data.frame'))
 }
 
 lenzerotonull <- function(x) if (length(x) == 0) NULL else x
 
 parse_png_info <- function(x){
-  tmp <- lapply(x, function(z){
-    do.call(rbind, lapply(z[[1]][[1]]$pngFiles, data.frame, stringsAsFactors = FALSE))
-  })
-  tmp2 <- ldply(tmp)
-  names(tmp2)[1] <- "uuid"
-  tmp2
+  out <- list()
+  for (i in seq_along(x)) {
+    out[[i]] <- lapply(x[[i]]$same, function(z) {
+      tmp <- do.call("rbind", lapply(z$pngFiles, data.frame, stringsAsFactors = FALSE))
+      tmp$uuid <- names(x)[i]
+      tmp
+    })
+  }
+  do.call("rbind", unlist(out, FALSE))
 }

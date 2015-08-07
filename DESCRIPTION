@@ -11,11 +11,9 @@ URL: https://github.com/sckott/rphylopic
 BugReports: https://github.com/sckott/rphylopic/issues
 Imports:
     ggplot2,
-    plyr,
     httr (>= 1.0.0),
     jsonlite,
     grid,
-    gridBase,
-    stringr
+    gridBase
 Suggests:
     testthat

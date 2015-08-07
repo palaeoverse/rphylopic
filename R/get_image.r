@@ -31,23 +31,21 @@
 #' p
 #' }
 
-get_image <- function(input, size)
-{
+get_image <- function(input, size) {
   .Deprecated("image_data", "rphylopic", "Function will be removed soon. See image_data()")
   size <- match.arg(as.character(size), c("64", "128", "256", "512", "1024", "thumb", "icon"))
 
-  if(is(input, "image_info")){
-    if(!size %in% c('thumb','icon')){
+  if (is(input, "image_info")) {
+    if (!size %in% c('thumb','icon')) {
       urls <- input[ as.character(input$height) == size , "url" ]
       urls <- sapply(urls, function(x) file.path("http://phylopic.org", x), USE.NAMES = FALSE)
     } else {
-      urls <- paste0(gsub("\\.64\\.png", "", unname(daply(input, .(uuid), function(x) x$url[1]))), sprintf(".%s.png", size))
+      tmp <- vapply(split(input, input$uuid), function(x) x$url[1], "", USE.NAMES = FALSE)
+      urls <- paste0(gsub("\\.64\\.png", "", tmp), sprintf(".%s.png", size))
       urls <- sapply(urls, function(x) file.path("http://phylopic.org", x), USE.NAMES = FALSE)
     }
-    out <- lapply(urls, getpng)
+    lapply(urls, getpng)
   } else {
-    out <- lapply(input, function(x) getpng(paste0("http://phylopic.org/assets/images/submissions/", x, ".", size, ".png")))
+    lapply(input, function(x) getpng(paste0("http://phylopic.org/assets/images/submissions/", x, ".", size, ".png")))
   }
-
-  return( out )
 }

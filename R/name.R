@@ -81,26 +81,28 @@
 
 #' @export
 #' @rdname name
-name_get <- function(uuid, options=NULL, ...) phy_GET(paste0(nbase(), uuid), collops(options), ...)$result
+name_get <- function(uuid, options=NULL, ...) {
+  phy_GET(paste0(nbase(), uuid), collops(options), ...)$result
+}
 
 #' @export
 #' @rdname name
 name_images <- function(uuid, subtaxa=NULL, supertaxa=NULL, other=FALSE, options=NULL, ...){
-  args <- pc(c(collops(options), subtaxa = subtaxa, supertaxa = supertaxa, other = other))
+  args <- make_args(options, subtaxa = subtaxa, supertaxa = supertaxa, other = other)
   phy_GET(sprintf("%s%s/%s", nbase(), uuid, "images"), args, ...)$result
 }
 
 #' @export
 #' @rdname name
 name_minsuptaxa <- function(uuid, options=NULL, ...){
-  args <- c(collops(options), nameUIDs = paste(uuid, collapse = " "))
+  args <- make_args(options, nameUIDs = paste(uuid, collapse = " "))
   phy_GET(paste0(nbase(), 'minSupertaxa'), args, ...)$result
 }
 
 #' @export
 #' @rdname name
 name_search <- function(text, options=NULL, as="table", ...){
-  args <- c(collops(options), text = text)
+  args <- make_args(options, text = text)
   res <- phy_GET2(paste0(nbase(), 'search'), args, ...)
   mswitch(as, res)
 }
@@ -110,7 +112,7 @@ name_search <- function(text, options=NULL, as="table", ...){
 name_taxonomy <- function(uuid, subtaxa=NULL, supertaxa=NULL, useUBio=FALSE, options=NULL, 
   as="table", ...) {
   
-  args <- c(collops(options), subtaxa = subtaxa, supertaxa = supertaxa, useUBio = useUBio)
+  args <- make_args(options, subtaxa = subtaxa, supertaxa = supertaxa, useUBio = useUBio)
   res <- phy_GET2(paste0(nbase(), uuid, '/taxonomy'), args, ...)
   mswitch(as, res)
 }
@@ -118,7 +120,7 @@ name_taxonomy <- function(uuid, subtaxa=NULL, supertaxa=NULL, useUBio=FALSE, opt
 #' @export
 #' @rdname name
 name_taxonomy_many <- function(uuid, options=NULL, as="table", ...) {
-  res <- phy_GET2(paste0(nbase(), 'taxonomy/multiple'), c(collops(options), nameUIDs = paste0(uuid, collapse = " ")), ...)
+  res <- phy_GET2(paste0(nbase(), 'taxonomy/multiple'), make_args(options, nameUIDs = paste0(uuid, collapse = " ")), ...)
   mswitch(as, res)
 }
 
@@ -133,21 +135,26 @@ nbase <- function() "http://phylopic.org/api/a/name/"
 
 collops <- function(x) if (!is.null(x)) list(options = paste0(x, collapse = " ")) else NULL
 
-name_parse <- function(x){
-  x <- lapply(x, replacenull)
-  ldply(x, function(x) data.frame(x[[1]]))
-}
-
 mswitch <- function(x, y){
   x <- match.arg(x, c("table","list","json"))
   switch(x, 
          json = y, 
          list = jsonlite::fromJSON(y, FALSE)$result, 
-         table = name_parse(jsonlite::fromJSON(y, FALSE)$result)
+         table = jsonlite::fromJSON(y, TRUE)$result
   )
 }
 
 mswitch2 <- function(x, y){
   x <- match.arg(x, c("list", "json"))
   switch(x, json = y, list = jsonlite::fromJSON(y, FALSE)$result)
+}
+
+
+make_args <- function(y, ...) {
+  pars <- list(...)
+  if (is.null(y)) {
+    pars
+  } else {
+    c(collops(y), pars)
+  }
 }

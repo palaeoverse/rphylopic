@@ -57,7 +57,7 @@
 #' ## input the output from search_images
 #' searchres <- search_text(text = "Homo sapiens", options = "names")
 #' output <- search_images(uuid=searchres, options=c("pngFiles", "credit", "canonicalName"))
-#' image_data(output$uuid[10], size = "icon")
+#' image_data(output, size = "icon")
 #'
 #' ## Put a silhouette behind a plot
 #' library('ggplot2')
@@ -111,7 +111,8 @@ image_data <- function(input, size) {
       urls <- input[ as.character(input$height) == size , "url" ]
       urls <- sapply(urls, function(x) file.path("http://phylopic.org", x), USE.NAMES = FALSE)
     } else {
-      urls <- paste0(gsub("\\.64\\.png", "", unname(daply(input, .(uuid), function(x) x$url[1]))), sprintf(".%s.png", size))
+      tmp <- vapply(split(input, input$uuid), function(x) x$url[1], "", USE.NAMES = FALSE)
+      urls <- paste0(gsub("\\.64\\.png", "", tmp), sprintf(".%s.png", size))
       urls <- sapply(urls, function(x) file.path("http://phylopic.org", x), USE.NAMES = FALSE)
     }
     lapply(urls, getpng)

@@ -1,6 +1,6 @@
 context("list_images")
 
-test_that("returns the correct class", {
+test_that("list_images works", {
   skip_on_cran()
 
   aa <- list_images(start=1, length=10)

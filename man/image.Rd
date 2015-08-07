@@ -93,7 +93,7 @@ image_data(toget, size = "thumb")
 ## input the output from search_images
 searchres <- search_text(text = "Homo sapiens", options = "names")
 output <- search_images(uuid=searchres, options=c("pngFiles", "credit", "canonicalName"))
-image_data(output$uuid[10], size = "icon")
+image_data(output, size = "icon")
 
 ## Put a silhouette behind a plot
 library('ggplot2')

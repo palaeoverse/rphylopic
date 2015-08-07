@@ -4,8 +4,6 @@
 #' @importFrom gridBase baseViewports
 #' @importFrom grDevices col2rgb rgb dev.cur
 #' @importFrom ggplot2 annotation_custom element_text
-#' @importFrom plyr daply ldply llply ddply .
-#' @importFrom stringr str_sub
 #' @importFrom httr GET content stop_for_status
 #' @importFrom jsonlite fromJSON
 #' @name rphylopic

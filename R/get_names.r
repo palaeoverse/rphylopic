@@ -45,15 +45,24 @@ get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, stripaut
   res <- content(tt, as = "text")
   out <- jsonlite::fromJSON(res, FALSE)
   stuff <- out$result$taxa
-  stuff2 <- llply(stuff, replacenull)
-  stuff2 <- llply(stuff2, citationtonumber)
+  stuff2 <- lapply(stuff, replacenull)
+  stuff2 <- lapply(stuff2, citationtonumber)
 
-  temp <- ldply(stuff2, function(x) data.frame(x$canonicalName, stringsAsFactors = FALSE))
+  temp <- do.call("rbind", lapply(stuff2, function(x) data.frame(x$canonicalName, stringsAsFactors = FALSE)))
 
   if (stripauthority) {
-    temp$rows <- 1:nrow(temp)
-    temp <- ddply(temp, .(rows), transform, name = stripauth(string, citationStart))
+    for (i in 1:NROW(temp)) {
+      temp[i, "name"] <- stripauth(temp[i, 'string'], temp[i, 'citationStart'])
+    }
   }
+  temp$citationStart <- NULL
+  temp
+}
 
-  return( temp[,!names(temp) %in% c("citationStart","rows")] )
+stripauth <- function(x, y) { 
+  if (y != 1) {
+    substring(x, 1, y - 1)
+  } else { 
+    x 
+  } 
 }
