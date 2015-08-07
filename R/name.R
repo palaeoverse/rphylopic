@@ -131,7 +131,7 @@ name_taxonomy_sources <- function(uuid, options=NULL, as="list", ...){
 
 nbase <- function() "http://phylopic.org/api/a/name/"
 
-collops <- function(x) if (!is.null(x)) list(options = paste0(x, collapse = " ")) else list()
+collops <- function(x) if (!is.null(x)) list(options = paste0(x, collapse = " ")) else NULL
 
 name_parse <- function(x){
   x <- lapply(x, replacenull)
