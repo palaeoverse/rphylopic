@@ -38,7 +38,7 @@ get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, stripaut
   if (stripauthority) {
     options <- paste(options, "citationStart", sep = " ")
   }
-  args <- pc(list(supertaxa = supertaxa, subtaxa = subtaxa, options = options))
+  args <- as_null(pc(list(supertaxa = supertaxa, subtaxa = subtaxa, options = options)))
   tt <- GET(url2, query = args, ...)
   stopifnot(tt$status_code < 203)
   stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")
@@ -56,12 +56,4 @@ get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, stripaut
   }
 
   return( temp[,!names(temp) %in% c("citationStart","rows")] )
-}
-
-stripauth <- function(x,y) { 
-  if (!y == 1) { 
-    str_sub(x, 1, y - 1) 
-  } else { 
-    x 
-  } 
 }

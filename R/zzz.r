@@ -42,6 +42,28 @@ citationtonumber <- function(x) {
 }
 
 # Strip authority
-stripauth <- function(x, y){ if(!y == 1){ str_sub(x, 1, y-1) } else { x } }
+stripauth <- function(x, y) { 
+  if (!y == 1) { 
+    str_sub(x, 1, y - 1) 
+  } else { 
+    x 
+  } 
+}
 
-pc <- function (l) Filter(Negate(is.null), l)
+pc <- function(l) Filter(Negate(is.null), l)
+
+as_null <- function(x) if (length(x) == 0) NULL else x
+
+phy_GET <- function(url, args, ...) {
+  res <- GET(url, query = as_null(pc(args)), ...)
+  stop_for_status(res)
+  jsonlite::fromJSON(content(res, "text"), FALSE)
+}
+
+phy_GET2 <- function(url, args, ...) {
+  res <- GET(url, query = as_null(pc(args)), ...)
+  stop_for_status(res)
+  content(res, "text")
+}
+
+ibase <- function() "http://phylopic.org/api/a/image/"

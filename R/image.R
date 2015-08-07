@@ -102,20 +102,6 @@ image_count <- function(...) {
   content(GET(paste0(ibase(), "count"), ...))$result
 }
 
-phy_GET <- function(url, args, ...) {
-  res <- GET(url, query = args, ...)
-  stop_for_status(res)
-  jsonlite::fromJSON(content(res, "text"), FALSE)
-}
-
-phy_GET2 <- function(url, args, ...) {
-  res <- GET(url, query = args, ...)
-  stop_for_status(res)
-  content(res, "text")
-}
-
-ibase <- function() "http://phylopic.org/api/a/image/"
-
 #' @export
 #' @rdname image
 image_data <- function(input, size) {

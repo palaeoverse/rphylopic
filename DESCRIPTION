@@ -1,7 +1,7 @@
 Package: rphylopic
 Title: Get 'Silhouettes' of 'Organisms' from 'Phylopic'
 Description: Get 'silhouettes' of 'organisms' from 'Phylopic'.
-Version: 0.1.8.9200
+Version: 0.1.8.9300
 Authors@R: c(
     person("Scott", "Chamberlain", role = c("aut", "cre"), email = "myrmecocystus@gmail.com"),
     person("David", "Miller", role = "ctb", email = "dave@ninepointeightone.net")  
@@ -12,7 +12,7 @@ BugReports: https://github.com/sckott/rphylopic/issues
 Imports:
     ggplot2,
     plyr,
-    httr,
+    httr (>= 1.0.0),
     jsonlite,
     grid,
     gridBase,
