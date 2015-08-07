@@ -1,7 +1,7 @@
 Package: rphylopic
 Title: Get 'Silhouettes' of 'Organisms' from 'Phylopic'
 Description: Get 'silhouettes' of 'organisms' from 'Phylopic'.
-Version: 0.1.7.9100
+Version: 0.1.7.9200
 Authors@R: c(
     person("Scott", "Chamberlain", role = c("aut", "cre"), email = "myrmecocystus@gmail.com"),
     person("David", "Miller", role = "ctb", email = "dave@ninepointeightone.net")  
