@@ -197,7 +197,7 @@ Count images in Phylopic database
 
 ```r
 image_count()
-#> [1] 2300
+#> [1] 2420
 ```
 
 Lists images in chronological order, from most to least recently modified
@@ -207,12 +207,12 @@ Lists images in chronological order, from most to least recently modified
 image_list(start=1, length=2)
 #> [[1]]
 #> [[1]]$uid
-#> [1] "b50f9214-3158-45ad-b506-3cb6bfeac58e"
+#> [1] "2e265034-1a52-4a5d-8b3c-2435079fa38b"
 #> 
 #> 
 #> [[2]]
 #> [[2]]$uid
-#> [1] "808b6003-6f30-4302-9c2e-751a3b786978"
+#> [1] "fd1d633d-601c-47e9-b987-aa2c1278fd8c"
 ```
 
 Lists images within a given time range, from most to least recent
@@ -251,11 +251,11 @@ ubio_get(namebankID = 109086)
 ```r
 library('ggplot2')
 img <- image_data("27356f15-3cf8-47e8-ab41-71c6260b2724", size = "512")[[1]]
-qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") +
+qplot(x = Sepal.Length, y = Sepal.Width, data = iris, geom = "point") +
   add_phylopic(img)
 ```
 
-![plot of chunk unnamed-chunk-16](inst/assets/img/unnamed-chunk-16-1.png) 
+![plot of chunk unnamed-chunk-16](inst/assets/img/unnamed-chunk-16-1.png)
 
 ### Plot images as points in a plot
 
@@ -267,23 +267,30 @@ library('ggplot2')
 img <- image_data("c089caae-43ef-4e4e-bf26-973dd4cb65c5", size = "64")[[1]]
 p <- ggplot(mtcars, aes(drat, wt)) +
       geom_blank() +
-      theme_grey(base_size=18)
-for(i in 1:nrow(mtcars)) p <- p + add_phylopic(img, 1, mtcars$drat[i], mtcars$wt[i], ysize = 0.3)
+      theme_grey(base_size = 18)
+for (i in 1:nrow(mtcars)) {
+  p <- p + add_phylopic(img, 1, mtcars$drat[i], mtcars$wt[i], ysize = 0.3)
+}
 p
 ```
 
-![plot of chunk unnamed-chunk-17](inst/assets/img/unnamed-chunk-17-1.png) 
+![plot of chunk unnamed-chunk-17](inst/assets/img/unnamed-chunk-17-1.png)
 
 and the same plot in base R graphics:
 
 
 ```r
-img <- image_data("c089caae-43ef-4e4e-bf26-973dd4cb65c5", size = "64")[[1]]
-plot(mtcars$drat, mtcars$wt, type="n")
-add_phylopic_base(img, 1, mtcars$drat, mtcars$wt, ysize = 0.3)
+cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 128)[[1]]
+posx <- runif(50, 0, 1)
+posy <- runif(50, 0, 1)
+size <- runif(50, 0.01, 0.2)
+plot(posx, posy, type = "n", main = "A cat herd")
+for (i in 1:50) {
+  add_phylopic_base(cat, posx[i], posy[i], size[i])
+}
 ```
 
-![plot of chunk unnamed-chunk-18](inst/assets/img/unnamed-chunk-18-1.png) 
+![plot of chunk unnamed-chunk-18](inst/assets/img/unnamed-chunk-18-1.png)
 
 ## Built on the shoulders of
 
