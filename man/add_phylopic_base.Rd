@@ -4,13 +4,11 @@
 \alias{add_phylopic_base}
 \title{Input an image and add to an existing plot made with base graphics}
 \usage{
-add_phylopic_base(img, alpha = 0.2, x = NULL, y = NULL, ysize = NULL,
+add_phylopic_base(img, x = NULL, y = NULL, ysize = NULL, alpha = 0.2,
   color = NULL)
 }
 \arguments{
 \item{img}{A png object, e.g, from using \code{\link{get_image}}}
-
-\item{alpha}{A value between 0 and 1, specifying the opacity of the silhouette.}
 
 \item{x}{x value of the silhouette center. Ignored if y and ysize are not specified.}
 
@@ -18,6 +16,8 @@ add_phylopic_base(img, alpha = 0.2, x = NULL, y = NULL, ysize = NULL,
 
 \item{ysize}{Height of the silhouette. The width is determined by the aspect ratio 
 of the original image. Ignored if x and y are not specified.}
+
+\item{alpha}{A value between 0 and 1, specifying the opacity of the silhouette.}
 
 \item{color}{Color to plot the silhouette in.}
 }
@@ -31,16 +31,20 @@ then the silhouette will be plotted to the full height and width of the plot.
 }
 \examples{
 \dontrun{
-# Put a silhouette anywhere
-posx <- runif(50, 0, 10)
-posy <- runif(50, 0, 10)
-sizey <- runif(50, 0.01, 0.5)
-cols <- sample(c("black", "darkorange", "grey42", "white"), 50, replace = TRUE)
-
+# get a silhouette
 cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 128)[[1]]
+
+# single image
+plot(1, 1, type="n", main="A cat herd")
+add_phylopic_base(cat, 0.5, 0.5, 0.2)
+
+# lots of images
+posx <- runif(50, 0, 1)
+posy <- runif(50, 0, 1)
+size <- runif(50, 0.01, 0.2)
 plot(posx, posy, type="n", main="A cat herd")
 for (i in 1:50) {
-  add_phylopic_base(cat, 1, posx[i], posy[i], sizey[i], cols[i])
+  add_phylopic_base(cat, posx[i], posy[i], size[i])
 }
 }
 }

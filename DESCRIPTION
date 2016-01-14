@@ -14,7 +14,8 @@ Imports:
     httr (>= 1.0.0),
     jsonlite,
     grid,
-    gridBase
+    gridBase,
+    graphics
 Suggests:
     testthat
 RoxygenNote: 5.0.1
