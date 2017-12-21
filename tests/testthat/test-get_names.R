@@ -14,7 +14,7 @@ test_that("get_names works", {
   
   expect_is(as.character(aa$uid), "character")
   
-  expect_more_than(NROW(cc), NROW(bb))
-  expect_more_than(NROW(cc), NROW(aa))
-  expect_more_than(NROW(bb), NROW(aa))
+  expect_gt(NROW(cc), NROW(bb))
+  expect_gt(NROW(cc), NROW(aa))
+  expect_gt(NROW(bb), NROW(aa))
 })
