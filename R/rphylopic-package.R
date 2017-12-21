@@ -3,7 +3,7 @@
 #' @importFrom grid popViewport grid.raster pushViewport rasterGrob
 #' @importFrom gridBase baseViewports
 #' @importFrom grDevices col2rgb rgb dev.cur
-#' @importFrom graphics rasterImage
+#' @importFrom graphics par rasterImage
 #' @importFrom ggplot2 annotation_custom element_text
 #' @importFrom httr GET content stop_for_status
 #' @importFrom jsonlite fromJSON

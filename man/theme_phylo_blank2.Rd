@@ -9,4 +9,3 @@ theme_phylo_blank2()
 \description{
 Fixed phylogeny blank theme for ggphylo
 }
-

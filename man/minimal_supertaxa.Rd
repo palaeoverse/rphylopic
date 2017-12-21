@@ -39,4 +39,3 @@ minimal_supertaxa(nameUIDs=c("1ee65cf3-53db-4a52-9960-a9f7093d845d",
 }
 }
 \keyword{internal}
-

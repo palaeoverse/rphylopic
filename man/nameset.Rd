@@ -40,4 +40,3 @@ nameset_taxonomy(uuid = "8d9a9ea3-95cc-414d-1000-4b683ce04be2", supertaxa="immed
    options=c("string","namebankID"))
 }
 }
-

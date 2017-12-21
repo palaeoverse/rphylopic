@@ -30,4 +30,3 @@ ubio_get(109086)
 ubio_get(109086, options=c('names','string'))
 }
 }
-

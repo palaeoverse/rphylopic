@@ -51,4 +51,3 @@ get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="immediate",
 get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", options="string")
 }
 }
-

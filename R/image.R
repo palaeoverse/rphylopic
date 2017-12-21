@@ -106,7 +106,7 @@ image_count <- function(...) {
 #' @rdname image
 image_data <- function(input, size) {
   size <- match.arg(as.character(size), c("64", "128", "256", "512", "1024", "thumb", "icon"))
-  if (is(input, "image_info")) {
+  if (inherits(input, "image_info")) {
     if (!size %in% c('thumb','icon')) {
       urls <- input[ as.character(input$height) == size , "url" ]
       urls <- sapply(urls, function(x) file.path("http://phylopic.org", x), USE.NAMES = FALSE)

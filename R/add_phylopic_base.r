@@ -36,8 +36,9 @@ add_phylopic_base <- function(img, x = NULL, y = NULL, ysize = NULL,
   #number of x-y pixels for the logo (aspect ratio)
   dims <- dim(img)[1:2]
   AR <- dims[1] / dims[2]
-  par(usr = c(0, 1, 0, 1))
-  rasterImage(img, x - (ysize/2), y - (AR*ysize/2), x + (ysize/2), y + (AR*ysize/2), interpolate = TRUE)
+  graphics::par(usr = c(0, 1, 0, 1))
+  graphics::rasterImage(img, x - (ysize/2), y - (AR*ysize/2), x + (ysize/2), y + (AR*ysize/2), 
+    interpolate = TRUE)
 }
 
 # add_phylopic_base <- function(img, alpha = 0.2, x = NULL, y = NULL, 

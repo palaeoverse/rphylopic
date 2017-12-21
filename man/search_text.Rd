@@ -40,4 +40,3 @@ library("httr")
 search_text(text = "Homo sapiens", options = "names", config=verbose())
 }
 }
-

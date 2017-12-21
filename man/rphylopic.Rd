@@ -4,6 +4,7 @@
 \name{rphylopic}
 \alias{rphylopic}
 \alias{rphylopic-package}
+\alias{rphylopic-package}
 \title{rphylopic}
 \description{
 rphylopic
@@ -13,4 +14,3 @@ Scott Chamberlain \email{myrmecocystus@gmail.com}
 
 David Miller \email{dave@ninepointeightone.net}
 }
-

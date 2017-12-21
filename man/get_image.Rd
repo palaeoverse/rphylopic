@@ -44,4 +44,3 @@ p
 \seealso{
 \code{\link{search_images}}
 }
-

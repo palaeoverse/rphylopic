@@ -2,11 +2,11 @@
 % Please edit documentation in R/image.R
 \name{image}
 \alias{image}
-\alias{image_count}
-\alias{image_data}
 \alias{image_get}
 \alias{image_list}
 \alias{image_timerange}
+\alias{image_count}
+\alias{image_data}
 \title{Perform actions with images.}
 \usage{
 image_get(uuid, options = NULL, ...)
@@ -109,4 +109,3 @@ for(i in 1:nrow(mtcars)) p <- p + add_phylopic(img, 1, mtcars$drat[i], mtcars$wt
 p
 }
 }
-

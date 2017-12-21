@@ -16,4 +16,3 @@ recolor_phylopic(img, alpha = 0.2, color = NULL)
 \description{
 Internal function to recolour and change alpha levels of a phylopic image.
 }
-

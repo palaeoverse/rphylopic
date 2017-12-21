@@ -32,4 +32,3 @@ search_images(uuid=someuuids[[4]], options=c("pngFiles", "credit", "canonicalNam
 search_images(uuid=someuuids[1:5], options=c("pngFiles", "credit", "canonicalName"))
 }
 }
-
