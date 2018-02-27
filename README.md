@@ -10,9 +10,9 @@ rphylopic
 
 The idea here is to create modular bits and pieces to allow you to add silhouettes to not only ggplot2 plots, but base plots as well. Some people prefer base plots while others prefer ggplot2 plots (me!), so it would be nice to have both options.
 
-+ Phylopic website: [http://phylopic.org/](http://phylopic.org/)
-+ Phylopic development documentation: [http://phylopic.org/api/](http://phylopic.org/api/)
-+ Check out the wrapper for Python by Ben Morris [here](https://github.com/bendmorris/python-phylopic)
++ Phylopic website: <http://phylopic.org/>
++ Phylopic development documentation: <http://phylopic.org/api/>
++ Check out the [wrapper for Python](https://github.com/bendmorris/python-phylopic) by Ben Morris
 
 ## Install
 
@@ -202,7 +202,7 @@ Count images in Phylopic database
 
 ```r
 image_count()
-#> [1] 2870
+#> [1] 2871
 ```
 
 Lists images in chronological order, from most to least recently modified
@@ -212,12 +212,12 @@ Lists images in chronological order, from most to least recently modified
 image_list(start=1, length=2)
 #> [[1]]
 #> [[1]]$uid
-#> [1] "22e65f52-2e0c-47b2-b4c9-03bdbac84584"
+#> [1] "b58a7ca7-8d14-4d7b-88a5-f2b05de79c85"
 #> 
 #> 
 #> [[2]]
 #> [[2]]$uid
-#> [1] "822c549b-b29b-47eb-9fe3-dc5bbb0abccb"
+#> [1] "22e65f52-2e0c-47b2-b4c9-03bdbac84584"
 ```
 
 Lists images within a given time range, from most to least recent
