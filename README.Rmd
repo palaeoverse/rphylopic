@@ -35,36 +35,41 @@ library('rphylopic')
 
 ## Work with names
 
+Find the taxa in Phylopic whose names match some text
+
+```{r}
+person <- name_search(text = "Homo sapiens", options = "namebankID")[[1]]
+```
+
 Get info on a name
 
 ```{r}
-id <- "1ee65cf3-53db-4a52-9960-a9f7093d845d"
-name_get(uuid = id)
-name_get(uuid = id, options = c('citationStart', 'html'))
+# no options just returns the UUID (aka: self)
+name_get(uuid = person$uid[1])
+# specify fields to return with the `options` parameter
+name_get(uuid = person$uid[1], options = c('citationStart', 'html'))
 ```
 
 Searches for images for a taxonomic name.
 
 ```{r}
-name_images(uuid = "1ee65cf3-53db-4a52-9960-a9f7093d845d")
+name_images(uuid = person$uid[1])
 ```
 
 Find the minimal common supertaxa for a list of names.
 
 ```{r}
-name_minsuptaxa(uuid=c("1ee65cf3-53db-4a52-9960-a9f7093d845d", "08141cfc-ef1f-4d0e-a061-b1347f5297a0"))
+insect <- name_search('Orussus abietinus')[[1]]
+bird <- name_search('Malacoptila panamensis')[[1]]
+(x <- name_minsuptaxa(uuid = c(person$uid[1], insect$uid, bird$uid))[[1]])
+name_get(x$canonicalName$uid, options = c('string'))
 ```
 
-Find the taxa whose names match a piece of text.
+Collect taxonomic data for a name.
 
 ```{r}
-name_search(text = "Homo sapiens", options = "namebankID")[[1]]
-```
-
-Collects taxonomic data for a name.
-
-```{r}
-name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string", as = "list")
+name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", 
+  options = "string", as = "list")
 ```
 
 ## Work with name sets

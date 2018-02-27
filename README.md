@@ -29,15 +29,23 @@ library('rphylopic')
 
 ## Work with names
 
+Find the taxa in Phylopic whose names match some text
+
+
+```r
+person <- name_search(text = "Homo sapiens", options = "namebankID")[[1]]
+```
+
 Get info on a name
 
 
 ```r
-id <- "1ee65cf3-53db-4a52-9960-a9f7093d845d"
-name_get(uuid = id)
+# no options just returns the UUID (aka: self)
+name_get(uuid = person$uid[1])
 #> $uid
 #> [1] "1ee65cf3-53db-4a52-9960-a9f7093d845d"
-name_get(uuid = id, options = c('citationStart', 'html'))
+# specify fields to return with the `options` parameter
+name_get(uuid = person$uid[1], options = c('citationStart', 'html'))
 #> $html
 #> [1] "<span class=\"nomen\"><span class=\"scientific\">Homo sapiens</span> <span class=\"citation\">Linnaeus, 1758</span></span>"
 #> 
@@ -52,7 +60,7 @@ Searches for images for a taxonomic name.
 
 
 ```r
-name_images(uuid = "1ee65cf3-53db-4a52-9960-a9f7093d845d")
+name_images(uuid = person$uid[1])
 #> $other
 #> list()
 #> 
@@ -82,38 +90,26 @@ Find the minimal common supertaxa for a list of names.
 
 
 ```r
-name_minsuptaxa(uuid=c("1ee65cf3-53db-4a52-9960-a9f7093d845d", "08141cfc-ef1f-4d0e-a061-b1347f5297a0"))
-#> [[1]]
-#> [[1]]$canonicalName
-#> [[1]]$canonicalName$uid
-#> [1] "b44e3b2e-3f21-4583-a760-59ec9d9f04d7"
+insect <- name_search('Orussus abietinus')[[1]]
+bird <- name_search('Malacoptila panamensis')[[1]]
+(x <- name_minsuptaxa(uuid = c(person$uid[1], insect$uid, bird$uid))[[1]])
+#> $canonicalName
+#> $canonicalName$uid
+#> [1] "68226175-f88d-4ea8-8228-3204c49bfda0"
+name_get(x$canonicalName$uid, options = c('string'))
+#> $uid
+#> [1] "68226175-f88d-4ea8-8228-3204c49bfda0"
+#> 
+#> $string
+#> [1] "Nephrozoa Jondelius & al. 2002"
 ```
 
-Find the taxa whose names match a piece of text.
+Collect taxonomic data for a name.
 
 
 ```r
-name_search(text = "Homo sapiens", options = "namebankID")[[1]]
-#>                                     uid namebankID
-#> 1  1ee65cf3-53db-4a52-9960-a9f7093d845d     109086
-#> 2  105d17a4-9706-4fd5-85d7-becffaf6250a       <NA>
-#> 3  f4067586-1dca-4f21-b91f-530b14958c6b       <NA>
-#> 4  b995ecbf-ee0a-4896-a4da-ad1287389c70       <NA>
-#> 5  9fee81c4-1a7d-44e6-999f-f2442b99a9db       <NA>
-#> 6  47fd19a7-8d1c-417d-b913-8f53a96d03d5       <NA>
-#> 7  c1331888-cdc5-42da-904a-b3e33d39e42c       <NA>
-#> 8  48236998-7157-4c13-b1b9-1d21fc7c65a6       <NA>
-#> 9  15444b9c-f17f-4d6e-89b5-5990096bcfb0       <NA>
-#> 10 505a0c47-b849-4f9e-bd05-d27ef23ef4bd       <NA>
-#> 11 65705fb7-b133-4b4e-96f1-7d98d1e4d3f6       <NA>
-#> 12 e3d17af6-dce0-4745-a62c-71d99690b322       <NA>
-```
-
-Collects taxonomic data for a name.
-
-
-```r
-name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string", as = "list")
+name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", 
+  options = "string", as = "list")
 #> $taxa
 #> $taxa[[1]]
 #> $taxa[[1]]$canonicalName
