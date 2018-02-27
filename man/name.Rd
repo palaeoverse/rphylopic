@@ -33,7 +33,7 @@ name_taxonomy_sources(uuid, options = NULL, as = "list", ...)
 \item{options}{(character) One or more of citationStart, html, namebankID, root, string,
 type, uid, uri, and/or votes}
 
-\item{...}{Curl options passed on to \code{\link[httr:GET]{httr::GET()}}}
+\item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
 
 \item{subtaxa}{If immediate, returns data for immediate subtaxa ("children").
 Otherwise, does not include subtaxa.}
@@ -76,9 +76,12 @@ May be null.
 \examples{
 \dontrun{
 # parse as different outputs
-name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string", as="table")
-name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string", as="list")
-name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string", as="json")
+name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", 
+   options = "string", as="table")
+name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", 
+   options = "string", as="list")
+name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", 
+   options = "string", as="json")
 
 # Get info on a name
 id <- "1ee65cf3-53db-4a52-9960-a9f7093d845d"
@@ -88,7 +91,8 @@ name_get(uuid = id, options=c('namebankID','root','votes'))
 
 # Searches for images for a taxonomic name.
 name_images(uuid = "1ee65cf3-53db-4a52-9960-a9f7093d845d")
-name_images(uuid = "1ee65cf3-53db-4a52-9960-a9f7093d845d", options='credit')
+name_images(uuid = "1ee65cf3-53db-4a52-9960-a9f7093d845d", 
+   options='credit')
 
 # Finds the minimal common supertaxa for a list of names.
 name_minsuptaxa(uuid=c("1ee65cf3-53db-4a52-9960-a9f7093d845d",
@@ -104,10 +108,12 @@ name_search(text = "Homo sapiens", options = "uri")
 name_search(text = "Homo sapiens", options = c("string","type","uri"))
 
 # Collects taxonomic data for a name.
-name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string")
-name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="immediate",
-   options=c("string","namebankID"))
-name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", options="string")
+name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", 
+   options = "string")
+name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", 
+   supertaxa="immediate", options=c("string","namebankID"))
+name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", 
+   options="string")
 name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", 
    options=c("string","uri"))
 
@@ -117,7 +123,8 @@ name_taxonomy_many(uuid = c("f3254fbd-284f-46c1-ae0f-685549a6a373",
 
 # Collects data about the sources for a name's taxonomy.
 name_taxonomy_sources(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373")
-name_taxonomy_sources(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", as="json")
+name_taxonomy_sources(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", 
+  as="json")
 name_taxonomy_sources(uuid = "1ee65cf3-53db-4a52-9960-a9f7093d845d")
 }
 }

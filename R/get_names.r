@@ -10,7 +10,7 @@
 #' @param options See details for the options for options, get it, ha.
 #' @param stripauthority If TRUE (default) the authority is stripped off of the
 #'    scientific name.
-#' @param ... Further args passed on to GET. See examples.
+#' @param ... curl options passed on to [crul::HttpClient]
 #' @details Here are the options for the options argument:
 #' 
 #' - citationStart: (optional) Integer Indicates where in the string the 
@@ -30,26 +30,26 @@
 #' get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string")
 #' get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="immediate", 
 #'    options=c("string namebankID"))
-#' get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", options="string")
+#' get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", 
+#'    options="string")
 #' }
 
-get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, stripauthority=TRUE, ...) {
-  url <- "http://phylopic.org/api/a/name/"
-  url2 <- paste(url, uuid, "/taxonomy", sep = "")
+get_names <- function(uuid, supertaxa=NULL, subtaxa=NULL, options=NULL, 
+  stripauthority=TRUE, ...) {
+
+  path <- file.path('api/a/name', uuid, "taxonomy")
   if (stripauthority) {
     options <- paste(options, "citationStart", sep = " ")
   }
-  args <- as_null(pc(list(supertaxa = supertaxa, subtaxa = subtaxa, options = options)))
-  tt <- GET(url2, query = args, ...)
-  stopifnot(tt$status_code < 203)
-  stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")
-  res <- content(tt, as = "text")
-  out <- jsonlite::fromJSON(res, FALSE)
+  args <- as_null(pc(list(supertaxa = supertaxa, subtaxa = subtaxa, 
+    options = options)))
+  out <- phy_GET(path, args, ...)
   stuff <- out$result$taxa
   stuff2 <- lapply(stuff, replacenull)
   stuff2 <- lapply(stuff2, citationtonumber)
 
-  temp <- do.call("rbind", lapply(stuff2, function(x) data.frame(x$canonicalName, stringsAsFactors = FALSE)))
+  temp <- do.call("rbind", lapply(stuff2, function(x) 
+    data.frame(x$canonicalName, stringsAsFactors = FALSE)))
 
   if (stripauthority) {
     for (i in 1:NROW(temp)) {

@@ -3,7 +3,7 @@
 #' @keywords internal
 #' @param nameUIDs Space-separated list of UUIDs for taxonomic names.
 #' @param options Space-separated list of options for the result value.
-#' @param ... Further args passed on to GET. See examples.
+#' @param ... curl options passed on to [crul::HttpClient]
 #' @details Here are the options for the options argument:
 #' 
 #' - citationStart: (optional) Integer Indicates where in the string the citation starts. 
@@ -23,13 +23,8 @@
 #'    "08141cfc-ef1f-4d0e-a061-b1347f5297a0"))
 #' }
 minimal_supertaxa <- function(nameUIDs, options = NULL, ...) {
-  url = "http://phylopic.org/api/a/name/minSupertaxa/"
-  nameUIDs <- paste(nameUIDs, collapse = " ")
-  args <- pc(list(nameUIDs = nameUIDs, options = options))
-  tt <- GET(url, query = args, ...)
-  stopifnot(tt$status_code < 203)
-  stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")
-  res <- content(tt, as = "text")
-  out <- fromJSON(res, FALSE)
-  out$result[[1]]$canonicalName$uid
+  args <- pc(list(nameUIDs = paste(nameUIDs, collapse = " "), 
+    options = options))
+  x <- phy_GET('api/a/name/minSupertaxa', args, ...)
+  x$result[[1]]$canonicalName$uid
 }

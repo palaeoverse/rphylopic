@@ -26,7 +26,7 @@ image_data(input, size)
 \item{options}{(character) One or more of citationStart, html, namebankID, root, string,
 type, uid, uri, and/or votes}
 
-\item{...}{Curl options passed on to \code{\link[httr:GET]{httr::GET()}}}
+\item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
 
 \item{start}{The index to start with. Using 0 starts with the most recently-submitted image.}
 
@@ -63,16 +63,15 @@ Note: uid is always returned
 \examples{
 \dontrun{
 # Get info on an image
-id <- "9fae30cd-fb59-4a81-a39c-e1826a35f612"
-image_get(uuid = id)
-image_get(uuid = id, options=c('credit','pngFiles','taxa','canonicalName','string','uri','type'))
-image_get(uuid = id, options=c('credit','licenseURL','pngFiles','submitted','submitter',
+uuid <- "9fae30cd-fb59-4a81-a39c-e1826a35f612"
+image_get(uuid = uuid)
+image_get(uuid = uuid, options=c('credit','pngFiles','taxa','canonicalName','string','uri','type'))
+image_get(uuid = uuid, options=c('credit','licenseURL','pngFiles','submitted','submitter',
    'svgFile','taxa','canonicalName','string','uri','type','citationStart'))
 
 # Count images in Phylopic database
 image_count()
-library('httr')
-image_count(config = verbose())
+image_count(verbose = TRUE)
 
 # Lists images in chronological order, from most to least recently modified
 image_list(start=1, length=10)
@@ -91,9 +90,9 @@ image_data(toget, size = "64")
 image_data(toget, size = "thumb")
 
 ## input the output from search_images
-searchres <- search_text(text = "Homo sapiens", options = "names")
-output <- search_images(uuid=searchres, options=c("pngFiles", "credit", "canonicalName"))
-image_data(output, size = "icon")
+x <- search_text(text = "Homo sapiens", options = "names")
+output <- search_images(x[1:10], options=c("pngFiles", "credit", "canonicalName"))
+image_data(output, size = "64")
 
 ## Put a silhouette behind a plot
 library('ggplot2')

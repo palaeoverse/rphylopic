@@ -6,7 +6,7 @@
 #' @param start The index to start with. Using 0 starts with the most recently-submitted image.
 #' @param length The number of images to list.
 #' @param options See details for the options for options.
-#' @param ... Curl options passed on to [httr::GET()]
+#' @param ... curl options passed on to [crul::HttpClient]
 #' @details Here are the options for the options argument:
 #' 
 #' - citationStart: (optional) Integer Indicates where in the string the citation starts. May be null.
@@ -25,12 +25,7 @@
 #' list_images(start=500, length=10)
 #' }
 list_images <- function(start, length, options=NULL, ...) {
-  options <- paste0(options, collapse = " ")
-  url <- "http://phylopic.org/api/a/image/list/"
-  args <- pc(list(options = options))
-  tt <- GET(paste(url, start, "/", length, sep = ""), query = args, ...)
-  stopifnot(tt$status_code < 203)
-  stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")
-  res <- content(tt, as = "text")
-  fromJSON(res, FALSE)$result
+  args <- pc(list(options = paste0(options, collapse = " ")))
+  path <- file.path('api/a/image/list', start, length)
+  phy_GET(path, args, ...)$result
 }

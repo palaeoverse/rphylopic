@@ -22,7 +22,7 @@ Otherwise, does not include subtaxa.}
 \item{stripauthority}{If TRUE (default) the authority is stripped off of the
 scientific name.}
 
-\item{...}{Further args passed on to GET. See examples.}
+\item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
 }
 \description{
 Get names for uuids.
@@ -49,6 +49,7 @@ supertaxa). (Should only be true for Panbiota/Vitae.)
 get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string")
 get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="immediate", 
    options=c("string namebankID"))
-get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", options="string")
+get_names(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", 
+   options="string")
 }
 }

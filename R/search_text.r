@@ -4,9 +4,11 @@
 #' @param text (character) Search string, see examples
 #' @param options (character) See here for options
 #' @param simplify (logical) Simplify result
-#' @param ... Further args passed on to GET. See examples.
-#' @return A list. You always get back the UUID, and any other fields requested.
-#' @details These aren't necessarily ones with images though. See examples
+#' @param ... curl options passed on to [crul::HttpClient]
+#' @return A list. You always get back the UUID, and any other 
+#' fields requested.
+#' @details These aren't necessarily ones with images though. 
+#' See examples
 #' @examples \dontrun{
 #' search_text(text = "Homo sapiens")
 #' search_text(text = "Homo sapiens", options = "names")
@@ -15,24 +17,27 @@
 #' search_text(text = "Homo sapiens", options = "root")
 #' search_text(text = "Homo sapiens", options = "uri")
 #' search_text(text = "Homo sapiens", options = c("string","type","uri"))
-#' search_text(text = "Homo sapiens", options = c("string","type","uri"), simplify=FALSE) 
+#' search_text(text = "Homo sapiens", options = c("string","type","uri"), 
+#'   simplify=FALSE) 
 #' 
 #' # pass in curl options
-#' library("httr")
-#' search_text(text = "Homo sapiens", options = "names", config=verbose())
+#' search_text(text = "Homo sapiens", options = "names", verbose = TRUE)
 #' }
 
 search_text <- function(text, options="string", simplify=TRUE, ...) {
   
-  url <- "http://phylopic.org/api/a/name/search"
   opts <- length(options)
   options <- paste0(options, collapse = " ")
   args <- pc(list(text = text, options = options))
-  tt <- GET(url, query = args, ...)
-  stopifnot(tt$status_code < 203)
-  stopifnot(tt$headers$`content-type` == "application/json; charset=utf-8")
-  res <- content(tt, as = "text")
-  out <- fromJSON(res, FALSE)
+
+  cli <- crul::HttpClient$new(url = pbase(), opts = list(...))
+  tt <- cli$get(path = 'api/a/name/search', query = args)
+  tt$raise_for_status()
+  stopifnot(tt$response_headers$`content-type` == 
+    "application/json; charset=utf-8")
+  res <- tt$parse("UTF-8")
+
+  out <- jsonlite::fromJSON(res, FALSE)
   if (simplify) {
     if (opts == 1) {
       if (options %in% c("string","type","namebankID","root")) {

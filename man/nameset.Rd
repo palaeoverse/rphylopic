@@ -16,7 +16,7 @@ nameset_taxonomy(uuid, options = NULL, ...)
 \item{options}{(character) One or more of citationStart, html, namebankID,
 root, string, type, uid, uri, and/or votes}
 
-\item{...}{Curl options passed on to \code{\link[httr:GET]{httr::GET()}}}
+\item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
 }
 \description{
 Perform actions with name sets

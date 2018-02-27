@@ -4,7 +4,7 @@
 #' @param uuid One or more name UUIDs.
 #' @param options (character) One or more of citationStart, html, namebankID, 
 #' root, string, type, uid, uri, and/or votes
-#' @param ... Curl options passed on to [httr::GET()]
+#' @param ... curl options passed on to [crul::HttpClient]
 #' @details I'm not adding methods for adding names because I can't imagine 
 #' doing that in R. Am I wrong?
 #'
@@ -25,13 +25,12 @@
 #' @export
 #' @rdname nameset
 nameset_get <- function(uuid, options=NULL, ...) {
-    phy_GET(paste0(nsbase(), uuid), collops(options), ...)$result
+    phy_GET(file.path("api/a/name/set", uuid), collops(options), ...)$result
 }
 
 #' @export
 #' @rdname nameset
 nameset_taxonomy <- function(uuid, options=NULL, ...) {
-    phy_GET(paste0(nsbase(), uuid, "/taxonomy"), collops(options), ...)$result
+    phy_GET(file.path("api/a/name/set", uuid, "taxonomy"), 
+        collops(options), ...)$result
 }
-
-nsbase <- function() "http://phylopic.org/api/a/name/set/"

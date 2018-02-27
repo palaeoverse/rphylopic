@@ -4,6 +4,4 @@
 #' @examples \dontrun{
 #' phylopic_count()
 #' }
-phylopic_count <- function(){
-  content(GET("http://phylopic.org/api/a/image/count"))$result
-}
+phylopic_count <- function() image_count()

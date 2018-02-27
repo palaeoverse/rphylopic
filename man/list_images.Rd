@@ -13,7 +13,7 @@ list_images(start, length, options = NULL, ...)
 
 \item{options}{See details for the options for options.}
 
-\item{...}{Curl options passed on to \code{\link[httr:GET]{httr::GET()}}}
+\item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
 }
 \description{
 Lists images in chronological order of submission, from most to least recent.

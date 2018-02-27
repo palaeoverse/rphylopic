@@ -14,7 +14,7 @@
 #' @param useUBio (logical) If TRUE, and there is pending data from uBio that needs to be cached, 
 #' a list of commands will be passed back instead of the normal result.
 #' @param as (character) What to return. One of table (default, a data.frame), list, or json.
-#' @param ... Curl options passed on to [httr::GET()]
+#' @param ... curl options passed on to [crul::HttpClient]
 #' @details I'm not adding methods for modifying names, including add, edit, or toggle, because
 #' I can't imagine doing those things from R. Am I wrong?
 #'
@@ -34,9 +34,12 @@
 #' 
 #' @examples \dontrun{
 #' # parse as different outputs
-#' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string", as="table")
-#' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string", as="list")
-#' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string", as="json")
+#' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", 
+#'    options = "string", as="table")
+#' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", 
+#'    options = "string", as="list")
+#' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", 
+#'    options = "string", as="json")
 #' 
 #' # Get info on a name
 #' id <- "1ee65cf3-53db-4a52-9960-a9f7093d845d"
@@ -46,7 +49,8 @@
 #'
 #' # Searches for images for a taxonomic name.
 #' name_images(uuid = "1ee65cf3-53db-4a52-9960-a9f7093d845d")
-#' name_images(uuid = "1ee65cf3-53db-4a52-9960-a9f7093d845d", options='credit')
+#' name_images(uuid = "1ee65cf3-53db-4a52-9960-a9f7093d845d", 
+#'    options='credit')
 #'
 #' # Finds the minimal common supertaxa for a list of names.
 #' name_minsuptaxa(uuid=c("1ee65cf3-53db-4a52-9960-a9f7093d845d",
@@ -62,10 +66,12 @@
 #' name_search(text = "Homo sapiens", options = c("string","type","uri"))
 #'
 #' # Collects taxonomic data for a name.
-#' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string")
-#' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="immediate",
-#'    options=c("string","namebankID"))
-#' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", options="string")
+#' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", 
+#'    options = "string")
+#' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", 
+#'    supertaxa="immediate", options=c("string","namebankID"))
+#' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", 
+#'    options="string")
 #' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", supertaxa="all", 
 #'    options=c("string","uri"))
 #' 
@@ -75,65 +81,73 @@
 #' 
 #' # Collects data about the sources for a name's taxonomy.
 #' name_taxonomy_sources(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373")
-#' name_taxonomy_sources(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", as="json")
+#' name_taxonomy_sources(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", 
+#'   as="json")
 #' name_taxonomy_sources(uuid = "1ee65cf3-53db-4a52-9960-a9f7093d845d")
 #' }
 
 #' @export
 #' @rdname name
 name_get <- function(uuid, options=NULL, ...) {
-  phy_GET(paste0(nbase(), uuid), collops(options), ...)$result
+  phy_GET(file.path("api/a/name", uuid), collops(options), ...)$result
 }
 
 #' @export
 #' @rdname name
-name_images <- function(uuid, subtaxa=NULL, supertaxa=NULL, other=FALSE, options=NULL, ...){
-  args <- make_args(options, subtaxa = subtaxa, supertaxa = supertaxa, other = other)
-  phy_GET(sprintf("%s%s/%s", nbase(), uuid, "images"), args, ...)$result
+name_images <- function(uuid, subtaxa=NULL, supertaxa=NULL, other=FALSE, 
+  options=NULL, ...){
+
+  args <- make_args(options, subtaxa = subtaxa, supertaxa = supertaxa, 
+    other = other)
+  phy_GET(file.path("api/a/name", uuid, "images"), args, ...)$result
 }
 
 #' @export
 #' @rdname name
 name_minsuptaxa <- function(uuid, options=NULL, ...){
   args <- make_args(options, nameUIDs = paste(uuid, collapse = " "))
-  phy_GET(paste0(nbase(), 'minSupertaxa'), args, ...)$result
+  phy_GET(file.path("api/a/name", 'minSupertaxa'), args, ...)$result
 }
 
 #' @export
 #' @rdname name
 name_search <- function(text, options=NULL, as="table", ...){
   args <- make_args(options, text = text)
-  res <- phy_GET2(paste0(nbase(), 'search'), args, ...)
+  res <- phy_GET2(file.path("api/a/name", 'search'), args, ...)
   mswitch(as, res)
 }
 
 #' @export
 #' @rdname name
-name_taxonomy <- function(uuid, subtaxa=NULL, supertaxa=NULL, useUBio=FALSE, options=NULL, 
-  as="table", ...) {
+name_taxonomy <- function(uuid, subtaxa=NULL, supertaxa=NULL, useUBio=FALSE, 
+  options=NULL, as="table", ...) {
   
-  args <- make_args(options, subtaxa = subtaxa, supertaxa = supertaxa, useUBio = useUBio)
-  res <- phy_GET2(paste0(nbase(), uuid, '/taxonomy'), args, ...)
+  args <- make_args(options, subtaxa = subtaxa, supertaxa = supertaxa, 
+    useUBio = useUBio)
+  res <- phy_GET2(file.path("api/a/name", uuid, 'taxonomy'), args, ...)
   mswitch(as, res)
 }
 
 #' @export
 #' @rdname name
 name_taxonomy_many <- function(uuid, options=NULL, as="table", ...) {
-  res <- phy_GET2(paste0(nbase(), 'taxonomy/multiple'), make_args(options, nameUIDs = paste0(uuid, collapse = " ")), ...)
+  res <- phy_GET2(file.path("api/a/name", 'taxonomy/multiple'), 
+    make_args(options, nameUIDs = paste0(uuid, collapse = " ")), ...)
   mswitch(as, res)
 }
 
 #' @export
 #' @rdname name
 name_taxonomy_sources <- function(uuid, options=NULL, as="list", ...){
-  res <- phy_GET2(paste0(nbase(), uuid, '/taxonomy/sources'), collops(options), ...)
+  res <- phy_GET2(file.path("api/a/name", uuid, 'taxonomy/sources'), 
+    collops(options), ...)
   mswitch2(as, res)
 }
 
-nbase <- function() "http://phylopic.org/api/a/name/"
-
-collops <- function(x) if (!is.null(x)) list(options = paste0(x, collapse = " ")) else NULL
+# helpers -----------------
+collops <- function(x) {
+  if (!is.null(x)) list(options = paste0(x, collapse = " ")) else NULL
+}
 
 mswitch <- function(x, y){
   x <- match.arg(x, c("table","list","json"))

@@ -13,16 +13,18 @@ search_text(text, options = "string", simplify = TRUE, ...)
 
 \item{simplify}{(logical) Simplify result}
 
-\item{...}{Further args passed on to GET. See examples.}
+\item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
 }
 \value{
-A list. You always get back the UUID, and any other fields requested.
+A list. You always get back the UUID, and any other
+fields requested.
 }
 \description{
 Text search for uuids
 }
 \details{
-These aren't necessarily ones with images though. See examples
+These aren't necessarily ones with images though.
+See examples
 }
 \examples{
 \dontrun{
@@ -33,10 +35,10 @@ search_text(text = "Homo sapiens", options = "namebankID")
 search_text(text = "Homo sapiens", options = "root")
 search_text(text = "Homo sapiens", options = "uri")
 search_text(text = "Homo sapiens", options = c("string","type","uri"))
-search_text(text = "Homo sapiens", options = c("string","type","uri"), simplify=FALSE) 
+search_text(text = "Homo sapiens", options = c("string","type","uri"), 
+  simplify=FALSE) 
 
 # pass in curl options
-library("httr")
-search_text(text = "Homo sapiens", options = "names", config=verbose())
+search_text(text = "Homo sapiens", options = "names", verbose = TRUE)
 }
 }

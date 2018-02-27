@@ -46,16 +46,17 @@ pc <- function(l) Filter(Negate(is.null), l)
 
 as_null <- function(x) if (length(x) == 0) NULL else x
 
-phy_GET <- function(url, args, ...) {
-  res <- GET(url, query = as_null(pc(args)), ...)
-  stop_for_status(res)
-  jsonlite::fromJSON(content(res, "text"), FALSE)
+phy_GET <- function(path, args, ...) {
+  tmp <- phy_GET2(path, args, ...)
+  jsonlite::fromJSON(tmp, FALSE)
 }
 
-phy_GET2 <- function(url, args, ...) {
-  res <- GET(url, query = as_null(pc(args)), ...)
-  stop_for_status(res)
-  content(res, "text")
+phy_GET2 <- function(path, args, ...) {
+  cli <- crul::HttpClient$new(url = pbase(), opts = list(...))
+  tt <- cli$get(path = path, query = as_null(pc(args)))
+  tt$raise_for_status()
+  tt$parse("UTF-8")
 }
 
 ibase <- function() "http://phylopic.org/api/a/image/"
+pbase <- function() "http://phylopic.org"

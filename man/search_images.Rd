@@ -4,31 +4,34 @@
 \alias{search_images}
 \title{Search for images for a taxon (via its uuid)}
 \usage{
-search_images(uuid, subtaxa = NULL, supertaxa = NULL, options = NULL,
-  cleanoutput = TRUE, ...)
+search_images(uuid, subtaxa = NULL, supertaxa = NULL, other = NULL,
+  options = NULL, cleanoutput = TRUE, ...)
 }
 \arguments{
 \item{uuid}{The UUID of the taxonomic name.}
 
-\item{subtaxa}{If set to "true", includes subtaxa in the search.}
+\item{subtaxa}{If set to \code{TRUE}, includes subtaxa in the search.}
 
-\item{supertaxa}{If not set to "false", includes supertaxa in the search.}
+\item{supertaxa}{If not set to \code{FALSE}, includes supertaxa in the search.}
+
+\item{other}{If set to \code{TRUE}, includes related taxa in the search.}
 
 \item{options}{Space-separated list of options for the result value.}
 
-\item{cleanoutput}{If TRUE, remove elements with no data.}
+\item{cleanoutput}{If \code{TRUE}, remove elements with no data.}
 
-\item{...}{Further args passed on to GET. See examples.}
+\item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
 }
 \description{
 Search for images for a taxon (via its uuid)
 }
 \examples{
 \dontrun{
-someuuids <- search_text(text = "Homo sapiens", options = "names")
-search_images(uuid=someuuids[[4]], options=c("pngFiles", "credit", "canonicalName"))
+search_images('1ee65cf3-53db-4a52-9960-a9f7093d845d', 
+  subtaxa = "true", options = c("pngFiles", "credit", "licenseURL", 
+  "svgFile", "canonicalName", "html"))
 
 # all of them
-search_images(uuid=someuuids[1:5], options=c("pngFiles", "credit", "canonicalName"))
+search_images(x[1:5], options=c("pngFiles", "credit", "canonicalName"))
 }
 }

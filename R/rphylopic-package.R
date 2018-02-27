@@ -5,7 +5,7 @@
 #' @importFrom grDevices col2rgb rgb dev.cur
 #' @importFrom graphics par rasterImage
 #' @importFrom ggplot2 annotation_custom element_text
-#' @importFrom httr GET content stop_for_status
+#' @importFrom crul HttpClient
 #' @importFrom jsonlite fromJSON
 #' @name rphylopic
 #' @aliases rphylopic-package

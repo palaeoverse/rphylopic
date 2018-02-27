@@ -2,7 +2,7 @@ Package: rphylopic
 Title: Get 'Silhouettes' of 'Organisms' from 'Phylopic'
 Description: Work with 'Phylopic' web service to get 'silhouettes' 
     of 'organisms', and search names, and more.
-Version: 0.1.9.9321
+Version: 0.1.9.9431
 Authors@R: c(
     person("Scott", "Chamberlain", role = c("aut", "cre"), 
         email = "myrmecocystus@gmail.com",
@@ -16,7 +16,7 @@ BugReports: https://github.com/sckott/rphylopic/issues
 Roxygen: list(markdown = TRUE)
 Imports:
     ggplot2,
-    httr (>= 1.0.0),
+    crul (>= 0.5.2),
     jsonlite,
     grid,
     gridBase,

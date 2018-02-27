@@ -11,7 +11,7 @@ minimal_supertaxa(nameUIDs, options = NULL, ...)
 
 \item{options}{Space-separated list of options for the result value.}
 
-\item{...}{Further args passed on to GET. See examples.}
+\item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
 }
 \description{
 Finds the minimal common supertaxa for a list of names.
