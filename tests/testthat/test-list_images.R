@@ -16,3 +16,10 @@ test_that("list_images works", {
   expect_is(bb[[1]], "list")
   expect_named(bb[[1]], c("taxa", "uid"))
 })
+
+test_that("list_images fails well", {
+  expect_error(list_images(), 
+    "argument \"start\" is missing")
+  expect_error(list_images(4), 
+    "argument \"length\" is missing")
+})
