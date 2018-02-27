@@ -13,17 +13,17 @@ nameset_taxonomy(uuid, options = NULL, ...)
 \arguments{
 \item{uuid}{One or more name UUIDs.}
 
-\item{options}{(character) One or more of citationStart, html, namebankID, root, string,
-type, uid, uri, and/or votes}
+\item{options}{(character) One or more of citationStart, html, namebankID,
+root, string, type, uid, uri, and/or votes}
 
-\item{...}{Curl options passed on to \code{\link[httr]{GET}}}
+\item{...}{Curl options passed on to \code{\link[httr:GET]{httr::GET()}}}
 }
 \description{
 Perform actions with name sets
 }
 \details{
-I'm not adding methods for adding names because I can't imagine doing that in R. 
-Am I wrong?
+I'm not adding methods for adding names because I can't imagine
+doing that in R. Am I wrong?
 
 Options for the \code{options} parameter: Same as those for \code{name_*()} functions.
 }
@@ -35,8 +35,9 @@ nameset_get(uuid = id)
 nameset_get(uuid = id, options=c('names','string'))
 
 # Collects taxonomic data for a name.
-nameset_taxonomy(uuid = "8d9a9ea3-95cc-414d-1000-4b683ce04be2", options = "string")
-nameset_taxonomy(uuid = "8d9a9ea3-95cc-414d-1000-4b683ce04be2", supertaxa="immediate",
-   options=c("string","namebankID"))
+nameset_taxonomy(uuid = "8d9a9ea3-95cc-414d-1000-4b683ce04be2", 
+  options = "string")
+nameset_taxonomy(uuid = "8d9a9ea3-95cc-414d-1000-4b683ce04be2", 
+  supertaxa="immediate", options=c("string","namebankID"))
 }
 }

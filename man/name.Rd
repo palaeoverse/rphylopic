@@ -33,7 +33,7 @@ name_taxonomy_sources(uuid, options = NULL, as = "list", ...)
 \item{options}{(character) One or more of citationStart, html, namebankID, root, string,
 type, uid, uri, and/or votes}
 
-\item{...}{Curl options passed on to \code{\link[httr]{GET}}}
+\item{...}{Curl options passed on to \code{\link[httr:GET]{httr::GET()}}}
 
 \item{subtaxa}{If immediate, returns data for immediate subtaxa ("children").
 Otherwise, does not include subtaxa.}
@@ -42,13 +42,13 @@ Otherwise, does not include subtaxa.}
 If all, returns data for all supertaxa ("ancestors"). Otherwise, does not
 include supertaxa.}
 
-\item{other}{If set to TRUE, includes related taxa in the search.}
+\item{other}{If set to \code{TRUE}, includes related taxa in the search.}
 
 \item{text}{(character) The text string to search on.}
 
 \item{as}{(character) What to return. One of table (default, a data.frame), list, or json.}
 
-\item{useUBio}{(logical) If TRUE, and there is pending data from uBio that needs to be cached, 
+\item{useUBio}{(logical) If TRUE, and there is pending data from uBio that needs to be cached,
 a list of commands will be passed back instead of the normal result.}
 }
 \description{
@@ -60,17 +60,17 @@ I can't imagine doing those things from R. Am I wrong?
 
 Options for the \code{options} parameter:
 \itemize{
- \item{citationStart}{[optional] Integer Indicates where in the string the citation starts.
- May be null.}
- \item{html}{[optional] StringHTML version of the name.}
- \item{namebankID}{[optional] StringuBio Namebank identifier. May be null.}
- \item{root}{[optional] Boolean If true, this name has no hyperonyms (names of supertaxa).
- (Should only be true for Panbiota/Vitae.)}
- \item{string}{[optional] String The text of the name, including the citation, if any.}
- \item{type}{[optional] String Either "scientific or "vernacular.}
- \item{uid}{[always] String Universally unique identifier.}
- \item{uri}{[optional] String The unique URI associated with the name.}
- \item{votes}{[optional] Integer The number of votes this name has received. (Currently unused.)}
+\item citationStart: (optional) Integer Indicates where in the string the citation starts.
+May be null.
+\item html: (optional) StringHTML version of the name.
+\item namebankID: (optional) StringuBio Namebank identifier. May be null.
+\item root: (optional) Boolean If true, this name has no hyperonyms (names of supertaxa).
+(Should only be true for Panbiota/Vitae.)
+\item string: (optional) String The text of the name, including the citation, if any.
+\item type: (optional) String Either "scientific or "vernacular.
+\item uid: (always) String Universally unique identifier.
+\item uri: (optional) String The unique URI associated with the name.
+\item votes: (optional) Integer The number of votes this name has received. (Currently unused.)
 }
 }
 \examples{

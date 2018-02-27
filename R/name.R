@@ -9,29 +9,29 @@
 #' @param supertaxa If immediate, returns data for immediate supertaxa ("parents").
 #' If all, returns data for all supertaxa ("ancestors"). Otherwise, does not
 #' include supertaxa.
-#' @param other If set to TRUE, includes related taxa in the search.
+#' @param other If set to `TRUE`, includes related taxa in the search.
 #' @param text (character) The text string to search on.
 #' @param useUBio (logical) If TRUE, and there is pending data from uBio that needs to be cached, 
 #' a list of commands will be passed back instead of the normal result.
 #' @param as (character) What to return. One of table (default, a data.frame), list, or json.
-#' @param ... Curl options passed on to \code{\link[httr]{GET}}
+#' @param ... Curl options passed on to [httr::GET()]
 #' @details I'm not adding methods for modifying names, including add, edit, or toggle, because
 #' I can't imagine doing those things from R. Am I wrong?
 #'
-#' Options for the \code{options} parameter:
-#' \itemize{
-#'  \item{citationStart}{[optional] Integer Indicates where in the string the citation starts.
-#'  May be null.}
-#'  \item{html}{[optional] StringHTML version of the name.}
-#'  \item{namebankID}{[optional] StringuBio Namebank identifier. May be null.}
-#'  \item{root}{[optional] Boolean If true, this name has no hyperonyms (names of supertaxa).
-#'  (Should only be true for Panbiota/Vitae.)}
-#'  \item{string}{[optional] String The text of the name, including the citation, if any.}
-#'  \item{type}{[optional] String Either "scientific or "vernacular.}
-#'  \item{uid}{[always] String Universally unique identifier.}
-#'  \item{uri}{[optional] String The unique URI associated with the name.}
-#'  \item{votes}{[optional] Integer The number of votes this name has received. (Currently unused.)}
-#' }
+#' Options for the `options` parameter:
+#' 
+#' - citationStart: (optional) Integer Indicates where in the string the citation starts.
+#'  May be null.
+#' - html: (optional) StringHTML version of the name.
+#' - namebankID: (optional) StringuBio Namebank identifier. May be null.
+#' - root: (optional) Boolean If true, this name has no hyperonyms (names of supertaxa).
+#'  (Should only be true for Panbiota/Vitae.)
+#' - string: (optional) String The text of the name, including the citation, if any.
+#' - type: (optional) String Either "scientific or "vernacular.
+#' - uid: (always) String Universally unique identifier.
+#' - uri: (optional) String The unique URI associated with the name.
+#' - votes: (optional) Integer The number of votes this name has received. (Currently unused.)
+#' 
 #' @examples \dontrun{
 #' # parse as different outputs
 #' name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string", as="table")

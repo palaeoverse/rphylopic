@@ -7,7 +7,7 @@
 recolor_phylopic(img, alpha = 0.2, color = NULL)
 }
 \arguments{
-\item{img}{A png object, e.g, from using \code{get_image}.}
+\item{img}{A png object, e.g, from using \code{get_image}}
 
 \item{alpha}{A value between 0 and 1, specifying the opacity of the silhouette.}
 

@@ -10,16 +10,17 @@ ubio_get(namebankID, options = NULL, ...)
 \arguments{
 \item{namebankID}{The identifier for a name in uBio Namebank.}
 
-\item{options}{(character) One or more of citationStart, html, namebankID, root, string,
-type, uid, uri, and/or votes}
+\item{options}{(character) One or more of citationStart, html, namebankID,
+root, string, type, uid, uri, and/or votes}
 
-\item{...}{Curl options passed on to \code{\link[httr]{GET}}}
+\item{...}{Curl options passed on to \code{\link[httr:GET]{httr::GET()}}}
 }
 \description{
 Perform actions with uBio data.
 }
 \details{
-There is only one function for working with uBio data right now, \code{ubio_get()}
+There is only one function for working with uBio data right now,
+\code{ubio_get()}
 
 Options for the \code{options} parameter: Same as those for \code{name_*()} functions.
 }

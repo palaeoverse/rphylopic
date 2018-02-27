@@ -13,7 +13,7 @@ list_images(start, length, options = NULL, ...)
 
 \item{options}{See details for the options for options.}
 
-\item{...}{Curl options passed on to \code{\link[httr]{GET}}}
+\item{...}{Curl options passed on to \code{\link[httr:GET]{httr::GET()}}}
 }
 \description{
 Lists images in chronological order of submission, from most to least recent.
@@ -21,15 +21,15 @@ Lists images in chronological order of submission, from most to least recent.
 \details{
 Here are the options for the options argument:
 \itemize{
- \item{citationStart}{[optional] Integer Indicates where in the string the citation starts. May be null.}
- \item{html}{[optional] StringHTML version of the name.}
- \item{namebankID}{[optional] StringuBio Namebank identifier. May be null.}
- \item{root}{[optional] Boolean If true, this name has no hyperonyms (names of supertaxa). (Should only be true for Panbiota/Vitae.)}
- \item{string}{[optional] String The text of the name, including the citation, if any.}
- \item{type}{[optional] String Either "scientific or "vernacular.}
- \item{uid}{[always] String Universally unique identifier.}
- \item{uri}{[optional] String The unique URI associated with the name.}
- \item{votes}{[optional] Integer The number of votes this name has received. (Currently unused.)}
+\item citationStart: (optional) Integer Indicates where in the string the citation starts. May be null.
+\item html: (optional) StringHTML version of the name.
+\item namebankID: (optional) StringuBio Namebank identifier. May be null.
+\item root: (optional) Boolean If true, this name has no hyperonyms (names of supertaxa). (Should only be true for Panbiota/Vitae.)
+\item string: (optional) String The text of the name, including the citation, if any.
+\item type: (optional) String Either "scientific or "vernacular.
+\item uid: (always) String Universally unique identifier.
+\item uri: (optional) String The unique URI associated with the name.
+\item votes: (optional) Integer The number of votes this name has received. (Currently unused.)
 }
 }
 \examples{

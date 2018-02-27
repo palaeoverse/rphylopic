@@ -1,14 +1,19 @@
 Package: rphylopic
 Title: Get 'Silhouettes' of 'Organisms' from 'Phylopic'
-Description: Get 'silhouettes' of 'organisms' from 'Phylopic'.
-Version: 0.1.9.9210
+Description: Work with 'Phylopic' web service to get 'silhouettes' 
+    of 'organisms', and search names, and more.
+Version: 0.1.9.9321
 Authors@R: c(
-    person("Scott", "Chamberlain", role = c("aut", "cre"), email = "myrmecocystus@gmail.com"),
-    person("David", "Miller", role = "ctb", email = "dave@ninepointeightone.net")  
+    person("Scott", "Chamberlain", role = c("aut", "cre"), 
+        email = "myrmecocystus@gmail.com",
+        comment = c(ORCID = "0000-0003-1444-9135")),
+    person("David", "Miller", role = "ctb", 
+        email = "dave@ninepointeightone.net")
   )
 License: MIT + file LICENSE
 URL: https://github.com/sckott/rphylopic
 BugReports: https://github.com/sckott/rphylopic/issues
+Roxygen: list(markdown = TRUE)
 Imports:
     ggplot2,
     httr (>= 1.0.0),

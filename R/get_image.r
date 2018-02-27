@@ -1,26 +1,31 @@
 #' Get data for an image or many images.
 #'
 #' @export
-#' @param input Either a vector of uuids or the output from the function \code{search_images}
-#' @param size Height of the image, one of 64, 128, 256, 512, 1024, "thumb", or "icon"
+#' @param input Either a vector of uuids or the output from the 
+#' function [search_images()]
+#' @param size Height of the image, one of 64, 128, 256, 512, 1024, 
+#' "thumb", or "icon"
 #'
-#' @seealso \code{\link{search_images}}
+#' @seealso [search_images()]
 #' @examples \dontrun{
 #' # input uuids
-#' toget <- c("c089caae-43ef-4e4e-bf26-973dd4cb65c5", "41b127f6-0824-4594-a941-5ff571f32378",
+#' toget <- c("c089caae-43ef-4e4e-bf26-973dd4cb65c5", 
+#'    "41b127f6-0824-4594-a941-5ff571f32378",
 #'    "9c6af553-390c-4bdd-baeb-6992cbc540b1")
 #' get_image(toget, size = "64")
 #' get_image(toget, size = "thumb")
 #'
 #' # input the output from search_images
 #' searchres <- search_text(text = "Homo sapiens", options = "names")
-#' output <- search_images(uuid=searchres, options=c("pngFiles", "credit", "canonicalName"))
+#' output <- search_images(uuid=searchres, options=c("pngFiles", 
+#'   "credit", "canonicalName"))
 #' get_image(output, size = "icon")
 #'
 #' # Put a silhouette behind a plot
 #' library('ggplot2')
 #' img <- get_image("27356f15-3cf8-47e8-ab41-71c6260b2724", size = "512")[[1]]
-#' qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") + add_phylopic(img)
+#' qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") + 
+#'   add_phylopic(img)
 #'
 #' # Use as points in a ggplot plot
 #' library('ggplot2')

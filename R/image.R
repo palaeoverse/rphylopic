@@ -4,8 +4,8 @@
 #' @param uuid One or more name UUIDs.
 #' @param options (character) One or more of citationStart, html, namebankID, root, string,
 #' type, uid, uri, and/or votes
-#' @param timestamp Either \code{modified} (to go by the last time the image file was modified) 
-#' or \code{submitted} (to go by the time the image was first submitted).
+#' @param timestamp Either `modified` (to go by the last time the image file was modified) 
+#' or `submitted` (to go by the time the image was first submitted).
 #' @param from  timestamp string, in "YYYY-MM-DD-HH-MM-SS" format, telling the earliest time to 
 #' retrieve images for. All numbers past the year are optional. For example, these are 
 #' acceptable: "2011-10-29-20-30", "2011-10-29-20", "2011-10-29", "2011-10", and "2011". 
@@ -18,8 +18,8 @@
 #' will include any images dated up to, but not including, the indicated time. 
 #' @param start The index to start with. Using 0 starts with the most recently-submitted image.
 #' @param length Number of images to list.
-#' @param ... Curl options passed on to \code{\link[httr]{GET}}
-#' @param input Either a vector of uuids or the output from the function \code{search_images}
+#' @param ... Curl options passed on to [httr::GET()]
+#' @param input Either a vector of uuids or the output from the function `search_images`
 #' @param size Height of the image, one of 64, 128, 256, 512, 1024, "thumb", or "icon"
 #' @details I'm not adding methods for modifying images, including add, edit, updated, delete, and
 #' transfer, because I can't imagine doing those things from R. Am I wrong?

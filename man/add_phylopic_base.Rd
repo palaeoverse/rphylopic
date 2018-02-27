@@ -8,16 +8,19 @@ add_phylopic_base(img, x = NULL, y = NULL, ysize = NULL, alpha = 0.2,
   color = NULL)
 }
 \arguments{
-\item{img}{A png object, e.g, from using \code{\link{get_image}}}
+\item{img}{A png object, e.g, from using \code{\link[=get_image]{get_image()}}}
 
-\item{x}{x value of the silhouette center. Ignored if y and ysize are not specified.}
+\item{x}{x value of the silhouette center. Ignored if y and ysize are
+not specified.}
 
-\item{y}{y value of the silhouette center. Ignored if x and ysize are not specified.}
+\item{y}{y value of the silhouette center. Ignored if x and ysize are
+not specified.}
 
-\item{ysize}{Height of the silhouette. The width is determined by the aspect ratio 
-of the original image. Ignored if x and y are not specified.}
+\item{ysize}{Height of the silhouette. The width is determined by the
+aspect ratio of the original image. Ignored if x and y are not specified.}
 
-\item{alpha}{A value between 0 and 1, specifying the opacity of the silhouette.}
+\item{alpha}{A value between 0 and 1, specifying the opacity of the
+silhouette.}
 
 \item{color}{Color to plot the silhouette in.}
 }
@@ -25,9 +28,10 @@ of the original image. Ignored if x and y are not specified.}
 Input an image and add to an existing plot made with base graphics
 }
 \details{
-Use parameters \code{x}, \code{y}, and \code{ysize} to place the silhouette 
-at a specified position on the plot. If all three of these parameters are unspecified, 
-then the silhouette will be plotted to the full height and width of the plot.
+Use parameters \code{x}, \code{y}, and \code{ysize} to place the silhouette
+at a specified position on the plot. If all three of these parameters
+are unspecified, then the silhouette will be plotted to the full height
+and width of the plot.
 }
 \examples{
 \dontrun{
