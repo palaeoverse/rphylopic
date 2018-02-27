@@ -1,7 +1,7 @@
 #' Input an image and add to an existing plot made with base graphics
 #'
 #' @export
-#' @param img A png object, e.g, from using [get_image()]
+#' @param img A png object, e.g, from using [image_data()]
 #' @param x x value of the silhouette center. Ignored if y and ysize are 
 #' not specified.
 #' @param y y value of the silhouette center. Ignored if x and ysize are 

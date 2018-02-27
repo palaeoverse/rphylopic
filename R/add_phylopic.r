@@ -1,7 +1,7 @@
 #' Input an image and create a ggplot2 layer to add to an existing plot
 #'
 #' @export
-#' @param img A png object, e.g, from using [get_image()]
+#' @param img A png object, e.g, from using [image_data()]
 #' @param alpha A value between 0 and 1, specifying the opacity of the 
 #' silhouette.
 #' @param x x value of the silhouette center. Ignored if y and ysize are not 
@@ -18,7 +18,7 @@
 #' @examples \dontrun{
 #' # Put a silhouette behind a plot
 #' library(ggplot2)
-#' img <- get_image("27356f15-3cf8-47e8-ab41-71c6260b2724", size = "512")[[1]]
+#' img <- image_data("27356f15-3cf8-47e8-ab41-71c6260b2724", size = "512")[[1]]
 #' qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") + 
 #'   add_phylopic(img)
 #'
@@ -30,7 +30,7 @@
 #' cols <- sample(c("black", "darkorange", "grey42", "white"), 50, 
 #'   replace = TRUE)
 #'
-#' cat <- get_image("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 128)[[1]]
+#' cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 128)[[1]]
 #' (p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) + 
 #'  geom_point(color = rgb(0,0,0,0)))
 #' for (i in 1:50) {

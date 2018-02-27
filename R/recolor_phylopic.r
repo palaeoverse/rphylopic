@@ -2,7 +2,7 @@
 #'
 #' Internal function to recolour and change alpha levels of a phylopic image.
 #'
-#' @param img A png object, e.g, from using `get_image`
+#' @param img A png object, e.g, from using [image_data()]
 #' @param alpha A value between 0 and 1, specifying the opacity of the silhouette.
 #' @param color Color to plot the silhouette in.
 recolor_phylopic <- function(img, alpha = 0.2, color = NULL) {

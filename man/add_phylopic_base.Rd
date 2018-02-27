@@ -8,7 +8,7 @@ add_phylopic_base(img, x = NULL, y = NULL, ysize = NULL, alpha = 0.2,
   color = NULL)
 }
 \arguments{
-\item{img}{A png object, e.g, from using \code{\link[=get_image]{get_image()}}}
+\item{img}{A png object, e.g, from using \code{\link[=image_data]{image_data()}}}
 
 \item{x}{x value of the silhouette center. Ignored if y and ysize are
 not specified.}
