@@ -14,14 +14,12 @@ The idea here is to create modular bits and pieces to allow you to add silhouett
 + Phylopic development documentation: [http://phylopic.org/api/](http://phylopic.org/api/)
 + Check out the wrapper for Python by Ben Morris [here](https://github.com/bendmorris/python-phylopic)
 
-## Quick start
-
-### Install
+## Install
 
 
 ```r
-install_github("devtools")
-devtools::install_github("sckott/rphylopic")
+install.packages("remotes")
+remotes::install_github("sckott/rphylopic")
 ```
 
 
@@ -29,7 +27,7 @@ devtools::install_github("sckott/rphylopic")
 library('rphylopic')
 ```
 
-### Work with names
+## Work with names
 
 Get info on a name
 
@@ -72,6 +70,11 @@ name_images(uuid = "1ee65cf3-53db-4a52-9960-a9f7093d845d")
 #> 
 #> $same[[2]]
 #> $same[[2]]$uid
+#> [1] "ad736445-7147-46f0-9932-d69243dea8f0"
+#> 
+#> 
+#> $same[[3]]
+#> $same[[3]]$uid
 #> [1] "a146bf1b-c94d-46e1-9cd8-a0ac52a1e0a9"
 ```
 
@@ -93,15 +96,17 @@ Find the taxa whose names match a piece of text.
 name_search(text = "Homo sapiens", options = "namebankID")[[1]]
 #>                                     uid namebankID
 #> 1  1ee65cf3-53db-4a52-9960-a9f7093d845d     109086
-#> 2  1558d4cc-4574-4709-89b6-7a0ce26d3c52       <NA>
-#> 3  9fee81c4-1a7d-44e6-999f-f2442b99a9db       <NA>
-#> 4  47fd19a7-8d1c-417d-b913-8f53a96d03d5       <NA>
-#> 5  c1331888-cdc5-42da-904a-b3e33d39e42c       <NA>
-#> 6  15444b9c-f17f-4d6e-89b5-5990096bcfb0       <NA>
-#> 7  505a0c47-b849-4f9e-bd05-d27ef23ef4bd       <NA>
-#> 8  aeba17e8-ec59-4283-9da9-a520a34a7bf2    5328593
-#> 9  105d17a4-9706-4fd5-85d7-becffaf6250a       <NA>
-#> 10 d88164ec-3152-444b-b41c-4757a344a764       <NA>
+#> 2  105d17a4-9706-4fd5-85d7-becffaf6250a       <NA>
+#> 3  f4067586-1dca-4f21-b91f-530b14958c6b       <NA>
+#> 4  b995ecbf-ee0a-4896-a4da-ad1287389c70       <NA>
+#> 5  9fee81c4-1a7d-44e6-999f-f2442b99a9db       <NA>
+#> 6  47fd19a7-8d1c-417d-b913-8f53a96d03d5       <NA>
+#> 7  c1331888-cdc5-42da-904a-b3e33d39e42c       <NA>
+#> 8  48236998-7157-4c13-b1b9-1d21fc7c65a6       <NA>
+#> 9  15444b9c-f17f-4d6e-89b5-5990096bcfb0       <NA>
+#> 10 505a0c47-b849-4f9e-bd05-d27ef23ef4bd       <NA>
+#> 11 65705fb7-b133-4b4e-96f1-7d98d1e4d3f6       <NA>
+#> 12 e3d17af6-dce0-4745-a62c-71d99690b322       <NA>
 ```
 
 Collects taxonomic data for a name.
@@ -128,7 +133,7 @@ name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string",
 #> list()
 ```
 
-### Work with name sets
+## Work with name sets
 
 Retrieves information on a set of taxonomic names.
 
@@ -180,7 +185,7 @@ nameset_taxonomy(uuid = "8d9a9ea3-95cc-414d-1000-4b683ce04be2", options = "strin
 #> [1] "Coelomata"
 ```
 
-### Work with images
+## Work with images
 
 Get info on an image
 
@@ -197,7 +202,7 @@ Count images in Phylopic database
 
 ```r
 image_count()
-#> [1] 2420
+#> [1] 2870
 ```
 
 Lists images in chronological order, from most to least recently modified
@@ -207,12 +212,12 @@ Lists images in chronological order, from most to least recently modified
 image_list(start=1, length=2)
 #> [[1]]
 #> [[1]]$uid
-#> [1] "2e265034-1a52-4a5d-8b3c-2435079fa38b"
+#> [1] "22e65f52-2e0c-47b2-b4c9-03bdbac84584"
 #> 
 #> 
 #> [[2]]
 #> [[2]]$uid
-#> [1] "fd1d633d-601c-47e9-b987-aa2c1278fd8c"
+#> [1] "822c549b-b29b-47eb-9fe3-dc5bbb0abccb"
 ```
 
 Lists images within a given time range, from most to least recent
@@ -236,7 +241,7 @@ image_timerange(from="2013-05-11", to="2013-05-12", options='credit')[1:2]
 #> [1] "303ddff0-6a51-4f70-adf7-69bb22385d6d"
 ```
 
-### Work with uBio data
+## Work with uBio data
 
 
 ```r
@@ -245,7 +250,7 @@ ubio_get(namebankID = 109086)
 #> [1] "1ee65cf3-53db-4a52-9960-a9f7093d845d"
 ```
 
-### Plot a silhouette behind a plot
+## Plot a silhouette behind a plot
 
 
 ```r
@@ -257,7 +262,7 @@ qplot(x = Sepal.Length, y = Sepal.Width, data = iris, geom = "point") +
 
 ![plot of chunk unnamed-chunk-16](inst/assets/img/unnamed-chunk-16-1.png)
 
-### Plot images as points in a plot
+## Plot images as points in a plot
 
 For `ggplot2` graphics...
 
@@ -295,3 +300,11 @@ for (i in 1:50) {
 ## Built on the shoulders of
 
 This wouldn't have been possible without the great work of [Hadley Wickham](http://had.co.nz/) building [ggplot2](https://github.com/hadley/ggplot2), and [Greg Jordan](https://github.com/gjuggler) building [ggphylo](https://github.com/gjuggler/ggphylo) on top of `ggplot2`.
+
+## Meta
+
+* Please [report any issues or bugs](https://github.com/sckott/rphylopic/issues).
+* License: MIT
+* Get citation information for `rphylopic` in R doing `citation(package = 'rphylopic')`
+* Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
+By participating in this project you agree to abide by its terms.

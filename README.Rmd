@@ -22,20 +22,18 @@ The idea here is to create modular bits and pieces to allow you to add silhouett
 + Phylopic development documentation: [http://phylopic.org/api/](http://phylopic.org/api/)
 + Check out the wrapper for Python by Ben Morris [here](https://github.com/bendmorris/python-phylopic)
 
-## Quick start
-
-### Install
+## Install
 
 ```{r eval=FALSE}
-install_github("devtools")
-devtools::install_github("sckott/rphylopic")
+install.packages("remotes")
+remotes::install_github("sckott/rphylopic")
 ```
 
 ```{r}
 library('rphylopic')
 ```
 
-### Work with names
+## Work with names
 
 Get info on a name
 
@@ -69,7 +67,7 @@ Collects taxonomic data for a name.
 name_taxonomy(uuid = "f3254fbd-284f-46c1-ae0f-685549a6a373", options = "string", as = "list")
 ```
 
-### Work with name sets
+## Work with name sets
 
 Retrieves information on a set of taxonomic names.
 
@@ -84,7 +82,7 @@ Collects taxonomic data for a name.
 nameset_taxonomy(uuid = "8d9a9ea3-95cc-414d-1000-4b683ce04be2", options = "string")$taxa[1:2]
 ```
 
-### Work with images
+## Work with images
 
 Get info on an image
 
@@ -111,13 +109,13 @@ Lists images within a given time range, from most to least recent
 image_timerange(from="2013-05-11", to="2013-05-12", options='credit')[1:2]
 ```
 
-### Work with uBio data
+## Work with uBio data
 
 ```{r}
 ubio_get(namebankID = 109086)
 ```
 
-### Plot a silhouette behind a plot
+## Plot a silhouette behind a plot
 
 ```{r tidy=FALSE}
 library('ggplot2')
@@ -126,7 +124,7 @@ qplot(x = Sepal.Length, y = Sepal.Width, data = iris, geom = "point") +
   add_phylopic(img)
 ```
 
-### Plot images as points in a plot
+## Plot images as points in a plot
 
 For `ggplot2` graphics...
 
@@ -158,3 +156,11 @@ for (i in 1:50) {
 ## Built on the shoulders of
 
 This wouldn't have been possible without the great work of [Hadley Wickham](http://had.co.nz/) building [ggplot2](https://github.com/hadley/ggplot2), and [Greg Jordan](https://github.com/gjuggler) building [ggphylo](https://github.com/gjuggler/ggphylo) on top of `ggplot2`.
+
+## Meta
+
+* Please [report any issues or bugs](https://github.com/sckott/rphylopic/issues).
+* License: MIT
+* Get citation information for `rphylopic` in R doing `citation(package = 'rphylopic')`
+* Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
+By participating in this project you agree to abide by its terms.

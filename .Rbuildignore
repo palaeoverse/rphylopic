@@ -8,3 +8,4 @@ CONTRIBUTING.md
 README.html
 README.Rmd
 inst/stuff/
+^CODE_OF_CONDUCT\.md$
