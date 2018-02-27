@@ -158,6 +158,15 @@ for (i in 1:50) {
 }
 ```
 
+## Save png to disk
+
+```{r eval=FALSE}
+cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 128)[[1]]
+out <- save_png(cat)
+identical(png::readPNG(out), cat)
+#> TRUE
+```
+
 ## Built on the shoulders of
 
 This wouldn't have been possible without the great work of [Hadley Wickham](http://had.co.nz/) building [ggplot2](https://github.com/hadley/ggplot2), and [Greg Jordan](https://github.com/gjuggler) building [ggphylo](https://github.com/gjuggler/ggphylo) on top of `ggplot2`.

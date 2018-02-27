@@ -31,6 +31,9 @@
 #' for (i in 1:50) {
 #'   add_phylopic_base(cat, posx[i], posy[i], size[i])
 #' }
+#' 
+#' # plot a stand alone image of the silhouette
+#' plot_phylopic_base(cat)
 #' }
 add_phylopic_base <- function(img, x = NULL, y = NULL, ysize = NULL, 
                               alpha = 0.2, color = NULL) {
@@ -46,39 +49,11 @@ add_phylopic_base <- function(img, x = NULL, y = NULL, ysize = NULL,
     interpolate = TRUE)
 }
 
-# add_phylopic_base <- function(img, alpha = 0.2, x = NULL, y = NULL, 
-#                               ysize = NULL, color = NULL) {
-# 
-#   # handle the null device -- no graphics yet
-#   if (attr(grDevices::dev.cur(), "names") == "null device") {
-#     stop("plot.new has not been called yet")
-#   }
-# 
-#   # color and alpha the animal
-#   mat <- recolor_phylopic(img, alpha, color)
-# 
-#   if (is.null(x) && is.null(y) && is.null(ysize)) {
-#     ## fill whole plot...
-#     x <- mean(par("usr")[1:2])
-#     y <- mean(par("usr")[3:4])
-# 
-#     ysize <- abs(diff(par("usr")[3:4]))
-# 
-#     aspratio <- nrow(mat) / ncol(mat) ## get aspect ratio of original image
-#     
-#     if (ysize/aspratio > abs(diff(par("usr")[1:2]))) {
-#       ysize <- ysize*aspratio
-#     }
-#   }
-# 
-#   # get the viewport to get the alignment right for grid.raster
-#   vps <- gridBase::baseViewports()
-#   grid::pushViewport(vps$inner, vps$figure, vps$plot)
-# 
-#   # plot the raster
-#   grid::grid.raster(mat, x = x, y = y, default.units = "native",
-#                     height = ysize, just = "centre")
-# 
-#   # make sure to pop the viewport otherwise everything goes horribly wrong
-#   grid::popViewport()
-# }
+#' @export
+#' @rdname add_phylopic_base
+plot_phylopic_base <- function(img, x = NULL, y = NULL, ysize = NULL, 
+                              alpha = 0.2, color = NULL) {
+
+  plot.new()
+  add_phylopic_base(img, x, y, ysize, alpha, color)
+}

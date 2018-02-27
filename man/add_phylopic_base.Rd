@@ -2,9 +2,13 @@
 % Please edit documentation in R/add_phylopic_base.r
 \name{add_phylopic_base}
 \alias{add_phylopic_base}
+\alias{plot_phylopic_base}
 \title{Input an image and add to an existing plot made with base graphics}
 \usage{
 add_phylopic_base(img, x = NULL, y = NULL, ysize = NULL, alpha = 0.2,
+  color = NULL)
+
+plot_phylopic_base(img, x = NULL, y = NULL, ysize = NULL, alpha = 0.2,
   color = NULL)
 }
 \arguments{
@@ -50,5 +54,8 @@ plot(posx, posy, type="n", main="A cat herd")
 for (i in 1:50) {
   add_phylopic_base(cat, posx[i], posy[i], size[i])
 }
+
+# plot a stand alone image of the silhouette
+plot_phylopic_base(cat)
 }
 }

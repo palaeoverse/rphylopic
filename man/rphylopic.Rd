@@ -7,7 +7,7 @@
 \alias{rphylopic-package}
 \title{rphylopic}
 \description{
-rphylopic
+Get Silhouettes of Organisms from Phylopic
 }
 \author{
 Scott Chamberlain \email{myrmecocystus@gmail.com}

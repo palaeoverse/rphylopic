@@ -1,4 +1,6 @@
 #' rphylopic
+#' 
+#' Get Silhouettes of Organisms from Phylopic
 #'
 #' @importFrom grid popViewport grid.raster pushViewport rasterGrob
 #' @importFrom gridBase baseViewports
@@ -7,6 +9,7 @@
 #' @importFrom ggplot2 annotation_custom element_text
 #' @importFrom crul HttpClient
 #' @importFrom jsonlite fromJSON
+#' @importFrom png readPNG writePNG
 #' @name rphylopic
 #' @aliases rphylopic-package
 #' @author Scott Chamberlain \email{myrmecocystus@@gmail.com}
