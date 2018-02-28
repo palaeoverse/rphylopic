@@ -295,12 +295,37 @@ for (i in 1:50) {
 
 ## Save png to disk
 
-```{r eval=FALSE}
+
+```r
 cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 128)[[1]]
 out <- save_png(cat)
 identical(png::readPNG(out), cat)
 #> TRUE
 ```
+
+## Use silhouettes as icons in Leaflet plots
+
+There's nothing baked into `rphylopic` for this, but here's an example of how to do it.
+
+
+```r
+library(leaflet)
+data(quakes)
+
+# get an image
+cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 128)[[1]]
+# save to disk
+file <- save_png(cat)
+# make an icon. this one is super simple, see `makeIcon` docs for more options
+sil_icon <- makeIcon(iconUrl = file)
+
+# make the plot
+leaflet(data = quakes[1:4,]) %>% addTiles() %>%
+  addMarkers(~long, ~lat, icon = sil_icon)
+```
+
+![leaflet-plot](inst/assets/img/leaflet.png)
+
 
 ## Built on the shoulders of
 
