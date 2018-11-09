@@ -10,3 +10,4 @@ README.Rmd
 inst/stuff/
 ^CODE_OF_CONDUCT\.md$
 ^cran-comments\.md$
+.github
