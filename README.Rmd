@@ -20,7 +20,6 @@ The idea here is to create modular bits and pieces to allow you to add silhouett
 
 + Phylopic website: <http://phylopic.org/>
 + Phylopic development documentation: <http://phylopic.org/api/>
-+ Check out the [wrapper for Python](https://github.com/bendmorris/python-phylopic) by Ben Morris
 
 ## Install
 

@@ -12,7 +12,6 @@ The idea here is to create modular bits and pieces to allow you to add silhouett
 
 + Phylopic website: <http://phylopic.org/>
 + Phylopic development documentation: <http://phylopic.org/api/>
-+ Check out the [wrapper for Python](https://github.com/bendmorris/python-phylopic) by Ben Morris
 
 ## Install
 
@@ -198,7 +197,7 @@ Count images in Phylopic database
 
 ```r
 image_count()
-#> [1] 2871
+#> [1] 3126
 ```
 
 Lists images in chronological order, from most to least recently modified
@@ -208,12 +207,12 @@ Lists images in chronological order, from most to least recently modified
 image_list(start=1, length=2)
 #> [[1]]
 #> [[1]]$uid
-#> [1] "b58a7ca7-8d14-4d7b-88a5-f2b05de79c85"
+#> [1] "dd8e04f8-0134-4c32-9768-1fdb702eaa8d"
 #> 
 #> 
 #> [[2]]
 #> [[2]]$uid
-#> [1] "22e65f52-2e0c-47b2-b4c9-03bdbac84584"
+#> [1] "9509aeb5-dbae-4902-9c56-6fdd01b321f2"
 ```
 
 Lists images within a given time range, from most to least recent
