@@ -5,11 +5,11 @@
 \alias{plot_phylopic_base}
 \title{Input an image and add to an existing plot made with base graphics}
 \usage{
-add_phylopic_base(img, x = NULL, y = NULL, ysize = NULL, alpha = 0.2,
-  color = NULL)
+add_phylopic_base(img, x = NULL, y = NULL, ysize = NULL,
+  alpha = 0.2, color = NULL)
 
-plot_phylopic_base(img, x = NULL, y = NULL, ysize = NULL, alpha = 0.2,
-  color = NULL)
+plot_phylopic_base(img, x = NULL, y = NULL, ysize = NULL,
+  alpha = 0.2, color = NULL)
 }
 \arguments{
 \item{img}{A png object, e.g, from using \code{\link[=image_data]{image_data()}}}

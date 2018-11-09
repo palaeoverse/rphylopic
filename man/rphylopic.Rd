@@ -4,7 +4,6 @@
 \name{rphylopic}
 \alias{rphylopic}
 \alias{rphylopic-package}
-\alias{rphylopic-package}
 \title{rphylopic}
 \description{
 Get Silhouettes of Organisms from Phylopic
