@@ -3,8 +3,8 @@ sudo: false
 cache: packages
 warnings_are_errors: true
 
-r_github_packages:
-  - jimhester/covr
+r_binary_packages:
+  - covr
 
 after_success:
   - Rscript -e 'covr::codecov()'
