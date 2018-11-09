@@ -23,7 +23,6 @@
 #' # pass in curl options
 #' search_text(text = "Homo sapiens", options = "names", verbose = TRUE)
 #' }
-
 search_text <- function(text, options="string", simplify=TRUE, ...) {
   
   opts <- length(options)
@@ -44,17 +43,22 @@ search_text <- function(text, options="string", simplify=TRUE, ...) {
         opt_length <- "mas" 
       } else if (options %in% "names") {
         opt_length <- "menos"
+      } else if (options %in% "uri") {
+        opt_length <- "mas"
       }
     } else {
       opt_length <- "mas"
     }
     foo <- function(y){
-      tmp <- data.frame(do.call(rbind, lapply(y, function(x) as.character(x[[1]]))), stringsAsFactors = FALSE)
+      tmp <- data.frame(do.call(rbind, 
+        lapply(y, function(x) as.character(x[[1]]))), 
+        stringsAsFactors = FALSE)
       names(tmp) <- names(y[[1]][[1]])
       tmp
     }
     switch(opt_length, 
-           menos = unname(unlist(do.call(c, sapply(out$result, function(x) x[[1]], simplify = TRUE)))),
+           menos = unname(unlist(do.call(c, 
+            sapply(out$result, function(x) x[[1]], simplify = TRUE)))),
            mas = foo(out$result))
   } else {
     out$result    

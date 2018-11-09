@@ -9,9 +9,4 @@ phylopic_count()
 \description{
 Get the total number of PhyloPic images.
 }
-\examples{
-\dontrun{
-phylopic_count()
-}
-}
 \keyword{internal}

@@ -18,12 +18,6 @@
 #' - uid: (always) String Universally unique identifier.
 #' - uri: (optional) String The unique URI associated with the name.
 #' - votes: (optional) Integer The number of votes this name has received. (Currently unused.)
-#'
-#' @examples \dontrun{
-#' list_images(start=1, length=10)
-#' list_images(start=1, length=10, options=c('string','taxa'))
-#' list_images(start=500, length=10)
-#' }
 list_images <- function(start, length, options=NULL, ...) {
   args <- pc(list(options = paste0(options, collapse = " ")))
   path <- file.path('api/a/image/list', start, length)

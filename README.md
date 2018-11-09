@@ -3,8 +3,12 @@ rphylopic
 
 
 
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![Build Status](https://api.travis-ci.org/sckott/rphylopic.png)](https://travis-ci.org/sckott/rphylopic)
 [![codecov.io](https://codecov.io/github/sckott/rphylopic/coverage.svg?branch=master)](https://codecov.io/github/sckott/rphylopic?branch=master)
+[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/rphylopic)](https://github.com/metacran/cranlogs.app)
+[![cran version](http://www.r-pkg.org/badges/version/rphylopic)](https://cran.r-project.org/package=rphylopic)
+
 
 ![](http://phylopic.org/assets/images/submissions/bedd622a-4de2-4067-8c70-4aa44326d229.128.png)
 
@@ -14,6 +18,15 @@ The idea here is to create modular bits and pieces to allow you to add silhouett
 + Phylopic development documentation: <http://phylopic.org/api/>
 
 ## Install
+
+CRAN version
+
+
+```r
+install.packages("rphylopic")
+```
+
+Development version
 
 
 ```r
@@ -255,7 +268,7 @@ qplot(x = Sepal.Length, y = Sepal.Width, data = iris, geom = "point") +
   add_phylopic(img)
 ```
 
-![plot of chunk unnamed-chunk-16](inst/assets/img/unnamed-chunk-16-1.png)
+![plot of chunk unnamed-chunk-17](inst/assets/img/unnamed-chunk-17-1.png)
 
 ## Plot images as points in a plot
 
@@ -274,7 +287,7 @@ for (i in 1:nrow(mtcars)) {
 p
 ```
 
-![plot of chunk unnamed-chunk-17](inst/assets/img/unnamed-chunk-17-1.png)
+![plot of chunk unnamed-chunk-18](inst/assets/img/unnamed-chunk-18-1.png)
 
 and the same plot in base R graphics:
 
@@ -290,7 +303,7 @@ for (i in 1:50) {
 }
 ```
 
-![plot of chunk unnamed-chunk-18](inst/assets/img/unnamed-chunk-18-1.png)
+![plot of chunk unnamed-chunk-19](inst/assets/img/unnamed-chunk-19-1.png)
 
 ## Save png to disk
 
@@ -325,10 +338,6 @@ leaflet(data = quakes[1:4,]) %>% addTiles() %>%
 
 ![leaflet-plot](inst/assets/img/leaflet.png)
 
-
-## Built on the shoulders of
-
-This wouldn't have been possible without the great work of [Hadley Wickham](http://had.co.nz/) building [ggplot2](https://github.com/hadley/ggplot2), and [Greg Jordan](https://github.com/gjuggler) building [ggphylo](https://github.com/gjuggler/ggphylo) on top of `ggplot2`.
 
 ## Meta
 

@@ -8,7 +8,7 @@ search_images(uuid, subtaxa = NULL, supertaxa = NULL, other = NULL,
   options = NULL, cleanoutput = TRUE, ...)
 }
 \arguments{
-\item{uuid}{The UUID of the taxonomic name.}
+\item{uuid}{(character) one or more UUIDs of taxonomic names}
 
 \item{subtaxa}{If set to \code{TRUE}, includes subtaxa in the search.}
 
@@ -32,6 +32,8 @@ search_images('1ee65cf3-53db-4a52-9960-a9f7093d845d',
   "svgFile", "canonicalName", "html"))
 
 # all of them
-search_images(x[1:5], options=c("pngFiles", "credit", "canonicalName"))
+search_images(c("1ee65cf3-53db-4a52-9960-a9f7093d845d",
+   "08141cfc-ef1f-4d0e-a061-b1347f5297a0"), 
+   options=c("pngFiles", "credit", "canonicalName"))
 }
 }

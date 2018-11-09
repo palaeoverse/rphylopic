@@ -32,10 +32,4 @@ May be null.
 \item votes: (optional) Integer The number of votes this name has received. (Currently unused.)
 }
 }
-\examples{
-\dontrun{
-minimal_supertaxa(nameUIDs=c("1ee65cf3-53db-4a52-9960-a9f7093d845d", 
-   "08141cfc-ef1f-4d0e-a061-b1347f5297a0"))
-}
-}
 \keyword{internal}

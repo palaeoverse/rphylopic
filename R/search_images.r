@@ -1,7 +1,7 @@
 #' Search for images for a taxon (via its uuid)
 #' 
 #' @export
-#' @param uuid The UUID of the taxonomic name.
+#' @param uuid (character) one or more UUIDs of taxonomic names
 #' @param subtaxa If set to `TRUE`, includes subtaxa in the search.
 #' @param supertaxa If not set to `FALSE`, includes supertaxa in the search.
 #' @param other If set to `TRUE`, includes related taxa in the search.
@@ -14,7 +14,9 @@
 #'   "svgFile", "canonicalName", "html"))
 #' 
 #' # all of them
-#' search_images(x[1:5], options=c("pngFiles", "credit", "canonicalName"))
+#' search_images(c("1ee65cf3-53db-4a52-9960-a9f7093d845d",
+#'    "08141cfc-ef1f-4d0e-a061-b1347f5297a0"), 
+#'    options=c("pngFiles", "credit", "canonicalName"))
 #' }
 
 search_images <- function(uuid, subtaxa = NULL, supertaxa = NULL, other = NULL, 

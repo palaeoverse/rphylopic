@@ -32,11 +32,4 @@ Here are the options for the options argument:
 \item votes: (optional) Integer The number of votes this name has received. (Currently unused.)
 }
 }
-\examples{
-\dontrun{
-list_images(start=1, length=10)
-list_images(start=1, length=10, options=c('string','taxa'))
-list_images(start=500, length=10)
-}
-}
 \keyword{internal}
