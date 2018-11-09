@@ -1,0 +1,192 @@
+http_interactions:
+- request:
+    method: get
+    uri: http://phylopic.org/api/a/name/f3254fbd-284f-46c1-ae0f-685549a6a373/taxonomy?supertaxa=all&options=string%20citationStart
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      User-Agent: libcurl/7.54.0 r-curl/3.2 crul/0.6.0
+      Accept-Encoding: gzip, deflate
+      Accept: application/json, text/xml, application/xml, */*
+  response:
+    status:
+      status_code: '200'
+      message: OK
+      explanation: Request fulfilled, document follows
+    headers:
+      status: HTTP/1.1 200 OK
+      date: Fri, 09 Nov 2018 22:26:50 GMT
+      server: Apache/2.2.21 (CentOS)
+      vary: Cookie
+      content-length: '13696'
+      content-type: application/json; charset=utf-8
+      access-control-allow-origin: '*'
+      connection: close
+    body:
+      encoding: UTF-8
+      string: '{"result": {"taxa": [{"canonicalName": {"citationStart": null, "uid":
+        "2265ff9d-cfcf-4bf4-9f3e-fb4dd9e90261", "string": "Choanozoa"}}, {"canonicalName":
+        {"citationStart": null, "uid": "b909eda2-4a6d-4d87-a463-87cbe3d20c5f", "string":
+        "Coelomata"}}, {"canonicalName": {"citationStart": null, "uid": "6ed7f321-091f-43c0-8db3-fa36bde54558",
+        "string": "Opisthokonta"}}, {"canonicalName": {"citationStart": 13, "uid":
+        "531415bb-8bda-4846-a238-43add9db57ee", "string": "Osteichthyes Huxley 1880"}},
+        {"canonicalName": {"citationStart": 11, "uid": "d55ad9b6-fc6b-43c5-8ebf-8635a34dcfb3",
+        "string": "Vertebrata Cuvier 1812"}}, {"canonicalName": {"citationStart":
+        9, "uid": "31a41bb7-fcf2-4624-8438-35d5f2b9ab7d", "string": "Chordata Bateson
+        1885"}}, {"canonicalName": {"citationStart": 7, "uid": "95c49c65-4152-475e-af92-2d9ab6bccb48",
+        "string": "Theria Parker and Haswell, 1897"}}, {"canonicalName": {"citationStart":
+        null, "uid": "bb57cfb0-be9e-4f29-8992-7e0b38f376ce", "string": "Eumetazoa"}},
+        {"canonicalName": {"citationStart": null, "uid": "56fbc828-b758-4d0d-8ae1-34e79c71c098",
+        "string": "Sphenacodontia"}}, {"canonicalName": {"citationStart": 8, "uid":
+        "f970e6a3-8786-4474-b3f6-b7ea018c6968", "string": "Holozoa Lang & al. 2002"}},
+        {"canonicalName": {"citationStart": null, "uid": "87153aa2-91f8-4265-9553-c267da177938",
+        "string": "Eukaryota"}}, {"canonicalName": {"citationStart": 9, "uid": "44fff0df-c0ba-40ef-9e52-87dba0dcead5",
+        "string": "Panbiota Wagner 2004"}}, {"canonicalName": {"citationStart": null,
+        "uid": "f88d9735-27c8-4785-908a-eb6ae0b941c8", "string": "\"Asgard\" group"}},
+        {"canonicalName": {"citationStart": null, "uid": "40b3da7f-a6c3-40cc-9c6e-eb99febeac25",
+        "string": "Heimdallarchaeota"}}, {"canonicalName": {"citationStart": 8, "uid":
+        "b0d30582-b7e2-4a7d-a048-1a341c23e0f2", "string": "Archaea Woese & al. 1990"}},
+        {"canonicalName": {"citationStart": 13, "uid": "f104b4df-782f-42a8-9655-8df62ec6780b",
+        "string": "Theriodontia Owen 1876"}}, {"canonicalName": {"citationStart":
+        null, "uid": "1c084d06-49ef-4f75-a68a-42fd501827ce", "string": "Reptiliomorpha"}},
+        {"canonicalName": {"citationStart": null, "uid": "6af4c378-09f3-47a9-9b14-86053798f6a0",
+        "string": "Sphenacodontoidea"}}, {"canonicalName": {"citationStart": null,
+        "uid": "69bd3001-f4b1-4145-b7a1-7c0a60c781a2", "string": "Panderichthyida"}},
+        {"canonicalName": {"citationStart": 10, "uid": "594044a1-68fa-4b7f-affc-b9c9364cf442",
+        "string": "Bilateria Hatschek 1888"}}, {"canonicalName": {"citationStart":
+        null, "uid": "2339f958-4c89-4389-96a0-6f8e2a7a83fd", "string": "gram-negative
+        bacteria"}}, {"canonicalName": {"citationStart": null, "uid": "95310635-111f-4da2-bda2-a2f9f17f12d0",
+        "string": "Galeaspida + Gnathostomata"}}, {"canonicalName": {"citationStart":
+        11, "uid": "e7548954-902f-40d8-9b57-5609402cb9f4", "string": "Clostridia Rainey
+        2010"}}, {"canonicalName": {"citationStart": 25, "uid": "f3254fbd-284f-46c1-ae0f-685549a6a373",
+        "string": "Macrauchenia patachonica Owen 1838"}}, {"canonicalName": {"citationStart":
+        null, "uid": "b8838168-bfc4-4827-aff9-d4479606978c", "string": "Apo-Tetrapoda"}},
+        {"canonicalName": {"citationStart": null, "uid": "fd68d359-8592-4151-a1fc-b46c64cafda6",
+        "string": "Eotetrapodiformes"}}, {"canonicalName": {"citationStart": null,
+        "uid": "f0faaf41-99cf-42ea-8aff-274b103164c5", "string": "Filozoa"}}, {"canonicalName":
+        {"citationStart": null, "uid": "514897c0-4ea0-4fc7-a0e4-a9c27a795bc0", "string":
+        "Cytota"}}, {"canonicalName": {"citationStart": 9, "uid": "caf0a324-5816-476d-b7a9-a424f885da2e",
+        "string": "Animalia Linnaeus 1758"}}, {"canonicalName": {"citationStart":
+        null, "uid": "22162818-5af5-464c-b9ed-c3854e27b0e7", "string": "Osteolepidida"}},
+        {"canonicalName": {"citationStart": null, "uid": "138efeb3-09d7-42bc-b416-11a5c2ea51ed",
+        "string": "Unikonta"}}, {"canonicalName": {"citationStart": 11, "uid": "e686bb71-0a89-43d2-b911-89704f750dd9",
+        "string": "Firmicutes corrig. Gibbons and Murray 1978"}}, {"canonicalName":
+        {"citationStart": null, "uid": "93a16458-d11b-4d1f-a891-31706df06ecb", "string":
+        "Eubacteria"}}, {"canonicalName": {"citationStart": null, "uid": "b3886074-f885-4f8b-a068-40681c69780f",
+        "string": "Biota"}}, {"canonicalName": {"citationStart": 15, "uid": "43179c68-7740-4cc0-91d0-6f6d6e5e88fe",
+        "string": "Proteobacteria Cavalier-Smith 2002,"}}, {"canonicalName": {"citationStart":
+        null, "uid": "b9d2a4b7-0748-409a-a150-5a55553f075a", "string": "Alphaproteobacteria"}},
+        {"canonicalName": {"citationStart": null, "uid": "3a85c248-a96c-436a-98ee-fdcf06b19280",
+        "string": "Tetrapodomorpha"}}, {"canonicalName": {"citationStart": null, "uid":
+        "e16775af-b677-4943-b567-9b6c93d0c797", "string": "Amniota + Diadectomorpha"}},
+        {"canonicalName": {"citationStart": null, "uid": "d388f8fc-a05c-49d0-8f1c-6b2c0c4515c4",
+        "string": "Baphetidae + Tetrapoda"}}, {"canonicalName": {"citationStart":
+        10, "uid": "4140e40a-7883-4c7a-84de-07ac0ccd8cb2", "string": "Tetrapoda von
+        Huene 1912"}}, {"canonicalName": {"citationStart": null, "uid": "15130eb3-8786-4e64-9b53-9d90b4e2eac7",
+        "string": "Synapsida"}}, {"canonicalName": {"citationStart": 11, "uid": "75856663-6fbc-4f4f-b731-36fd3ec84ee5",
+        "string": "Therapsida Broom 1905"}}, {"canonicalName": {"citationStart": null,
+        "uid": "9948c80e-38b4-4c0f-ae7a-3e2ec8f5877f", "string": "Hynerpeton + Tetrapoda"}},
+        {"canonicalName": {"citationStart": null, "uid": "d1e749b8-9399-4b47-8fbd-6559885fad2a",
+        "string": "Tetrapoda + Tulerpeton"}}, {"canonicalName": {"citationStart":
+        null, "uid": "140465fb-09e7-41c8-bb7b-5bea01fe4eeb", "string": "Rhipidistia"}},
+        {"canonicalName": {"citationStart": 16, "uid": "95dd5ce7-1595-414f-ac66-5cb3ce9e4af2",
+        "string": "Elpistostegalia Camp & Allison 1961"}}, {"canonicalName": {"citationStart":
+        null, "uid": "06b2313e-6963-48bd-9907-04114da0e772", "string": "Eutherapsida"}},
+        {"canonicalName": {"citationStart": null, "uid": "936221a3-9926-4fbc-aacf-9616b0773563",
+        "string": "Biarmosuchia"}}, {"canonicalName": {"citationStart": 14, "uid":
+        "a4685088-5088-4c4b-a2a6-b698221c917e", "string": "Gnathostomata Gegenbaur
+        1874"}}, {"canonicalName": {"citationStart": null, "uid": "87858fc5-ddc5-4ebc-b70f-eb93f0f2e61e",
+        "string": "Trechnotheria"}}, {"canonicalName": {"citationStart": null, "uid":
+        "588f19ad-4bf1-4acf-a240-ae807bf15948", "string": "pan-Animalia"}}, {"canonicalName":
+        {"citationStart": null, "uid": "8d3256e8-cfad-4b29-ae45-06dcd744cfa8", "string":
+        "Entelognathus + Gnathostomata"}}, {"canonicalName": {"citationStart": null,
+        "uid": "878ce1b7-d554-4888-9449-1968c62ef77a", "string": "Eucynodontia"}},
+        {"canonicalName": {"citationStart": null, "uid": "d6d6c0a8-0bac-4b41-a9db-818a2b6574fe",
+        "string": "Probainognathia"}}, {"canonicalName": {"citationStart": null, "uid":
+        "2479c8a2-9061-4006-bee6-199c7fcc1cbe", "string": "Epicynodontia"}}, {"canonicalName":
+        {"citationStart": null, "uid": "f9fcc47f-6a08-4b95-b1b3-7bb8ebd8dc19", "string":
+        "Eutheriodontia"}}, {"canonicalName": {"citationStart": 11, "uid": "36c04f2f-b7d2-4891-a4a9-138d79592bf2",
+        "string": "Cynodontia Owen 1861"}}, {"canonicalName": {"citationStart": 9,
+        "uid": "b68b5c34-32f2-4bf2-9309-4915d903054c", "string": "Eutheria Gill, 1872"}},
+        {"canonicalName": {"citationStart": null, "uid": "d8da86f1-87bb-4505-8419-a707ce2408d9",
+        "string": "Chiniquodontoidea"}}, {"canonicalName": {"citationStart": null,
+        "uid": "15bd802c-d0c4-4ab1-85d3-097b2b3f4ec6", "string": "Prozostrodontia"}},
+        {"canonicalName": {"citationStart": null, "uid": "ea948f48-987a-4a03-9793-8aded925d6d0",
+        "string": "Mammaliamorpha"}}, {"canonicalName": {"citationStart": null, "uid":
+        "ae9dee79-ae5d-4ec4-8638-b16b84403f67", "string": "Mammaliaformes"}}, {"canonicalName":
+        {"citationStart": 9, "uid": "b44e3b2e-3f21-4583-a760-59ec9d9f04d7", "string":
+        "Mammalia Linnaeus, 1758"}}, {"canonicalName": {"citationStart": null, "uid":
+        "287004c6-ffc5-4b17-9033-5b1654df7e51", "string": "Scrotifera"}}, {"canonicalName":
+        {"citationStart": 15, "uid": "504fb209-adea-4e29-a6c5-7bad75241559", "string":
+        "Pan-Euungulata O''Leary & al. 2013"}}, {"canonicalName": {"citationStart":
+        13, "uid": "3c8fb9e0-e7c5-4720-8dbb-0f51201f37e7", "string": "Theriiformes
+        Rowe 1988"}}, {"canonicalName": {"citationStart": null, "uid": "b1741af3-8815-4bae-8113-3a95835d05d8",
+        "string": "Tribosphenida"}}, {"canonicalName": {"citationStart": null, "uid":
+        "7b85b5c6-12d8-4e42-84f9-378c53bda7e2", "string": "Amniota"}}, {"canonicalName":
+        {"citationStart": null, "uid": "55ba8e02-dcfb-4f78-a951-f6becd49586e", "string":
+        "pan-Sarcopterygii"}}, {"canonicalName": {"citationStart": null, "uid": "d668dd7f-478a-4401-9d46-5f657c2735aa",
+        "string": "Sarcopterygii"}}, {"canonicalName": {"citationStart": null, "uid":
+        "fc8ce331-a658-40da-a0dd-f86f311a3fbd", "string": "Gnathostomata + Pteraspidomorphi"}},
+        {"canonicalName": {"citationStart": null, "uid": "9885cf41-243a-45f9-8b26-62b8dc9a2ca8",
+        "string": "Gnathostomata + Osteostraci"}}, {"canonicalName": {"citationStart":
+        null, "uid": "e0451e6b-a82f-478e-b631-1b836d88b293", "string": "pan-Rhipidistia"}},
+        {"canonicalName": {"citationStart": null, "uid": "bfdd3899-f543-4c1e-a0d0-06b15f86e6f1",
+        "string": "Rickettsiidae"}}, {"canonicalName": {"citationStart": null, "uid":
+        "1caff21b-d975-419a-8464-675a2e0f03ca", "string": "Rickettsiinae"}}, {"canonicalName":
+        {"citationStart": null, "uid": "f67f9631-d607-4d2f-a12d-ffee0059e2e0", "string":
+        "protomitochondria"}}, {"canonicalName": {"citationStart": 13, "uid": "c3b1fe3b-df05-43cd-833f-3e417eed14a1",
+        "string": "Macrauchenia Owen (1838)"}}, {"canonicalName": {"citationStart":
+        null, "uid": "25143fb9-80b6-4730-af8d-fb49174080eb", "string": "Macrauchenioidea"}},
+        {"canonicalName": {"citationStart": null, "uid": "9a2cbd7b-eeac-4fdb-8610-a07099ce1153",
+        "string": "pan-Gnathostomata"}}, {"canonicalName": {"citationStart": null,
+        "uid": "a3c5afd0-01f3-4092-b8ad-cb08f8866780", "string": "Euungulata"}}, {"canonicalName":
+        {"citationStart": 11, "uid": "4d2b57f3-b17d-4e0d-9866-0d9d31c4eb32", "string":
+        "Litopterna Ameghino 1889"}}, {"canonicalName": {"citationStart": null, "uid":
+        "ab3be807-e37a-4b80-98c6-66f0ea793375", "string": "Mesaxonia"}}, {"canonicalName":
+        {"citationStart": 16, "uid": "3b9e9e66-ad3d-46f6-837a-aee4ef896669", "string":
+        "Macraucheniidae Gill 1872"}}, {"canonicalName": {"citationStart": null, "uid":
+        "3c9667a6-9b96-417f-a673-5a70e8cbb9b3", "string": "pan-Vertebrata"}}, {"canonicalName":
+        {"citationStart": 14, "uid": "60a2d7b4-8554-4f27-a347-3c4577aaa9de", "string":
+        "Deuterostomia Grobben 1908"}}, {"canonicalName": {"citationStart": null,
+        "uid": "b4109894-3c43-4eb0-bc92-c434abab59bc", "string": "Pikaia + Vertebrata"}},
+        {"canonicalName": {"citationStart": null, "uid": "f73f08ef-bcd7-45c2-a6ce-547c5a22fd2b",
+        "string": "Olfactores"}}, {"canonicalName": {"citationStart": 15, "uid": "ad29999f-f90b-4dcb-a30d-6356b1a3dba3",
+        "string": "Actinobacteria Cavalier-Smith 2002"}}, {"canonicalName": {"citationStart":
+        10, "uid": "68226175-f88d-4ea8-8228-3204c49bfda0", "string": "Nephrozoa Jondelius
+        & al. 2002"}}, {"canonicalName": {"citationStart": null, "uid": "b9e2e84c-3327-40ab-8342-b39221784f32",
+        "string": "Placodermi"}}, {"canonicalName": {"citationStart": 0, "uid": "cff7dc18-68fa-4beb-b22a-ba29a38f872a",
+        "string": "Gnathostomata \u2190 Entelognathus"}}, {"canonicalName": {"citationStart":
+        null, "uid": "169938d8-bdd8-4c78-83a1-66a161a0152e", "string": "Arthrodira
+        + Gnathostomata"}}, {"canonicalName": {"citationStart": null, "uid": "07223bb8-ba0a-41db-bba3-525059a6da66",
+        "string": "Gnathostomata + Petalichthyida"}}, {"canonicalName": {"citationStart":
+        null, "uid": "69f2c19b-bc52-4102-be65-af49d5abe8fc", "string": "Obazoa"}},
+        {"canonicalName": {"citationStart": null, "uid": "e1c2005f-4ec5-4380-a8c1-833885dfa16d",
+        "string": "Amporphea"}}, {"canonicalName": {"citationStart": null, "uid":
+        "2eb85581-9046-4dde-9193-7027799cb90e", "string": "Laurasiatheria"}}, {"canonicalName":
+        {"citationStart": null, "uid": "7ca07ee2-03be-43b3-affa-9e011090da6d", "string":
+        "Zatheria"}}, {"canonicalName": {"citationStart": null, "uid": "d21685a7-c536-49ea-ab7d-a2bc25fff4d5",
+        "string": "Holotheria"}}, {"canonicalName": {"citationStart": null, "uid":
+        "cf57d69e-45d1-4350-aa29-1c8f9fab3c65", "string": "Cladotheria"}}, {"canonicalName":
+        {"citationStart": null, "uid": "4406858f-5772-4f99-8de8-08f50d1311ba", "string":
+        "Meridiungulata"}}, {"canonicalName": {"citationStart": 16, "uid": "6a67a2c9-ed10-46ff-bd8b-9945a74b55f3",
+        "string": "Macraucheniinae Gill 1872"}}, {"canonicalName": {"citationStart":
+        null, "uid": "c4900824-db8e-4573-93dc-3a8b40063829", "string": "Boreotheria"}},
+        {"canonicalName": {"citationStart": null, "uid": "1dd0cec3-220b-4379-8c4b-887acef2405d",
+        "string": "Placentalia"}}], "uBioCommands": false, "inclusions": [[40, 8],
+        [58, 59], [25, 18], [82, 100], [21, 71], [53, 58], [68, 69], [33, 14], [51,
+        90], [64, 79], [28, 7], [43, 38], [73, 74], [80, 77], [0, 50], [74, 75], [34,
+        35], [55, 56], [12, 13], [33, 32], [31, 22], [52, 53], [3, 68], [98, 96],
+        [65, 97], [88, 84], [20, 34], [83, 85], [10, 30], [91, 51], [31, 87], [90,
+        48], [4, 78], [5, 86], [1, 88], [70, 21], [19, 1], [54, 52], [26, 0], [66,
+        6], [30, 94], [6, 57], [48, 3], [39, 16], [75, 10], [44, 36], [99, 80], [100,
+        76], [79, 81], [59, 60], [62, 65], [93, 2], [37, 67], [27, 33], [71, 89],
+        [47, 15], [17, 41], [18, 45], [69, 72], [85, 4], [77, 82], [87, 20], [9, 26],
+        [97, 49], [56, 54], [67, 40], [42, 43], [49, 98], [29, 25], [60, 61], [38,
+        39], [94, 93], [50, 28], [96, 66], [15, 55], [7, 19], [102, 101], [78, 70],
+        [86, 83], [57, 102], [22, 20], [46, 47], [11, 27], [41, 46], [76, 23], [61,
+        62], [36, 29], [24, 42], [63, 64], [72, 44], [35, 73], [13, 10], [45, 24],
+        [14, 12], [32, 31], [92, 91], [101, 95], [2, 9], [84, 5], [16, 37], [8, 17],
+        [95, 63], [89, 92], [81, 99]]}, "success": true}'
+  recorded_at: 2018-11-09 22:19:49 GMT
+  recorded_with: vcr/0.2.0, webmockr/0.2.9

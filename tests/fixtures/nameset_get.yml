@@ -1,0 +1,63 @@
+http_interactions:
+- request:
+    method: get
+    uri: http://phylopic.org/api/a/name/set/8d9a9ea3-95cc-414d-1000-4b683ce04be2
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      User-Agent: libcurl/7.54.0 r-curl/3.2 crul/0.6.0
+      Accept-Encoding: gzip, deflate
+      Accept: application/json, text/xml, application/xml, */*
+  response:
+    status:
+      status_code: '200'
+      message: OK
+      explanation: Request fulfilled, document follows
+    headers:
+      status: HTTP/1.1 200 OK
+      date: Fri, 09 Nov 2018 22:23:54 GMT
+      server: Apache/2.2.21 (CentOS)
+      vary: Cookie
+      content-length: '76'
+      content-type: application/json; charset=utf-8
+      access-control-allow-origin: '*'
+      connection: close
+    body:
+      encoding: UTF-8
+      string: '{"result": {"uid": "8d9a9ea3-95cc-414d-1000-4b683ce04be2"}, "success":
+        true}'
+  recorded_at: 2018-11-09 22:16:35 GMT
+  recorded_with: vcr/0.2.0, webmockr/0.2.9
+- request:
+    method: get
+    uri: http://phylopic.org/api/a/name/set/8d9a9ea3-95cc-414d-1000-4b683ce04be2?options=names%20string
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      User-Agent: libcurl/7.54.0 r-curl/3.2 crul/0.6.0
+      Accept-Encoding: gzip, deflate
+      Accept: application/json, text/xml, application/xml, */*
+  response:
+    status:
+      status_code: '200'
+      message: OK
+      explanation: Request fulfilled, document follows
+    headers:
+      status: HTTP/1.1 200 OK
+      date: Fri, 09 Nov 2018 22:23:55 GMT
+      server: Apache/2.2.21 (CentOS)
+      vary: Cookie
+      content-length: '274'
+      content-type: application/json; charset=utf-8
+      access-control-allow-origin: '*'
+      connection: close
+    body:
+      encoding: UTF-8
+      string: '{"result": {"uid": "8d9a9ea3-95cc-414d-1000-4b683ce04be2", "names":
+        [{"uid": "105d17a4-9706-4fd5-85d7-becffaf6250a", "string": "Homo sapiens sapiens
+        Linnaeus 1758"}, {"uid": "9dc78907-02ca-4e98-95d7-f5a7c6166ee8", "string":
+        "Canis familiaris familiaris"}]}, "success": true}'
+  recorded_at: 2018-11-09 22:16:35 GMT
+  recorded_with: vcr/0.2.0, webmockr/0.2.9
