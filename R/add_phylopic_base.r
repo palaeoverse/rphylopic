@@ -54,6 +54,6 @@ add_phylopic_base <- function(img, x = NULL, y = NULL, ysize = NULL,
 plot_phylopic_base <- function(img, x = NULL, y = NULL, ysize = NULL, 
                               alpha = 0.2, color = NULL) {
 
-  plot.new()
+  graphics::plot.new()
   add_phylopic_base(img, x, y, ysize, alpha, color)
 }
