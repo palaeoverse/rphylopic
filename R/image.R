@@ -106,7 +106,7 @@ image_count <- function(...) {
 
 #' @export
 #' @rdname image
-image_data <- function(input, size) {
+image_data <- function(input, size, ...) {
   size <- match.arg(as.character(size), 
     c("64", "128", "256", "512", "1024", "thumb", "icon"))
   if (inherits(input, "image_info")) {
@@ -120,7 +120,7 @@ image_data <- function(input, size) {
     lapply(urls, get_png)
   } else {
     lapply(input, function(x) {
-      get_png(paste0("assets/images/submissions/", x, ".", size, ".png"))
+      get_png(paste0("assets/images/submissions/", x, ".", size, ".png"), ...)
     })
   }
 }

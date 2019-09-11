@@ -4,7 +4,7 @@ Description: Work with 'Phylopic' web service (<http://phylopic.org/api/>)
     to get 'silhouette' images of 'organisms', search names, and more.
     Includes functions for adding 'silhouettes' to both base plots and
     ggplot2 plots.
-Version: 0.2.0.9100
+Version: 0.2.0.9310
 Authors@R: c(
     person("Scott", "Chamberlain", role = c("aut", "cre"), 
         email = "myrmecocystus@gmail.com",

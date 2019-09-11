@@ -18,7 +18,7 @@ image_timerange(timestamp = "modified", from = NULL, to = NULL,
 
 image_count(...)
 
-image_data(input, size)
+image_data(input, size, ...)
 }
 \arguments{
 \item{uuid}{One or more name UUIDs.}
