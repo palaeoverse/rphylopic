@@ -1,0 +1,11 @@
+---
+title: "Cheat sheet"
+author: "Gabriela Palomo"
+date: "9/16/2019"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{rphylopic cheatsheet}
+  %\VignetteEncoding{UTF-8}
+---
+
