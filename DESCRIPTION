@@ -29,4 +29,6 @@ Imports:
 Suggests:
     testthat,
     vcr (>= 0.2.0)
+    knitr
 RoxygenNote: 6.1.1
+VignetteBuilder: knitr
