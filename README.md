@@ -1,7 +1,4 @@
-rphylopic
-=======
-
-
+# rphylopic <img src="man/figures/logo.png" align="right" alt="" width="120">
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![Build Status](https://api.travis-ci.org/sckott/rphylopic.png)](https://travis-ci.org/sckott/rphylopic)
@@ -210,7 +207,7 @@ Count images in Phylopic database
 
 ```r
 image_count()
-#> [1] 3126
+#> [1] 3564
 ```
 
 Lists images in chronological order, from most to least recently modified
@@ -220,12 +217,12 @@ Lists images in chronological order, from most to least recently modified
 image_list(start=1, length=2)
 #> [[1]]
 #> [[1]]$uid
-#> [1] "dd8e04f8-0134-4c32-9768-1fdb702eaa8d"
+#> [1] "78dbe564-bcba-4dc3-8bdc-fb95fc288580"
 #> 
 #> 
 #> [[2]]
 #> [[2]]$uid
-#> [1] "9509aeb5-dbae-4902-9c56-6fdd01b321f2"
+#> [1] "cbfc59ab-55c1-4296-9d9f-c8791894fbbb"
 ```
 
 Lists images within a given time range, from most to least recent
