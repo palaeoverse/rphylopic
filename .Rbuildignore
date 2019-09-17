@@ -11,3 +11,4 @@ inst/stuff/
 ^CODE_OF_CONDUCT\.md$
 ^cran-comments\.md$
 .github
+vignettes/cheatsheet.html
