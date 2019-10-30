@@ -10,16 +10,16 @@ knitr::opts_chunk$set(
 
 # rphylopic <img src="man/figures/logo.png" align="right" alt="" width="120">
 
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Build Status](https://api.travis-ci.org/sckott/rphylopic.png)](https://travis-ci.org/sckott/rphylopic)
 [![codecov.io](https://codecov.io/github/sckott/rphylopic/coverage.svg?branch=master)](https://codecov.io/github/sckott/rphylopic?branch=master)
-[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/rphylopic)](https://github.com/metacran/cranlogs.app)
-[![cran version](http://www.r-pkg.org/badges/version/rphylopic)](https://cran.r-project.org/package=rphylopic)
+[![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/rphylopic)](https://github.com/metacran/cranlogs.app)
+[![cran version](https://www.r-pkg.org/badges/version/rphylopic)](https://cran.r-project.org/package=rphylopic)
 
 
 ![](http://phylopic.org/assets/images/submissions/bedd622a-4de2-4067-8c70-4aa44326d229.128.png)
 
-The idea here is to create modular bits and pieces to allow you to add silhouettes to not only ggplot2 plots, but base plots as well. Some people prefer base plots while others prefer ggplot2 plots (me!), so it would be nice to have both options.
+The idea here is to create modular bits and pieces to allow you to add silhouettes to not only ggplot2 plots, but base plots as well.
 
 + Phylopic website: <http://phylopic.org/>
 + Phylopic development documentation: <http://phylopic.org/api/>
@@ -205,5 +205,7 @@ leaflet(data = quakes[1:4,]) %>% addTiles() %>%
 * Please [report any issues or bugs](https://github.com/sckott/rphylopic/issues).
 * License: MIT
 * Get citation information for `rphylopic` in R doing `citation(package = 'rphylopic')`
-* Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md).
+* Please note that this project is released with a [Contributor Code of Conduct][coc].
 By participating in this project you agree to abide by its terms.
+
+[coc]: https://github.com/sckott/rphylopic/blob/master/CODE_OF_CONDUCT.md
