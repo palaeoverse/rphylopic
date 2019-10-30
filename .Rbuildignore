@@ -12,3 +12,4 @@ inst/stuff/
 ^cran-comments\.md$
 .github
 vignettes/cheatsheet.html
+Makefile
