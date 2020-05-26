@@ -31,7 +31,7 @@ taxonomic names.
 }
 \section{\code{options} parameter}{
 
-Same as those for \code{name_*()} functions
+Same as those for \verb{name_*()} functions
 }
 
 \examples{

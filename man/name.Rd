@@ -13,15 +13,28 @@
 \usage{
 name_get(uuid, options = NULL, ...)
 
-name_images(uuid, subtaxa = NULL, supertaxa = NULL, other = FALSE,
-  options = NULL, ...)
+name_images(
+  uuid,
+  subtaxa = NULL,
+  supertaxa = NULL,
+  other = FALSE,
+  options = NULL,
+  ...
+)
 
 name_minsuptaxa(uuid, options = NULL, ...)
 
 name_search(text, options = NULL, as = "table", ...)
 
-name_taxonomy(uuid, subtaxa = NULL, supertaxa = NULL,
-  useUBio = FALSE, options = NULL, as = "table", ...)
+name_taxonomy(
+  uuid,
+  subtaxa = NULL,
+  supertaxa = NULL,
+  useUBio = FALSE,
+  options = NULL,
+  as = "table",
+  ...
+)
 
 name_taxonomy_many(uuid, options = NULL, as = "table", ...)
 

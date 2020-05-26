@@ -22,7 +22,7 @@ Perform actions with uBio data.
 There is only one function for working with uBio data right now,
 \code{ubio_get()}
 
-Options for the \code{options} parameter: Same as those for \code{name_*()} functions.
+Options for the \code{options} parameter: Same as those for \verb{name_*()} functions.
 }
 \examples{
 \dontrun{

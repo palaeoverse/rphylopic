@@ -13,8 +13,13 @@ image_get(uuid, options = NULL, ...)
 
 image_list(start = 1, length = 10, options = NULL, ...)
 
-image_timerange(timestamp = "modified", from = NULL, to = NULL,
-  options = NULL, ...)
+image_timerange(
+  timestamp = "modified",
+  from = NULL,
+  to = NULL,
+  options = NULL,
+  ...
+)
 
 image_count(...)
 

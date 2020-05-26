@@ -4,8 +4,7 @@
 \alias{add_phylopic}
 \title{Input an image and create a ggplot2 layer to add to an existing plot}
 \usage{
-add_phylopic(img, alpha = 0.2, x = NULL, y = NULL, ysize = NULL,
-  color = NULL)
+add_phylopic(img, alpha = 0.2, x = NULL, y = NULL, ysize = NULL, color = NULL)
 }
 \arguments{
 \item{img}{A png object, e.g, from using \code{\link[=image_data]{image_data()}}}

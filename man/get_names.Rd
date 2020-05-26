@@ -4,8 +4,14 @@
 \alias{get_names}
 \title{Get names for uuids.}
 \usage{
-get_names(uuid, supertaxa = NULL, subtaxa = NULL, options = NULL,
-  stripauthority = TRUE, ...)
+get_names(
+  uuid,
+  supertaxa = NULL,
+  subtaxa = NULL,
+  options = NULL,
+  stripauthority = TRUE,
+  ...
+)
 }
 \arguments{
 \item{uuid}{UUID to get names for}

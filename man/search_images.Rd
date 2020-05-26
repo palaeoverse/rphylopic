@@ -4,8 +4,15 @@
 \alias{search_images}
 \title{Search for images for a taxon (via its uuid)}
 \usage{
-search_images(uuid, subtaxa = NULL, supertaxa = NULL, other = NULL,
-  options = NULL, cleanoutput = TRUE, ...)
+search_images(
+  uuid,
+  subtaxa = NULL,
+  supertaxa = NULL,
+  other = NULL,
+  options = NULL,
+  cleanoutput = TRUE,
+  ...
+)
 }
 \arguments{
 \item{uuid}{(character) one or more UUIDs of taxonomic names}
