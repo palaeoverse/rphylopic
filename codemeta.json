@@ -1,5 +1,8 @@
 {
-  "@context": ["https://doi.org/10.5063/schema/codemeta-2.0", "http://schema.org"],
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
   "@type": "SoftwareSourceCode",
   "identifier": "rphylopic",
   "description": "Work with 'Phylopic' web service (<http://phylopic.org/api/>) \n    to get 'silhouette' images of 'organisms', search names, and more.\n    Includes functions for adding 'silhouettes' to both base plots and\n    ggplot2 plots.",
@@ -7,7 +10,7 @@
   "codeRepository": "https://github.com/sckott/rphylopic",
   "issueTracker": "https://github.com/sckott/rphylopic/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.2.9.91",
+  "version": "0.3.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -86,6 +89,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
     }
   ],
   "softwareRequirements": [
@@ -163,8 +178,14 @@
   ],
   "releaseNotes": "https://github.com/sckott/rphylopic/blob/master/NEWS.md",
   "readme": "https://github.com/sckott/rphylopic/blob/master/README.md",
-  "fileSize": "718.108KB",
+  "fileSize": "718.307KB",
   "contIntegration": "https://codecov.io/github/sckott/rphylopic?branch=master",
   "developmentStatus": "https://www.repostatus.org/#active",
-  "keywords": ["phylopic", "rstats", "silhouette", "ggplot2", "base-r"]
+  "keywords": [
+    "phylopic",
+    "rstats",
+    "silhouette",
+    "ggplot2",
+    "base-r"
+  ]
 }

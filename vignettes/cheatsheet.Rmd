@@ -1,10 +1,10 @@
 ---
 title: "Cheat sheet"
 author: "Gabriela Palomo"
-date: "9/16/2019"
+date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteEngine{knitr::knitr}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{rphylopic cheatsheet}
   %\VignetteEncoding{UTF-8}
 ---
