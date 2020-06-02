@@ -37,7 +37,7 @@
 #' plot(posx, posy, type="n", main="A cat herd, on top of a cat",
 #'      xlim=c(0,1), ylim=c(0,1))
 #' # get a higher-resolution cat
-#' cat_hires <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 128)[[1]]
+#' cat_hires <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 512)[[1]]
 #' # plot background cat
 #' add_phylopic_base(cat_hires, 0.5, 0.5, 1, alpha=0.2)
 #' # overlay smaller cats
