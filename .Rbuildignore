@@ -13,3 +13,4 @@ inst/stuff/
 .github
 vignettes/cheatsheet.html
 Makefile
+^\.github/workflows$
