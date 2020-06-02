@@ -3,7 +3,7 @@
 # rphylopic <img src="man/figures/logo.png" align="right" alt="" width="120">
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Build Status](https://api.travis-ci.org/sckott/rphylopic.png)](https://travis-ci.org/sckott/rphylopic)
+[![R-CMD-check](https://github.com/sckott/rphylopic/workflows/R-CMD-check/badge.svg)](https://github.com/sckott/rphylopic/actions/)
 [![codecov.io](https://codecov.io/github/sckott/rphylopic/coverage.svg?branch=master)](https://codecov.io/github/sckott/rphylopic?branch=master)
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/rphylopic)](https://github.com/metacran/cranlogs.app)
 [![cran version](https://www.r-pkg.org/badges/version/rphylopic)](https://cran.r-project.org/package=rphylopic)
@@ -209,7 +209,7 @@ Count images in Phylopic database
 
 ```r
 image_count()
-#> [1] 3620
+#> [1] 4101
 ```
 
 Lists images in chronological order, from most to least recently modified
@@ -219,12 +219,12 @@ Lists images in chronological order, from most to least recently modified
 image_list(start=1, length=2)
 #> [[1]]
 #> [[1]]$uid
-#> [1] "b769d118-6fe8-4e52-b2d0-757f4b953f5f"
+#> [1] "d3a78afb-1b9e-45e0-b6f4-144d79f399f0"
 #> 
 #> 
 #> [[2]]
 #> [[2]]$uid
-#> [1] "3fc08235-3ef9-434e-af1d-89ab04cdedf0"
+#> [1] "c7fbe213-1eac-4f81-80d0-674c3bd2d6b0"
 ```
 
 Lists images within a given time range, from most to least recent
@@ -267,7 +267,7 @@ qplot(x = Sepal.Length, y = Sepal.Width, data = iris, geom = "point") +
   add_phylopic(img)
 ```
 
-![plot of chunk unnamed-chunk-17](inst/assets/img/unnamed-chunk-17-1.png)
+![plot of chunk unnamed-chunk-17](man/figures/unnamed-chunk-17-1.png)
 
 ## Plot images as points in a plot
 
@@ -286,7 +286,7 @@ for (i in 1:nrow(mtcars)) {
 p
 ```
 
-![plot of chunk unnamed-chunk-18](inst/assets/img/unnamed-chunk-18-1.png)
+![plot of chunk unnamed-chunk-18](man/figures/unnamed-chunk-18-1.png)
 
 and the same plot in base R graphics:
 
@@ -302,7 +302,7 @@ for (i in 1:50) {
 }
 ```
 
-![plot of chunk unnamed-chunk-19](inst/assets/img/unnamed-chunk-19-1.png)
+![plot of chunk unnamed-chunk-19](man/figures/unnamed-chunk-19-1.png)
 
 ## Save png to disk
 
@@ -335,7 +335,7 @@ leaflet(data = quakes[1:4,]) %>% addTiles() %>%
   addMarkers(~long, ~lat, icon = sil_icon)
 ```
 
-![leaflet-plot](inst/assets/img/leaflet.png)
+![leaflet-plot](man/figures/leaflet.png)
 
 
 ## Meta
