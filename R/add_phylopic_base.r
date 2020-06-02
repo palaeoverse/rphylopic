@@ -39,14 +39,18 @@ add_phylopic_base <- function(img, x = NULL, y = NULL, ysize = NULL,
                               alpha = 0.2, color = NULL) {
   # color and alpha the animal
   img <- recolor_phylopic(img, alpha, color)
-  
-  #number of x-y pixels for the logo (aspect ratio)
+
+  # work out the dimensions of the image
   dims <- dim(img)[1:2]
   AR <- dims[1] / dims[2]
-  graphics::par(usr = c(0, 1, 0, 1))
-  graphics::rasterImage(img, x - (ysize/2), 
-    y - (AR*ysize/2), x + (ysize/2), y + (AR*ysize/2), 
-    interpolate = TRUE)
+  xsize <- AR * ysize
+
+  graphics::rasterImage(img,
+                        x - xsize/2,
+                        y - ysize/2,
+                        x + xsize/2,
+                        y + ysize/2,
+                        interpolate = TRUE)
 }
 
 #' @export
