@@ -16,3 +16,12 @@
 #' @author David Miller \email{dave@@ninepointeightone.net}
 #' @docType package
 NULL
+
+#' This function is defunct.
+#' @export
+#' @rdname plot_phylopic_base-defunct
+#' @keywords internal
+#' @note see [add_phylopic_base()]
+plot_phylopic_base <- function(...) {
+  .Defunct(msg = "`plot_phylopic_base` is defunct; use `?add_phylopic_base`")
+}

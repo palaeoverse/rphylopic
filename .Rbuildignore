@@ -14,3 +14,4 @@ inst/stuff/
 vignettes/cheatsheet.html
 Makefile
 ^\.github/workflows$
+^codemeta\.json$
