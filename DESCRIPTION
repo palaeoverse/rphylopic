@@ -18,7 +18,7 @@ BugReports: https://github.com/sckott/rphylopic/issues
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 Language: en-US
-VignetteBuilder: knitr
+VignetteBuilder: knitr, R.rsp
 Imports:
     ggplot2,
     crul (>= 0.5.2),
@@ -31,5 +31,6 @@ Suggests:
     testthat,
     vcr (>= 0.2.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    R.rsp
 RoxygenNote: 7.1.0
