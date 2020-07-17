@@ -1,6 +1,7 @@
 context("get_names")
 
 test_that("get_names works", {
+  skip_on_cran()
   vcr::use_cassette("get_names", {
     
     # just running one example as these take a long time to run
@@ -28,6 +29,7 @@ test_that("get_names works", {
 })
 
 test_that("get_names fails well", {
+  skip_on_cran()
   expect_error(get_names(), 
     "argument \"uuid\" is missing")
 })

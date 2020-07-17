@@ -1,6 +1,7 @@
 context("list_images")
 
 test_that("list_images works", {
+  skip_on_cran()
   vcr::use_cassette("list_images", {
 
     aa <- list_images(start=1, length=10)
@@ -19,6 +20,7 @@ test_that("list_images works", {
 })
 
 test_that("list_images fails well", {
+  skip_on_cran()
   expect_error(list_images(), 
     "argument \"start\" is missing")
   expect_error(list_images(4), 

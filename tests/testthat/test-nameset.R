@@ -1,5 +1,6 @@
 context("nameset_get")
 test_that("nameset_get works", {
+  skip_on_cran()
   vcr::use_cassette("nameset_get", {  
     id <- "8d9a9ea3-95cc-414d-1000-4b683ce04be2"
     aa <- nameset_get(uuid = id)
@@ -17,12 +18,14 @@ test_that("nameset_get works", {
 })
 
 test_that("nameset_get fails well", {
+  skip_on_cran()
   expect_error(nameset_get(), 
     "argument \"uuid\" is missing")
 })
 
 context("nameset_taxonomy")
 test_that("nameset_taxonomy works", {
+  skip_on_cran()
   vcr::use_cassette("nameset_taxonomy", {
     cc <- nameset_taxonomy(uuid = "8d9a9ea3-95cc-414d-1000-4b683ce04be2", 
       options = "string")
@@ -34,6 +37,7 @@ test_that("nameset_taxonomy works", {
 })
 
 test_that("nameset_taxonomy fails well", {
+  skip_on_cran()
   expect_error(nameset_taxonomy(), 
     "argument \"uuid\" is missing")
 })

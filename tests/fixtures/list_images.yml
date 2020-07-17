@@ -6,7 +6,7 @@ http_interactions:
       encoding: ''
       string: ''
     headers:
-      User-Agent: libcurl/7.54.0 r-curl/3.2 crul/0.6.0
+      User-Agent: libcurl/7.64.1 r-curl/4.3 crul/0.9.0
       Accept-Encoding: gzip, deflate
       Accept: application/json, text/xml, application/xml, */*
   response:
@@ -16,23 +16,27 @@ http_interactions:
       explanation: Request fulfilled, document follows
     headers:
       status: HTTP/1.1 200 OK
-      date: Fri, 09 Nov 2018 22:25:45 GMT
+      date: Wed, 03 Jun 2020 19:00:08 GMT
       server: Apache/2.2.21 (CentOS)
       vary: Cookie
       content-length: '519'
+      warning: 299 phylopic.org "THIS VERSION OF THE PHYLOPIC API WILL BE REPLACED.
+        To read about the new PhyloPic API in development, see <https://github.com/keesey/phylopic-api-docs>.
+        To be an early tester, contact Mike Keesey <keesey+phylopic@gmail.com>."
       content-type: application/json; charset=utf-8
       access-control-allow-origin: '*'
       connection: close
     body:
       encoding: UTF-8
-      string: '{"result": [{"uid": "dd8e04f8-0134-4c32-9768-1fdb702eaa8d"}, {"uid":
-        "9509aeb5-dbae-4902-9c56-6fdd01b321f2"}, {"uid": "b0d54194-4105-4694-b670-b693df1640cf"},
-        {"uid": "a8b7e68a-6c32-4088-aac7-913849bc9e5c"}, {"uid": "b2b60a18-fd7d-49b2-a15d-54a62cdcac6b"},
-        {"uid": "ec11f62e-ed3e-49bb-bcff-4e47b281d378"}, {"uid": "e38c264a-8989-4e69-a6c1-7778b919980d"},
-        {"uid": "b3d81818-b362-462c-b559-e0fc7c7e9978"}, {"uid": "3e3a8307-26aa-4982-92d2-9d51c823ed44"},
-        {"uid": "839b9df7-c97f-444a-a611-95609e950960"}], "success": true}'
-  recorded_at: 2018-11-09 22:18:33 GMT
-  recorded_with: vcr/0.2.0, webmockr/0.2.9
+      file: no
+      string: '{"result": [{"uid": "d3a78afb-1b9e-45e0-b6f4-144d79f399f0"}, {"uid":
+        "c7fbe213-1eac-4f81-80d0-674c3bd2d6b0"}, {"uid": "88edcbd6-dd46-4e4a-ba1b-20a71f0cfdeb"},
+        {"uid": "415efeb0-020a-4776-9a19-77fc1ec2922f"}, {"uid": "d01de196-29cf-42d0-b52f-8ae433de8c30"},
+        {"uid": "349529e4-140e-4e8f-8d16-15bf8f68ddcc"}, {"uid": "21d61af7-a191-4561-9dff-d106ac4f53f7"},
+        {"uid": "a0753559-d626-4b3a-9af7-39c79409b8f4"}, {"uid": "aeeb30a8-afdc-4e7e-9bcc-574cb290a1f6"},
+        {"uid": "5f4c760e-f6f7-4b9b-9199-db12bcfbf212"}], "success": true}'
+  recorded_at: 2020-06-03 19:00:13 GMT
+  recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
     uri: http://phylopic.org/api/a/image/list/1/10?options=string%20taxa
@@ -40,7 +44,7 @@ http_interactions:
       encoding: ''
       string: ''
     headers:
-      User-Agent: libcurl/7.54.0 r-curl/3.2 crul/0.6.0
+      User-Agent: libcurl/7.64.1 r-curl/4.3 crul/0.9.0
       Accept-Encoding: gzip, deflate
       Accept: application/json, text/xml, application/xml, */*
   response:
@@ -50,67 +54,62 @@ http_interactions:
       explanation: Request fulfilled, document follows
     headers:
       status: HTTP/1.1 200 OK
-      date: Fri, 09 Nov 2018 22:25:50 GMT
+      date: Wed, 03 Jun 2020 19:00:09 GMT
       server: Apache/2.2.21 (CentOS)
       vary: Cookie
-      content-length: '4661'
+      content-length: '4031'
+      warning: 299 phylopic.org "THIS VERSION OF THE PHYLOPIC API WILL BE REPLACED.
+        To read about the new PhyloPic API in development, see <https://github.com/keesey/phylopic-api-docs>.
+        To be an early tester, contact Mike Keesey <keesey+phylopic@gmail.com>."
       content-type: application/json; charset=utf-8
       access-control-allow-origin: '*'
       connection: close
     body:
       encoding: UTF-8
-      string: '{"result": [{"taxa": [], "uid": "dd8e04f8-0134-4c32-9768-1fdb702eaa8d"},
-        {"taxa": [{"canonicalName": {"uid": "a536deee-f23f-473a-9c9b-c52797cf08b5",
-        "string": "Columbidae"}}, {"canonicalName": {"uid": "3b15f6fa-5187-4a0a-9979-c44aecce88a7",
-        "string": "Columba Linnaeus 1758"}}, {"canonicalName": {"uid": "ca1fcd63-5b13-4654-b437-5a0215f24e12",
-        "string": "Columbinae + Otidiphabinae"}}, {"canonicalName": {"uid": "c8224248-6ba2-4516-ae53-9f1d3e4c6302",
-        "string": "Columbini Illiger 1811"}}, {"canonicalName": {"uid": "350fd0dc-4e72-4687-bd90-65504fd2d101",
-        "string": "Columbinae Illiger 1811"}}, {"canonicalName": {"uid": "1db35110-8bdc-48f1-b6ae-f4e6f58521ef",
-        "string": "Columba palumbus Linnaeus, 1758"}}], "uid": "9509aeb5-dbae-4902-9c56-6fdd01b321f2"},
-        {"taxa": [{"canonicalName": {"uid": "d92acec6-9eac-4d7d-ac17-bbf6ef597f51",
-        "string": "Erithacus rubecula (Linnaeus, 1758)"}}, {"canonicalName": {"uid":
-        "6b25d85b-cd95-48ad-a41a-2d232e3b6712", "string": "Erithacus Cuvier 1800"}}],
-        "uid": "b0d54194-4105-4694-b670-b693df1640cf"}, {"taxa": [{"canonicalName":
-        {"uid": "7f18183f-47dd-44a7-a9d2-ed3960312810", "string": "Corvus corax Linnaeus,
-        1758"}}, {"canonicalName": {"uid": "68f75afe-0ab8-401c-87d2-09011107a79e",
-        "string": "ravens"}}], "uid": "a8b7e68a-6c32-4088-aac7-913849bc9e5c"}, {"taxa":
-        [{"canonicalName": {"uid": "4716d41d-6c35-4aa9-8077-e91090dd5f5c", "string":
-        "Aquila chrysaetos (Linnaeus, 1758)"}}, {"canonicalName": {"uid": "feda4664-fae8-4e68-9822-509335d3b1e4",
-        "string": "Aquila Agassiz 1846"}}, {"canonicalName": {"uid": "80a97904-cf10-4873-8ba0-9de03ee9350b",
-        "string": "Aquilinae Hemprich 1820"}}], "uid": "b2b60a18-fd7d-49b2-a15d-54a62cdcac6b"},
-        {"taxa": [{"canonicalName": {"uid": "16410c4c-c84f-4af6-9f66-1ca178a4528e",
-        "string": "Passerida"}}, {"canonicalName": {"uid": "e4cf36cd-10dd-4d30-8939-5b0551e00ad1",
-        "string": "Turdus merula Linnaeus 1758"}}, {"canonicalName": {"uid": "fc79dc4f-6f96-4126-b68c-6aa07aea0b2f",
-        "string": "Turdus Linnaeus 1758"}}, {"canonicalName": {"uid": "5523d4f3-862b-4bf5-89a5-89063f0e4d7f",
-        "string": "Turdidae"}}, {"canonicalName": {"uid": "13dfd1a0-b0d0-4e23-b70f-76dbdc54a858",
-        "string": "Turdinae"}}], "uid": "ec11f62e-ed3e-49bb-bcff-4e47b281d378"}, {"taxa":
-        [{"canonicalName": {"uid": "a43e9ba6-ee65-431e-be04-8272709c2916", "string":
-        "Troglodytinae"}}, {"canonicalName": {"uid": "e1973c2b-2d20-4730-b9a1-1d74acd5ef75",
-        "string": "Troglodytidae"}}, {"canonicalName": {"uid": "5093aaa3-7735-4929-aba3-0078e7bd34bc",
-        "string": "Troglodytes Vieillot 1809"}}, {"canonicalName": {"uid": "2c0a3215-2f29-48ca-af3d-5bbda6b1ba6a",
-        "string": "Troglodytes troglodytes (Linnaeus, 1758)"}}, {"canonicalName":
-        {"uid": "1c646b5b-d217-4679-8065-6099a24ad4fc", "string": "Sylvioidea"}}],
-        "uid": "e38c264a-8989-4e69-a6c1-7778b919980d"}, {"taxa": [{"canonicalName":
-        {"uid": "6b375b4c-3bff-4f6a-86cd-7e859de3e6ed", "string": "Eufalconimorphae"}},
-        {"canonicalName": {"uid": "ef42f295-636f-4ddb-b739-d50902756427", "string":
-        "Falconides"}}, {"canonicalName": {"uid": "a759b9b0-01e1-4506-8219-72a77d25b5b9",
-        "string": "Falconidae"}}, {"canonicalName": {"uid": "d126313f-a685-47c9-977c-ebd289059b78",
-        "string": "Falconida"}}, {"canonicalName": {"uid": "9ac1223f-718e-45ad-82fd-61548aded7db",
-        "string": "Polyborinae Lafresnaye 1839"}}, {"canonicalName": {"uid": "eb18ad69-1db3-48e1-98c3-30c2f2e61da5",
-        "string": "Falconiformes"}}, {"canonicalName": {"uid": "656639a3-a1fc-459c-a8c1-eb653060e7a0",
-        "string": "Australaves"}}, {"canonicalName": {"uid": "7b083c2a-1b5b-4656-a829-f5a187fd9802",
-        "string": "Telluraves"}}, {"canonicalName": {"uid": "21e6000f-83eb-4cf0-b2b0-6fe981242353",
-        "string": "Ibycter americanus Boddaert 1783"}}], "uid": "b3d81818-b362-462c-b559-e0fc7c7e9978"},
-        {"taxa": [{"canonicalName": {"uid": "cf766c40-bda0-4acd-ac70-a39a3804668e",
-        "string": "Amphipoda Latreille, 1816"}}, {"canonicalName": {"uid": "c498201d-7fc0-4a66-bf67-6dc95f9b451c",
-        "string": "Senticaudata"}}, {"canonicalName": {"uid": "1ead32c5-9402-4301-ae08-0a589ee10896",
-        "string": "Talitrida"}}, {"canonicalName": {"uid": "0c03643e-4cec-40c3-bf45-66075d13de0a",
-        "string": "Talitroidea Rafinesque 1815"}}, {"canonicalName": {"uid": "c772b7e9-58a4-4f47-a568-592c3c1703e0",
-        "string": "Hyalella azteca Saussure, 1858"}}, {"canonicalName": {"uid": "91bbd740-76f4-4631-b6e6-d4c4a21fcb51",
-        "string": "Hyalella S. I. Smith 1874"}}, {"canonicalName": {"uid": "3d2a0ebe-1930-4fb3-be3f-a15655470a79",
-        "string": "Dogielinotidae"}}], "uid": "3e3a8307-26aa-4982-92d2-9d51c823ed44"},
-        {"taxa": [{"canonicalName": {"uid": "b6308c27-47bb-4ca3-a9b8-1a3bd0c4785c",
-        "string": "Medusozoa"}}], "uid": "839b9df7-c97f-444a-a611-95609e950960"}],
-        "success": true}'
-  recorded_at: 2018-11-09 22:18:33 GMT
-  recorded_with: vcr/0.2.0, webmockr/0.2.9
+      file: no
+      string: '{"result": [{"taxa": [{"canonicalName": {"uid": "56ad68f9-42b1-48a9-b1f0-fbe1f41b7506",
+        "string": "Enhydra lutris (Linnaeus, 1758)"}}, {"canonicalName": {"uid": "f53b041f-667a-45ee-b43a-9691f403e75b",
+        "string": "Enhydra Fleming, 1822"}}], "uid": "d3a78afb-1b9e-45e0-b6f4-144d79f399f0"},
+        {"taxa": [{"canonicalName": {"uid": "b1cb4995-d8cf-41ef-b1c6-921fb7e1f90f",
+        "string": "Ursus arctos Linnaeus, 1758"}}, {"canonicalName": {"uid": "a03f4171-459e-4528-ad28-34d7373da030",
+        "string": "Ursus (Ursus) Linnaeus 1758"}}, {"canonicalName": {"uid": "cbe03b59-0dc3-4c5c-9481-f67de8994787",
+        "string": "Ursus (arctos) Linnaeus 1758"}}], "uid": "c7fbe213-1eac-4f81-80d0-674c3bd2d6b0"},
+        {"taxa": [{"canonicalName": {"uid": "438b5a6a-19a8-4def-acf8-485500d6df9c",
+        "string": "Cephalopoda Cuvier, 1797"}}, {"canonicalName": {"uid": "65358b78-5b06-45d6-88bf-7fc1ceda97cb",
+        "string": "Orthoceratoidea"}}, {"canonicalName": {"uid": "9d8aa5a2-fb3b-4dd8-8af8-b42c13c4db3f",
+        "string": "Endoceras Hall, 1847"}}, {"canonicalName": {"uid": "c23c6e9a-fb05-48a6-aad9-4646cda4e739",
+        "string": "Endocerida Teichert, 1933"}}, {"canonicalName": {"uid": "4dca1f83-5150-42b0-9d97-d9c148e1930d",
+        "string": "Endoceratidae"}}], "uid": "88edcbd6-dd46-4e4a-ba1b-20a71f0cfdeb"},
+        {"taxa": [{"canonicalName": {"uid": "d6663553-0cc6-4f6e-9fe8-676cab6ae1e9",
+        "string": "Cuscuta L."}}, {"canonicalName": {"uid": "e505de77-d690-497d-8128-9a79ce1fbfc7",
+        "string": "Cuscuta campestris"}}], "uid": "415efeb0-020a-4776-9a19-77fc1ec2922f"},
+        {"taxa": [{"canonicalName": {"uid": "6cc7c5f9-68ad-4d34-94a1-d3ee6193fb93",
+        "string": "Curculioninae Latreille 1802"}}, {"canonicalName": {"uid": "d6d57f1f-79b2-4704-9188-f1589325a649",
+        "string": "Phanerognatha"}}, {"canonicalName": {"uid": "4f39ba83-8fb7-4e9f-859c-44f8bc395e0b",
+        "string": "Smycronyx"}}, {"canonicalName": {"uid": "c054ee2a-bd21-4e1d-90a7-68fa4a19f19d",
+        "string": "Smicronychini"}}], "uid": "d01de196-29cf-42d0-b52f-8ae433de8c30"},
+        {"taxa": [{"canonicalName": {"uid": "3361c102-76ab-47ee-bbf6-9b7766751304",
+        "string": "Apocynaceae Adans., nom. cons."}}, {"canonicalName": {"uid": "b6a99fdf-56c7-4f4d-898e-b19f63d5a717",
+        "string": "Rauvolfioideae"}}, {"canonicalName": {"uid": "69259dba-923b-4587-bb73-146fa8260eb7",
+        "string": "Vinceae"}}, {"canonicalName": {"uid": "2b7f37b0-5d34-4328-af1b-0c597ea58a98",
+        "string": "Vinca L."}}], "uid": "349529e4-140e-4e8f-8d16-15bf8f68ddcc"}, {"taxa":
+        [{"canonicalName": {"uid": "5f9e9904-d767-42ff-8c70-c2d6a9d89796", "string":
+        "Malvaceae Juss."}}, {"canonicalName": {"uid": "987c662e-0869-42e9-86e5-dff927585ff2",
+        "string": "Hibiscus L."}}], "uid": "21d61af7-a191-4561-9dff-d106ac4f53f7"},
+        {"taxa": [{"canonicalName": {"uid": "22bc107f-b0f6-47dd-88bb-ffb8ef87f364",
+        "string": "Brachionidae Ehrenberg, 1838"}}, {"canonicalName": {"uid": "246c4fc3-bda8-4982-aa64-c4050486c48a",
+        "string": "Ploima Hudson and Gosse, 1886"}}, {"canonicalName": {"uid": "a03703cd-3e09-4d6c-ab1e-d612537e3ebf",
+        "string": "Monogononta Plate, 1889"}}, {"canonicalName": {"uid": "f54c763f-05f0-4fae-8546-a0d63be1012f",
+        "string": "Pseudotrocha Kutikova, 1970"}}, {"canonicalName": {"uid": "f68e8013-ec88-4c4b-a09c-988dd475881a",
+        "string": "Brachionus Blumenbach 1790"}}, {"canonicalName": {"uid": "b7e6b813-c075-4d00-9cce-abd59297d25c",
+        "string": "Brachionus plicatilis Muller 1786"}}], "uid": "a0753559-d626-4b3a-9af7-39c79409b8f4"},
+        {"taxa": [{"canonicalName": {"uid": "ddfc0da4-cb40-4ecc-880f-50baec8b5efd",
+        "string": "Triceratops Marsh 1889"}}, {"canonicalName": {"uid": "26e70fc5-fc90-48fd-a1f8-975568ea5c17",
+        "string": "Triceratops prorsus Marsh 1890"}}], "uid": "aeeb30a8-afdc-4e7e-9bcc-574cb290a1f6"},
+        {"taxa": [{"canonicalName": {"uid": "f2153cb9-df88-4ca9-a233-d8cb231d1456",
+        "string": "Tenontosaurus Ostrom 1970"}}, {"canonicalName": {"uid": "b1a9dde9-6d9b-439f-8c73-613a1b8a06d9",
+        "string": "Tenontosaurus tilletti Ostrom 1970"}}, {"canonicalName": {"uid":
+        "65acc786-39e7-4450-9456-de90569f5ff3", "string": "Dryomorpha + Rhabdodon"}}],
+        "uid": "5f4c760e-f6f7-4b9b-9199-db12bcfbf212"}], "success": true}'
+  recorded_at: 2020-06-03 19:00:13 GMT
+  recorded_with: vcr/0.5.4, webmockr/0.6.2
