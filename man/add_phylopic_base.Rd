@@ -9,6 +9,7 @@ add_phylopic_base(
   x = NULL,
   y = NULL,
   ysize = NULL,
+  xsize = NULL,
   alpha = 0.2,
   color = NULL
 )
@@ -24,6 +25,9 @@ not specified.}
 
 \item{ysize}{Height of the silhouette. The width is determined by the
 aspect ratio of the original image. Ignored if x and y are not specified.}
+
+\item{xsize}{Width of the silhouette (optional). If not supplied determined
+by \code{ysize}}
 
 \item{alpha}{A value between 0 and 1, specifying the opacity of the
 silhouette.}
