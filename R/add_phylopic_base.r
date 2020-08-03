@@ -58,7 +58,7 @@ add_phylopic_base <- function(img, x = NULL, y = NULL, ysize = NULL, xsize=NULL,
 
 
   # compute the size
-  if(missing(xsize)){
+  if(is.null(xsize)){
     # aspect ratio for image dimensions
     image_ar <- dims[1] / dims[2]
 
