@@ -1,3 +1,10 @@
+Version: 0.3.2.92
+===============
+
+### NEW FEATURES
+
+* New function: `gather_images` 
+
 rphylopic 0.3.0
 ===============
 
