@@ -3,11 +3,17 @@
 \name{gather_images}
 \alias{gather_images}
 \title{Gather 1 valid image per species}
+\source{
+\href{https://github.com/GuangchuangYu/ggimage/blob/master/R/geom_phylopic.R}{
+Related function: \code{ggimage::geom_phylopic}}
+}
 \usage{
 gather_images(
   species,
   options = c("namebankID", "names", "string"),
   include_image_data = FALSE,
+  mc.cores = 1,
+  verbose = TRUE,
   ...
 )
 }
@@ -18,7 +24,12 @@ gather_images(
 type, uid, uri, and/or votes}
 
 \item{include_image_data}{Include the image data itself
-(not just the image UID).}
+(not just the image UID) in the results.}
+
+\item{mc.cores}{Accelerate multiple species queries by parallelising
+across multiple cores.}
+
+\item{verbose}{Print messages.}
 
 \item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
 }
@@ -37,6 +48,9 @@ There are multiple images per species, and not all image UIDs are valid.
 This function makes searching for a valid image for each species much easier.
 Searches for the best name match per \code{species} and
 iteratively tries image UIDs until a viable image is found.
+}
+\details{
+Contributed by \href{https://github.com/bschilder}{Brian M. Schilder}.
 }
 \examples{
  

@@ -5,9 +5,14 @@
 #' Searches for the best name match per \code{species} and 
 #' iteratively tries image UIDs until a viable image is found.
 #' 
+#' Contributed by \href{https://github.com/bschilder}{Brian M. Schilder}.
+#' 
 #' @param species Species list.
 #' @param include_image_data Include the image data itself 
-#' (not just the image UID).
+#' (not just the image UID) in the results.
+#' @param mc.cores Accelerate multiple species queries by parallelising 
+#' across multiple cores.
+#' @param verbose Print messages.
 #' @inheritParams name
 #' @returns data.frame with:
 #' \itemize{
@@ -17,6 +22,8 @@
 #' \item{string : }{Standardised species name.}
 #' \item{picid : }{Image UID.}
 #' }
+#' @source \href{https://github.com/GuangchuangYu/ggimage/blob/master/R/geom_phylopic.R}{
+#' Related function: \code{ggimage::geom_phylopic}}
 #' 
 #' @export 
 #' @examples  
@@ -25,11 +32,19 @@
 gather_images <- function(species,
                           options=c("namebankID","names","string"),
                           include_image_data=FALSE,
-                          ...){ 
+                          mc.cores = 1,
+                          verbose = TRUE,
+                          ...){  
+  
+  requireNamespace("parallel")
+  requireNamespace("data.table")
+  string <- NULL;
+  
+  messager("Gathering phylopic silhouettes.",v=verbose)
   orig_names <- unique(species)
   species <- gsub("-|_|[(]|[)]"," ", orig_names)
-  res <- lapply(species, function(s){
-    message(s)
+  res <- parallel::mclapply(species, function(s){
+    if(verbose) message_parallel(s) 
     tryCatch({
       uids <- name_search(text = s,
                           options = options)[[1]]
@@ -45,7 +60,7 @@ gather_images <- function(species,
       i <- 1 
       #### Iterate until viable image found ####
       while(is.na(img) & i<=nrow(d)){
-        message("try: ",i)
+        messager("try: ",i,v=verbose)
         picid <- d$uid[[i]]
         img <- tryCatch({
           image_data(d$uid[[i]], size = "512")
@@ -58,8 +73,12 @@ gather_images <- function(species,
       uids$picid <- picid
       uids
     }, error=function(e) NULL)
-  })  
-  res <- cbind(species=orig_names, 
-               do.call("rbind",res))
+  }, mc.cores = mc.cores)  
+  #### rbindlist handles this more robustly than rbind #####
+  names(res) <- orig_names
+  res <- data.table::rbindlist(res, use.names = TRUE,
+                               idcol = "input_species",
+                               fill = TRUE)
+  data.table::setnames(res,"string","species") 
   return(res)
 }
