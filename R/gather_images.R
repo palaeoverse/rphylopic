@@ -1,17 +1,27 @@
-#' Gather 1 image per species
+#' Gather 1 valid image per species
 #' 
-#' There are multiple images per species, and not all pciture UIDs are valid.
+#' There are multiple images per species, and not all image UIDs are valid.
 #' This function makes searching for a valid image for each species much easier.
 #' Searches for the best name match per \code{species} and 
-#' iteratively tries image UIDs until a viable PNG is found.
+#' iteratively tries image UIDs until a viable image is found.
 #' 
 #' @param species Species list.
+#' @param include_image_data Include the image data itself 
+#' (not just the image UID).
 #' @inheritParams name
+#' @returns data.frame with:
+#' \itemize{
+#' \item{species : }{Species name.}
+#' \item{uid : }{Species UID.}
+#' \item{namebankID : }{\href{http://ubio.org/}{uBio} species ID.}
+#' \item{string : }{Standardised species name.}
+#' \item{picid : }{Image UID.}
+#' }
 #' 
 #' @export 
 #' @examples  
 #' species <- c("Mus_musculus","Pan_troglodytes","Homo_sapiens")
-#' res <- gather_images(species=species)
+#' res <- rphylopic::gather_images(species=species)
 gather_images <- function(species,
                           options=c("namebankID","names","string"),
                           include_image_data=FALSE,
@@ -29,7 +39,7 @@ gather_images <- function(species,
       z <- name_images(x$uid)
       d <- data.frame(uid=unlist(z),
                       name=names(unlist(z)))
-      d <- d[nrow(d):1,]
+      d <- d[seq(nrow(d),1),]
       img <- NA
       picid <- NA
       i <- 1 
