@@ -2,7 +2,7 @@
 % Please edit documentation in R/gather_images.R
 \name{gather_images}
 \alias{gather_images}
-\title{Gather 1 image per species}
+\title{Gather 1 valid image per species}
 \usage{
 gather_images(
   species,
@@ -17,16 +17,29 @@ gather_images(
 \item{options}{(character) One or more of citationStart, html, namebankID, root, string,
 type, uid, uri, and/or votes}
 
+\item{include_image_data}{Include the image data itself
+(not just the image UID).}
+
 \item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
 }
+\value{
+data.frame with:
+\itemize{
+\item{species : }{Species name.}
+\item{uid : }{Species UID.}
+\item{namebankID : }{\href{http://ubio.org/}{uBio} species ID.}
+\item{string : }{Standardised species name.}
+\item{picid : }{Image UID.}
+}
+}
 \description{
-There are multiple images per species, and not all pciture UIDs are valid.
+There are multiple images per species, and not all image UIDs are valid.
 This function makes searching for a valid image for each species much easier.
 Searches for the best name match per \code{species} and
-iteratively tries image UIDs until a viable PNG is found.
+iteratively tries image UIDs until a viable image is found.
 }
 \examples{
  
 species <- c("Mus_musculus","Pan_troglodytes","Homo_sapiens")
-res <- gather_images(species=species)
+res <- rphylopic::gather_images(species=species)
 }
