@@ -32,5 +32,7 @@ Suggests:
     vcr (>= 0.2.0),
     knitr,
     rmarkdown,
-    R.rsp
+    R.rsp,
+    parallel,
+    data.table
 RoxygenNote: 7.1.2
