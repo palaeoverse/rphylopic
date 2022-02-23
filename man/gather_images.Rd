@@ -24,12 +24,12 @@ gather_images(
 type, uid, uri, and/or votes}
 
 \item{include_image_data}{Include the image data itself
-(not just the image UID) in the results.}
+(not just the image UID) in the results (default: \code{FALSE}).}
 
 \item{mc.cores}{Accelerate multiple species queries by parallelising
-across multiple cores.}
+across multiple cores (default: \code{1}).}
 
-\item{verbose}{Print messages.}
+\item{verbose}{Print messages (default: \code{TRUE}).}
 
 \item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
 }
