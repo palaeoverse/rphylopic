@@ -1,9 +1,13 @@
-Version: 0.3.3
+Version: 0.3.2.91
 ===============
 
 ### NEW FEATURES
 
-* New function: `gather_images` 
+* New exported function: `gather_images` 
+* New internal functions in *zzz.R*: 
+  + `check_for_a_pkg`
+  + `messager`
+  + `message_parallel` 
 
 rphylopic 0.3.0
 ===============

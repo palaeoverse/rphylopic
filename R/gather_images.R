@@ -9,10 +9,10 @@
 #' 
 #' @param species Species list.
 #' @param include_image_data Include the image data itself 
-#' (not just the image UID) in the results.
+#' (not just the image UID) in the results (default: \code{FALSE}). 
 #' @param mc.cores Accelerate multiple species queries by parallelising 
-#' across multiple cores.
-#' @param verbose Print messages.
+#' across multiple cores (default: \code{1}). 
+#' @param verbose Print messages (default: \code{TRUE}).
 #' @inheritParams name
 #' @returns data.frame with:
 #' \itemize{
@@ -35,9 +35,8 @@ gather_images <- function(species,
                           mc.cores = 1,
                           verbose = TRUE,
                           ...){  
-  
-  requireNamespace("parallel")
-  requireNamespace("data.table")
+  check_for_a_pkg("parallel")
+  check_for_a_pkg("data.table")
   string <- NULL;
   
   messager("Gathering phylopic silhouettes.",v=verbose)

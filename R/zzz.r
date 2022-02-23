@@ -60,3 +60,26 @@ phy_GET2 <- function(path, args, ...) {
 
 ibase <- function() "http://phylopic.org/api/a/image/"
 pbase <- function() "http://phylopic.org"
+
+check_for_a_pkg <- function(x) {
+  if (!requireNamespace(x, quietly = TRUE)) {
+    stop("Please install ", x, call. = FALSE)
+  } else {
+    invisible(TRUE)
+  }
+}
+
+messager <- function(..., v = TRUE) {
+  msg <- paste(...)
+  if (v) {
+    message(msg)
+  }
+}
+
+#' Send messages to console even from within parallel processes
+#' @return A message
+#' @keywords internal
+message_parallel <- function(...) {
+  system(sprintf('echo "%s"', paste0(..., collapse = "")))
+}
+
