@@ -4,7 +4,7 @@
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/sckott/rphylopic/workflows/R-CMD-check/badge.svg)](https://github.com/sckott/rphylopic/actions/)
-[![codecov.io](https://codecov.io/github/sckott/rphylopic/coverage.svg?branch=master)](https://codecov.io/github/sckott/rphylopic?branch=master)
+[![codecov.io](https://codecov.io/github/sckott/rphylopic/coverage.svg?branch=main)](https://codecov.io/github/sckott/rphylopic?branch=main)
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/rphylopic)](https://github.com/metacran/cranlogs.app)
 [![cran version](https://www.r-pkg.org/badges/version/rphylopic)](https://cran.r-project.org/package=rphylopic)
 
@@ -186,10 +186,10 @@ nameset_taxonomy(uuid = "8d9a9ea3-95cc-414d-1000-4b683ce04be2", options = "strin
 #> [[2]]
 #> [[2]]$canonicalName
 #> [[2]]$canonicalName$uid
-#> [1] "b909eda2-4a6d-4d87-a463-87cbe3d20c5f"
+#> [1] "68226175-f88d-4ea8-8228-3204c49bfda0"
 #> 
 #> [[2]]$canonicalName$string
-#> [1] "Coelomata"
+#> [1] "Nephrozoa Jondelius & al. 2002"
 ```
 
 ## Work with images
@@ -209,7 +209,7 @@ Count images in Phylopic database
 
 ```r
 image_count()
-#> [1] 4101
+#> [1] 5218
 ```
 
 Lists images in chronological order, from most to least recently modified
@@ -219,12 +219,12 @@ Lists images in chronological order, from most to least recently modified
 image_list(start=1, length=2)
 #> [[1]]
 #> [[1]]$uid
-#> [1] "d3a78afb-1b9e-45e0-b6f4-144d79f399f0"
+#> [1] "7cdeecba-af41-4b5f-9cd8-a9661beb27ea"
 #> 
 #> 
 #> [[2]]
 #> [[2]]$uid
-#> [1] "c7fbe213-1eac-4f81-80d0-674c3bd2d6b0"
+#> [1] "277ceeda-a1ca-4d81-a97e-07a66907d4cc"
 ```
 
 Lists images within a given time range, from most to least recent
@@ -346,4 +346,4 @@ leaflet(data = quakes[1:4,]) %>% addTiles() %>%
 * Please note that this project is released with a [Contributor Code of Conduct][coc].
 By participating in this project you agree to abide by its terms.
 
-[coc]: https://github.com/sckott/rphylopic/blob/master/CODE_OF_CONDUCT.md
+[coc]: https://github.com/sckott/rphylopic/blob/main/CODE_OF_CONDUCT.md

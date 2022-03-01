@@ -1,23 +1,19 @@
 {
-  "@context": [
-    "https://doi.org/10.5063/schema/codemeta-2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "rphylopic",
-  "description": "Work with 'Phylopic' web service (<http://phylopic.org/api/>) \n    to get 'silhouette' images of 'organisms', search names, and more.\n    Includes functions for adding 'silhouettes' to both base plots and\n    ggplot2 plots.",
+  "description": "Work with 'Phylopic' web service (<http://phylopic.org/api/>) to get 'silhouette' images of 'organisms', search names, and more. Includes functions for adding 'silhouettes' to both base plots and 'ggplot2' plots.",
   "name": "rphylopic: Get 'Silhouettes' of 'Organisms' from 'Phylopic'",
   "codeRepository": "https://github.com/sckott/rphylopic",
   "issueTracker": "https://github.com/sckott/rphylopic/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.3.0",
+  "version": "0.3.2.91",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "4.0.0",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.0 Patched (2020-05-16 r78478)",
+  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -41,8 +37,6 @@
       "email": "dave@ninepointeightone.net"
     }
   ],
-  "copyrightHolder": {},
-  "funder": {},
   "maintainer": [
     {
       "@type": "Person",
@@ -101,10 +95,39 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "R.rsp",
+      "name": "R.rsp",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=R.rsp"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "parallel",
+      "name": "parallel"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "data.table",
+      "name": "data.table",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=data.table"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
       "@type": "SoftwareApplication",
       "identifier": "ggplot2",
       "name": "ggplot2",
@@ -116,7 +139,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ggplot2"
     },
-    {
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "crul",
       "name": "crul",
@@ -129,7 +152,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=crul"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "jsonlite",
       "name": "jsonlite",
@@ -141,12 +164,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=jsonlite"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "grid",
       "name": "grid"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "gridBase",
       "name": "gridBase",
@@ -158,12 +181,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=gridBase"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "graphics",
       "name": "graphics"
     },
-    {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "png",
       "name": "png",
@@ -174,18 +197,8 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=png"
-    }
-  ],
-  "releaseNotes": "https://github.com/sckott/rphylopic/blob/master/NEWS.md",
-  "readme": "https://github.com/sckott/rphylopic/blob/master/README.md",
-  "fileSize": "718.307KB",
-  "contIntegration": "https://codecov.io/github/sckott/rphylopic?branch=master",
-  "developmentStatus": "https://www.repostatus.org/#active",
-  "keywords": [
-    "phylopic",
-    "rstats",
-    "silhouette",
-    "ggplot2",
-    "base-r"
-  ]
+    },
+    "SystemRequirements": null
+  },
+  "fileSize": "895.75KB"
 }

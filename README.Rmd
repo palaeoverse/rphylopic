@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![R-CMD-check](https://github.com/sckott/rphylopic/workflows/R-CMD-check/badge.svg)](https://github.com/sckott/rphylopic/actions/)
-[![codecov.io](https://codecov.io/github/sckott/rphylopic/coverage.svg?branch=master)](https://codecov.io/github/sckott/rphylopic?branch=master)
+[![codecov.io](https://codecov.io/github/sckott/rphylopic/coverage.svg?branch=main)](https://codecov.io/github/sckott/rphylopic?branch=main)
 [![rstudio mirror downloads](https://cranlogs.r-pkg.org/badges/rphylopic)](https://github.com/metacran/cranlogs.app)
 [![cran version](https://www.r-pkg.org/badges/version/rphylopic)](https://cran.r-project.org/package=rphylopic)
 
@@ -208,4 +208,4 @@ leaflet(data = quakes[1:4,]) %>% addTiles() %>%
 * Please note that this project is released with a [Contributor Code of Conduct][coc].
 By participating in this project you agree to abide by its terms.
 
-[coc]: https://github.com/sckott/rphylopic/blob/master/CODE_OF_CONDUCT.md
+[coc]: https://github.com/sckott/rphylopic/blob/main/CODE_OF_CONDUCT.md
