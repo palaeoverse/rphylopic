@@ -76,14 +76,14 @@
 #' @rdname image
 image_get <- function(uuid, options=NULL, ...) {
   args <- if (!is.null(options)) list(options = paste0(options, collapse = " ")) else list()
-  phy_GET(file.path('api/a/image', uuid), args, ...)$result
+  phy_GET(file.path("images", uuid), args, ...)
 }
 
 #' @export
 #' @rdname image
 image_list <- function(start=1, length=10, options=NULL, ...) {
   args <- if (!is.null(options)) list(options = paste0(options, collapse = " ")) else list()
-  phy_GET(file.path("api/a/image/list", start, length), args, ...)$result
+  phy_GET(file.path("images", start, length), args, ...)
 }
 
 #' @export
@@ -92,7 +92,7 @@ image_timerange <- function(timestamp="modified", from=NULL, to=NULL, options=NU
   args <- if (!is.null(options)) list(options = paste0(options, collapse = " ")) else list()
   path <- file.path("api/a/image/list", timestamp, from)
   if (!is.null(to)) path <- file.path(path, to)
-  phy_GET(path, args, ...)$result
+  phy_GET(path, args, ...)
 }
 
 #' @export
@@ -126,7 +126,13 @@ image_data <- function(input, size, ...) {
 }
 
 get_png <- function(x, ...) {
-  tmp <- crul::HttpClient$new(url = pbase(), opts = list(...))
-  res <- tmp$get(x)
-  png::readPNG(res$content)
+  res <- httr::GET(url = x, config = list(...))
+  img_tmp <- png::readPNG(res$content)
+  # convert to RGBA if in GA format
+  if (dim(img)[3] == 2) {
+    img_new <- array(1, dim = c(dim(img_tmp)[1:2], 4))
+    img_new[, , 1:3] <- 0
+    img_new[, , 4] <- img_tmp[, , 2]
+  }
+  img_new
 }
