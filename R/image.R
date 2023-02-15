@@ -74,34 +74,33 @@
 
 #' @export
 #' @rdname image
-image_get <- function(uuid, options=NULL, ...) {
-  args <- if (!is.null(options)) list(options = paste0(options, collapse = " ")) else list()
-  phy_GET(file.path("images", uuid), args, ...)
+image_get <- function(uuid, options = NULL, ...) {
+  phy_GET(file.path("images", uuid), query = options, ...)
 }
 
 #' @export
 #' @rdname image
-image_list <- function(start=1, length=10, options=NULL, ...) {
-  args <- if (!is.null(options)) list(options = paste0(options, collapse = " ")) else list()
-  phy_GET(file.path("images", start, length), args, ...)
+image_list <- function(page = 0, options = NULL, ...) {
+  phy_GET("images", query = c(list(page = page), options), ...)$`_links`$items
 }
 
 #' @export
 #' @rdname image
-image_timerange <- function(timestamp="modified", from=NULL, to=NULL, options=NULL, ...) {
-  args <- if (!is.null(options)) list(options = paste0(options, collapse = " ")) else list()
-  path <- file.path("api/a/image/list", timestamp, from)
-  if (!is.null(to)) path <- file.path(path, to)
-  phy_GET(path, args, ...)
+image_timerange <- function(options = NULL, ...) {
+  # get total number of pages for query
+  tot_pages <- phy_GET("images", query = options, ...)$totalPages
+  # get first page
+  young_age <- phy_GET("images", query = c(list(page = 0, embed_items = "true"), options), ...)$`_embedded`$items[[1]]$created
+  # get last page
+  items <- phy_GET("images", query = c(list(page = tot_pages - 1, embed_items = "true"), options), ...)$`_embedded`$items
+  old_age <- items[[length(items)]]$created
+  list(young_age, old_age)
 }
 
 #' @export
 #' @rdname image
-image_count <- function(...) {
-  cli <- crul::HttpClient$new(url = pbase(), opts = list(...))
-  tt <- cli$get(path = 'api/a/image/count')
-  tt$raise_for_status()
-  jsonlite::fromJSON(tt$parse("UTF-8"))$result
+image_count <- function(options = NULL, ...) {
+  phy_GET("images", query = options, ...)$totalItems
 }
 
 #' @export

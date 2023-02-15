@@ -46,13 +46,13 @@ pc <- function(l) Filter(Negate(is.null), l)
 
 as_null <- function(x) if (length(x) == 0) NULL else x
 
-phy_GET <- function(path, args = list(), ...) {
-  tmp <- phy_GET2(path, args, ...)
+phy_GET <- function(path, query = list(), ...) {
+  tmp <- phy_GET2(path, query, ...)
   jsonlite::fromJSON(tmp, FALSE)
 }
 
-phy_GET2 <- function(path, args, ...) {
-  tt <- httr::GET(url = pbase(), path = path, query = as_null(pc(args)))
+phy_GET2 <- function(path, query, ...) {
+  tt <- httr::GET(url = pbase(), path = path, query = as_null(pc(query)))
   #tt$raise_for_status()
   httr::content(tt, as = "text", encoding = "UTF-8")
 }
