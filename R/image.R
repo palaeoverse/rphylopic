@@ -107,7 +107,8 @@ image_count <- function(options = NULL, ...) {
 #' @rdname image
 image_data <- function(input, size, ...) {
   size <- match.arg(as.character(size), 
-    c("64", "128", "256", "512", "1024", "thumb", "icon"))
+    c("64", "128", "192", "512", "1024", "1536", "twitter", "vector", "source"))
+  # need to probably fix this if bit
   if (inherits(input, "image_info")) {
     if (!size %in% c('thumb','icon')) {
       urls <- input[ as.character(input$height) == size , "url" ]
@@ -119,7 +120,21 @@ image_data <- function(input, size, ...) {
     lapply(urls, get_png)
   } else {
     lapply(input, function(x) {
-      get_png(paste0("assets/images/submissions/", x, ".", size, ".png"), ...)
+      image_info <- phy_GET(file.path("images", input), ...)$`_links`
+      if (size %in% c("64", "128", "192")) { # get thumbnail url
+        thumbs <- image_info$thumbnailFiles
+        url <- Filter(function(x) grepl(size, x$sizes), thumbs)[[1]]$href
+      } else if (size %in% c("512", "1024", "1536")) { # get raster url
+        rasters <- image_info$rasterFiles
+        url <- Filter(function(x) grepl(size, x$sizes), rasters)[[1]]$href
+      } else if (size == "twitter") { # get twitter url
+        url <- image_info$`twitter:image`$href
+      } else if (size == "vector") { # get vector url
+        url <- image_info$vectorFile$href
+      } else { # get source url
+        url <- image_info$sourceFile$href
+      }
+      get_png(url, ...)
     })
   }
 }
@@ -128,7 +143,7 @@ get_png <- function(x, ...) {
   res <- httr::GET(url = x, config = list(...))
   img_tmp <- png::readPNG(res$content)
   # convert to RGBA if in GA format
-  if (dim(img)[3] == 2) {
+  if (dim(img_tmp)[3] == 2) {
     img_new <- array(1, dim = c(dim(img_tmp)[1:2], 4))
     img_new[, , 1:3] <- 0
     img_new[, , 4] <- img_tmp[, , 2]
