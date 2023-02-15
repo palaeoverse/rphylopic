@@ -11,17 +11,11 @@
 \usage{
 image_get(uuid, options = NULL, ...)
 
-image_list(start = 1, length = 10, options = NULL, ...)
+image_list(page = 0, options = NULL, ...)
 
-image_timerange(
-  timestamp = "modified",
-  from = NULL,
-  to = NULL,
-  options = NULL,
-  ...
-)
+image_timerange(options = NULL, ...)
 
-image_count(...)
+image_count(options = NULL, ...)
 
 image_data(input, size, ...)
 }
@@ -33,9 +27,9 @@ type, uid, uri, and/or votes}
 
 \item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
 
-\item{start}{The index to start with. Using 0 starts with the most recently-submitted image.}
+\item{input}{Either a vector of uuids or the output from the function \code{search_images}}
 
-\item{length}{Number of images to list.}
+\item{size}{Height of the image, one of 64, 128, 256, 512, 1024, "thumb", or "icon"}
 
 \item{timestamp}{Either \code{modified} (to go by the last time the image file was modified)
 or \code{submitted} (to go by the time the image was first submitted).}
@@ -52,9 +46,9 @@ include any images dated at the indicated time.}
 retrieve images for. See the from parameter for more details on the format. The image list
 will include any images dated up to, but not including, the indicated time.}
 
-\item{input}{Either a vector of uuids or the output from the function \code{search_images}}
+\item{start}{The index to start with. Using 0 starts with the most recently-submitted image.}
 
-\item{size}{Height of the image, one of 64, 128, 256, 512, 1024, "thumb", or "icon"}
+\item{length}{Number of images to list.}
 }
 \description{
 Perform actions with images.

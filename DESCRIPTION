@@ -1,24 +1,28 @@
 Package: rphylopic
-Title: Get 'Silhouettes' of 'Organisms' from 'Phylopic'
-Description: Work with 'Phylopic' web service (<http://phylopic.org/api/>) 
-    to get 'silhouette' images of 'organisms', search names, and more.
-    Includes functions for adding 'silhouettes' to both base plots and
-    'ggplot2' plots.
+Title: Get Silhouettes of Organisms from Phylopic
+Description: Work with the Phylopic Web Service (<http://api-docs.phylopic.org/v2/>) 
+    to fetch silhouette images of organisms, search names, and more.
+    Includes functions for adding silhouettes to both base plots and
+    ggplot2 plots.
 Version: 0.3.3.91
 Authors@R: c(
-    person("Scott", "Chamberlain", role = c("aut", "cre"), 
-        email = "myrmecocystus@gmail.com",
-        comment = c(ORCID = "0000-0003-1444-9135")),
-    person("David", "Miller", role = "ctb", 
-        email = "dave@ninepointeightone.net")
+    person(given = "William", family = "Gearty", email = "willgearty@gmail.com",
+      role = c("aut", "cre"), comment = c(ORCID = "0000-0003-0076-3262")),
+    person(given = "Lewis A.", family = "Jones", email = "LewisAlan.Jones@uvigo.es",
+      role = c("aut"), comment = c(ORCID = "0000-0003-3902-8986")),
+    person(given = "Scott", family = "Chamberlain", email = "myrmecocystus@gmail.com",
+      role = c("aut"), comment = c(ORCID = "0000-0003-1444-9135")),
+    person(given = "David", family = "Miller", email = "dave@ninepointeightone.net",
+      role = c("ctb"))
   )
-License: MIT + file LICENSE
-URL: https://github.com/sckott/rphylopic
-BugReports: https://github.com/sckott/rphylopic/issues
-Roxygen: list(markdown = TRUE)
+License: GPL (>= 3)
+Language: en-GB
 Encoding: UTF-8
-Language: en-US
-VignetteBuilder: knitr, R.rsp
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Depends: 
+    R (>= 4.0)
 Imports:
     ggplot2,
     crul (>= 0.5.2),
@@ -35,4 +39,9 @@ Suggests:
     R.rsp,
     parallel,
     data.table
-RoxygenNote: 7.1.2
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+URL: https://rphylopic.palaeoverse.org,
+     https://github.com/palaeoverse-community/rphylopic,
+     https://palaeoverse.org
+BugReports: https://github.com/palaeoverse-community/rphylopic/issues
