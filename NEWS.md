@@ -1,3 +1,9 @@
+Version: 1.0.0
+==============
+
+* rphylopic has now been transfered to the palaeoverse community (new maintainer: William Gearty and author: Lewis Jones)
+
+
 Version: 0.3.4
 ==============
 

@@ -38,7 +38,8 @@ Suggests:
     rmarkdown,
     R.rsp,
     parallel,
-    data.table
+    data.table,
+    covr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 URL: https://rphylopic.palaeoverse.org,

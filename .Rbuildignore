@@ -12,3 +12,5 @@ README.Rmd
 .github
 Makefile
 ^codemeta\.json$
+^codecov\.yml$
+^\.github$
