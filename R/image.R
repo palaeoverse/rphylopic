@@ -134,19 +134,33 @@ image_data <- function(input, size, ...) {
       } else { # get source url
         url <- image_info$sourceFile$href
       }
-      get_png(url, ...)
+      if (size == "vector") get_svg(url, ...) else get_png(url, ...)
     })
   }
 }
 
+#' @importFrom httr GET
+#' @importFrom rsvg rsvg_svg
+#' @importFrom grImport2 readPicture
+get_svg <- function(x, ...) {
+  res <- GET(url = x, config = list(...))
+  filename <- file.path(tempdir(), "temp.svg")
+  rsvg::rsvg_svg(res$content, filename)
+  readPicture(filename)
+}
+
+#' @importFrom httr GET
+#' @importFrom png readPNG
 get_png <- function(x, ...) {
-  res <- httr::GET(url = x, config = list(...))
-  img_tmp <- png::readPNG(res$content)
+  res <- GET(url = x, config = list(...))
+  img_tmp <- readPNG(res$content)
   # convert to RGBA if in GA format
   if (dim(img_tmp)[3] == 2) {
     img_new <- array(1, dim = c(dim(img_tmp)[1:2], 4))
     img_new[, , 1:3] <- 0
     img_new[, , 4] <- img_tmp[, , 2]
+  } else {
+    img_new <- img_tmp
   }
   img_new
 }
