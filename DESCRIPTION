@@ -25,12 +25,14 @@ Depends:
     R (>= 4.0)
 Imports:
     ggplot2,
-    crul (>= 0.5.2),
     jsonlite,
     grid,
     gridBase,
     graphics,
-    png
+    png,
+    grImport2,
+    rsvg,
+    httr
 Suggests:
     testthat,
     vcr (>= 0.2.0),

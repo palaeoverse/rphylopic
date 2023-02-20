@@ -145,7 +145,7 @@ image_data <- function(input, size, ...) {
 get_svg <- function(x, ...) {
   res <- GET(url = x, config = list(...))
   filename <- file.path(tempdir(), "temp.svg")
-  rsvg::rsvg_svg(res$content, filename)
+  rsvg_svg(res$content, filename)
   readPicture(filename)
 }
 

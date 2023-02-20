@@ -1,8 +1,9 @@
 #' Fixed phylogeny blank theme for ggphylo
 #' @export
+#' @importFrom ggplot2 theme element_blank element_text
 theme_phylo_blank2 <- function() {
-  element_blank <- ggplot2::element_blank
-  ggplot2::theme(
+  element_blank <- element_blank
+  theme(
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
     panel.background = element_blank(),
@@ -46,15 +47,17 @@ pc <- function(l) Filter(Negate(is.null), l)
 
 as_null <- function(x) if (length(x) == 0) NULL else x
 
+#' @importFrom jsonlite fromJSON
 phy_GET <- function(path, query = list(), ...) {
   tmp <- phy_GET2(path, query, ...)
-  jsonlite::fromJSON(tmp, FALSE)
+  fromJSON(tmp, FALSE)
 }
 
+#' @importFrom httr GET content
 phy_GET2 <- function(path, query, ...) {
-  tt <- httr::GET(url = pbase(), path = path, query = as_null(pc(query)))
+  tt <- GET(url = pbase(), path = path, query = as_null(pc(query)))
   #tt$raise_for_status()
-  httr::content(tt, as = "text", encoding = "UTF-8")
+  content(tt, as = "text", encoding = "UTF-8")
 }
 
 ibase <- function() "https://images.phylopic.org/images"
