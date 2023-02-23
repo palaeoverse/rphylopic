@@ -1,6 +1,9 @@
 #' Input an image and create a ggplot2 layer to add to an existing plot
 #'
 #' @export
+#' @importFrom ggmap inset
+#' @importFrom grImport2 pictureGrob
+#' @importFrom grid rasterGrob gList gTree
 #' @param img A png object, e.g, from using [image_data()]
 #' @param alpha A value between 0 and 1, specifying the opacity of the 
 #' silhouette.
@@ -39,27 +42,50 @@
 #' p + ggtitle("R Cat Herd!!")
 #' }
 
-add_phylopic <- function(img, alpha = 0.2, x = NULL, y = NULL, ysize = NULL, 
-  color = NULL) {
+add_phylopic <- function(img, name = NULL,
+                         x = NULL, y = NULL, ysize = NULL,
+                         alpha = 1, color = "black") {
 
-  # color and alpha the animal
-  mat <- recolor_phylopic(img, alpha, color)
+  # get aspect ratio
+  if (is(img, "Picture")) { # svg
+    aspratio <- abs(diff(img@summary@xscale))/abs(diff(img@summary@yscale))
+  } else { # png
+    aspratio <- ncol(img) / nrow(img)
+  }
 
   if (!is.null(x) && !is.null(y) && !is.null(ysize)) {
-    aspratio <- nrow(mat) / ncol(mat) ## get aspect ratio of original image
     ymin <- y - ysize / 2
     ymax <- y + ysize / 2
-    xmin <- x - ysize / aspratio / 2
-    xmax <- x + ysize / aspratio / 2
+    xmin <- x - ysize * aspratio / 2
+    xmax <- x + ysize * aspratio / 2
   } else {
     ymin <- -Inf ## fill whole plot...
     ymax <- Inf
     xmin <- -Inf
     xmax <- Inf
   }
-  imgGrob <- rasterGrob(mat)
+  
+  # grobify (and recolor if necessary)
+  if (is(img, "Picture")) { # svg
+    gpFUN <- function(pars) {
+      if (!is.null(color)) {
+        pars$col <- color
+        pars$fill <- color
+      }
+      pars$alpha <- alpha
+      pars
+    }
+    # copied from
+    # https://github.com/k-hench/hypoimg/blob/master/R/hypoimg_recolor_svg.R
+    imgGrob <- pictureGrob(img, gpFUN = gpFUN)
+    imgGrob <- gList(imgGrob)
+    imgGrob <- gTree(children = imgGrob)
+  } else { # png
+    img <- recolor_png(img, alpha, color)
+    imgGrob <- rasterGrob(img)
+  }
+  
   return(
-    annotation_custom(xmin = xmin, ymin = ymin, xmax = xmax, 
-      ymax = ymax, imgGrob)
+    inset(imgGrob, xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax)
   )
 }

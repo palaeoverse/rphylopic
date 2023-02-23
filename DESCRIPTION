@@ -32,7 +32,8 @@ Imports:
     png,
     grImport2,
     rsvg,
-    httr
+    httr,
+    ggmap
 Suggests:
     testthat,
     vcr (>= 0.2.0),

@@ -4,13 +4,18 @@
 \alias{add_phylopic}
 \title{Input an image and create a ggplot2 layer to add to an existing plot}
 \usage{
-add_phylopic(img, alpha = 0.2, x = NULL, y = NULL, ysize = NULL, color = NULL)
+add_phylopic(
+  img,
+  name = NULL,
+  x = NULL,
+  y = NULL,
+  ysize = NULL,
+  alpha = 1,
+  color = "black"
+)
 }
 \arguments{
 \item{img}{A png object, e.g, from using \code{\link[=image_data]{image_data()}}}
-
-\item{alpha}{A value between 0 and 1, specifying the opacity of the
-silhouette.}
 
 \item{x}{x value of the silhouette center. Ignored if y and ysize are not
 specified.}
@@ -20,6 +25,9 @@ specified.}
 
 \item{ysize}{Height of the silhouette. The width is determined by the aspect
 ratio of the original image. Ignored if x and y are not specified.}
+
+\item{alpha}{A value between 0 and 1, specifying the opacity of the
+silhouette.}
 
 \item{color}{Color to plot the silhouette in.}
 }

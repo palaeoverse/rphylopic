@@ -17,7 +17,7 @@ image_timerange(options = NULL, ...)
 
 image_count(options = NULL, ...)
 
-image_data(input, size, ...)
+image_data(uuid, size = "vector", ...)
 }
 \arguments{
 \item{uuid}{One or more name UUIDs.}
@@ -26,8 +26,6 @@ image_data(input, size, ...)
 type, uid, uri, and/or votes}
 
 \item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
-
-\item{input}{Either a vector of uuids or the output from the function \code{search_images}}
 
 \item{size}{Height of the image, one of 64, 128, 256, 512, 1024, "thumb", or "icon"}
 
@@ -49,6 +47,8 @@ will include any images dated up to, but not including, the indicated time.}
 \item{start}{The index to start with. Using 0 starts with the most recently-submitted image.}
 
 \item{length}{Number of images to list.}
+
+\item{input}{Either a vector of uuids or the output from the function \code{search_images}}
 }
 \description{
 Perform actions with images.
