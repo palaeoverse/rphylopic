@@ -105,38 +105,24 @@ image_count <- function(options = NULL, ...) {
 
 #' @export
 #' @rdname image
-image_data <- function(input, size, ...) {
+image_data <- function(uuid, size = "vector", ...) {
   size <- match.arg(as.character(size), 
     c("64", "128", "192", "512", "1024", "1536", "twitter", "vector", "source"))
-  # need to probably fix this if bit
-  if (inherits(input, "image_info")) {
-    if (!size %in% c('thumb','icon')) {
-      urls <- input[ as.character(input$height) == size , "url" ]
-    } else {
-      tmp <- vapply(split(input, input$uuid), function(x) x$url[1], "", 
-        USE.NAMES = FALSE)
-      urls <- paste0(gsub("\\.64\\.png", "", tmp), sprintf(".%s.png", size))
-    }
-    lapply(urls, get_png)
-  } else {
-    lapply(input, function(x) {
-      image_info <- phy_GET(file.path("images", input), ...)$`_links`
-      if (size %in% c("64", "128", "192")) { # get thumbnail url
-        thumbs <- image_info$thumbnailFiles
-        url <- Filter(function(x) grepl(size, x$sizes), thumbs)[[1]]$href
-      } else if (size %in% c("512", "1024", "1536")) { # get raster url
-        rasters <- image_info$rasterFiles
-        url <- Filter(function(x) grepl(size, x$sizes), rasters)[[1]]$href
-      } else if (size == "twitter") { # get twitter url
-        url <- image_info$`twitter:image`$href
-      } else if (size == "vector") { # get vector url
-        url <- image_info$vectorFile$href
-      } else { # get source url
-        url <- image_info$sourceFile$href
-      }
-      if (size == "vector") get_svg(url, ...) else get_png(url, ...)
-    })
+  image_info <- phy_GET(file.path("images", uuid), ...)$`_links`
+  if (size %in% c("64", "128", "192")) { # get thumbnail url
+    thumbs <- image_info$thumbnailFiles
+    url <- Filter(function(x) grepl(size, x$sizes), thumbs)[[1]]$href
+  } else if (size %in% c("512", "1024", "1536")) { # get raster url
+    rasters <- image_info$rasterFiles
+    url <- Filter(function(x) grepl(size, x$sizes), rasters)[[1]]$href
+  } else if (size == "twitter") { # get twitter url
+    url <- image_info$`twitter:image`$href
+  } else if (size == "vector") { # get vector url
+    url <- image_info$vectorFile$href
+  } else { # get source url
+    url <- image_info$sourceFile$href
   }
+  if (size == "vector") get_svg(url, ...) else get_png(url, ...)
 }
 
 #' @importFrom httr GET
