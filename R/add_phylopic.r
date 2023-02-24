@@ -87,5 +87,6 @@ add_phylopic <- function(img, name = NULL,
   
   return(
     inset(imgGrob, xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax)
+    # use this instead of annotation_custom to support other coords
   )
 }

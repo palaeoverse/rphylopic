@@ -8,8 +8,6 @@
 #' not specified.
 #' @param ysize Height of the silhouette. The width is determined by the 
 #' aspect ratio of the original image. Ignored if x and y are not specified.
-#' @param xsize Width of the silhouette (optional). If not supplied determined 
-#' by `ysize`
 #' @param alpha A value between 0 and 1, specifying the opacity of the 
 #' silhouette.
 #' @param color Color to plot the silhouette in.
@@ -18,6 +16,8 @@
 #' are unspecified, then the silhouette will be plotted to the full height 
 #' and width of the plot.
 #' @importFrom graphics par
+#' @importFrom grid grid.raster gpar
+#' @importFrom grImport2 grid.picture
 #' @examples \dontrun{
 #' # get a silhouette
 #' cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 128)[[1]]
@@ -48,32 +48,44 @@
 #'   add_phylopic_base(cat, posx[i], posy[i], size[i], alpha=.8)
 #' }
 #' }
-add_phylopic_base <- function(img, x = NULL, y = NULL, ysize = NULL, xsize=NULL,
-                              alpha = 0.2, color = NULL) {
-  # color and alpha the animal
-  img <- recolor_phylopic(img, alpha, color)
+add_phylopic_base <- function(img, name = NULL,
+                              x = NULL, y = NULL, ysize = NULL,
+                              alpha = 1, color = "black") {
+  # get plot limits
+  usr <- par()$usr
+  usr_x <- if (par()$xlog) 10^usr[1:2] else usr[1:2]
+  usr_y <- if (par()$ylog) 10^usr[3:4] else usr[3:4]
+  
+  # get plot area percentages
+  # note that this means that changing the plot size AFTER plotting may
+  # affect the position of the phylopic
+  plt <- par()$plt
+  plt_x <- plt[1:2]
+  plt_y <- plt[3:4]
+  
+  # get figure limits
+  width <- diff(usr_x)/diff(plt_x)
+  xlims <- c(usr_x[1] - plt_x[1] * width, usr_x[2] + (1 - plt_x[2]) * width)
+  height <- diff(usr_y)/diff(plt_y)
+  ylims <- c(usr_y[1] - plt_y[1] * height, usr_y[2] + (1 - plt_y[2]) * height)
+  
+  # convert x, y, and ysize to percentages
+  x <- (x - xlims[1])/diff(xlims)
+  y <- (y - ylims[1])/diff(ylims)
+  ysize <- ysize/abs(diff(ylims))
 
-  # work out the dimensions of the image
-  dims <- dim(img)[1:2]
-
-
-  # compute the size
-  if(is.null(xsize)){
-    # aspect ratio for image dimensions
-    image_ar <- dims[1] / dims[2]
-
-    # rescale depending on which of the axes is longer
-    image_ar <- image_ar * c(diff(par()$yaxp[1:2]),
-                             1/diff(par()$xaxp[1:2]))[which.max(
-                                c(diff(par()$yaxp[1:2]), diff(par()$xaxp[1:2])))]
-    # calculate xsize
-    xsize <- ysize / image_ar
+  if (is(img, "Picture")) { # svg
+    gpFUN <- function(pars) {
+      if (!is.null(color)) {
+        pars$col <- color
+        pars$fill <- color
+      }
+      pars$alpha <- alpha
+      pars
+    }
+    grid.picture(img, x = x, y = y, height = ysize, gpFUN = gpFUN)
+  } else { # png
+    img <- recolor_png(img, alpha, color)
+    grid.raster(img, x = x, y = y, height = ysize)
   }
-
-  graphics::rasterImage(img,
-                        x - xsize/2,
-                        y - ysize/2,
-                        x + xsize/2,
-                        y + ysize/2,
-                        interpolate = TRUE)
 }
