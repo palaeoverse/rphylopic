@@ -15,7 +15,7 @@ returned. If \code{TRUE}, a valid PhyloPic image url of the uuid is
 returned.}
 }
 \value{
-A \code{character} vector of a valid PhyloPic uuid or .svg image
+A \code{character} vector of a valid PhyloPic uuid or svg image
 url.
 }
 \description{

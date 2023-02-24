@@ -10,7 +10,7 @@
 #'   returned. If \code{TRUE}, a valid PhyloPic image url of the uuid is
 #'   returned.
 #'
-#' @return A \code{character} vector of a valid PhyloPic uuid or .svg image
+#' @return A \code{character} vector of a valid PhyloPic uuid or svg image
 #'   url.
 #'
 #' @details This function provides a single uuid for an input \code{name}. If
@@ -39,11 +39,16 @@ get_uuid <- function(name = NULL, url = FALSE){
   name <- sub("_", "%20", name)
 
   # API call -------------------------------------------------------------
-  base <- "https://api.phylopic.org/nodes?build=172"
+  base <- "https://api.phylopic.org/nodes?build="
+  # Get build
+  build <- GET(url = "https://api.phylopic.org/")
+  build <- content(build, as = "text", encoding = "UTF-8")
+  build <- sub(".*?build=", "", build)
+  build <- sub("\",\".*", "", build)
   embed <- "&embed_items=true&embed_primaryImage=true"
   filter <- paste0("&filter_name=", name)
   page <- "&page=0"
-  request <- paste0(base, embed, filter, page)
+  request <- paste0(base, build, embed, filter, page)
   api_return <- GET(url = request)
 
   # Extract uuid ----------------------------------------------------------
