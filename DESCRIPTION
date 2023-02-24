@@ -39,8 +39,6 @@ Suggests:
     knitr,
     rmarkdown,
     R.rsp,
-    parallel,
-    data.table,
     covr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
