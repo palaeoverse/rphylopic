@@ -1,4 +1,4 @@
-#' Get single PhyloPic uuid
+#' Get PhyloPic uuid
 #'
 #' This function provides a convenient way to obtain a valid uuid or image url
 #' for an input taxonomic name. As multiple silhouettes can exist for each
@@ -6,6 +6,10 @@
 #'
 #' @param name \code{character}. A taxonomic name. Different taxonomic levels
 #'   are supported (e.g. species, genus, family).
+#' @param n \code{numeric}. How many uuids should be returned? Depending
+#' on the requested `name`, multiple silhouettes might exist. If `n` exceeds
+#' the number of available images, all available uuids will be returned. This
+#' argument defaults to 1. 
 #' @param url \code{logical}. If \code{FALSE} (default), only the uuid is
 #'   returned. If \code{TRUE}, a valid PhyloPic image url of the uuid is
 #'   returned.
@@ -21,8 +25,8 @@
 #' @export
 #' @examples
 #' get_uuid(name = "Acropora cervicornis")
-#' get_uuid(name = "Tyrannosaurus", url = TRUE)
-get_uuid <- function(name = NULL, url = FALSE){
+#' get_uuid(name = "Dinosauria", n = 5, url = TRUE)
+get_uuid <- function(name = NULL, n = 1, url = FALSE){
   # Error handling -------------------------------------------------------
   if (is.null(name)) {
     stop("A taxonomic `name` is required (e.g. Acropora cervicornis).")
@@ -37,32 +41,38 @@ get_uuid <- function(name = NULL, url = FALSE){
   name <- tolower(name)
   name <- sub(" ", "%20", name)
   name <- sub("_", "%20", name)
-
+  
   # API call -------------------------------------------------------------
-  base <- "https://api.phylopic.org/nodes?build="
+  base <- "https://api.phylopic.org/images"
   # Get build
   build <- GET(url = "https://api.phylopic.org/")
   build <- content(build, as = "text", encoding = "UTF-8")
-  build <- sub(".*?build=", "", build)
-  build <- sub("\",\".*", "", build)
-  embed <- "&embed_items=true&embed_primaryImage=true"
+  build <- fromJSON(build)$build
+  build <- paste0("?build=", build)
+  embed <- "&embed_items=true"
   filter <- paste0("&filter_name=", name)
   page <- "&page=0"
+  # Request
   request <- paste0(base, build, embed, filter, page)
   api_return <- GET(url = request)
-
-  # Extract uuid ----------------------------------------------------------
-  uuid <- content(api_return, as = "text", encoding = "UTF-8")
-  # Check if resource available
-  if (grepl(pattern = "RESOURCE_NOT_FOUND", x = uuid)) {
-    stop("Resource not found. Check input `name`.")
-  }
-  uuid <- sub("/vector.svg.*", "", uuid) 
-  uuid <- sub(".*https://images.phylopic.org/images/", "", uuid) 
+  api_return <- content(api_return, as = "text", encoding = "UTF-8")
+  api_return <- fromJSON(api_return)
   
+  # Extract uuid ----------------------------------------------------------
+  uuids <- api_return$`_links`$items$href
+  uuids <- sub("/images/", "", uuids)
+  uuids <- sub(build, "", uuids, fixed = TRUE)
+  # Update n if greater than available uuids 
+  if (n > length(uuids)) {
+    n <- length(uuids)
+  }
+  # Extract n uuids
+  uuids <- uuids[1:n]
+
   # Build URL? ------------------------------------------------------------
   if (url) {
-    uuid <- paste0("https://images.phylopic.org/images/", uuid, "/vector.svg")
+    uuids <- paste0("https://images.phylopic.org/images/", uuids, 
+                    "/vector.svg")
   }
-  return(uuid)
+  return(uuids)
 }

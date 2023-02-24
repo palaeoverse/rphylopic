@@ -2,13 +2,18 @@
 % Please edit documentation in R/get_uuid.R
 \name{get_uuid}
 \alias{get_uuid}
-\title{Get single PhyloPic uuid}
+\title{Get PhyloPic uuid}
 \usage{
-get_uuid(name = NULL, url = FALSE)
+get_uuid(name = NULL, n = 1, url = FALSE)
 }
 \arguments{
 \item{name}{\code{character}. A taxonomic name. Different taxonomic levels
 are supported (e.g. species, genus, family).}
+
+\item{n}{\code{numeric}. How many uuids should be returned? Depending
+on the requested \code{name}, multiple silhouettes might exist. If \code{n} exceeds
+the number of available images, all available uuids will be returned. This
+argument defaults to 1.}
 
 \item{url}{\code{logical}. If \code{FALSE} (default), only the uuid is
 returned. If \code{TRUE}, a valid PhyloPic image url of the uuid is
@@ -31,5 +36,5 @@ valid image url (.svg file).
 }
 \examples{
 get_uuid(name = "Acropora cervicornis")
-get_uuid(name = "Tyrannosaurus", url = TRUE)
+get_uuid(name = "Dinosauria", n = 5, url = TRUE)
 }
