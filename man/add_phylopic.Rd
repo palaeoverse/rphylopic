@@ -2,11 +2,12 @@
 % Please edit documentation in R/add_phylopic.r
 \name{add_phylopic}
 \alias{add_phylopic}
-\title{Input an image and create a ggplot2 layer to add to an existing plot}
+\title{Add a phylopic to a ggplot plot}
 \usage{
 add_phylopic(
-  img,
+  img = NULL,
   name = NULL,
+  uuid = NULL,
   x = NULL,
   y = NULL,
   ysize = NULL,
@@ -15,7 +16,12 @@ add_phylopic(
 )
 }
 \arguments{
-\item{img}{A png object, e.g, from using \code{\link[=image_data]{image_data()}}}
+\item{img}{A Picture or png array object, e.g., from using \code{\link[=image_data]{image_data()}}.}
+
+\item{name}{A taxonomic name to be passed to \code{\link[=get_uuid]{get_uuid()}}.}
+
+\item{uuid}{A valid uuid for a phylopic silhouette (such as that returned by
+\code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylo]{pick_phylo()}}).}
 
 \item{x}{x value of the silhouette center. Ignored if y and ysize are not
 specified.}
@@ -27,41 +33,42 @@ specified.}
 ratio of the original image. Ignored if x and y are not specified.}
 
 \item{alpha}{A value between 0 and 1, specifying the opacity of the
-silhouette.}
+silhouette (0 is fully transparent, 1 is fully opaque).}
 
 \item{color}{Color to plot the silhouette in.}
 }
 \description{
-Input an image and create a ggplot2 layer to add to an existing plot
+Specify an existing image, taxonomic name, or phylopic uuid to add a phylopic
+silhouette as a separate layer to an existing ggplot plot.
 }
 \details{
-Use parameters \code{x}, \code{y}, and \code{ysize} to place the silhouette at a
-specified position on the plot. If all three of these parameters are
-unspecified, then the silhouette will be plotted to the full height and width
-of the plot.
+One (and only one) of \code{img}, \code{name}, or \code{uuid} must be specified.
+Use parameters \code{x}, \code{y}, and \code{ysize} to place the silhouette at a specified
+position on the plot. If all three of these parameters are unspecified,
+then the silhouette will be plotted to the full height and width of the
+plot. The aspect ratio of the silhouette will always be maintained.
 }
 \examples{
-\dontrun{
-# Put a silhouette behind a plot
+# Put a silhouette behind a plot based on a taxonomic name
 library(ggplot2)
-img <- image_data("27356f15-3cf8-47e8-ab41-71c6260b2724", size = "512")[[1]]
-qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") + 
-  add_phylopic(img)
+ggplot(iris) +
+  add_phylopic(name = "Iris", alpha = .2) +
+  geom_point(aes(x = Sepal.Length, y = Sepal.Width))
 
-# Put a silhouette anywhere
-library(ggplot2)
+# Put a silhouette anywhere based on UUID
 posx <- runif(50, 0, 10)
 posy <- runif(50, 0, 10)
 sizey <- runif(50, 0.4, 2)
-cols <- sample(c("black", "darkorange", "grey42", "white"), 50, 
+cols <- sample(c("black", "darkorange", "grey42", "white"), 50,
   replace = TRUE)
 
-cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 128)[[1]]
-(p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) + 
- geom_point(color = rgb(0,0,0,0)))
+# Since we are plotting a lot of the same image, we should just save
+# the image in our environment first
+cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9")
+(p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)))
 for (i in 1:50) {
-  p <- p + add_phylopic(cat, 1, posx[i], posy[i], sizey[i], cols[i])
+  p <- p + add_phylopic(cat, x = posx[i], y = posy[i],
+                        ysize = sizey[i], color = cols[i])
 }
 p + ggtitle("R Cat Herd!!")
-}
 }

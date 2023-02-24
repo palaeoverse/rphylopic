@@ -131,8 +131,8 @@ image_data <- function(uuid, size = "vector", ...) {
 #' @importFrom httr GET
 #' @importFrom rsvg rsvg_svg
 #' @importFrom grImport2 readPicture
-get_svg <- function(x, ...) {
-  res <- GET(url = x, config = list(...))
+get_svg <- function(url, ...) {
+  res <- GET(url = url, config = list(...))
   filename <- file.path(tempdir(), "temp.svg")
   rsvg_svg(res$content, filename)
   readPicture(filename)

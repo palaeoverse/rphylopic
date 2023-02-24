@@ -40,7 +40,7 @@ save_phylopic <- function(img = NULL, path = NULL, ...) {
   if (is.null(img)) {
     stop("`img` is required.")
   }
-  if (class(img) != "Picture") {
+  if (!is(img, "Picture")) {
     stop("`img` should be of class Picture.")
   }
   # If path is NULL use current working directory and svg

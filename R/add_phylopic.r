@@ -1,49 +1,82 @@
-#' Input an image and create a ggplot2 layer to add to an existing plot
+#' Add a phylopic to a ggplot plot
 #'
-#' @export
+#' Specify an existing image, taxonomic name, or phylopic uuid to add a phylopic
+#' silhouette as a separate layer to an existing ggplot plot.
+#'
+#' @param img A Picture or png array object, e.g., from using [image_data()].
+#' @param name A taxonomic name to be passed to [get_uuid()].
+#' @param uuid A valid uuid for a phylopic silhouette (such as that returned by
+#'   [get_uuid()] or [pick_phylo()]).
+#' @param x x value of the silhouette center. Ignored if y and ysize are not
+#'   specified.
+#' @param y y value of the silhouette center. Ignored if x and ysize are not
+#'   specified.
+#' @param ysize Height of the silhouette. The width is determined by the aspect
+#'   ratio of the original image. Ignored if x and y are not specified.
+#' @param alpha A value between 0 and 1, specifying the opacity of the
+#'   silhouette (0 is fully transparent, 1 is fully opaque).
+#' @param color Color to plot the silhouette in.
+#' @details One (and only one) of `img`, `name`, or `uuid` must be specified.
+#'   Use parameters `x`, `y`, and `ysize` to place the silhouette at a specified
+#'   position on the plot. If all three of these parameters are unspecified,
+#'   then the silhouette will be plotted to the full height and width of the
+#'   plot. The aspect ratio of the silhouette will always be maintained.
 #' @importFrom grImport2 pictureGrob
 #' @importFrom grid rasterGrob gList gTree
-#' @param img A png object, e.g, from using [image_data()]
-#' @param alpha A value between 0 and 1, specifying the opacity of the 
-#' silhouette.
-#' @param x x value of the silhouette center. Ignored if y and ysize are not 
-#' specified.
-#' @param y y value of the silhouette center. Ignored if x and ysize are not 
-#' specified.
-#' @param ysize Height of the silhouette. The width is determined by the aspect 
-#' ratio of the original image. Ignored if x and y are not specified.
-#' @param color Color to plot the silhouette in. 
-#' @details Use parameters `x`, `y`, and `ysize` to place the silhouette at a 
-#' specified position on the plot. If all three of these parameters are 
-#' unspecified, then the silhouette will be plotted to the full height and width 
-#' of the plot.
-#' @examples \dontrun{
-#' # Put a silhouette behind a plot
+#' @export
+#' @examples
+#' # Put a silhouette behind a plot based on a taxonomic name
 #' library(ggplot2)
-#' img <- image_data("27356f15-3cf8-47e8-ab41-71c6260b2724", size = "512")[[1]]
-#' qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") + 
-#'   add_phylopic(img)
+#' ggplot(iris) +
+#'   add_phylopic(name = "Iris", alpha = .2) +
+#'   geom_point(aes(x = Sepal.Length, y = Sepal.Width))
 #'
-#' # Put a silhouette anywhere
-#' library(ggplot2)
+#' # Put a silhouette anywhere based on UUID
 #' posx <- runif(50, 0, 10)
 #' posy <- runif(50, 0, 10)
 #' sizey <- runif(50, 0.4, 2)
-#' cols <- sample(c("black", "darkorange", "grey42", "white"), 50, 
+#' cols <- sample(c("black", "darkorange", "grey42", "white"), 50,
 #'   replace = TRUE)
 #'
-#' cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 128)[[1]]
-#' (p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) + 
-#'  geom_point(color = rgb(0,0,0,0)))
+#' # Since we are plotting a lot of the same image, we should just save
+#' # the image in our environment first
+#' cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9")
+#' (p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)))
 #' for (i in 1:50) {
-#'   p <- p + add_phylopic(cat, 1, posx[i], posy[i], sizey[i], cols[i])
+#'   p <- p + add_phylopic(cat, x = posx[i], y = posy[i],
+#'                         ysize = sizey[i], color = cols[i])
 #' }
 #' p + ggtitle("R Cat Herd!!")
-#' }
-
-add_phylopic <- function(img, name = NULL,
+add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
                          x = NULL, y = NULL, ysize = NULL,
                          alpha = 1, color = "black") {
+  if (all(sapply(list(img, name, uuid), is.null))) {
+    stop("One of `img`, `name`, or `uuid` is required.")
+  }
+  if (sum(sapply(list(img, name, uuid), is.null)) < 2) {
+    stop("Only one of `img`, `name`, or `uuid` may be specified")
+  }
+  if (alpha > 1 || alpha < 0) {
+    stop("`alpha` must be between 0 and 1.")
+  }
+  if (!is.null(name)) {
+    if (!is.character(name)) {
+      stop("`name` should be of class character.")
+    }
+    url <- get_uuid(name = name, url = TRUE)
+    if (is.na(url)) {
+      stop("`name` returned no phylopic results.")
+    }
+    img <- get_svg(url)
+  } else if (!is.null(uuid)) {
+    if (!is.character(uuid)) {
+      stop("`uuid` should be of class character.")
+    }
+    img <- image_data(uuid)
+  } else if (!is(img, "Picture") && !is.array(img)) {
+    stop("`img` should be of class Picture (for a vector image) or class array
+          (for a raster image).")
+  }
 
   # get aspect ratio
   if (is(img, "Picture")) { # svg
@@ -85,7 +118,7 @@ add_phylopic <- function(img, name = NULL,
   }
   
   return(
-    inset(imgGrob, xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax)
     # use this instead of annotation_custom to support all coords
+    inset(imgGrob, xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax)
   )
 }
