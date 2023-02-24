@@ -1,7 +1,6 @@
 #' Input an image and create a ggplot2 layer to add to an existing plot
 #'
 #' @export
-#' @importFrom ggmap inset
 #' @importFrom grImport2 pictureGrob
 #' @importFrom grid rasterGrob gList gTree
 #' @param img A png object, e.g, from using [image_data()]
@@ -87,6 +86,6 @@ add_phylopic <- function(img, name = NULL,
   
   return(
     inset(imgGrob, xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax)
-    # use this instead of annotation_custom to support other coords
+    # use this instead of annotation_custom to support all coords
   )
 }
