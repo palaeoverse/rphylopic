@@ -42,8 +42,8 @@ get_uuid <- function(name = NULL, n = 1, url = FALSE){
   }
   # Normalise name -------------------------------------------------------
   name <- tolower(name)
-  name <- sub(" ", "%20", name)
-  name <- sub("_", "%20", name)
+  name <- gsub(" ", "%20", name)
+  name <- gsub("_", "%20", name)
   
   # API call -------------------------------------------------------------
   base <- "https://api.phylopic.org/images"

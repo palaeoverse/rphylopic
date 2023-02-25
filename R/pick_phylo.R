@@ -27,29 +27,27 @@
 pick_phylo <- function(name = NULL, n = 5){
   # Get uuids
   uuids <- get_uuid(name = name, n = n, url = FALSE)
-  # Start a new graphics page
-  grid.newpage()
   # Cycle through uuids
   for (i in seq_along(uuids)) {
+    # Start a new graphics page
+    grid.newpage()
     # Get image data
     img <- image_data(uuid = uuids[i], size = "vector")
     # Plot image
     grid.picture(img)
+    # Return data for final image
+    if (i == length(uuids)) {
+      message("This is the only or final image. Returning this uuid data.")
+      print(uuids[i])
+      return(img)
+    }
     # Set up menu choice
-    m <- menu(choices = c("Next", "Select"),
-              title = paste0("Choose an option (",
-                             i, "/", length(uuids), "):"))
+    m <- menu(choices = c("Next", "Select"), title = paste0(
+      "Choose an option (", i, "/", length(uuids), "):"))
     # Make selection
     if (m == 2) {
       print(uuids[i])
       return(img)
     }
-    # Return data for final image
-    if (i == length(uuids)) {
-      message("This is the final image. Returning data for this uuid.")
-      print(uuids[i])
-      return(img)
-    }
-    dev.off()
   }
 }
