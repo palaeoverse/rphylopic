@@ -2,13 +2,13 @@
 % Please edit documentation in R/get_uuid.R
 \name{get_uuid}
 \alias{get_uuid}
-\title{Get PhyloPic uuid}
+\title{Get PhyloPic uuid(s)}
 \usage{
 get_uuid(name = NULL, n = 1, url = FALSE)
 }
 \arguments{
 \item{name}{\code{character}. A taxonomic name. Different taxonomic levels
-are supported (e.g. species, genus, family).}
+are supported (i.e. species, genus, family).}
 
 \item{n}{\code{numeric}. How many uuids should be returned? Depending
 on the requested \code{name}, multiple silhouettes might exist. If \code{n} exceeds
@@ -29,10 +29,9 @@ for an input taxonomic name. As multiple silhouettes can exist for each
 species in PhyloPic, this function extracts the primary image.
 }
 \details{
-This function provides a single uuid for an input \code{name}. If
-the returned uuid does not provide the desired image, the user might
-prefer to use \strong{INSERT FUNCTION}. The uuid can also be returned as a
-valid image url (.svg file).
+This function returns uuid(s) or image url (svg) for an input
+\code{name}. If a specific image is desired, the user can make use of
+\link{pick_phylo} to visually select the desired uuid/url.
 }
 \examples{
 get_uuid(name = "Acropora cervicornis")

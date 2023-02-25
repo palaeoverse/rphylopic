@@ -2,25 +2,33 @@
 % Please edit documentation in R/pick_phylo.R
 \name{pick_phylo}
 \alias{pick_phylo}
-\title{Pick a PhyloPic uuid from available options}
+\title{Pick a PhyloPic image from available options}
 \usage{
-pick_phylo(name, n = 5, url = FALSE)
+pick_phylo(name = NULL, n = 5)
 }
 \arguments{
 \item{name}{\code{character}. A taxonomic name. Different taxonomic levels
 are supported (e.g. species, genus, family).}
 
-\item{n}{\code{numeric}. How many uuids should be returned? Depending
-on the requested \code{name}, multiple silhouettes might exist. If \code{n} exceeds
-the number of available images, all available uuids will be returned. This
-argument defaults to 1.}
-
-\item{url}{\code{logical}. If \code{FALSE} (default), only the uuid is
-returned. If \code{TRUE}, a valid PhyloPic image url of the uuid is
-returned.}
+\item{n}{\code{numeric}. How many uuids should be viewed? Depending on
+the requested \code{name}, multiple silhouettes may exist. If \code{n} exceeds
+the number of available images, all available uuids will be returned.
+Defaults to 5.}
+}
+\value{
+A \code{Picture} object is returned. The uuid of the selected
+image is also printed to console.
 }
 \description{
-This function provides a visually interactive way to pick a valid uuid
-for an input taxonomic name. As multiple silhouettes can exist for each
-species in PhyloPic, this is useful for choosing the right uuid for you.
+This function provides a visually interactive way to pick an image and
+valid uuid for an input taxonomic name. As multiple silhouettes can exist
+for each species in PhyloPic, this function is useful for choosing the
+right image/uuid for the user.
+}
+\details{
+This function allows the user to visually select the desired
+image from a pool of silhouettes available for the input \code{name}.
+}
+\examples{
+img <- pick_phylo(name = "Canis lupus", n = 5)
 }

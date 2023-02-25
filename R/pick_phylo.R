@@ -1,40 +1,55 @@
-#' Pick a PhyloPic uuid from available options
+#' Pick a PhyloPic image from available options
 #'
-#' This function provides a visually interactive way to pick a valid uuid
-#' for an input taxonomic name. As multiple silhouettes can exist for each
-#' species in PhyloPic, this is useful for choosing the right uuid for you.
+#' This function provides a visually interactive way to pick an image and
+#' valid uuid for an input taxonomic name. As multiple silhouettes can exist
+#' for each species in PhyloPic, this function is useful for choosing the 
+#' right image/uuid for the user.
 #'
 #' @param name \code{character}. A taxonomic name. Different taxonomic levels
 #'   are supported (e.g. species, genus, family).
-#' @param n \code{numeric}. How many uuids should be returned? Depending
-#' on the requested `name`, multiple silhouettes might exist. If `n` exceeds
-#' the number of available images, all available uuids will be returned. This
-#' argument defaults to 1. 
-#' @param url \code{logical}. If \code{FALSE} (default), only the uuid is
-#'   returned. If \code{TRUE}, a valid PhyloPic image url of the uuid is
-#'   returned.
+#' @param n \code{numeric}. How many uuids should be viewed? Depending on
+#'   the requested `name`, multiple silhouettes may exist. If `n` exceeds
+#'   the number of available images, all available uuids will be returned.
+#'   Defaults to 5.
 #'
-#'
-#'
-#'
-#'
-#'
-#'
-#'
-pick_phylo <- function(name, n = 5, url = FALSE){
+#' @return A \code{Picture} object is returned. The uuid of the selected
+#'   image is also printed to console.
+#' 
+#' @details This function allows the user to visually select the desired
+#'   image from a pool of silhouettes available for the input `name`.
+#' 
+#' @importFrom grid grid.newpage
+#' @importFrom grImport2 grid.picture
+#' 
+#' @export
+#' @examples 
+#' img <- pick_phylo(name = "Canis lupus", n = 5)
+pick_phylo <- function(name = NULL, n = 5){
   # Get uuids
-  uuids <- get_uuid(name = name, n = n, url = url)
+  uuids <- get_uuid(name = name, n = n, url = FALSE)
+  # Start a new graphics page
+  grid.newpage()
   # Cycle through uuids
-  for (i in uuids) {
-    img <- image_data(uuid = i, size = "vector")
+  for (i in seq_along(uuids)) {
+    # Get image data
+    img <- image_data(uuid = uuids[i], size = "vector")
+    # Plot image
     grid.picture(img)
-    m <- menu(choices = c("Next", "Select"), title = "Choose an option:")
+    # Set up menu choice
+    m <- menu(choices = c("Next", "Select"),
+              title = paste0("Choose an option (",
+                             i, "/", length(uuids), "):"))
+    # Make selection
     if (m == 2) {
-      print(i)
+      print(uuids[i])
+      return(img)
+    }
+    # Return data for final image
+    if (i == length(uuids)) {
+      message("This is the final image. Returning data for this uuid.")
+      print(uuids[i])
       return(img)
     }
     dev.off()
   }
 }
-
-

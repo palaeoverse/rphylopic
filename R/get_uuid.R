@@ -1,11 +1,11 @@
-#' Get PhyloPic uuid
+#' Get PhyloPic uuid(s)
 #'
 #' This function provides a convenient way to obtain a valid uuid or image url
 #' for an input taxonomic name. As multiple silhouettes can exist for each
 #' species in PhyloPic, this function extracts the primary image.
 #'
 #' @param name \code{character}. A taxonomic name. Different taxonomic levels
-#'   are supported (e.g. species, genus, family).
+#'   are supported (i.e. species, genus, family).
 #' @param n \code{numeric}. How many uuids should be returned? Depending
 #' on the requested `name`, multiple silhouettes might exist. If `n` exceeds
 #' the number of available images, all available uuids will be returned. This
@@ -17,11 +17,11 @@
 #' @return A \code{character} vector of a valid PhyloPic uuid or svg image
 #'   url.
 #'
-#' @details This function provides a single uuid for an input \code{name}. If
-#'   the returned uuid does not provide the desired image, the user might
-#'   prefer to use **INSERT FUNCTION**. The uuid can also be returned as a
-#'   valid image url (.svg file).
+#' @details This function returns uuid(s) or image url (svg) for an input 
+#'   \code{name}. If a specific image is desired, the user can make use of
+#'    \link{pick_phylo} to visually select the desired uuid/url.
 #' @importFrom httr GET content
+#' @importFrom jsonlite fromJSON
 #' @export
 #' @examples
 #' get_uuid(name = "Acropora cervicornis")
@@ -33,6 +33,9 @@ get_uuid <- function(name = NULL, n = 1, url = FALSE){
   }
   if (!is.character(name)) {
     stop("`name` should be of class character.")
+  }
+  if (!is.numeric(n)) {
+    stop("`n` should be of class numeric.")
   }
   if (!is.logical(url)) {
     stop("`url` should be of class logical.")
@@ -57,7 +60,12 @@ get_uuid <- function(name = NULL, n = 1, url = FALSE){
   api_return <- GET(url = request)
   api_return <- content(api_return, as = "text", encoding = "UTF-8")
   api_return <- fromJSON(api_return)
-  
+  # Error handling
+  if ("errors" %in% names(api_return)) {
+    stop(paste0("Image resource not available for `name`. \n",
+                "Ensure provided name is a valid taxonomic name or ",
+                "try a species/genus resolution name."))
+  }
   # Extract uuid ----------------------------------------------------------
   uuids <- api_return$`_links`$items$href
   uuids <- sub("/images/", "", uuids)

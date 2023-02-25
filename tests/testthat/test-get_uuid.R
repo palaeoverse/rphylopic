@@ -8,4 +8,5 @@ test_that("get_uuid works", {
   expect_error(get_uuid(name = NULL))
   expect_error(get_uuid(name = 1))
   expect_error(get_uuid(name = "Acropora cervicornis", url = 1))
+  expect_error(get_uuid(name = "Acropora cervicornis", n = "5"))
 })
