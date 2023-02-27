@@ -16,33 +16,6 @@ theme_phylo_blank2 <- function() {
   )
 }
 
-# Unnest a nested list
-unnest <- function(x) {
-  if (is.null(names(x))) {
-    list(unname(unlist(x)))
-  }
-  else {
-    c(list(all = unname(unlist(x))), do.call(c, lapply(x, unnest)))
-  }
-}
-
-# Replaces null with "none"
-replacenull <- function(x) {
-  x$canonicalName[sapply(x$canonicalName, function(x) is.null(x))] <- "none"
-  x
-}
-
-# Convert citation null to number 1
-citationtonumber <- function(x) {
-  make1 <- function(x){
-    if (x$canonicalName$citationStart == "none") {
-      x$canonicalName$citationStart <- 1
-    }
-    x
-  }
-  make1(x)
-}
-
 pc <- function(l) Filter(Negate(is.null), l)
 
 as_null <- function(x) if (length(x) == 0) NULL else x
@@ -62,26 +35,3 @@ phy_GET2 <- function(path, query, ...) {
 
 ibase <- function() "https://images.phylopic.org/images"
 pbase <- function() "https://api.phylopic.org"
-
-check_for_a_pkg <- function(x) {
-  if (!requireNamespace(x, quietly = TRUE)) {
-    stop("Please install ", x, call. = FALSE)
-  } else {
-    invisible(TRUE)
-  }
-}
-
-messager <- function(..., v = TRUE) {
-  msg <- paste(...)
-  if (v) {
-    message(msg)
-  }
-}
-
-#' Send messages to console even from within parallel processes
-#' @return A message
-#' @keywords internal
-message_parallel <- function(...) {
-  system(sprintf('echo "%s"', paste0(..., collapse = "")))
-}
-
