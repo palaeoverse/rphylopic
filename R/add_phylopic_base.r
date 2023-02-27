@@ -26,6 +26,7 @@
 #' @importFrom graphics par
 #' @importFrom grid grid.raster gpar
 #' @importFrom grImport2 grid.picture
+#' @importFrom methods is
 #' @export
 #' @examples
 #' # single image

@@ -23,32 +23,13 @@ image_data(uuid, size = "vector", ...)
 \item{uuid}{One or more name UUIDs.}
 
 \item{options}{(character) One or more of citationStart, html, namebankID, root, string,
-type, uid, uri, and/or votes}
+type, uid, uri, and/or votes.}
 
 \item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
 
+\item{page}{The page of the results to return.}
+
 \item{size}{Height of the image, one of 64, 128, 256, 512, 1024, "thumb", or "icon"}
-
-\item{timestamp}{Either \code{modified} (to go by the last time the image file was modified)
-or \code{submitted} (to go by the time the image was first submitted).}
-
-\item{from}{timestamp string, in "YYYY-MM-DD-HH-MM-SS" format, telling the earliest time to
-retrieve images for. All numbers past the year are optional. For example, these are
-acceptable: "2011-10-29-20-30", "2011-10-29-20", "2011-10-29", "2011-10", and "2011".
-Omitted numbers indicate the lowest possible value for that number, for example, "2011"
-indicates "2011-01-01-00-00-00" (2011 January 1, midnight). Numbers in the string do not
-need to be padded. For example, this is acceptable: "2011-1-1-0-0-0". The image list will
-include any images dated at the indicated time.}
-
-\item{to}{A date-time string, in "YYYY-MM-DD-HH-MM-SS" format, telling the earliest time to
-retrieve images for. See the from parameter for more details on the format. The image list
-will include any images dated up to, but not including, the indicated time.}
-
-\item{start}{The index to start with. Using 0 starts with the most recently-submitted image.}
-
-\item{length}{Number of images to list.}
-
-\item{input}{Either a vector of uuids or the output from the function \code{search_images}}
 }
 \description{
 Perform actions with images.

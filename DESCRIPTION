@@ -32,7 +32,8 @@ Imports:
     grImport2,
     rsvg,
     httr,
-    curl
+    curl,
+    methods
 Suggests:
     testthat (>= 3.0.0),
     vdiffr (>= 1.0.0),

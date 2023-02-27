@@ -23,6 +23,7 @@
 #'   plot. The aspect ratio of the silhouette will always be maintained.
 #' @importFrom grImport2 pictureGrob
 #' @importFrom grid rasterGrob gList gTree
+#' @importFrom methods is
 #' @export
 #' @examples
 #' # Put a silhouette behind a plot based on a taxonomic name
@@ -119,6 +120,6 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
   
   return(
     # use this instead of annotation_custom to support all coords
-    inset(imgGrob, xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax)
+    phylopic_inset(imgGrob, xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax)
   )
 }

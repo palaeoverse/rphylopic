@@ -20,7 +20,7 @@
 #' 
 #' @importFrom grid grid.newpage grid.text
 #' @importFrom grImport2 grid.picture
-#' 
+#' @importFrom utils menu
 #' @export
 #' @examples 
 #' img <- pick_phylo(name = "Canis lupus", n = 5)

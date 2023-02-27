@@ -9,13 +9,13 @@
 #'   of grob
 #' @param ymin,ymax y location (in data coordinates) giving vertical location of
 #'   grob
-#' @export inset
-#' @importFrom ggplot2 StatIdentity PositionIdentity
+#' @export
+#' @importFrom ggplot2 StatIdentity PositionIdentity layer
 #' @note [annotation_custom()] expects the grob to fill the entire viewport
 #'   defined by xmin, xmax, ymin, ymax. Grobs with a different (absolute) size
 #'   will be center-justified in that region. Inf values can be used to fill the
 #'   full plot panel
-inset <- annotation_custom <- function(grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf) {
+phylopic_inset <- function(grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf) {
   layer(
     data = NULL,
     stat = StatIdentity,

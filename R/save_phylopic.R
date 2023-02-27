@@ -24,8 +24,9 @@
 #'   the grDevices package can be used (i.e. pdf, png, svg,
 #'   tiff, jpeg, and bmp).
 #' 
-#' @importFrom grDevices pdf png svg tiff jpeg bmp
+#' @importFrom grDevices pdf png svg tiff jpeg bmp dev.off
 #' @importFrom grImport2 grid.picture
+#' @importFrom methods is
 #' @export
 #' @examples
 #' # Get image data

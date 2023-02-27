@@ -20,6 +20,8 @@ pc <- function(l) Filter(Negate(is.null), l)
 
 as_null <- function(x) if (length(x) == 0) NULL else x
 
+pbase <- function() "https://api.phylopic.org"
+
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr GET content
 #' @importFrom curl nslookup
@@ -44,6 +46,3 @@ phy_GET <- function(path, query = list(), ...) {
   }
   jsn
 }
-
-ibase <- function() "https://images.phylopic.org/images"
-pbase <- function() "https://api.phylopic.org"
