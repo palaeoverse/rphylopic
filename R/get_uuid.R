@@ -20,9 +20,7 @@
 #' @details This function returns uuid(s) or image url (svg) for an input 
 #'   \code{name}. If a specific image is desired, the user can make use of
 #'    [pick_phylo] to visually select the desired uuid/url.
-#' @importFrom httr GET content
-#' @importFrom jsonlite fromJSON
-#' @importFrom curl nslookup
+#' @importFrom stats setNames
 #' @export
 #' @examples
 #' get_uuid(name = "Acropora cervicornis")
@@ -41,35 +39,15 @@ get_uuid <- function(name = NULL, n = 1, url = FALSE){
   if (!is.logical(url)) {
     stop("`url` should be of class logical.")
   }
-  # Check PhyloPic (or user) is online
-  # Check PhyloPic (or user) is online
-  tryCatch(
-    {
-      nslookup("api.phylopic.org")
-    },
-    error = function(e) {
-      stop("PhyloPic is not available or you have no internet connection.")
-    })
   # Normalise name -------------------------------------------------------
   name <- tolower(name)
-  name <- gsub(" ", "%20", name)
-  name <- gsub("_", "%20", name)
+  name <- gsub("_", " ", name)
   
   # API call -------------------------------------------------------------
-  base <- "https://api.phylopic.org/images"
-  # Get build
-  build <- GET(url = "https://api.phylopic.org/")
-  build <- content(build, as = "text", encoding = "UTF-8")
-  build <- fromJSON(build)$build
-  build <- paste0("?build=", build)
-  embed <- "&embed_items=true"
-  filter <- paste0("&filter_name=", name)
-  page <- "&page=0"
-  # Request
-  request <- paste0(base, build, embed, filter, page)
-  api_return <- GET(url = request)
-  api_return <- content(api_return, as = "text", encoding = "UTF-8")
-  api_return <- fromJSON(api_return)
+  api_return <- phy_GET("images",
+                        list(embed_items = if (url) "true" else "false",
+                             filter_name = name,
+                             page = 0))
   # Error handling
   if ("errors" %in% names(api_return)) {
     stop(paste0("Image resource not available for `name`. \n",
@@ -79,7 +57,7 @@ get_uuid <- function(name = NULL, n = 1, url = FALSE){
   # Extract uuid ----------------------------------------------------------
   uuids <- api_return$`_links`$items$href
   uuids <- sub("/images/", "", uuids)
-  uuids <- sub(build, "", uuids, fixed = TRUE)
+  uuids <- sub("(\\?build=\\d+)$", "", uuids)
   # Update n if greater than available uuids 
   if (n > length(uuids)) {
     n <- length(uuids)
@@ -89,8 +67,8 @@ get_uuid <- function(name = NULL, n = 1, url = FALSE){
 
   # Build URL? ------------------------------------------------------------
   if (url) {
-    uuids <- paste0("https://images.phylopic.org/images/", uuids, 
-                    "/vector.svg")
+    href <- api_return$`_embedded`$items$`_links`$vectorFile$href
+    uuids <- setNames(href[1:n], uuids)
   }
   return(uuids)
 }

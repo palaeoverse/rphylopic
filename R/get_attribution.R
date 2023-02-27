@@ -11,9 +11,6 @@
 #' @details This function returns image `uuid` specific attribution data,
 #'   including: contributor name, contributor uuid, contributor contact,
 #'   image uuid and license. 
-#' @importFrom httr GET content
-#' @importFrom jsonlite fromJSON
-#' @importFrom curl nslookup
 #' @export
 #' @examples
 #' # Get valid uuid
@@ -28,27 +25,8 @@ get_attribution <- function(uuid = NULL) {
   if (!is.character(uuid)) {
     stop("`uuid` should be of class character.")
   }
-  # Check PhyloPic (or user) is online
-  tryCatch(
-    {
-      nslookup("api.phylopic.org")
-    },
-    error = function(e) {
-      stop("PhyloPic is not available or you have no internet connection.")
-    })
   # API call -------------------------------------------------------------
-  base <- "https://api.phylopic.org/images/"
-  # Get build
-  build <- GET(url = "https://api.phylopic.org/")
-  build <- content(build, as = "text", encoding = "UTF-8")
-  build <- fromJSON(build)$build
-  build <- paste0("?build=", build)
-  embed <- paste0("&embed_contributor=true")
-  # Request
-  request <- paste0(base, uuid, build, embed)
-  api_return <- GET(url = request)
-  api_return <- content(api_return, as = "text", encoding = "UTF-8")
-  api_return <- fromJSON(api_return)
+  api_return <- phy_GET(file.path("images", uuid), list(embed_contributor = "true"))
   # Process output -------------------------------------------------------
   att <- list(contributor = api_return$`_embedded`$contributor$name, 
               contributor_uuid = api_return$`_embedded`$contributor$uuid, 
