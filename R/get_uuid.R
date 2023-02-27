@@ -19,9 +19,10 @@
 #'
 #' @details This function returns uuid(s) or image url (svg) for an input 
 #'   \code{name}. If a specific image is desired, the user can make use of
-#'    \link{pick_phylo} to visually select the desired uuid/url.
+#'    [pick_phylo] to visually select the desired uuid/url.
 #' @importFrom httr GET content
 #' @importFrom jsonlite fromJSON
+#' @importFrom curl nslookup
 #' @export
 #' @examples
 #' get_uuid(name = "Acropora cervicornis")
@@ -40,6 +41,15 @@ get_uuid <- function(name = NULL, n = 1, url = FALSE){
   if (!is.logical(url)) {
     stop("`url` should be of class logical.")
   }
+  # Check PhyloPic (or user) is online
+  # Check PhyloPic (or user) is online
+  tryCatch(
+    {
+      nslookup("api.phylopic.org")
+    },
+    error = function(e) {
+      stop("PhyloPic is not available or you have no internet connection.")
+    })
   # Normalise name -------------------------------------------------------
   name <- tolower(name)
   name <- gsub(" ", "%20", name)

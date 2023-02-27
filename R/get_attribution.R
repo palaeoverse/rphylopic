@@ -13,6 +13,7 @@
 #'   image uuid and license. 
 #' @importFrom httr GET content
 #' @importFrom jsonlite fromJSON
+#' @importFrom curl nslookup
 #' @export
 #' @examples
 #' # Get valid uuid
@@ -27,6 +28,14 @@ get_attribution <- function(uuid = NULL) {
   if (!is.character(uuid)) {
     stop("`uuid` should be of class character.")
   }
+  # Check PhyloPic (or user) is online
+  tryCatch(
+    {
+      nslookup("api.phylopic.org")
+    },
+    error = function(e) {
+      stop("PhyloPic is not available or you have no internet connection.")
+    })
   # API call -------------------------------------------------------------
   base <- "https://api.phylopic.org/images/"
   # Get build

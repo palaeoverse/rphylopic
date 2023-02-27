@@ -33,8 +33,18 @@ pick_phylo <- function(name = NULL, n = 5){
     grid.newpage()
     # Get image data
     img <- image_data(uuid = uuids[i], size = "vector")
+    # Get attribution data
+    att <- get_attribution(uuid = uuids[i])
     # Plot image
     grid.picture(img)
+    # Add text for attribution
+    att_string <- paste0("Contributor: ", att$contributor, "\n",
+                         "Created: ", att$created, "\n",
+                         "License: ", att$license)
+    grid.text(label = att_string, 
+              x = 0.96, y = 0.92,
+              just = "right",
+              gp = gpar(fontsize = 8, col = "purple", fontface = "bold"))
     # Return data for final image
     if (i == length(uuids)) {
       message("This is the only or final image. Returning this uuid data.")
