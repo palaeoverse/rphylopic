@@ -97,10 +97,10 @@ image_data <- function(uuid, size = "vector", ...) {
   image_info <- phy_GET(file.path("images", uuid), ...)$`_links`
   if (size %in% c("64", "128", "192")) { # get thumbnail url
     thumbs <- image_info$thumbnailFiles
-    url <- Filter(function(x) grepl(size, x$sizes), thumbs)[[1]]$href
+    url <- thumbs$href[grepl(size, thumbs$sizes)]
   } else if (size %in% c("512", "1024", "1536")) { # get raster url
     rasters <- image_info$rasterFiles
-    url <- Filter(function(x) grepl(size, x$sizes), rasters)[[1]]$href
+    url <- rasters$href[grepl(size, rasters$sizes)]
   } else if (size == "twitter") { # get twitter url
     url <- image_info$`twitter:image`$href
   } else if (size == "vector") { # get vector url

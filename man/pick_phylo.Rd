@@ -30,5 +30,7 @@ This function allows the user to visually select the desired
 image from a pool of silhouettes available for the input \code{name}.
 }
 \examples{
+\dontrun{
 img <- pick_phylo(name = "Canis lupus", n = 5)
+}
 }

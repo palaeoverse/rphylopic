@@ -87,8 +87,6 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     stop("`img` should be of class Picture (for a vector image) or class array
           (for a raster image).")
   }
-
-  # need to add a condition here if no size is specified
   
   # get plot limits
   usr <- par()$usr
@@ -107,6 +105,11 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   xlims <- c(usr_x[1] - plt_x[1] * width, usr_x[2] + (1 - plt_x[2]) * width)
   height <- diff(usr_y)/diff(plt_y)
   ylims <- c(usr_y[1] - plt_y[1] * height, usr_y[2] + (1 - plt_y[2]) * height)
+  
+  # set default position and size if need be
+  if (is.null(x)) x <- mean(usr_x)
+  if (is.null(y)) y <- mean(usr_y)
+  if (is.null(ysize)) ysize <- abs(diff(usr_y))
   
   # convert x, y, and ysize to percentages
   x <- (x - xlims[1])/diff(xlims)

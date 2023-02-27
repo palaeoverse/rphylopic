@@ -4,7 +4,14 @@ test_that("add_phylopic_base works", {
   # phylopic in background, with name
   expect_doppelganger("phylopic in background", function() {
     plot(1, 1, type="n", main="A cat")
-    add_phylopic_base(name = "Cat", x = 1, y = 1, ysize = .4)
+    add_phylopic_base(name = "Cat")
+  })
+  
+  # png phylopic in background
+  expect_doppelganger("phylopic png in background", function() {
+    cat_png <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = "512")
+    plot(1, 1, type="n", main="A cat")
+    add_phylopic_base(cat_png, x = 1, y = 1, ysize = .4, color = "blue")
   })
   
   # a bunch of little colored phylopics, with existing image

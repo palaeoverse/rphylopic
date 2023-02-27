@@ -22,8 +22,9 @@
 #' @importFrom grImport2 grid.picture
 #' @importFrom utils menu
 #' @export
-#' @examples 
+#' @examples \dontrun{
 #' img <- pick_phylo(name = "Canis lupus", n = 5)
+#' }
 pick_phylo <- function(name = NULL, n = 5){
   # Get uuids
   uuids <- get_uuid(name = name, n = n, url = FALSE)
