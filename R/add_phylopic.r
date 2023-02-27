@@ -41,7 +41,7 @@
 #' # Since we are plotting a lot of the same image, we should just save
 #' # the image in our environment first
 #' cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9")
-#' (p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)))
+#' p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y))
 #' for (i in 1:50) {
 #'   p <- p + add_phylopic(cat, x = posx[i], y = posy[i],
 #'                         ysize = sizey[i], color = cols[i])

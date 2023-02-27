@@ -5,7 +5,7 @@ test_that("pick_phylo interactively works", {
 
 test_that("pick_phylo works", {
   # Expect equal
-  expect_equal(class(pick_phylo(name = "Acropora", n = 1))[1], "Picture")
+  expect_true(is(pick_phylo(name = "Acropora", n = 1), "Picture"))
   
   # Expect error
   expect_error(pick_phylo(name = "Dog"))
