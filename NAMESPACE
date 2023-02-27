@@ -2,6 +2,7 @@
 
 export(add_phylopic)
 export(add_phylopic_base)
+export(get_attribution)
 export(get_uuid)
 export(image_count)
 export(image_data)
