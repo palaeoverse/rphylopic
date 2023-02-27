@@ -18,7 +18,7 @@
 #' @details This function allows the user to visually select the desired
 #'   image from a pool of silhouettes available for the input `name`.
 #' 
-#' @importFrom grid grid.newpage
+#' @importFrom grid grid.newpage grid.text
 #' @importFrom grImport2 grid.picture
 #' 
 #' @export
