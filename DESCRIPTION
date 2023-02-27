@@ -27,12 +27,12 @@ Imports:
     ggplot2,
     jsonlite,
     grid,
-    gridBase,
     graphics,
     png,
     grImport2,
     rsvg,
-    httr
+    httr,
+    curl
 Suggests:
     testthat (>= 3.0.0),
     vdiffr (>= 1.0.0),
