@@ -5,7 +5,7 @@
 #' @param options (character) One or more of citationStart, html, namebankID,
 #'   root, string, type, uid, uri, and/or votes.
 #' @param page The page of the results to return.
-#' @param ... curl options passed on to [crul::HttpClient]
+#' @param ... curl options passed on to [httr::GET]
 #' @param size Height of the image, one of 64, 128, 256, 512, 1024, "thumb", or
 #'   "icon"
 #' @details I'm not adding methods for modifying images, including add, edit,
@@ -31,6 +31,7 @@
 #' # Get data for an image
 #' image_data(uuid, size = "vector") # vector format
 #' image_data(uuid, size = "512") # raster format
+#' }
 #' @export
 #' @rdname image
 image_get <- function(uuid, options = NULL, ...) {

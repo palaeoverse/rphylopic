@@ -22,21 +22,23 @@ image_data(uuid, size = "vector", ...)
 \arguments{
 \item{uuid}{One or more name UUIDs.}
 
-\item{options}{(character) One or more of citationStart, html, namebankID, root, string,
-type, uid, uri, and/or votes.}
+\item{options}{(character) One or more of citationStart, html, namebankID,
+root, string, type, uid, uri, and/or votes.}
 
-\item{...}{curl options passed on to \link[crul:HttpClient]{crul::HttpClient}}
+\item{...}{curl options passed on to \link[httr:GET]{httr::GET}}
 
 \item{page}{The page of the results to return.}
 
-\item{size}{Height of the image, one of 64, 128, 256, 512, 1024, "thumb", or "icon"}
+\item{size}{Height of the image, one of 64, 128, 256, 512, 1024, "thumb", or
+"icon"}
 }
 \description{
 Perform actions with images.
 }
 \details{
-I'm not adding methods for modifying images, including add, edit, updated, delete, and
-transfer, because I can't imagine doing those things from R. Am I wrong?
+I'm not adding methods for modifying images, including add, edit,
+updated, delete, and transfer, because I can't imagine doing those things
+from R. Am I wrong?
 
 Note: uid is always returned
 }
@@ -45,46 +47,19 @@ Note: uid is always returned
 # Get info on an image
 uuid <- "9fae30cd-fb59-4a81-a39c-e1826a35f612"
 image_get(uuid = uuid)
-image_get(uuid = uuid, options=c('credit','pngFiles','taxa','canonicalName','string','uri','type'))
-image_get(uuid = uuid, options=c('credit','licenseURL','pngFiles','submitted','submitter',
-   'svgFile','taxa','canonicalName','string','uri','type','citationStart'))
 
 # Count images in Phylopic database
 image_count()
-image_count(verbose = TRUE)
 
 # Lists images in chronological order, from most to least recently modified
-image_list(start=1, length=10)
-image_list(start=1, length=10, options="taxa")
+image_list()
+image_list(page = 10)
 
-# Lists images within a given time range, from most to least recent
-image_timerange(from="2013-05-11")
-image_timerange(from="2013-05-11", to="2013-05-12")
-image_timerange(from="2013-05-11", to="2013-05-12", options='credit')
+# Return the timerange of images in phylopic
+image_timerange()
 
 # Get data for an image
-## input uuids
-toget <- c("c089caae-43ef-4e4e-bf26-973dd4cb65c5", "41b127f6-0824-4594-a941-5ff571f32378", 
-   "9c6af553-390c-4bdd-baeb-6992cbc540b1")
-image_data(toget, size = "64")
-image_data(toget, size = "thumb")
-
-## input the output from search_images
-x <- search_text(text = "Homo sapiens", options = "names")
-output <- search_images(x[1:10], options=c("pngFiles", "credit", "canonicalName"))
-image_data(output, size = "64")
-
-## Put a silhouette behind a plot
-library('ggplot2')
-img <- image_data("27356f15-3cf8-47e8-ab41-71c6260b2724", size = "512")[[1]]
-qplot(x=Sepal.Length, y=Sepal.Width, data=iris, geom="point") + add_phylopic(img)
-
-## Use as points in a ggplot plot
-library('ggplot2')
-uuid <- "c089caae-43ef-4e4e-bf26-973dd4cb65c5"
-img <- image_data(uuid, size = "64")[[1]]
-(p <- ggplot(mtcars, aes(drat, wt)) + geom_blank())
-for(i in 1:nrow(mtcars)) p <- p + add_phylopic(img, 1, mtcars$drat[i], mtcars$wt[i], ysize = 0.3)
-p
+image_data(uuid, size = "vector") # vector format
+image_data(uuid, size = "512") # raster format
 }
 }
