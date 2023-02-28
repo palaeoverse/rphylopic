@@ -13,7 +13,7 @@ if (requireNamespace("vdiffr", quietly = TRUE) &&
   if (identical(Sys.getenv("VDIFFR_RUN_TESTS"), "true")) {
     abort("vdiffr is not installed")
   }
-  
+
   # Otherwise, assign a dummy function
   expect_doppelganger <- function(...) skip("vdiffr is not installed.")
 }

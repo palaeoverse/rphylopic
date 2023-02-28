@@ -57,7 +57,7 @@ get_uuid <- function(name = NULL, n = 1, url = FALSE) {
   uuids <- api_return$`_links`$items$href
   uuids <- sub("/images/", "", uuids)
   uuids <- sub("(\\?build=\\d+)$", "", uuids)
-  # Update n if greater than available uuids 
+  # Update n if greater than available uuids
   if (n > length(uuids)) {
     n <- length(uuids)
   }

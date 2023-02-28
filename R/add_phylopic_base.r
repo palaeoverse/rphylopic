@@ -87,37 +87,37 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     stop("`img` should be of class Picture (for a vector image) or class array
           (for a raster image).")
   }
-  
+
   # get plot limits
   usr <- par()$usr
   usr_x <- if (par()$xlog) 10^usr[1:2] else usr[1:2]
   usr_y <- if (par()$ylog) 10^usr[3:4] else usr[3:4]
-  
+
   # get plot area percentages
   # note that this means that changing the plot size AFTER plotting may
   # affect the position of the phylopic
   plt <- par()$plt
   plt_x <- plt[1:2]
   plt_y <- plt[3:4]
-  
+
   # get figure limits
-  width <- diff(usr_x)/diff(plt_x)
+  width <- diff(usr_x) / diff(plt_x)
   xlims <- c(usr_x[1] - plt_x[1] * width, usr_x[2] + (1 - plt_x[2]) * width)
-  height <- diff(usr_y)/diff(plt_y)
+  height <- diff(usr_y) / diff(plt_y)
   ylims <- c(usr_y[1] - plt_y[1] * height, usr_y[2] + (1 - plt_y[2]) * height)
-  
+
   # set default position and size if need be
   if (is.null(x)) x <- mean(usr_x)
   if (is.null(y)) y <- mean(usr_y)
   if (is.null(ysize)) ysize <- abs(diff(usr_y))
-  
+
   # convert x, y, and ysize to percentages
-  x <- (x - xlims[1])/diff(xlims)
-  y <- (y - ylims[1])/diff(ylims)
-  ysize <- ysize/abs(diff(ylims))
+  x <- (x - xlims[1]) / diff(xlims)
+  y <- (y - ylims[1]) / diff(ylims)
+  ysize <- ysize / abs(diff(ylims))
 
   if (is(img, "Picture")) { # svg
-    gpFUN <- function(pars) {
+    gp_fun <- function(pars) {
       if (!is.null(color)) {
         pars$col <- color
         pars$fill <- color
@@ -125,7 +125,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
       pars$alpha <- alpha
       pars
     }
-    grid.picture(img, x = x, y = y, height = ysize, gpFUN = gpFUN)
+    grid.picture(img, x = x, y = y, height = ysize, gpFUN = gp_fun)
   } else { # png
     img <- recolor_png(img, alpha, color)
     grid.raster(img, x = x, y = y, height = ysize)

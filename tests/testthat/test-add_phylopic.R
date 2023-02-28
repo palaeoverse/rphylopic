@@ -2,20 +2,20 @@ suppressPackageStartupMessages(library(ggplot2, quietly = TRUE))
 
 test_that("add_phylopic works", {
   skip_if_offline(host = "api.phylopic.org")
-  
+
   # phylopic in background, with name
   p <- ggplot(iris) +
     add_phylopic(name = "Iris", alpha = .2) +
     geom_point(aes(x = Sepal.Length, y = Sepal.Width))
   expect_doppelganger("phylopic in background", p)
-  
+
   # png phylopic in background
   cat_png <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = "512")
   p <- ggplot(iris) +
     add_phylopic(cat_png, alpha = .2) +
     geom_point(aes(x = Sepal.Length, y = Sepal.Width))
   expect_doppelganger("phylopic png in background", p)
-  
+
   # a bunch of little colored phylopics, with existing image
   set.seed(1234)
   posx <- runif(50, 0, 10)
@@ -32,7 +32,7 @@ test_that("add_phylopic works", {
   }
   p <- p + ggtitle("R Cat Herd!!")
   expect_doppelganger("phylopics on top of plot", p)
-  
+
   # Expect error
   expect_error(add_phylopic(img = "cat"))
   expect_error(add_phylopic(cat, name = "cat"))

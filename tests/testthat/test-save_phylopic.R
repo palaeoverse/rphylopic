@@ -10,6 +10,4 @@ test_that("save_phylopic works", {
   expect_error(save_phylopic(img, path = "./phylopic.png", length = 200))
   expect_error(save_phylopic(img = NULL, path = "./phylopic.png"))
   expect_error(save_phylopic(img = "test", path = "./phylopic.png"))
-  })
-
-
+})

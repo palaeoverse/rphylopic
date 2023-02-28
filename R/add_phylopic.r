@@ -81,7 +81,7 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
 
   # get aspect ratio
   if (is(img, "Picture")) { # svg
-    aspratio <- abs(diff(img@summary@xscale))/abs(diff(img@summary@yscale))
+    aspratio <- abs(diff(img@summary@xscale)) / abs(diff(img@summary@yscale))
   } else { # png
     aspratio <- ncol(img) / nrow(img)
   }
@@ -97,10 +97,10 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
     xmin <- -Inf
     xmax <- Inf
   }
-  
+
   # grobify (and recolor if necessary)
   if (is(img, "Picture")) { # svg
-    gpFUN <- function(pars) {
+    gp_fun <- function(pars) {
       if (!is.null(color)) {
         pars$col <- color
         pars$fill <- color
@@ -108,18 +108,18 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
       pars$alpha <- alpha
       pars
     }
-    # copied from
+    # modified from
     # https://github.com/k-hench/hypoimg/blob/master/R/hypoimg_recolor_svg.R
-    imgGrob <- pictureGrob(img, gpFUN = gpFUN)
-    imgGrob <- gList(imgGrob)
-    imgGrob <- gTree(children = imgGrob)
+    img_grob <- pictureGrob(img, gpFUN = gp_fun)
+    img_grob <- gList(img_grob)
+    img_grob <- gTree(children = img_grob)
   } else { # png
     img <- recolor_png(img, alpha, color)
-    imgGrob <- rasterGrob(img)
+    img_grob <- rasterGrob(img)
   }
-  
+
   return(
     # use this instead of annotation_custom to support all coords
-    phylopic_inset(imgGrob, xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax)
+    phylopic_inset(img_grob, xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax)
   )
 }
