@@ -23,18 +23,20 @@
 #'   from the grImport2 package. Any file format available in
 #'   the grDevices package can be used (i.e. pdf, png, svg,
 #'   tiff, jpeg, and bmp).
-#' 
+#'
 #' @importFrom grDevices pdf png svg tiff jpeg bmp dev.off
 #' @importFrom grImport2 grid.picture
 #' @importFrom methods is
 #' @export
 #' @examples
+#' \dontrun{
 #' # Get image data
 #' img <- image_data("27356f15-3cf8-47e8-ab41-71c6260b2724",
 #'                   size = "vector")
 #' # Save file
 #' save_phylopic(img = img, path = "./phylopic.png",
 #'               width = 500, height = 500)
+#' }
 save_phylopic <- function(img = NULL, path = NULL, ...) {
   # Error handling -----------------------------------------------------
   # Image checking

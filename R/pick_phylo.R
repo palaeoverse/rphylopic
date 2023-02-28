@@ -2,7 +2,7 @@
 #'
 #' This function provides a visually interactive way to pick an image and
 #' valid uuid for an input taxonomic name. As multiple silhouettes can exist
-#' for each species in PhyloPic, this function is useful for choosing the 
+#' for each species in PhyloPic, this function is useful for choosing the
 #' right image/uuid for the user.
 #'
 #' @param name \code{character}. A taxonomic name. Different taxonomic levels
@@ -14,10 +14,10 @@
 #'
 #' @return A \code{Picture} object is returned. The uuid of the selected
 #'   image is also printed to console.
-#' 
+#'
 #' @details This function allows the user to visually select the desired
 #'   image from a pool of silhouettes available for the input `name`.
-#' 
+#'
 #' @importFrom grid grid.newpage grid.text
 #' @importFrom grImport2 grid.picture
 #' @importFrom utils menu
@@ -25,7 +25,7 @@
 #' @examples \dontrun{
 #' img <- pick_phylo(name = "Canis lupus", n = 5)
 #' }
-pick_phylo <- function(name = NULL, n = 5){
+pick_phylo <- function(name = NULL, n = 5) {
   # Get uuids
   uuids <- get_uuid(name = name, n = n, url = FALSE)
   # Cycle through uuids
@@ -42,7 +42,7 @@ pick_phylo <- function(name = NULL, n = 5){
     att_string <- paste0("Contributor: ", att$contributor, "\n",
                          "Created: ", att$created, "\n",
                          "License: ", att$license)
-    grid.text(label = att_string, 
+    grid.text(label = att_string,
               x = 0.96, y = 0.92,
               just = "right",
               gp = gpar(fontsize = 8, col = "purple", fontface = "bold"))

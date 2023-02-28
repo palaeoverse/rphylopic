@@ -9,7 +9,7 @@
 #' @param n \code{numeric}. How many uuids should be returned? Depending
 #' on the requested `name`, multiple silhouettes might exist. If `n` exceeds
 #' the number of available images, all available uuids will be returned. This
-#' argument defaults to 1. 
+#' argument defaults to 1.
 #' @param url \code{logical}. If \code{FALSE} (default), only the uuid is
 #'   returned. If \code{TRUE}, a valid PhyloPic image url of the uuid is
 #'   returned.
@@ -17,7 +17,7 @@
 #' @return A \code{character} vector of a valid PhyloPic uuid or svg image
 #'   url.
 #'
-#' @details This function returns uuid(s) or image url (svg) for an input 
+#' @details This function returns uuid(s) or image url (svg) for an input
 #'   \code{name}. If a specific image is desired, the user can make use of
 #'    [pick_phylo] to visually select the desired uuid/url.
 #' @importFrom stats setNames
@@ -25,7 +25,7 @@
 #' @examples
 #' get_uuid(name = "Acropora cervicornis")
 #' get_uuid(name = "Dinosauria", n = 5, url = TRUE)
-get_uuid <- function(name = NULL, n = 1, url = FALSE){
+get_uuid <- function(name = NULL, n = 1, url = FALSE) {
   # Error handling -------------------------------------------------------
   if (is.null(name)) {
     stop("A taxonomic `name` is required (e.g. Acropora cervicornis).")
@@ -42,7 +42,6 @@ get_uuid <- function(name = NULL, n = 1, url = FALSE){
   # Normalise name -------------------------------------------------------
   name <- tolower(name)
   name <- gsub("_", " ", name)
-  
   # API call -------------------------------------------------------------
   api_return <- phy_GET("images",
                         list(embed_items = if (url) "true" else "false",

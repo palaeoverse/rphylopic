@@ -4,7 +4,6 @@ test_that("get_uuid works", {
   expect_true(is.character(get_uuid(name = "Acropora cervicornis")))
   expect_true(is.character(get_uuid(name = "Tyrannosaurus", url = TRUE)))
   expect_true(is.character(get_uuid(name = "Acropora", n = 10, url = TRUE)))
-  
   # Expect errors
   expect_error(get_uuid(name = "Didgeridoo"))
   expect_error(get_uuid(name = NULL))

@@ -37,10 +37,12 @@ the grDevices package can be used (i.e. pdf, png, svg,
 tiff, jpeg, and bmp).
 }
 \examples{
+\dontrun{
 # Get image data
 img <- image_data("27356f15-3cf8-47e8-ab41-71c6260b2724",
                   size = "vector")
 # Save file
 save_phylopic(img = img, path = "./phylopic.png",
               width = 500, height = 500)
+}
 }
