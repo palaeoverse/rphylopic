@@ -9,7 +9,8 @@ test_that("add_phylopic_base works", {
 
   # png phylopic in background
   expect_doppelganger("phylopic png in background", function() {
-    cat_png <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = "512")
+    cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
+                            size = "512")
     plot(1, 1, type = "n", main = "A cat")
     add_phylopic_base(cat_png, x = 1, y = 1, ysize = .4, color = "blue")
   })
@@ -22,7 +23,7 @@ test_that("add_phylopic_base works", {
   cols <- sample(c("black", "darkorange", "grey42", "white"), 50,
                  replace = TRUE)
 
-  cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9")
+  cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
   expect_doppelganger("phylopics on top of plot", function() {
     plot(posx, posy, type = "n", main = "A cat herd")
     for (i in 1:50) {

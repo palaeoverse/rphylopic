@@ -16,7 +16,7 @@ add_phylopic(
 )
 }
 \arguments{
-\item{img}{A Picture or png array object, e.g., from using \code{\link[=image_data]{image_data()}}.}
+\item{img}{A Picture or png array object, e.g., from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 
 \item{name}{A taxonomic name to be passed to \code{\link[=get_uuid]{get_uuid()}}.}
 
@@ -64,7 +64,7 @@ cols <- sample(c("black", "darkorange", "grey42", "white"), 50,
 
 # Since we are plotting a lot of the same image, we should just save
 # the image in our environment first
-cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9")
+cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
 p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y))
 for (i in 1:50) {
   p <- p + add_phylopic(cat, x = posx[i], y = posy[i],

@@ -33,7 +33,7 @@ pick_phylo <- function(name = NULL, n = 5) {
     # Start a new graphics page
     grid.newpage()
     # Get image data
-    img <- image_data(uuid = uuids[i], size = "vector")
+    img <- get_phylopic(uuid = uuids[i], size = "vector")
     # Get attribution data
     att <- get_attribution(uuid = uuids[i])
     # Plot image

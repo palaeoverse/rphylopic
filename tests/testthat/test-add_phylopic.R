@@ -10,7 +10,7 @@ test_that("add_phylopic works", {
   expect_doppelganger("phylopic in background", p)
 
   # png phylopic in background
-  cat_png <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = "512")
+  cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = "512")
   p <- ggplot(iris) +
     add_phylopic(cat_png, alpha = .2) +
     geom_point(aes(x = Sepal.Length, y = Sepal.Width))
@@ -24,7 +24,7 @@ test_that("add_phylopic works", {
   cols <- sample(c("black", "darkorange", "grey42", "white"), 50,
     replace = TRUE)
 
-  cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9")
+  cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
   p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y))
   for (i in 1:50) {
     p <- p + add_phylopic(cat, x = posx[i], y = posy[i],

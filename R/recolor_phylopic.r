@@ -2,7 +2,7 @@
 #'
 #' Internal function to recolour and change alpha levels of a phylopic image.
 #'
-#' @param img A png object, e.g., from using [image_data()]
+#' @param img A png object, e.g., from using [get_phylopic()]
 #' @param alpha A value between 0 and 1, specifying the opacity of the
 #'   silhouette.
 #' @param color Color to plot the silhouette in.

@@ -3,7 +3,7 @@
 #' Specify an existing image, taxonomic name, or phylopic uuid to add a phylopic
 #' silhouette on top of an existing base R plot.
 #'
-#' @param img A Picture or png array object, e.g., from using [image_data()].
+#' @param img A Picture or png array object, e.g., from using [get_phylopic()].
 #' @param name A taxonomic name to be passed to [get_uuid()].
 #' @param uuid A valid uuid for a phylopic silhouette (such as that returned by
 #'   [get_uuid()] or [pick_phylo()]).
@@ -40,7 +40,7 @@
 #'
 #' # Since we are plotting a lot of the same image, we should just save
 #' # the image in our environment first
-#' cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9")
+#' cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
 #'
 #' plot(posx, posy, type="n", main="A cat herd")
 #' for (i in 1:50) {
@@ -82,7 +82,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     if (!is.character(uuid)) {
       stop("`uuid` should be of class character.")
     }
-    img <- image_data(uuid)
+    img <- get_phylopic(uuid)
   } else if (!is(img, "Picture") && !is.array(img)) {
     stop("`img` should be of class Picture (for a vector image) or class array
           (for a raster image).")

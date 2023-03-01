@@ -29,8 +29,8 @@
 #' image_timerange()
 #'
 #' # Get data for an image
-#' image_data(uuid, size = "vector") # vector format
-#' image_data(uuid, size = "512") # raster format
+#' get_phylopic(uuid, size = "vector") # vector format
+#' get_phylopic(uuid, size = "512") # raster format
 #' }
 #' @export
 #' @rdname image
@@ -70,7 +70,7 @@ image_count <- function(options = NULL, ...) {
 
 #' @export
 #' @rdname image
-image_data <- function(uuid, size = "vector", ...) {
+get_phylopic <- function(uuid, size = "vector", ...) {
   size <- match.arg(as.character(size),
     c("64", "128", "192", "512", "1024", "1536", "twitter", "vector", "source"))
   image_info <- phy_GET(file.path("images", uuid), ...)$`_links`

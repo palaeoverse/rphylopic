@@ -6,7 +6,7 @@
 \alias{image_list}
 \alias{image_timerange}
 \alias{image_count}
-\alias{image_data}
+\alias{get_phylopic}
 \title{Perform actions with images.}
 \usage{
 image_get(uuid, options = NULL, ...)
@@ -17,7 +17,7 @@ image_timerange(options = NULL, ...)
 
 image_count(options = NULL, ...)
 
-image_data(uuid, size = "vector", ...)
+get_phylopic(uuid, size = "vector", ...)
 }
 \arguments{
 \item{uuid}{One or more name UUIDs.}
@@ -59,7 +59,7 @@ image_list(page = 10)
 image_timerange()
 
 # Get data for an image
-image_data(uuid, size = "vector") # vector format
-image_data(uuid, size = "512") # raster format
+get_phylopic(uuid, size = "vector") # vector format
+get_phylopic(uuid, size = "512") # raster format
 }
 }

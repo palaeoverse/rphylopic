@@ -1,6 +1,6 @@
 test_that("save_phylopic works", {
   # Get image
-  img <- image_data("918e22ea-53d9-4318-879d-1a3126968157", size = "vector")
+  img <- get_phylopic("918e22ea-53d9-4318-879d-1a3126968157")
   # Expect warning
   expect_warning(save_phylopic(img), NULL)
   # Remove generated file
