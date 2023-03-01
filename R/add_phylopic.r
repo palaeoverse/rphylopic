@@ -102,7 +102,6 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
   if (is(img, "Picture")) { # svg
     gp_fun <- function(pars) {
       if (!is.null(color)) {
-        pars$col <- color
         pars$fill <- color
       }
       pars$alpha <- alpha
