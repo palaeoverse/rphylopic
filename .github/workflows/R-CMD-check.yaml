@@ -20,9 +20,9 @@ jobs:
         config:
           - {os: macos-latest,   r: 'release'}
           - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,   r: 'release'}
-          - {os: ubuntu-latest,   r: 'oldrel-1'}
+          - {os: ubuntu-20.04,   r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-20.04,   r: 'release'}
+          - {os: ubuntu-20.04,   r: 'oldrel-1'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -43,6 +43,19 @@ jobs:
         with:
           extra-packages: any::rcmdcheck
           needs: check
+
+      - name: Downgrade librsvg2 if needed
+        if: runner.os == 'Linux'
+        run: |
+          curl -O http://launchpadlibrarian.net/509454689/librsvg2-2_2.48.9-1ubuntu0.20.04.1_amd64.deb
+          sudo apt install --fix-broken --allow-downgrades ./librsvg2-2_2.48.9-1ubuntu0.20.04.1_amd64.deb
+          curl -O http://launchpadlibrarian.net/509454691/librsvg2-common_2.48.9-1ubuntu0.20.04.1_amd64.deb
+          sudo apt install --fix-broken --allow-downgrades ./librsvg2-common_2.48.9-1ubuntu0.20.04.1_amd64.deb
+          curl -O http://launchpadlibrarian.net/509454680/gir1.2-rsvg-2.0_2.48.9-1ubuntu0.20.04.1_amd64.deb
+          sudo apt install --fix-broken --allow-downgrades ./gir1.2-rsvg-2.0_2.48.9-1ubuntu0.20.04.1_amd64.deb
+          curl -O http://launchpadlibrarian.net/509454685/librsvg2-dev_2.48.9-1ubuntu0.20.04.1_amd64.deb
+          sudo apt install --fix-broken --allow-downgrades ./librsvg2-dev_2.48.9-1ubuntu0.20.04.1_amd64.deb
+        shell: bash
 
       - uses: r-lib/actions/check-r-package@v2
         with:
