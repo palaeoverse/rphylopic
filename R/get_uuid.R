@@ -19,7 +19,7 @@
 #'
 #' @details This function returns uuid(s) or image url (svg) for an input
 #'   \code{name}. If a specific image is desired, the user can make use of
-#'    [pick_phylo] to visually select the desired uuid/url.
+#'    [pick_phylopic] to visually select the desired uuid/url.
 #' @importFrom stats setNames
 #' @export
 #' @examples

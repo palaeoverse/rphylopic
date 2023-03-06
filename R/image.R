@@ -2,10 +2,6 @@
 #'
 #' @name image
 #' @param uuid One or more name UUIDs.
-#' @param options (character) One or more of citationStart, html, namebankID,
-#'   root, string, type, uid, uri, and/or votes.
-#' @param page The page of the results to return.
-#' @param ... curl options passed on to [httr::GET]
 #' @param size Height of the image, one of 64, 128, 256, 512, 1024, "thumb", or
 #'   "icon"
 #' @details I'm not adding methods for modifying images, including add, edit,
@@ -33,47 +29,10 @@
 #' get_phylopic(uuid, size = "512") # raster format
 #' }
 #' @export
-#' @rdname image
-image_get <- function(uuid, options = NULL, ...) {
-  phy_GET(file.path("images", uuid), query = options, ...)
-}
-
-#' @export
-#' @rdname image
-image_list <- function(page = 0, options = NULL, ...) {
-  phy_GET("images", query = c(list(page = page), options), ...)$`_links`$items
-}
-
-#' @export
-#' @rdname image
-image_timerange <- function(options = NULL, ...) {
-  # get total number of pages for query
-  tot_pages <- phy_GET("images", query = options, ...)$totalPages
-  # get first page
-  young_age <- phy_GET("images",
-                       query = c(list(page = 0, embed_items = "true"), options),
-                       ...)$`_embedded`$items[[1]]$created
-  # get last page
-  items <- phy_GET("images",
-                   query = c(list(page = tot_pages - 1, embed_items = "true"),
-                             options),
-                   ...)$`_embedded`$items
-  old_age <- items[[length(items)]]$created
-  list(young_age, old_age)
-}
-
-#' @export
-#' @rdname image
-image_count <- function(options = NULL, ...) {
-  phy_GET("images", query = options, ...)$totalItems
-}
-
-#' @export
-#' @rdname image
-get_phylopic <- function(uuid, size = "vector", ...) {
+get_phylopic <- function(uuid, size = "vector") {
   size <- match.arg(as.character(size),
     c("64", "128", "192", "512", "1024", "1536", "twitter", "vector", "source"))
-  image_info <- phy_GET(file.path("images", uuid), ...)$`_links`
+  image_info <- phy_GET(file.path("images", uuid))$`_links`
   if (size %in% c("64", "128", "192")) { # get thumbnail url
     thumbs <- image_info$thumbnailFiles
     url <- thumbs$href[grepl(size, thumbs$sizes)]
@@ -96,8 +55,8 @@ get_phylopic <- function(uuid, size = "vector", ...) {
 #' @importFrom httr GET
 #' @importFrom rsvg rsvg_svg
 #' @importFrom grImport2 readPicture
-get_svg <- function(url, ...) {
-  res <- GET(url = url, config = list(...))
+get_svg <- function(url) {
+  res <- GET(url = url)
   filename <- file.path(tempdir(), "temp.svg")
   rsvg_svg(res$content, filename)
   readPicture(filename)
@@ -105,8 +64,8 @@ get_svg <- function(url, ...) {
 
 #' @importFrom httr GET
 #' @importFrom png readPNG
-get_png <- function(x, ...) {
-  res <- GET(url = x, config = list(...))
+get_png <- function(x) {
+  res <- GET(url = x)
   img_tmp <- readPNG(res$content)
   # convert to RGBA if in GA format
   if (dim(img_tmp)[3] == 2) {

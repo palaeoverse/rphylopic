@@ -2,32 +2,13 @@
 % Please edit documentation in R/image.R
 \name{image}
 \alias{image}
-\alias{image_get}
-\alias{image_list}
-\alias{image_timerange}
-\alias{image_count}
 \alias{get_phylopic}
 \title{Perform actions with images.}
 \usage{
-image_get(uuid, options = NULL, ...)
-
-image_list(page = 0, options = NULL, ...)
-
-image_timerange(options = NULL, ...)
-
-image_count(options = NULL, ...)
-
-get_phylopic(uuid, size = "vector", ...)
+get_phylopic(uuid, size = "vector")
 }
 \arguments{
 \item{uuid}{One or more name UUIDs.}
-
-\item{options}{(character) One or more of citationStart, html, namebankID,
-root, string, type, uid, uri, and/or votes.}
-
-\item{...}{curl options passed on to \link[httr:GET]{httr::GET}}
-
-\item{page}{The page of the results to return.}
 
 \item{size}{Height of the image, one of 64, 128, 256, 512, 1024, "thumb", or
 "icon"}

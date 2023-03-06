@@ -8,7 +8,7 @@ get_attribution(uuid = NULL)
 }
 \arguments{
 \item{uuid}{\code{character}. A valid uuid for a PhyloPic silhouette such
-as that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylo]{pick_phylo()}}.}
+as that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}.}
 }
 \value{
 A \code{list} of PhyloPic attribution data for an image \code{uuid}.

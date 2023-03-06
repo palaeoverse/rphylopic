@@ -6,7 +6,7 @@
 #' @param img A Picture or png array object, e.g., from using [get_phylopic()].
 #' @param name A taxonomic name to be passed to [get_uuid()].
 #' @param uuid A valid uuid for a phylopic silhouette (such as that returned by
-#'   [get_uuid()] or [pick_phylo()]).
+#'   [get_uuid()] or [pick_phylopic()]).
 #' @param x x value of the silhouette center. Ignored if y and ysize are not
 #'   specified.
 #' @param y y value of the silhouette center. Ignored if x and ysize are not

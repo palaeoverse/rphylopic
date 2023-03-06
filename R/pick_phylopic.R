@@ -28,9 +28,9 @@
 #' @importFrom utils menu
 #' @export
 #' @examples \dontrun{
-#' img <- pick_phylo(name = "Canis lupus", n = 5)
+#' img <- pick_phylopic(name = "Canis lupus", n = 5)
 #' }
-pick_phylo <- function(name = NULL, n = 5, auto = NULL) {
+pick_phylopic <- function(name = NULL, n = 5, auto = NULL) {
   # Error handling
   if (!is.null(auto) && !auto %in% c(1, 2)) {
     stop("`auto` must be of value: NULL, 1, or 2")

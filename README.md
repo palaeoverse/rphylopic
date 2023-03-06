@@ -47,7 +47,7 @@ uuid <- get_uuid(name = "Canis lupus", n = 5)
 ```r
 # But if multiple images exist, how do I pick?!
 # It's difficult without seeing the image itself, let's use:
-img <- pick_phylo(name = "Canis lupus", n = 5)
+img <- pick_phylopic(name = "Canis lupus", n = 5)
 ```
 
 ## Plot an image
@@ -77,7 +77,7 @@ add_phylopic_base(name = "Canis lupus", x = 0.75, y = 1.25, ysize = 0.25, color 
 # But we use add_phylopic instead!
 library(ggplot2)
 # Get image
-img <- pick_phylo(name = "Iris", n = 1)
+img <- pick_phylopic(name = "Iris", n = 1)
 # Put a silhouette behind a plot
 ggplot(iris) +
   add_phylopic(img = img, color = "purple", alpha = .5) +
@@ -114,7 +114,7 @@ get_attribution(uuid = uuid)
 ```r
 # How do I save an image?
 # Get image
-img <- pick_phylo(name = "Phascolarctos cinereus", n = 1)
+img <- pick_phylopic(name = "Phascolarctos cinereus", n = 1)
 # Save image
 save_phylopic(img = img)
 ```

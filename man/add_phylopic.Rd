@@ -21,7 +21,7 @@ add_phylopic(
 \item{name}{A taxonomic name to be passed to \code{\link[=get_uuid]{get_uuid()}}.}
 
 \item{uuid}{A valid uuid for a phylopic silhouette (such as that returned by
-\code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylo]{pick_phylo()}}).}
+\code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
 \item{x}{x value of the silhouette center. Ignored if y and ysize are not
 specified.}

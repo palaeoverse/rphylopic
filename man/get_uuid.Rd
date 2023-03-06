@@ -31,7 +31,7 @@ species in PhyloPic, this function extracts the primary image.
 \details{
 This function returns uuid(s) or image url (svg) for an input
 \code{name}. If a specific image is desired, the user can make use of
-\link{pick_phylo} to visually select the desired uuid/url.
+\link{pick_phylopic} to visually select the desired uuid/url.
 }
 \examples{
 get_uuid(name = "Acropora cervicornis")

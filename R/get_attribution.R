@@ -4,7 +4,7 @@
 #' for PhyloPic images via an image uuid returned by [get_uuid()].
 #'
 #' @param uuid \code{character}. A valid uuid for a PhyloPic silhouette such
-#'   as that returned by [get_uuid()] or [pick_phylo()].
+#'   as that returned by [get_uuid()] or [pick_phylopic()].
 #'
 #' @return A \code{list} of PhyloPic attribution data for an image `uuid`.
 #'
