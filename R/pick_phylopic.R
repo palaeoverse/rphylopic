@@ -42,7 +42,7 @@ pick_phylopic <- function(name = NULL, n = 5, auto = NULL) {
     # Start a new graphics page
     grid.newpage()
     # Get image data
-    img <- get_phylopic(uuid = uuids[i], size = "vector")
+    img <- get_phylopic(uuid = uuids[i], format = "vector")
     # Get attribution data
     att <- get_attribution(uuid = uuids[i])
     # Plot image
