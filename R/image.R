@@ -46,7 +46,7 @@ get_phylopic <- function(uuid, size = "vector") {
   } else { # get source url
     url <- image_info$sourceFile$href
   }
-  ret <- if (size == "vector") get_svg(url, ...) else get_png(url, ...)
+  ret <- if (size == "vector") get_svg(url) else get_png(url)
   attr(ret, "uuid") <- uuid
   attr(ret, "url") <- url
   ret
