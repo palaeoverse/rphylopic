@@ -27,3 +27,4 @@ defined by xmin, xmax, ymin, ymax. Grobs with a different (absolute) size
 will be center-justified in that region. Inf values can be used to fill the
 full plot panel
 }
+\keyword{internal}

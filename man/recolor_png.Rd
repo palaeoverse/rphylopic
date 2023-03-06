@@ -17,3 +17,4 @@ silhouette.}
 \description{
 Internal function to recolour and change alpha levels of a phylopic image.
 }
+\keyword{internal}

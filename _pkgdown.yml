@@ -1,0 +1,41 @@
+url: https://rphylopic.palaeoverse.org
+template:
+  bootstrap: 5
+  bootswatch: flatly
+  bslib:
+    navbar-padding-y: 8px
+
+authors:
+  William Gearty:
+    href: https://williamgearty.com
+  Lewis A. Jones:
+    href: https://www.lewisajones.com
+
+home:
+  links:
+  - text: Twitter
+    href: https://twitter.com/ThePalaeoverse
+  - text: Palaeoverse website
+    href: https://palaeoverse.org
+
+reference:
+- title: Getting silhouettes
+  desc: >
+    Functions for identifying and retrieving PhyloPic silhouettes.
+  contents:
+  - get_uuid
+  - pick_phylopic
+  - get_phylopic
+  - get_attribution
+  - save_phylopic
+- title: Adding silhouettes to plots
+  desc: >
+    Functions for adding silhouettes to various plots.
+  contents:
+  - add_phylopic
+  - add_phylopic_base
+- title: Miscellaneous functions
+  desc: >
+    Other functions that may be useful
+  contents:
+  - theme_phylo_blank2

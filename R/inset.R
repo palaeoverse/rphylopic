@@ -4,6 +4,7 @@
 #'
 #' Most useful for adding tables, inset plots, and other grid-based decorations
 #'
+#' @keywords internal
 #' @param grob grob to display
 #' @param xmin,xmax x location (in data coordinates) giving horizontal location
 #'   of grob
