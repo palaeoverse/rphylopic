@@ -4,7 +4,7 @@
 \alias{pick_phylo}
 \title{Pick a PhyloPic image from available options}
 \usage{
-pick_phylo(name = NULL, n = 5)
+pick_phylo(name = NULL, n = 5, auto = NULL)
 }
 \arguments{
 \item{name}{\code{character}. A taxonomic name. Different taxonomic levels
@@ -14,6 +14,12 @@ are supported (e.g. species, genus, family).}
 the requested \code{name}, multiple silhouettes may exist. If \code{n} exceeds
 the number of available images, all available uuids will be returned.
 Defaults to 5.}
+
+\item{auto}{\code{numeric}. This argument allows the user to automate input
+into the menu choice. If the input value is \code{1}, requested images will be
+automatically cycled through with the final image returned. If the input
+value is \code{2}, the first returned image will be selected. If \code{NULL}
+(default), the user must interactively respond to the called menu.}
 }
 \value{
 A \code{Picture} object is returned. The uuid of the selected

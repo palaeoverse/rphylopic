@@ -11,6 +11,11 @@
 #'   the requested `name`, multiple silhouettes may exist. If `n` exceeds
 #'   the number of available images, all available uuids will be returned.
 #'   Defaults to 5.
+#' @param auto \code{numeric}. This argument allows the user to automate input
+#'   into the menu choice. If the input value is `1`, requested images will be
+#'   automatically cycled through with the final image returned. If the input
+#'   value is `2`, the first returned image will be selected. If `NULL`
+#'   (default), the user must interactively respond to the called menu.
 #'
 #' @return A \code{Picture} object is returned. The uuid of the selected
 #'   image is also printed to console.
@@ -25,7 +30,11 @@
 #' @examples \dontrun{
 #' img <- pick_phylo(name = "Canis lupus", n = 5)
 #' }
-pick_phylo <- function(name = NULL, n = 5) {
+pick_phylo <- function(name = NULL, n = 5, auto = NULL) {
+  # Error handling
+  if (!is.null(auto) && !auto %in% c(1, 2)) {
+    stop("`auto` must be of value: NULL, 1, or 2")
+  }
   # Get uuids
   uuids <- get_uuid(name = name, n = n, url = FALSE)
   # Cycle through uuids
@@ -53,8 +62,12 @@ pick_phylo <- function(name = NULL, n = 5) {
       return(img)
     }
     # Set up menu choice
-    m <- menu(choices = c("Next", "Select"), title = paste0(
-      "Choose an option (", i, "/", length(uuids), "):"))
+    if (is.null(auto)) {
+      m <- menu(choices = c("Next", "Select"), title = paste0(
+        "Choose an option (", i, "/", length(uuids), "):"))
+    } else {
+      m <- auto
+    }
     # Make selection
     if (m == 2) {
       print(uuids[i])
