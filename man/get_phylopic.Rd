@@ -2,21 +2,27 @@
 % Please edit documentation in R/get_phylopic.R
 \name{get_phylopic}
 \alias{get_phylopic}
-\title{Retrieve an image for a given UUID.}
+\title{Retrieve an image for a given PhyloPic uuid}
 \usage{
 get_phylopic(uuid, format = "vector")
 }
 \arguments{
-\item{uuid}{An image UUID.}
+\item{uuid}{A PhyloPic image uuid.}
 
-\item{format}{Format of the image. To return a vectorized image, use.
+\item{format}{Format of the image. To return a vectorized image, use
 "vector". To return a rasterized image, use one of 512, 1024, or 1536.
 Rasterized thumbnails can be returned by using 64, 128, or 192. Finally,
 using "twitter" will return a rasterized image that includes the phylopic
 logo and is formatted for posting on social media.}
 }
+\value{
+If \code{format} is "vector", a \link[grImport2:Picture-class]{Picture} object
+is returned. Otherwise, a png array representing the rasterized image is
+returned. Either way, the uuid and download url are included as the "uuid"
+and "url" attributes, respectively.
+}
 \description{
-This retrieves a phylopic silhouette as a vectorized or rasterized object.
+This retrieves a PhyloPic silhouette as a vectorized or rasterized object.
 }
 \examples{
 uuid <- "9fae30cd-fb59-4a81-a39c-e1826a35f612"

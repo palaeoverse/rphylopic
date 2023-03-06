@@ -1,11 +1,11 @@
-#' Add a phylopic to a base R plot
+#' Add a PhyloPic to a base R plot
 #'
-#' Specify an existing image, taxonomic name, or phylopic uuid to add a phylopic
+#' Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
 #' silhouette on top of an existing base R plot.
 #'
 #' @param img A Picture or png array object, e.g., from using [get_phylopic()].
 #' @param name A taxonomic name to be passed to [get_uuid()].
-#' @param uuid A valid uuid for a phylopic silhouette (such as that returned by
+#' @param uuid A valid uuid for a PhyloPic silhouette (such as that returned by
 #'   [get_uuid()] or [pick_phylopic()]).
 #' @param x x value of the silhouette center. Ignored if y and ysize are not
 #'   specified.
@@ -75,7 +75,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     }
     url <- get_uuid(name = name, url = TRUE)
     if (is.na(url)) {
-      stop("`name` returned no phylopic results.")
+      stop("`name` returned no PhyloPic results.")
     }
     img <- get_svg(url)
   } else if (!is.null(uuid)) {
@@ -95,7 +95,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
 
   # get plot area percentages
   # note that this means that changing the plot size AFTER plotting may
-  # affect the position of the phylopic
+  # affect the position of the PhyloPic
   plt <- par()$plt
   plt_x <- plt[1:2]
   plt_y <- plt[3:4]

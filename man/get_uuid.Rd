@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_uuid.R
 \name{get_uuid}
 \alias{get_uuid}
-\title{Get PhyloPic uuid(s)}
+\title{Get a PhyloPic uuid}
 \usage{
 get_uuid(name = NULL, n = 1, url = FALSE)
 }

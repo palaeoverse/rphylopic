@@ -1,11 +1,12 @@
-#' Add a phylopic to a ggplot plot
+#' Add a PhyloPic to a ggplot plot
 #'
-#' Specify an existing image, taxonomic name, or phylopic uuid to add a phylopic
+#' Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
 #' silhouette as a separate layer to an existing ggplot plot.
 #'
-#' @param img A Picture or png array object, e.g., from using [get_phylopic()].
+#' @param img A [Picture][grImport2::Picture-class] or png array object, e.g.,
+#'   from using [get_phylopic()].
 #' @param name A taxonomic name to be passed to [get_uuid()].
-#' @param uuid A valid uuid for a phylopic silhouette (such as that returned by
+#' @param uuid A valid uuid for a PhyloPic silhouette (such as that returned by
 #'   [get_uuid()] or [pick_phylopic()]).
 #' @param x x value of the silhouette center. Ignored if y and ysize are not
 #'   specified.
@@ -66,7 +67,7 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
     }
     url <- get_uuid(name = name, url = TRUE)
     if (is.na(url)) {
-      stop("`name` returned no phylopic results.")
+      stop("`name` returned no PhyloPic results.")
     }
     img <- get_svg(url)
   } else if (!is.null(uuid)) {

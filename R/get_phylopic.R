@@ -1,13 +1,17 @@
-#' Retrieve an image for a given UUID.
-#' 
-#' This retrieves a phylopic silhouette as a vectorized or rasterized object.
+#' Retrieve an image for a given PhyloPic uuid
 #'
-#' @param uuid An image UUID.
-#' @param format Format of the image. To return a vectorized image, use.
+#' This retrieves a PhyloPic silhouette as a vectorized or rasterized object.
+#'
+#' @param uuid A PhyloPic image uuid.
+#' @param format Format of the image. To return a vectorized image, use
 #'   "vector". To return a rasterized image, use one of 512, 1024, or 1536.
 #'   Rasterized thumbnails can be returned by using 64, 128, or 192. Finally,
 #'   using "twitter" will return a rasterized image that includes the phylopic
 #'   logo and is formatted for posting on social media.
+#' @return If `format` is "vector", a [Picture][grImport2::Picture-class] object
+#'   is returned. Otherwise, a png array representing the rasterized image is
+#'   returned. Either way, the uuid and download url are included as the "uuid"
+#'   and "url" attributes, respectively.
 #' @export
 #' @examples
 #' uuid <- "9fae30cd-fb59-4a81-a39c-e1826a35f612"

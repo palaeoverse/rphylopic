@@ -7,12 +7,16 @@
 recolor_png(img, alpha = 1, color = NULL)
 }
 \arguments{
-\item{img}{A png object, e.g., from using \code{\link[=get_phylopic]{get_phylopic()}}}
+\item{img}{A png object (stored as an array), e.g., from using
+\code{\link[=get_phylopic]{get_phylopic()}}}
 
 \item{alpha}{A value between 0 and 1, specifying the opacity of the
 silhouette.}
 
 \item{color}{Color to plot the silhouette in.}
+}
+\value{
+A png object (stored as an array)
 }
 \description{
 Internal function to recolour and change alpha levels of a phylopic image.

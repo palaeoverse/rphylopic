@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_phylopic.r
 \name{add_phylopic}
 \alias{add_phylopic}
-\title{Add a phylopic to a ggplot plot}
+\title{Add a PhyloPic to a ggplot plot}
 \usage{
 add_phylopic(
   img = NULL,
@@ -16,11 +16,12 @@ add_phylopic(
 )
 }
 \arguments{
-\item{img}{A Picture or png array object, e.g., from using \code{\link[=get_phylopic]{get_phylopic()}}.}
+\item{img}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
+from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 
 \item{name}{A taxonomic name to be passed to \code{\link[=get_uuid]{get_uuid()}}.}
 
-\item{uuid}{A valid uuid for a phylopic silhouette (such as that returned by
+\item{uuid}{A valid uuid for a PhyloPic silhouette (such as that returned by
 \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
 \item{x}{x value of the silhouette center. Ignored if y and ysize are not
@@ -38,7 +39,7 @@ silhouette (0 is fully transparent, 1 is fully opaque).}
 \item{color}{Color to plot the silhouette in.}
 }
 \description{
-Specify an existing image, taxonomic name, or phylopic uuid to add a phylopic
+Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
 silhouette as a separate layer to an existing ggplot plot.
 }
 \details{

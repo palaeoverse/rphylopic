@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_phylopic_base.r
 \name{add_phylopic_base}
 \alias{add_phylopic_base}
-\title{Add a phylopic to a base R plot}
+\title{Add a PhyloPic to a base R plot}
 \usage{
 add_phylopic_base(
   img = NULL,
@@ -20,7 +20,7 @@ add_phylopic_base(
 
 \item{name}{A taxonomic name to be passed to \code{\link[=get_uuid]{get_uuid()}}.}
 
-\item{uuid}{A valid uuid for a phylopic silhouette (such as that returned by
+\item{uuid}{A valid uuid for a PhyloPic silhouette (such as that returned by
 \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
 \item{x}{x value of the silhouette center. Ignored if y and ysize are not
@@ -38,7 +38,7 @@ silhouette.}
 \item{color}{Color to plot the silhouette in.}
 }
 \description{
-Specify an existing image, taxonomic name, or phylopic uuid to add a phylopic
+Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
 silhouette on top of an existing base R plot.
 }
 \details{

@@ -1,4 +1,4 @@
-#' Get PhyloPic uuid(s)
+#' Get a PhyloPic uuid
 #'
 #' This function provides a convenient way to obtain a valid uuid or image url
 #' for an input taxonomic name. As multiple silhouettes can exist for each
