@@ -38,14 +38,16 @@ devtools::install_github("palaeoverse-community/rphylopic")
 library(rphylopic)
 # Get a single image uuid for a species
 uuid <- get_uuid(name = "Canis lupus", n = 1)
-# Or... as multiple silhouettes can exist per species
+# Get the image for that uuid
+img <- get_phylopic(uuid = uuid)
+# But multiple silhouettes can exist per species...
 uuid <- get_uuid(name = "Canis lupus", n = 5)
 ```
 
 ## Pick an image
 
 ```r
-# But if multiple images exist, how do I pick?!
+# How do I pick?!
 # It's difficult without seeing the image itself, let's use:
 img <- pick_phylopic(name = "Canis lupus", n = 5)
 ```
@@ -77,7 +79,8 @@ add_phylopic_base(name = "Canis lupus", x = 0.75, y = 1.25, ysize = 0.25, color 
 # But we use add_phylopic instead!
 library(ggplot2)
 # Get image
-img <- pick_phylopic(name = "Iris", n = 1)
+uuid <- get_uuid(name = "Iris", n = 1)
+img <- get_phylopic(uuid = uuid)
 # Put a silhouette behind a plot
 ggplot(iris) +
   add_phylopic(img = img, color = "purple", alpha = .5) +
@@ -104,7 +107,7 @@ p
 # their work. You can get data about images using get_attribution
 
 # Get valid uuid
-uuid <- get_uuid(name = "Cat")
+uuid <- get_uuid(name = "Nycticebus")
 # Get attribution data for uuid
 get_attribution(uuid = uuid)
 ```
