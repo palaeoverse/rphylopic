@@ -34,8 +34,3 @@ reference:
   contents:
   - add_phylopic
   - add_phylopic_base
-- title: Miscellaneous functions
-  desc: >
-    Other functions that may be useful
-  contents:
-  - theme_phylo_blank2
