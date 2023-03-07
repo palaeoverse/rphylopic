@@ -16,7 +16,7 @@
 #' # Get valid uuid
 #' uuid <- get_uuid(name = "Acropora cervicornis")
 #' # Get attribution data for uuid
-#' get_attribution(uuid = uuid)
+#' attri <- get_attribution(uuid = uuid)
 get_attribution <- function(uuid = NULL) {
   # Error handling -------------------------------------------------------
   if (is.null(uuid)) {

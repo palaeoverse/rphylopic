@@ -23,8 +23,8 @@
 #' @importFrom stats setNames
 #' @export
 #' @examples
-#' get_uuid(name = "Acropora cervicornis")
-#' get_uuid(name = "Dinosauria", n = 5, url = TRUE)
+#' uuid <- get_uuid(name = "Acropora cervicornis")
+#' uuid <- get_uuid(name = "Dinosauria", n = 5, url = TRUE)
 get_uuid <- function(name = NULL, n = 1, url = FALSE) {
   # Error handling -------------------------------------------------------
   if (is.null(name)) {

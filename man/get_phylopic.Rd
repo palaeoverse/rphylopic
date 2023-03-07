@@ -12,7 +12,7 @@ get_phylopic(uuid = NULL, format = "vector")
 \item{format}{Format of the image. To return a vectorized image, use
 "vector". To return a rasterized image, use one of 512, 1024, or 1536.
 Rasterized thumbnails can be returned by using 64, 128, or 192. Finally,
-using "twitter" will return a rasterized image that includes the phylopic
+using "twitter" will return a rasterized image that includes the PhyloPic
 logo and is formatted for posting on social media.}
 }
 \value{
@@ -25,6 +25,7 @@ and "url" attributes, respectively.
 This retrieves a PhyloPic silhouette as a vectorized or rasterized object.
 }
 \examples{
+# uuid
 uuid <- "9fae30cd-fb59-4a81-a39c-e1826a35f612"
 
 # Get data for an image

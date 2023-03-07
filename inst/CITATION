@@ -1,0 +1,13 @@
+citHeader("To cite rphylopic in publications, use the following citation:")
+
+bibentry(bibtype  = "Article",
+         title  = "rphylopic: an R package for accessing and plotting PhyloPic silhouettes",
+         author = c(as.person("William Gearty"),
+                    as.person("Lewis A. Jones"),
+                    as.person("Scott Chamberlain")),
+         year   = "2023",
+         journal = "TBD",
+         textVersion  =
+         paste("Gearty, W., Jones, L.A., Chamberlain, S. 2023.",
+         "rphylopic: an R package for accessing and plotting PhyloPic silhouettes.")
+)
