@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Work with the Phylopic Web Service (\url{http://api-docs.phylopic.org/v2/}) to fetch silhouette images of organisms, search names, and more. Includes functions for adding silhouettes to both base plots and ggplot2 plots.
+Work with the PhyloPic Web Service (\url{http://api-docs.phylopic.org/v2/}) to fetch silhouette images of organisms. Includes functions for adding silhouettes to both base R plots and ggplot2 plots.
 }
 \seealso{
 Useful links:

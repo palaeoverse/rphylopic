@@ -4,7 +4,7 @@
 \alias{get_phylopic}
 \title{Retrieve an image for a given PhyloPic uuid}
 \usage{
-get_phylopic(uuid, format = "vector")
+get_phylopic(uuid = NULL, format = "vector")
 }
 \arguments{
 \item{uuid}{A PhyloPic image uuid.}

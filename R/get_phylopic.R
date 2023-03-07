@@ -19,7 +19,17 @@
 #' # Get data for an image
 #' img_svg <- get_phylopic(uuid, format = "vector") # vector format
 #' img_png <- get_phylopic(uuid, format = "512") # raster format
-get_phylopic <- function(uuid, format = "vector") {
+get_phylopic <- function(uuid = NULL, format = "vector") {
+  # Error handling -------------------------------------------------------
+  if (is.null(uuid)) {
+    stop("A `uuid` is required (hint: use `get_uuid()`).")
+  }
+  if (length(uuid) > 1) {
+    stop("The length of `uuid` is more than one. Use `sapply()`.")
+  }
+  if (!is.character(uuid)) {
+    stop("`uuid` is not of class character.")
+  }
   format <- match.arg(as.character(format),
                     c("64", "128", "192", "512", "1024", "1536", "twitter",
                       "vector"))
