@@ -2,32 +2,35 @@
 % Please edit documentation in R/add_phylopic_base.r
 \name{add_phylopic_base}
 \alias{add_phylopic_base}
-\title{Input an image and add to an existing plot made with base graphics}
+\title{Add a PhyloPic to a base R plot}
 \usage{
 add_phylopic_base(
-  img,
+  img = NULL,
+  name = NULL,
+  uuid = NULL,
   x = NULL,
   y = NULL,
   ysize = NULL,
-  xsize = NULL,
-  alpha = 0.2,
-  color = NULL
+  alpha = 1,
+  color = "black"
 )
 }
 \arguments{
-\item{img}{A png object, e.g, from using \code{\link[=image_data]{image_data()}}}
+\item{img}{A Picture or png array object, e.g., from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 
-\item{x}{x value of the silhouette center. Ignored if y and ysize are
-not specified.}
+\item{name}{A taxonomic name to be passed to \code{\link[=get_uuid]{get_uuid()}}.}
 
-\item{y}{y value of the silhouette center. Ignored if x and ysize are
-not specified.}
+\item{uuid}{A valid uuid for a PhyloPic silhouette (such as that returned by
+\code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
-\item{ysize}{Height of the silhouette. The width is determined by the
-aspect ratio of the original image. Ignored if x and y are not specified.}
+\item{x}{x value of the silhouette center. Ignored if y and ysize are not
+specified.}
 
-\item{xsize}{Width of the silhouette (optional). If not supplied determined
-by \code{ysize}}
+\item{y}{y value of the silhouette center. Ignored if x and ysize are not
+specified.}
+
+\item{ysize}{Height of the silhouette. The width is determined by the aspect
+ratio of the original image. Ignored if x and y are not specified.}
 
 \item{alpha}{A value between 0 and 1, specifying the opacity of the
 silhouette.}
@@ -35,43 +38,45 @@ silhouette.}
 \item{color}{Color to plot the silhouette in.}
 }
 \description{
-Input an image and add to an existing plot made with base graphics
+Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
+silhouette on top of an existing base R plot.
 }
 \details{
-Use parameters \code{x}, \code{y}, and \code{ysize} to place the silhouette
-at a specified position on the plot. If all three of these parameters
-are unspecified, then the silhouette will be plotted to the full height
-and width of the plot.
+One (and only one) of \code{img}, \code{name}, or \code{uuid} must be specified.
+Use parameters \code{x}, \code{y}, and \code{ysize} to place the silhouette at a specified
+position on the plot. If all three of these parameters are unspecified,
+then the silhouette will be plotted to the full height and width of the
+plot. The aspect ratio of the silhouette will always be maintained (even
+when a figure is resized). However, if the plot is resized afterwards, the
+absolute position of the silhouette may change.
 }
 \examples{
-\dontrun{
-# get a silhouette
-cat <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 128)[[1]]
-
 # single image
 plot(1, 1, type="n", main="A cat")
-add_phylopic_base(cat, 1, 1, 0.2)
+add_phylopic_base(name = "Cat", x = 1, y = 1, ysize = .4)
 
-# lots of images
+# lots of images using a uuid
 posx <- runif(50, 0, 1)
 posy <- runif(50, 0, 1)
 size <- runif(50, 0.01, 0.2)
+
+# Since we are plotting a lot of the same image, we should just save
+# the image in our environment first
+cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
+
 plot(posx, posy, type="n", main="A cat herd")
 for (i in 1:50) {
-  add_phylopic_base(cat, posx[i], posy[i], size[i])
+  add_phylopic_base(cat, x = posx[i], y = posy[i], ysize = size[i])
 }
 
 # Example using a cat background
 # setup plot area
 plot(posx, posy, type="n", main="A cat herd, on top of a cat",
      xlim=c(0,1), ylim=c(0,1))
-# get a higher-resolution cat
-cat_hires <- image_data("23cd6aa4-9587-4a2e-8e26-de42885004c9", size = 512)[[1]]
 # plot background cat
-add_phylopic_base(cat_hires, 0.5, 0.5, 1, alpha=0.2)
+add_phylopic_base(cat, alpha=0.2)
 # overlay smaller cats
 for (i in 1:50) {
-  add_phylopic_base(cat, posx[i], posy[i], size[i], alpha=.8)
-}
+  add_phylopic_base(cat, x = posx[i], y = posy[i], ysize = size[i], alpha=.8)
 }
 }

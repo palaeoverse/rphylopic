@@ -7,8 +7,14 @@ man-roxygen
 CONTRIBUTING.md
 README.html
 README.Rmd
+^LICENSE\.md$
 ^CODE_OF_CONDUCT\.md$
 ^cran-comments\.md$
 .github
 Makefile
 ^codemeta\.json$
+^codecov\.yml$
+^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
