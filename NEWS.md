@@ -1,4 +1,4 @@
-Version: 1.0.0
+rphylopic 1.0.0
 ==============
 
 * rphylopic has now been transfered to the palaeoverse community (new maintainer: William Gearty and author: Lewis Jones)
@@ -14,7 +14,7 @@ Version: 1.0.0
   * save_phylopic: this function enables users to save PhyloPic silhouettes using various formats (replaces save_png)
   
 
-Version: 0.3.4
+rphylopic 0.3.4
 ==============
 
 ### NEW FEATURES
