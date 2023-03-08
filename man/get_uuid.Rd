@@ -7,8 +7,9 @@
 get_uuid(name = NULL, n = 1, url = FALSE)
 }
 \arguments{
-\item{name}{\code{character}. A taxonomic name. Different taxonomic levels
-are supported (i.e. species, genus, family).}
+\item{name}{\code{character}. A taxonomic name. Various taxonomic levels
+are supported (e.g. species, genus, family). NULL can also be supplied
+which will skip the taxonomic filtering of the PhyloPic database.}
 
 \item{n}{\code{numeric}. How many uuids should be returned? Depending
 on the requested \code{name}, multiple silhouettes might exist. If \code{n} exceeds
