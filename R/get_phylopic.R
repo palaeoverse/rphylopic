@@ -69,9 +69,7 @@ get_png <- function(x) {
   img_tmp <- readPNG(res$content)
   # convert to RGBA if in GA format
   if (dim(img_tmp)[3] == 2) {
-    img_new <- array(1, dim = c(dim(img_tmp)[1:2], 4))
-    img_new[, , 1:3] <- 0
-    img_new[, , 4] <- img_tmp[, , 2]
+    img_new <- ga_to_rgba(img_tmp)
   } else {
     img_new <- img_tmp
   }

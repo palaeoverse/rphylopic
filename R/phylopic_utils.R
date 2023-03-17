@@ -24,13 +24,14 @@ flip_phylopic.Picture <- function(img, horizontal = TRUE, vertical = FALSE) {
 
 #' @export
 flip_phylopic.array <- function(img, horizontal = TRUE, vertical = FALSE) {
+  # modified from https://github.com/richfitz/vectoR/blob/master/R/vector.R
   if (horizontal) {
     img <- img[, ncol(img):1, , drop=FALSE]
   }
   if (vertical) {
     img <- img[nrow(img):1, , , drop=FALSE]
   }
-  x
+  img
 }
 
 #' @export
@@ -103,26 +104,43 @@ recolor_phylopic <- function(img, alpha = 1, color = NULL) {
 
 #' @export
 recolor_phylopic.array <- function(img, alpha = 1, color = NULL) {
-  if (is.null(color)) {
-    mat <- matrix(rgb(img[, , 1], img[, , 2], img[, , 3], img[, , 4] * alpha),
-                  nrow = dim(img)[1])
-  } else {
-    cols <- col2rgb(color)
-    imglen <- length(img[, , 1])
-    mat <- matrix(ifelse(img[, , 4] > 0, rgb(rep(cols[1, 1], imglen),
-                                             rep(cols[2, 1], imglen),
-                                             rep(cols[3, 1], imglen),
-                                             img[, , 4] * 255 * alpha,
-                                             maxColorValue = 255),
-                         ## make background white for devices
-                         ## that do not support alpha channel
-                         rgb(rep(1, imglen),
-                             rep(1, imglen),
-                             rep(1, imglen),
-                             img[, , 4] * alpha)),
-                  nrow = dim(img)[1])
+  dims <- dim(img)
+  # convert to RGBA if needed
+  if (dims[3] == 1) { # grayscale
+    img <- g_to_rgba(img)
+  } else if (dims[3] == 2) { # greyscale + alpha
+    img <- ga_to_rgba(img)
+  } else if (dims[3] == 3) { # RGB
+    img <- rgb_to_rgba(img)
   }
-  return(mat)
+  if (is.null(color)) {
+    new_img <- array(c(img[, , 1:3], img[, , 4] * alpha), dim = dims)
+  } else {
+    cols <- col2rgb(color) / 255
+    imglen <- length(img[, , 1])
+    new_img <- array(c(rep(cols[1, 1], imglen),
+                       rep(cols[2, 1], imglen),
+                       rep(cols[3, 1], imglen),
+                       img[, , 4] * alpha), dim = dims)
+  }
+  return(new_img)
+}
+
+ga_to_rgba <- function(img) {
+  new_img <- array(0, dim = c(dim(img)[1:2], 4))
+  new_img[, , 4] <- img[, , 2]
+  new_img
+}
+
+g_to_rgba <- function(img) {
+  new_img[, , 1] <- 0
+  new_img[, , 2] <- img
+  ga_to_rgba(new_img)
+}
+
+rgb_to_rgba <- function(img) {
+  new_img[, , 4] <- 1
+  new_img
 }
 
 #' @export
