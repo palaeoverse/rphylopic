@@ -1,3 +1,16 @@
+#' Flip a PhyloPic silhouette along its horizontal and/or vertical axis
+#'
+#' The picture can be a [Picture][grImport2::Picture-class] or png array object,
+#' e.g., from using [get_phylopic()].
+#'
+#' @param img A [Picture][grImport2::Picture-class] or png array object, e.g.,
+#'   from using [get_phylopic()].
+#' @param horizontal \code{logical}. Should the silhouette be flipped
+#'   horizontally?
+#' @param vertical \code{logical}. Should the silhouette be flipped vertically?
+#' @return A [Picture][grImport2::Picture-class] or png array object (matching
+#'   the type of `img`)
+#' @family transformations
 #' @export
 flip_phylopic <- function(img, horizontal = TRUE, vertical = FALSE) {
   UseMethod("flip_phylopic")
@@ -34,6 +47,17 @@ flip_phylopic.array <- function(img, horizontal = TRUE, vertical = FALSE) {
   img
 }
 
+#' Rotate a PhyloPic silhouette
+#'
+#' The picture should be a [Picture][grImport2::Picture-class], e.g., from using
+#' [get_phylopic()]. Note that png array objects cannot (yet) be flipped.
+#'
+#' @param img A [Picture][grImport2::Picture-class] object, e.g., from using
+#'   [get_phylopic()].
+#' @param angle \code{numeric}. The number of degrees to rotate the silhouette
+#'   clockwise.
+#' @return A [Picture][grImport2::Picture-class] object
+#' @family transformations
 #' @export
 rotate_phylopic <- function(img, angle = 90) {
   UseMethod("rotate_phylopic")
@@ -83,19 +107,20 @@ transform_summary <- function(summary, mat) {
 }
 
 
-#' Recolor a phylopic image
+#' Recolor a PhyloPic image
 #'
-#' Function to recolour and change alpha levels of a phylopic image.
+#' Function to recolour and change alpha levels of a PhyloPic image.
 #'
 #' @param img A [Picture][grImport2::Picture-class] or png array object, e.g.,
 #'   from using [get_phylopic()].
-#' @param alpha A value between 0 and 1, specifying the opacity of the
+#' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity of the
 #'   silhouette.
-#' @param color Color to plot the silhouette in. If NULL, the color is not
+#' @param color \code{character}. Color to plot the silhouette in. If NULL, the color is not
 #'   changed.
 #' 
 #' @return A [Picture][grImport2::Picture-class] or png array object (matching
 #'   the type of `img`)
+#' @family transformations
 #' @importFrom grDevices rgb col2rgb
 #' @export
 recolor_phylopic <- function(img, alpha = 1, color = NULL) {

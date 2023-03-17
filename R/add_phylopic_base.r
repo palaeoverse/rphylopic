@@ -3,19 +3,26 @@
 #' Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
 #' silhouette on top of an existing base R plot.
 #'
-#' @param img A Picture or png array object, e.g., from using [get_phylopic()].
-#' @param name A taxonomic name to be passed to [get_uuid()].
-#' @param uuid A valid uuid for a PhyloPic silhouette (such as that returned by
-#'   [get_uuid()] or [pick_phylopic()]).
-#' @param x x value of the silhouette center. Ignored if y and ysize are not
-#'   specified.
-#' @param y y value of the silhouette center. Ignored if x and ysize are not
-#'   specified.
-#' @param ysize Height of the silhouette. The width is determined by the aspect
-#'   ratio of the original image. Ignored if x and y are not specified.
-#' @param alpha A value between 0 and 1, specifying the opacity of the
-#'   silhouette.
-#' @param color Color to plot the silhouette in.
+#' @param img A [Picture][grImport2::Picture-class] or png array object, e.g.,
+#'   from using [get_phylopic()].
+#' @param name \code{character}. A taxonomic name to be passed to [get_uuid()].
+#' @param uuid \code{character}. A valid uuid for a PhyloPic silhouette (such as
+#'   that returned by [get_uuid()] or [pick_phylopic()]).
+#' @param x \code{numeric}. x value of the silhouette center. Ignored if y and
+#'   ysize are not specified.
+#' @param y \code{numeric}. y value of the silhouette center. Ignored if x and
+#'   ysize are not specified.
+#' @param ysize \code{numeric}. Height of the silhouette. The width is
+#'   determined by the aspect ratio of the original image. Ignored if x and y
+#'   are not specified.
+#' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
+#'   of the silhouette (0 is fully transparent, 1 is fully opaque).
+#' @param color \code{character}. Color to plot the silhouette in.
+#' @param horizontal \code{logical}. Should the silhouette be flipped
+#'   horizontally?
+#' @param vertical \code{logical}. Should the silhouette be flipped vertically?
+#' @param angle \code{numeric}. The number of degrees to rotate the silhouette
+#'   clockwise. The default is no rotation.
 #' @details One (and only one) of `img`, `name`, or `uuid` must be specified.
 #'   Use parameters `x`, `y`, and `ysize` to place the silhouette at a specified
 #'   position on the plot. If all three of these parameters are unspecified,
@@ -23,6 +30,11 @@
 #'   plot. The aspect ratio of the silhouette will always be maintained (even
 #'   when a figure is resized). However, if the plot is resized afterwards, the
 #'   absolute position of the silhouette may change.
+#'
+#'   When specifying a horizontal and/or vertical flip **and** a rotation, the
+#'   flip(s) will always occur first. If you would like to customize this
+#'   behavior, you can flip and/or rotate the image within your own workflow
+#'   using [flip_phylopic()] and [rotate_phylopic()].
 #' @importFrom graphics par
 #' @importFrom grid grid.raster gpar
 #' @importFrom grImport2 grid.picture
@@ -59,7 +71,9 @@
 #' }
 add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
                               x = NULL, y = NULL, ysize = NULL,
-                              alpha = 1, color = "black") {
+                              alpha = 1, color = "black",
+                              horizontal = FALSE, vertical = FALSE,
+                              angle = 0) {
   if (all(sapply(list(img, name, uuid), is.null))) {
     stop("One of `img`, `name`, or `uuid` is required.")
   }
@@ -87,6 +101,9 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     stop("`img` should be of class Picture (for a vector image) or class array
           (for a raster image).")
   }
+
+  if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
+  if (!is.null(angle) && angle != 0) img <- rotate_phylopic(img, angle)
 
   # get plot limits
   usr <- par()$usr

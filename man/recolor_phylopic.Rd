@@ -2,7 +2,7 @@
 % Please edit documentation in R/phylopic_utils.R
 \name{recolor_phylopic}
 \alias{recolor_phylopic}
-\title{Recolor a phylopic image}
+\title{Recolor a PhyloPic image}
 \usage{
 recolor_phylopic(img, alpha = 1, color = NULL)
 }
@@ -10,10 +10,10 @@ recolor_phylopic(img, alpha = 1, color = NULL)
 \item{img}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
 from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 
-\item{alpha}{A value between 0 and 1, specifying the opacity of the
+\item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity of the
 silhouette.}
 
-\item{color}{Color to plot the silhouette in. If NULL, the color is not
+\item{color}{\code{character}. Color to plot the silhouette in. If NULL, the color is not
 changed.}
 }
 \value{
@@ -21,5 +21,11 @@ A \link[grImport2:Picture-class]{Picture} or png array object (matching
 the type of \code{img})
 }
 \description{
-Function to recolour and change alpha levels of a phylopic image.
+Function to recolour and change alpha levels of a PhyloPic image.
 }
+\seealso{
+Other transformations: 
+\code{\link{flip_phylopic}()},
+\code{\link{rotate_phylopic}()}
+}
+\concept{transformations}
