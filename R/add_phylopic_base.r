@@ -126,7 +126,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     }
     grid.picture(img, x = x, y = y, height = ysize, gpFUN = gp_fun)
   } else { # png
-    img <- recolor_png(img, alpha, color)
+    img <- recolor_phylopic(img, alpha, color)
     grid.raster(img, x = x, y = y, height = ysize)
   }
 }

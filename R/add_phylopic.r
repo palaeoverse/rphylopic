@@ -114,7 +114,7 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
     img_grob <- gList(img_grob)
     img_grob <- gTree(children = img_grob)
   } else { # png
-    img <- recolor_png(img, alpha, color)
+    img <- recolor_phylopic(img, alpha, color)
     img_grob <- rasterGrob(img)
   }
 
