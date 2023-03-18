@@ -45,10 +45,10 @@ flip_phylopic.array <- function(img, horizontal = TRUE, vertical = FALSE) {
 
   # modified from https://github.com/richfitz/vectoR/blob/master/R/vector.R
   if (horizontal) {
-    img <- img[, ncol(img):1, , drop=FALSE]
+    img <- img[, rev(seq_len(ncol(img))), , drop = FALSE]
   }
   if (vertical) {
-    img <- img[nrow(img):1, , , drop=FALSE]
+    img <- img[rev(seq_len(nrow(img))), , , drop = FALSE]
   }
   img
 }
@@ -108,7 +108,7 @@ rotate_phylopic.array <- function(img, angle = 90) {
   img_new <- img
   for (i in seq_len(abs(angle) / 90)) {
     img_new <- simplify2array(
-      lapply(1:dim(img_new)[3],
+      lapply(seq_len(dim(img_new)[3]),
              function(i) rotate(img_new[, , i]))
       )
   }
@@ -180,7 +180,7 @@ recolor_phylopic.array <- function(img, alpha = 1, color = NULL) {
   } else if (dims[3] == 3) { # RGB
     img <- rgb_to_rgba(img)
   } else if (dims[3] > 4) { # not supported
-    stop(paste("`img` must be in G, GA, RGB, or RGBA format.", 
+    stop(paste("`img` must be in G, GA, RGB, or RGBA format.",
                "More than four channels is not supported."))
   }
   if (is.null(color)) {
