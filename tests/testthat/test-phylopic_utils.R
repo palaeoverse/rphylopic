@@ -33,7 +33,7 @@ test_that("rotate_phylopic works", {
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
                           format = "512")
   expect_equal(rev(dim(cat_png)[1:2]), dim(rotate_phylopic(cat_png))[1:2])
-  
+
   # Expect error
   expect_error(rotate_phylopic(cat, angle = "clockwise"))
   expect_error(rotate_phylopic(cat_png, angle = 150))
@@ -51,6 +51,10 @@ test_that("recolor_phylopic works", {
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
                           format = "512")
   cat_recolor <- recolor_phylopic(cat_png, .9, "purple")
+  expect_equal(dim(recolor_phylopic(cat_png[, , 1, drop = FALSE], .5, "red")),
+               dim(cat_recolor))
+  expect_equal(dim(recolor_phylopic(cat_recolor[, , 1:3, drop = FALSE], .2)),
+               dim(cat_recolor))
   cols <- col2rgb("purple")[, 1] / 255
   expect_true(all(cat_recolor[, , 1] == cols["red"]))
   expect_true(all(cat_recolor[, , 2] == cols["green"]))
@@ -61,7 +65,8 @@ test_that("recolor_phylopic works", {
   expect_equal(max(cat_recolor[, , 4]), .5)
 
   # Expect error
+  expect_error(recolor_phylopic(cat, alpha = "transparent"))
+  expect_error(recolor_phylopic(cat, color = 0))
   expect_error(recolor_phylopic(array(1, dim = c(5, 5))))
   expect_error(recolor_phylopic(array(1, dim = c(5, 5, 5))))
 })
-  

@@ -98,11 +98,11 @@ rotate_phylopic.array <- function(img, angle = 90) {
 
   # modified from https://stackoverflow.com/a/16497058/4660582
   if (angle > 0) { # clockwise
-    rotate <- function(mat) t(mat[nrow(mat):1, , drop = FALSE])
+    rotate <- function(mat) t(mat[rev(seq_len(nrow(mat))), , drop = FALSE])
   } else if (angle < 0) { # counter clockwise
     rotate <- function(mat) {
       mat_t <- t(mat)
-      mat_t[nrow(mat_t):1, , drop = FALSE]
+      mat_t[rev(seq_len(nrow(mat_t))), , drop = FALSE]
     }
   }
   img_new <- img
@@ -149,7 +149,7 @@ transform_summary <- function(summary, mat) {
 #'   of the silhouette.
 #' @param color \code{character}. Color to plot the silhouette in. If NULL, the
 #'   color is not changed.
-#' 
+#'
 #' @return A [Picture][grImport2::Picture-class] or png array object (matching
 #'   the type of `img`)
 #' @family transformations
@@ -168,14 +168,14 @@ recolor_phylopic <- function(img, alpha = 1, color = NULL) {
 #' @export
 recolor_phylopic.array <- function(img, alpha = 1, color = NULL) {
   dims <- dim(img)
-  if (length(dims) != 3) {
+  if (length(dim(img)) != 3) {
     stop("`img` must be an array with three dimensions.")
   }
 
   # convert to RGBA if needed
   if (dims[3] == 1) { # grayscale
     img <- g_to_rgba(img)
-  } else if (dims[3] == 2) { # greyscale + alpha
+  } else if (dims[3] == 2) { # greyscale and alpha
     img <- ga_to_rgba(img)
   } else if (dims[3] == 3) { # RGB
     img <- rgb_to_rgba(img)
@@ -183,6 +183,7 @@ recolor_phylopic.array <- function(img, alpha = 1, color = NULL) {
     stop(paste("`img` must be in G, GA, RGB, or RGBA format.",
                "More than four channels is not supported."))
   }
+  dims <- dim(img) # update dimensions
   if (is.null(color)) {
     new_img <- array(c(img[, , 1:3], img[, , 4] * alpha), dim = dims)
   } else {
@@ -203,12 +204,14 @@ ga_to_rgba <- function(img) {
 }
 
 g_to_rgba <- function(img) {
-  new_img[, , 1] <- 0
+  new_img <- array(0, dim = c(dim(img)[1:2], 2))
   new_img[, , 2] <- img
   ga_to_rgba(new_img)
 }
 
 rgb_to_rgba <- function(img) {
+  new_img <- array(0, dim = c(dim(img)[1:2], 4))
+  new_img[, , 1:3] <- img[, , 1:3]
   new_img[, , 4] <- 1
   new_img
 }
