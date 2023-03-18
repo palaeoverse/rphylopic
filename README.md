@@ -141,3 +141,5 @@ Gearty, W., Jones, L.A., Chamberlain, S. 2023. rphylopic: an R package for acces
 <img src="man/figures/logo.png" width="120" />
 
 </p>
+
+[Hex logo by Miranta Kouvari](https://www.mirantakouvari.com)
