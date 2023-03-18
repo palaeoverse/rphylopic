@@ -20,6 +20,8 @@ flip_phylopic <- function(img, horizontal = TRUE, vertical = FALSE) {
 flip_phylopic.Picture <- function(img, horizontal = TRUE, vertical = FALSE) {
   # modified from
   # https://github.com/thomasp85/ggforce/blob/main/R/trans_linear.R
+  if (!is.logical(horizontal)) stop("`horizontal` must be TRUE or FALSE.")
+  if (!is.logical(vertical)) stop("`vertical` must be TRUE or FALSE.")
   if (horizontal) {
     mat <- matrix(c(-1, 0, 0,
                     0, 1, 0,
@@ -38,6 +40,12 @@ flip_phylopic.Picture <- function(img, horizontal = TRUE, vertical = FALSE) {
 #' @export
 flip_phylopic.array <- function(img, horizontal = TRUE, vertical = FALSE) {
   # modified from https://github.com/richfitz/vectoR/blob/master/R/vector.R
+  if (length(dim(img)) != 3) {
+    stop("`img` must be an array with three dimensions.")
+  }
+  if (!is.logical(horizontal)) stop("`horizontal` must be TRUE or FALSE.")
+  if (!is.logical(vertical)) stop("`vertical` must be TRUE or FALSE.")
+
   if (horizontal) {
     img <- img[, ncol(img):1, , drop=FALSE]
   }
@@ -65,6 +73,7 @@ rotate_phylopic <- function(img, angle = 90) {
 
 #' @export
 rotate_phylopic.Picture <- function(img, angle = 90) {
+  if (!is.numeric(angle)) stop("`angle` must be a number.")
   # change to radians
   angle <- angle / 360 * (2 * pi)
   # change to clockwise
@@ -79,7 +88,7 @@ rotate_phylopic.Picture <- function(img, angle = 90) {
 
 #' @export
 rotate_phylopic.array <- function(img, angle = 90) {
-  stop("`rotate_phylopic` is not yet implemented for rasterized phylopics.")
+  stop("`rotate_phylopic` is not yet implemented for rasterized PhyloPics.")
 }
 
 #' @importFrom grImport2 applyTransform
@@ -113,10 +122,10 @@ transform_summary <- function(summary, mat) {
 #'
 #' @param img A [Picture][grImport2::Picture-class] or png array object, e.g.,
 #'   from using [get_phylopic()].
-#' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity of the
-#'   silhouette.
-#' @param color \code{character}. Color to plot the silhouette in. If NULL, the color is not
-#'   changed.
+#' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
+#'   of the silhouette.
+#' @param color \code{character}. Color to plot the silhouette in. If NULL, the
+#'   color is not changed.
 #' 
 #' @return A [Picture][grImport2::Picture-class] or png array object (matching
 #'   the type of `img`)
@@ -130,6 +139,9 @@ recolor_phylopic <- function(img, alpha = 1, color = NULL) {
 #' @export
 recolor_phylopic.array <- function(img, alpha = 1, color = NULL) {
   dims <- dim(img)
+  if (length(dims) != 3) {
+    stop("`img` must be an array with three dimensions.")
+  }
   # convert to RGBA if needed
   if (dims[3] == 1) { # grayscale
     img <- g_to_rgba(img)
@@ -137,6 +149,9 @@ recolor_phylopic.array <- function(img, alpha = 1, color = NULL) {
     img <- ga_to_rgba(img)
   } else if (dims[3] == 3) { # RGB
     img <- rgb_to_rgba(img)
+  } else if (dims[3] > 4) { # not supported
+    stop(paste("`img` must be in G, GA, RGB, or RGBA format.", 
+               "More than four channels is not supported."))
   }
   if (is.null(color)) {
     new_img <- array(c(img[, , 1:3], img[, , 4] * alpha), dim = dims)
