@@ -65,6 +65,8 @@ When specifying a horizontal and/or vertical flip \strong{and} a rotation, the
 flip(s) will always occur first. If you would like to customize this
 behavior, you can flip and/or rotate the image within your own workflow
 using \code{\link[=flip_phylopic]{flip_phylopic()}} and \code{\link[=rotate_phylopic]{rotate_phylopic()}}.
+
+Note that png array objects can only be rotated by multiples of 90 degrees.
 }
 \examples{
 # Put a silhouette behind a plot based on a taxonomic name

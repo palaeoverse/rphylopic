@@ -13,7 +13,7 @@ test_that("add_phylopic works", {
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
                           format = "512")
   p <- ggplot(iris) +
-    add_phylopic(cat_png, alpha = .2, horizontal = TRUE) +
+    add_phylopic(cat_png, alpha = .2, angle = 90, horizontal = TRUE) +
     geom_point(aes(x = Sepal.Length, y = Sepal.Width))
   expect_doppelganger("phylopic png in background", p)
 

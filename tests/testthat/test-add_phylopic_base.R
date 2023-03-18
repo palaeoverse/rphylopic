@@ -13,7 +13,7 @@ test_that("add_phylopic_base works", {
                             format = "512")
     plot(1, 1, type = "n", main = "A cat")
     add_phylopic_base(cat_png, x = 1, y = 1, ysize = .4, color = "blue",
-                      alpha = .5, horizontal = TRUE)
+                      alpha = .5, angle = -90, horizontal = TRUE)
   })
 
   # a bunch of little colored phylopics, with existing image

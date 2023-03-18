@@ -33,6 +33,8 @@
 #'   flip(s) will always occur first. If you would like to customize this
 #'   behavior, you can flip and/or rotate the image within your own workflow
 #'   using [flip_phylopic()] and [rotate_phylopic()].
+#'   
+#'   Note that png array objects can only be rotated by multiples of 90 degrees.
 #' @importFrom grImport2 pictureGrob
 #' @importFrom grid rasterGrob gList gTree
 #' @importFrom methods is

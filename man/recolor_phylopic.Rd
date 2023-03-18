@@ -10,18 +10,18 @@ recolor_phylopic(img, alpha = 1, color = NULL)
 \item{img}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
 from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 
-\item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity of the
-silhouette.}
+\item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
+of the silhouette.}
 
-\item{color}{\code{character}. Color to plot the silhouette in. If NULL, the color is not
-changed.}
+\item{color}{\code{character}. Color to plot the silhouette in. If NULL, the
+color is not changed.}
 }
 \value{
 A \link[grImport2:Picture-class]{Picture} or png array object (matching
 the type of \code{img})
 }
 \description{
-Function to recolour and change alpha levels of a PhyloPic image.
+Function to recolor and change alpha levels of a PhyloPic image.
 }
 \seealso{
 Other transformations: 

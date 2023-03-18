@@ -13,6 +13,8 @@
 #' @family transformations
 #' @export
 flip_phylopic <- function(img, horizontal = TRUE, vertical = FALSE) {
+  if (!is.logical(horizontal)) stop("`horizontal` must be TRUE or FALSE.")
+  if (!is.logical(vertical)) stop("`vertical` must be TRUE or FALSE.")
   UseMethod("flip_phylopic")
 }
 
@@ -20,8 +22,6 @@ flip_phylopic <- function(img, horizontal = TRUE, vertical = FALSE) {
 flip_phylopic.Picture <- function(img, horizontal = TRUE, vertical = FALSE) {
   # modified from
   # https://github.com/thomasp85/ggforce/blob/main/R/trans_linear.R
-  if (!is.logical(horizontal)) stop("`horizontal` must be TRUE or FALSE.")
-  if (!is.logical(vertical)) stop("`vertical` must be TRUE or FALSE.")
   if (horizontal) {
     mat <- matrix(c(-1, 0, 0,
                     0, 1, 0,
@@ -39,13 +39,11 @@ flip_phylopic.Picture <- function(img, horizontal = TRUE, vertical = FALSE) {
 
 #' @export
 flip_phylopic.array <- function(img, horizontal = TRUE, vertical = FALSE) {
-  # modified from https://github.com/richfitz/vectoR/blob/master/R/vector.R
   if (length(dim(img)) != 3) {
     stop("`img` must be an array with three dimensions.")
   }
-  if (!is.logical(horizontal)) stop("`horizontal` must be TRUE or FALSE.")
-  if (!is.logical(vertical)) stop("`vertical` must be TRUE or FALSE.")
 
+  # modified from https://github.com/richfitz/vectoR/blob/master/R/vector.R
   if (horizontal) {
     img <- img[, ncol(img):1, , drop=FALSE]
   }
@@ -57,23 +55,25 @@ flip_phylopic.array <- function(img, horizontal = TRUE, vertical = FALSE) {
 
 #' Rotate a PhyloPic silhouette
 #'
-#' The picture should be a [Picture][grImport2::Picture-class], e.g., from using
-#' [get_phylopic()]. Note that png array objects cannot (yet) be flipped.
+#' The picture can be a [Picture][grImport2::Picture-class] or png array object,
+#' e.g., from using [get_phylopic()]. Note that png array objects can only be
+#' rotated by multiples of 90 degrees.
 #'
-#' @param img A [Picture][grImport2::Picture-class] object, e.g., from using
-#'   [get_phylopic()].
+#' @param img A [Picture][grImport2::Picture-class] or png array object, e.g.,
+#'   from using [get_phylopic()].
 #' @param angle \code{numeric}. The number of degrees to rotate the silhouette
 #'   clockwise.
-#' @return A [Picture][grImport2::Picture-class] object
+#' @return A [Picture][grImport2::Picture-class] or png array object (matching
+#'   the type of `img`)
 #' @family transformations
 #' @export
 rotate_phylopic <- function(img, angle = 90) {
+  if (!is.numeric(angle)) stop("`angle` must be a number.")
   UseMethod("rotate_phylopic")
 }
 
 #' @export
 rotate_phylopic.Picture <- function(img, angle = 90) {
-  if (!is.numeric(angle)) stop("`angle` must be a number.")
   # change to radians
   angle <- angle / 360 * (2 * pi)
   # change to clockwise
@@ -88,7 +88,31 @@ rotate_phylopic.Picture <- function(img, angle = 90) {
 
 #' @export
 rotate_phylopic.array <- function(img, angle = 90) {
-  stop("`rotate_phylopic` is not yet implemented for rasterized PhyloPics.")
+  if (length(dim(img)) != 3) {
+    stop("`img` must be an array with three dimensions.")
+  }
+  if (angle %% 90 != 0) {
+    stop(paste("`angle` must be divisible by 90. Other angles are not yet",
+               "implemented for rasterized PhyloPics."))
+  }
+
+  # modified from https://stackoverflow.com/a/16497058/4660582
+  if (angle > 0) { # clockwise
+    rotate <- function(mat) t(mat[nrow(mat):1, , drop = FALSE])
+  } else if (angle < 0) { # counter clockwise
+    rotate <- function(mat) {
+      mat_t <- t(mat)
+      mat_t[nrow(mat_t):1, , drop = FALSE]
+    }
+  }
+  img_new <- img
+  for (i in seq_len(abs(angle) / 90)) {
+    img_new <- simplify2array(
+      lapply(1:dim(img_new)[3],
+             function(i) rotate(img_new[, , i]))
+      )
+  }
+  img_new
 }
 
 #' @importFrom grImport2 applyTransform
@@ -115,10 +139,9 @@ transform_summary <- function(summary, mat) {
   summary
 }
 
-
 #' Recolor a PhyloPic image
 #'
-#' Function to recolour and change alpha levels of a PhyloPic image.
+#' Function to recolor and change alpha levels of a PhyloPic image.
 #'
 #' @param img A [Picture][grImport2::Picture-class] or png array object, e.g.,
 #'   from using [get_phylopic()].
@@ -133,6 +156,12 @@ transform_summary <- function(summary, mat) {
 #' @importFrom grDevices rgb col2rgb
 #' @export
 recolor_phylopic <- function(img, alpha = 1, color = NULL) {
+  if (!is.numeric(alpha) || alpha < 0 || alpha > 1) {
+    stop("`alpha` must be a number between 0 and 1.")
+  }
+  if (!is.character(color) && !is.null(color)) {
+    stop("`color` must be a character value.")
+  }
   UseMethod("recolor_phylopic")
 }
 
@@ -142,6 +171,7 @@ recolor_phylopic.array <- function(img, alpha = 1, color = NULL) {
   if (length(dims) != 3) {
     stop("`img` must be an array with three dimensions.")
   }
+
   # convert to RGBA if needed
   if (dims[3] == 1) { # grayscale
     img <- g_to_rgba(img)

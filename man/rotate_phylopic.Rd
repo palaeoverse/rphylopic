@@ -7,18 +7,20 @@
 rotate_phylopic(img, angle = 90)
 }
 \arguments{
-\item{img}{A \link[grImport2:Picture-class]{Picture} object, e.g., from using
-\code{\link[=get_phylopic]{get_phylopic()}}.}
+\item{img}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
+from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 
 \item{angle}{\code{numeric}. The number of degrees to rotate the silhouette
 clockwise.}
 }
 \value{
-A \link[grImport2:Picture-class]{Picture} object
+A \link[grImport2:Picture-class]{Picture} or png array object (matching
+the type of \code{img})
 }
 \description{
-The picture should be a \link[grImport2:Picture-class]{Picture}, e.g., from using
-\code{\link[=get_phylopic]{get_phylopic()}}. Note that png array objects cannot (yet) be flipped.
+The picture can be a \link[grImport2:Picture-class]{Picture} or png array object,
+e.g., from using \code{\link[=get_phylopic]{get_phylopic()}}. Note that png array objects can only be
+rotated by multiples of 90 degrees.
 }
 \seealso{
 Other transformations: 
