@@ -132,7 +132,7 @@ As with any community project, society, or meeting we feel it is important to es
 
 # Attribution
 
-If you use the `rphylopic` package in your work, please acknowledge the contributors responsible for the image, the creator of PhyloPic--[Michael Keesey](http://tmkeesey.net)--and citing the following for `rphylopic`:
+If you use the `rphylopic` package in your work, please acknowledge the contributors responsible for the image, the creator of PhyloPic ([Michael Keesey](http://tmkeesey.net)), and citing the following for `rphylopic`:
 
 Gearty, W., Jones, L.A., Chamberlain, S. 2023. rphylopic: an R package for accessing and plotting PhyloPic silhouettes.
 
