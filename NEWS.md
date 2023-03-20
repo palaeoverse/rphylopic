@@ -1,3 +1,8 @@
+rphylopic (development version)
+==============
+
+* added functions for transforming PhyloPic silhouettes (flipping and rotating)
+
 rphylopic 1.0.0
 ==============
 
