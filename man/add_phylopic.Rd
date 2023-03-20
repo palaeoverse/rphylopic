@@ -57,17 +57,17 @@ ggplot(iris) +
   geom_point(aes(x = Sepal.Length, y = Sepal.Width))
 
 # Put a silhouette anywhere based on UUID
-posx <- runif(50, 0, 10)
-posy <- runif(50, 0, 10)
-sizey <- runif(50, 0.4, 2)
-cols <- sample(c("black", "darkorange", "grey42", "white"), 50,
+posx <- runif(10, 0, 10)
+posy <- runif(10, 0, 10)
+sizey <- runif(10, 0.4, 2)
+cols <- sample(c("black", "darkorange", "grey42", "white"), 10,
   replace = TRUE)
 
 # Since we are plotting a lot of the same image, we should just save
 # the image in our environment first
 cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
 p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y))
-for (i in 1:50) {
+for (i in 1:10) {
   p <- p + add_phylopic(cat, x = posx[i], y = posy[i],
                         ysize = sizey[i], color = cols[i])
 }
