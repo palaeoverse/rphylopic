@@ -2,18 +2,19 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "rphylopic",
-  "description": "Work with 'Phylopic' web service (<http://phylopic.org/api/>) to get 'silhouette' images of 'organisms', search names, and more. Includes functions for adding 'silhouettes' to both base plots and 'ggplot2' plots.",
-  "name": "rphylopic: Get 'Silhouettes' of 'Organisms' from 'Phylopic'",
-  "codeRepository": "https://github.com/sckott/rphylopic",
-  "issueTracker": "https://github.com/sckott/rphylopic/issues",
-  "license": "https://spdx.org/licenses/MIT",
-  "version": "0.3.2.91",
+  "description": "Work with the PhyloPic Web Service (<http://api-docs.phylopic.org/v2/>) to fetch silhouette images of organisms. Includes functions for adding silhouettes to both base R plots and ggplot2 plots.",
+  "name": "rphylopic: Get Silhouettes of Organisms from PhyloPic",
+  "relatedLink": ["https://rphylopic.palaeoverse.org", "https://palaeoverse.org", "https://CRAN.R-project.org/package=rphylopic"],
+  "codeRepository": "https://github.com/palaeoverse-community/rphylopic",
+  "issueTracker": "https://github.com/palaeoverse-community/rphylopic/issues",
+  "license": "https://spdx.org/licenses/GPL-3.0",
+  "version": "1.0.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.2 (2021-11-01)",
+  "runtimePlatform": "R version 4.2.2 (2022-10-31 ucrt)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -21,6 +22,20 @@
     "url": "https://cran.r-project.org"
   },
   "author": [
+    {
+      "@type": "Person",
+      "givenName": "William",
+      "familyName": "Gearty",
+      "email": "willgearty@gmail.com",
+      "@id": "https://orcid.org/0000-0003-0076-3262"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Lewis A.",
+      "familyName": "Jones",
+      "email": "LewisAlan.Jones@uvigo.es",
+      "@id": "https://orcid.org/0000-0003-3902-8986"
+    },
     {
       "@type": "Person",
       "givenName": "Scott",
@@ -40,10 +55,10 @@
   "maintainer": [
     {
       "@type": "Person",
-      "givenName": "Scott",
-      "familyName": "Chamberlain",
-      "email": "myrmecocystus@gmail.com",
-      "@id": "https://orcid.org/0000-0003-1444-9135"
+      "givenName": "William",
+      "familyName": "Gearty",
+      "email": "willgearty@gmail.com",
+      "@id": "https://orcid.org/0000-0003-0076-3262"
     }
   ],
   "softwareSuggestions": [
@@ -51,6 +66,7 @@
       "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
+      "version": ">= 3.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -61,16 +77,16 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "vcr",
-      "name": "vcr",
-      "version": ">= 0.2.0",
+      "identifier": "vdiffr",
+      "name": "vdiffr",
+      "version": ">= 1.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=vcr"
+      "sameAs": "https://CRAN.R-project.org/package=vdiffr"
     },
     {
       "@type": "SoftwareApplication",
@@ -98,36 +114,25 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "R.rsp",
-      "name": "R.rsp",
+      "identifier": "covr",
+      "name": "covr",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=R.rsp"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "parallel",
-      "name": "parallel"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "data.table",
-      "name": "data.table",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=data.table"
+      "sameAs": "https://CRAN.R-project.org/package=covr"
     }
   ],
   "softwareRequirements": {
     "1": {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 4.0"
+    },
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "ggplot2",
       "name": "ggplot2",
@@ -138,19 +143,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=ggplot2"
-    },
-    "2": {
-      "@type": "SoftwareApplication",
-      "identifier": "crul",
-      "name": "crul",
-      "version": ">= 0.5.2",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=crul"
     },
     "3": {
       "@type": "SoftwareApplication",
@@ -171,22 +163,10 @@
     },
     "5": {
       "@type": "SoftwareApplication",
-      "identifier": "gridBase",
-      "name": "gridBase",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=gridBase"
-    },
-    "6": {
-      "@type": "SoftwareApplication",
       "identifier": "graphics",
       "name": "graphics"
     },
-    "7": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "png",
       "name": "png",
@@ -198,7 +178,96 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=png"
     },
+    "7": {
+      "@type": "SoftwareApplication",
+      "identifier": "grImport2",
+      "name": "grImport2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=grImport2"
+    },
+    "8": {
+      "@type": "SoftwareApplication",
+      "identifier": "rsvg",
+      "name": "rsvg",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rsvg"
+    },
+    "9": {
+      "@type": "SoftwareApplication",
+      "identifier": "httr",
+      "name": "httr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=httr"
+    },
+    "10": {
+      "@type": "SoftwareApplication",
+      "identifier": "curl",
+      "name": "curl",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=curl"
+    },
+    "11": {
+      "@type": "SoftwareApplication",
+      "identifier": "methods",
+      "name": "methods"
+    },
     "SystemRequirements": null
   },
-  "fileSize": "895.75KB"
+  "fileSize": "2702.159KB",
+  "citation": [
+    {
+      "@type": "ScholarlyArticle",
+      "datePublished": "2023",
+      "author": [
+        {
+          "@type": "Person",
+          "givenName": "William",
+          "familyName": "Gearty"
+        },
+        {
+          "@type": "Person",
+          "givenName": ["Lewis", "A."],
+          "familyName": "Jones"
+        },
+        {
+          "@type": "Person",
+          "givenName": "Scott",
+          "familyName": "Chamberlain"
+        }
+      ],
+      "name": "rphylopic: an R package for accessing and plotting PhyloPic silhouettes",
+      "isPartOf": {
+        "@type": "PublicationIssue",
+        "datePublished": "2023",
+        "isPartOf": {
+          "@type": ["PublicationVolume", "Periodical"],
+          "name": "TBD"
+        }
+      }
+    }
+  ],
+  "releaseNotes": "https://github.com/palaeoverse-community/rphylopic/blob/master/NEWS.md",
+  "readme": "https://github.com/palaeoverse-community/rphylopic/blob/main/README.md",
+  "contIntegration": ["https://github.com/palaeoverse-community/rphylopic/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/palaeoverse-community/rphylopic"],
+  "keywords": ["phylopic", "rstats", "silhouette", "ggplot2", "base-r"]
 }
