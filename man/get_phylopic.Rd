@@ -16,10 +16,10 @@ using "twitter" will return a rasterized image that includes the PhyloPic
 logo and is formatted for posting on social media.}
 }
 \value{
-If \code{format} is "vector", a \link[grImport2:Picture-class]{Picture} object
-is returned. Otherwise, a png array representing the rasterized image is
-returned. Either way, the uuid and download url are included as the "uuid"
-and "url" attributes, respectively.
+If \code{format} is "vector", a \link[grImport2:Picture-class]{Picture}
+object is returned. Otherwise, a png array representing the rasterized
+image is returned. Either way, the uuid and download url are included as
+the "uuid" and "url" attributes, respectively.
 }
 \description{
 This retrieves a PhyloPic silhouette as a vectorized or rasterized object.

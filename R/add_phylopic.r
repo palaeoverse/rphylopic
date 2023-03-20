@@ -8,12 +8,12 @@
 #' @param name A taxonomic name to be passed to [get_uuid()].
 #' @param uuid A valid uuid for a PhyloPic silhouette (such as that returned by
 #'   [get_uuid()] or [pick_phylopic()]).
-#' @param x x value of the silhouette center. Ignored if y and ysize are not
+#' @param x x value of the silhouette center. Ignored if `y` and `ysize` are not
 #'   specified.
-#' @param y y value of the silhouette center. Ignored if x and ysize are not
+#' @param y y value of the silhouette center. Ignored if `x` and `ysize` are not
 #'   specified.
 #' @param ysize Height of the silhouette. The width is determined by the aspect
-#'   ratio of the original image. Ignored if x and y are not specified.
+#'   ratio of the original image. Ignored if `x` and `y` are not specified.
 #' @param alpha A value between 0 and 1, specifying the opacity of the
 #'   silhouette (0 is fully transparent, 1 is fully opaque).
 #' @param color Color to plot the silhouette in.

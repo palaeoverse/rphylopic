@@ -16,21 +16,23 @@ add_phylopic_base(
 )
 }
 \arguments{
-\item{img}{A Picture or png array object, e.g., from using \code{\link[=get_phylopic]{get_phylopic()}}.}
+\item{img}{A Picture or png array object, e.g., from using
+\code{\link[=get_phylopic]{get_phylopic()}}.}
 
 \item{name}{A taxonomic name to be passed to \code{\link[=get_uuid]{get_uuid()}}.}
 
-\item{uuid}{A valid uuid for a PhyloPic silhouette (such as that returned by
-\code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
+\item{uuid}{A valid uuid for a PhyloPic silhouette (such as that returned
+by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
-\item{x}{x value of the silhouette center. Ignored if y and ysize are not
+\item{x}{x value of the silhouette center. Ignored if \code{y} and \code{ysize} are
+not specified.}
+
+\item{y}{y value of the silhouette center. Ignored if \code{x} and \code{ysize} are
+not specified.}
+
+\item{ysize}{Height of the silhouette. The width is determined by the
+aspect ratio of the original image. Ignored if \code{x} and \code{y} are not
 specified.}
-
-\item{y}{y value of the silhouette center. Ignored if x and ysize are not
-specified.}
-
-\item{ysize}{Height of the silhouette. The width is determined by the aspect
-ratio of the original image. Ignored if x and y are not specified.}
 
 \item{alpha}{A value between 0 and 1, specifying the opacity of the
 silhouette.}
@@ -38,17 +40,17 @@ silhouette.}
 \item{color}{Color to plot the silhouette in.}
 }
 \description{
-Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
-silhouette on top of an existing base R plot.
+Specify an existing image, taxonomic name, or PhyloPic uuid to add a
+PhyloPic silhouette on top of an existing base R plot.
 }
 \details{
 One (and only one) of \code{img}, \code{name}, or \code{uuid} must be specified.
-Use parameters \code{x}, \code{y}, and \code{ysize} to place the silhouette at a specified
-position on the plot. If all three of these parameters are unspecified,
-then the silhouette will be plotted to the full height and width of the
-plot. The aspect ratio of the silhouette will always be maintained (even
-when a figure is resized). However, if the plot is resized afterwards, the
-absolute position of the silhouette may change.
+Use parameters \code{x}, \code{y}, and \code{ysize} to place the silhouette at a
+specified position on the plot. If all three of these parameters are
+unspecified, then the silhouette will be plotted to the full height and
+width of the plot. The aspect ratio of the silhouette will always be
+maintained (even when a figure is resized). However, if the plot is
+resized afterwards, the absolute position of the silhouette may change.
 }
 \examples{
 # single image

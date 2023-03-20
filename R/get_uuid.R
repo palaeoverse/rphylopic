@@ -7,10 +7,10 @@
 #' @param name \code{character}. A taxonomic name. Various taxonomic levels
 #'   are supported (e.g. species, genus, family). NULL can also be supplied
 #'   which will skip the taxonomic filtering of the PhyloPic database.
-#' @param n \code{numeric}. How many uuids should be returned? Depending
-#'   on the requested `name`, multiple silhouettes might exist. If `n` exceeds
-#'   the number of available images, all available uuids will be returned. This
-#'   argument defaults to 1.
+#' @param n \code{numeric}. How many uuids should be returned? Depending on
+#'   the requested `name`, multiple silhouettes might exist. If `n` exceeds
+#'   the number of available images, all available uuids will be returned.
+#'   This argument defaults to 1.
 #' @param url \code{logical}. If \code{FALSE} (default), only the uuid is
 #'   returned. If \code{TRUE}, a valid PhyloPic image url of the uuid is
 #'   returned.

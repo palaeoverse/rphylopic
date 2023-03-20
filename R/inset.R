@@ -3,20 +3,21 @@
 #' This is identical to [ggplot2::annotation_custom()] but it works with all
 #' coords.
 #'
-#' Most useful for adding tables, inset plots, and other grid-based decorations
+#' Most useful for adding tables, inset plots, and other grid-based
+#' decorations
 #'
 #' @keywords internal
 #' @param grob grob to display
-#' @param xmin,xmax x location (in data coordinates) giving horizontal location
+#' @param xmin,xmax x location (in data coordinates) giving horizontal
+#'   location of grob
+#' @param ymin,ymax y location (in data coordinates) giving vertical location
 #'   of grob
-#' @param ymin,ymax y location (in data coordinates) giving vertical location of
-#'   grob
 #' @export
 #' @importFrom ggplot2 StatIdentity PositionIdentity layer
 #' @note [phylopic_inset()] expects the grob to fill the entire viewport
-#'   defined by xmin, xmax, ymin, ymax. Grobs with a different (absolute) size
-#'   will be center-justified in that region. Inf values can be used to fill the
-#'   full plot panel (the default).
+#'   defined by `xmin`, `xmax`, `ymin`, `ymax.` Grobs with a different
+#'   (absolute) size will be center-justified in that region. Inf values can
+#'   be used to fill the full plot panel (the default).
 phylopic_inset <-
   function(grob, xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf) {
     layer(

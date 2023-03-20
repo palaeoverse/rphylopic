@@ -11,8 +11,9 @@ pick_phylopic(name = NULL, n = 5, auto = NULL)
 are supported (e.g. species, genus, family).}
 
 \item{n}{\code{numeric}. How many uuids should be viewed? Depending on the
-requested \code{name}, multiple silhouettes may exist. If \code{n} exceeds the number
-of available images, all available uuids will be returned. Defaults to 5.}
+requested \code{name}, multiple silhouettes may exist. If \code{n} exceeds the
+number of available images, all available uuids will be returned.
+Defaults to 5.}
 
 \item{auto}{\code{numeric}. This argument allows the user to automate input
 into the menu choice. If the input value is \code{1}, requested images will be
@@ -21,15 +22,15 @@ value is \code{2}, the first returned image will be selected. If \code{NULL}
 (default), the user must interactively respond to the called menu.}
 }
 \value{
-A \link[grImport2:Picture-class]{Picture} object is returned. The uuid of
-the selected image is saved as the "uuid" attribute of the returned object
-and is also printed to console.
+A \link[grImport2:Picture-class]{Picture} object is returned. The uuid
+of the selected image is saved as the "uuid" attribute of the returned
+object and is also printed to console.
 }
 \description{
-This function provides a visually interactive way to pick an image and valid
-uuid for an input taxonomic name. As multiple silhouettes can exist for each
-species in PhyloPic, this function is useful for choosing the right
-image/uuid for the user.
+This function provides a visually interactive way to pick an image and
+valid uuid for an input taxonomic name. As multiple silhouettes can exist
+for each species in PhyloPic, this function is useful for choosing the
+right image/uuid for the user.
 }
 \details{
 This function allows the user to visually select the desired image

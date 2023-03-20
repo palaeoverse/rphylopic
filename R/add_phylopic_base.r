@@ -1,28 +1,30 @@
 #' Add a PhyloPic to a base R plot
 #'
-#' Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
-#' silhouette on top of an existing base R plot.
+#' Specify an existing image, taxonomic name, or PhyloPic uuid to add a
+#' PhyloPic silhouette on top of an existing base R plot.
 #'
-#' @param img A Picture or png array object, e.g., from using [get_phylopic()].
+#' @param img A Picture or png array object, e.g., from using
+#'   [get_phylopic()].
 #' @param name A taxonomic name to be passed to [get_uuid()].
-#' @param uuid A valid uuid for a PhyloPic silhouette (such as that returned by
-#'   [get_uuid()] or [pick_phylopic()]).
-#' @param x x value of the silhouette center. Ignored if y and ysize are not
+#' @param uuid A valid uuid for a PhyloPic silhouette (such as that returned
+#'   by [get_uuid()] or [pick_phylopic()]).
+#' @param x x value of the silhouette center. Ignored if `y` and `ysize` are
+#'   not specified.
+#' @param y y value of the silhouette center. Ignored if `x` and `ysize` are
+#'   not specified.
+#' @param ysize Height of the silhouette. The width is determined by the
+#'   aspect ratio of the original image. Ignored if `x` and `y` are not
 #'   specified.
-#' @param y y value of the silhouette center. Ignored if x and ysize are not
-#'   specified.
-#' @param ysize Height of the silhouette. The width is determined by the aspect
-#'   ratio of the original image. Ignored if x and y are not specified.
 #' @param alpha A value between 0 and 1, specifying the opacity of the
 #'   silhouette.
 #' @param color Color to plot the silhouette in.
 #' @details One (and only one) of `img`, `name`, or `uuid` must be specified.
-#'   Use parameters `x`, `y`, and `ysize` to place the silhouette at a specified
-#'   position on the plot. If all three of these parameters are unspecified,
-#'   then the silhouette will be plotted to the full height and width of the
-#'   plot. The aspect ratio of the silhouette will always be maintained (even
-#'   when a figure is resized). However, if the plot is resized afterwards, the
-#'   absolute position of the silhouette may change.
+#'   Use parameters `x`, `y`, and `ysize` to place the silhouette at a
+#'   specified position on the plot. If all three of these parameters are
+#'   unspecified, then the silhouette will be plotted to the full height and
+#'   width of the plot. The aspect ratio of the silhouette will always be
+#'   maintained (even when a figure is resized). However, if the plot is
+#'   resized afterwards, the absolute position of the silhouette may change.
 #' @importFrom graphics par
 #' @importFrom grid grid.raster gpar
 #' @importFrom grImport2 grid.picture
