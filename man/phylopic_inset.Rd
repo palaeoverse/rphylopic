@@ -16,15 +16,16 @@ of grob}
 grob}
 }
 \description{
-This is identical to ggplot2::annotation_custom but it works with all coords
+This is identical to \code{\link[ggplot2:annotation_custom]{ggplot2::annotation_custom()}} but it works with all
+coords.
 }
 \details{
 Most useful for adding tables, inset plots, and other grid-based decorations
 }
 \note{
-\code{\link[=annotation_custom]{annotation_custom()}} expects the grob to fill the entire viewport
+\code{\link[=phylopic_inset]{phylopic_inset()}} expects the grob to fill the entire viewport
 defined by xmin, xmax, ymin, ymax. Grobs with a different (absolute) size
 will be center-justified in that region. Inf values can be used to fill the
-full plot panel
+full plot panel (the default).
 }
 \keyword{internal}

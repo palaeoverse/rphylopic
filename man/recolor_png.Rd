@@ -2,7 +2,7 @@
 % Please edit documentation in R/recolor_phylopic.r
 \name{recolor_png}
 \alias{recolor_png}
-\title{Recolor a phylopic image}
+\title{Recolour a PhyloPic image}
 \usage{
 recolor_png(img, alpha = 1, color = NULL)
 }
@@ -19,6 +19,6 @@ silhouette.}
 A png object (stored as an array)
 }
 \description{
-Internal function to recolour and change alpha levels of a phylopic image.
+Internal function to recolour and change alpha levels of a PhyloPic image.
 }
 \keyword{internal}

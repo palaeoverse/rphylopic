@@ -1,6 +1,6 @@
-#' Recolor a phylopic image
+#' Recolour a PhyloPic image
 #'
-#' Internal function to recolour and change alpha levels of a phylopic image.
+#' Internal function to recolour and change alpha levels of a PhyloPic image.
 #'
 #' @keywords internal
 #' @param img A png object (stored as an array), e.g., from using
