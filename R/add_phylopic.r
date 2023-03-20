@@ -8,13 +8,13 @@
 #' @param name \code{character}. A taxonomic name to be passed to [get_uuid()].
 #' @param uuid \code{character}. A valid uuid for a PhyloPic silhouette (such as
 #'   that returned by [get_uuid()] or [pick_phylopic()]).
-#' @param x \code{numeric}. x value of the silhouette center. Ignored if y and
-#'   ysize are not specified.
-#' @param y \code{numeric}. y value of the silhouette center. Ignored if x and
-#'   ysize are not specified.
+#' @param x \code{numeric}. x value of the silhouette center. Ignored if `y` and
+#'   `ysize` are not specified.
+#' @param y \code{numeric}. y value of the silhouette center. Ignored if `x` and
+#'   `ysize` are not specified.
 #' @param ysize \code{numeric}. Height of the silhouette. The width is
-#'   determined by the aspect ratio of the original image. Ignored if x and y
-#'   are not specified.
+#'   determined by the aspect ratio of the original image. Ignored if `x` and
+#'   `y` are not specified.
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
 #' @param color \code{character}. Color to plot the silhouette in.

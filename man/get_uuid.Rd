@@ -11,10 +11,10 @@ get_uuid(name = NULL, n = 1, url = FALSE)
 are supported (e.g. species, genus, family). NULL can also be supplied
 which will skip the taxonomic filtering of the PhyloPic database.}
 
-\item{n}{\code{numeric}. How many uuids should be returned? Depending
-on the requested \code{name}, multiple silhouettes might exist. If \code{n} exceeds
-the number of available images, all available uuids will be returned. This
-argument defaults to 1.}
+\item{n}{\code{numeric}. How many uuids should be returned? Depending on
+the requested \code{name}, multiple silhouettes might exist. If \code{n} exceeds
+the number of available images, all available uuids will be returned.
+This argument defaults to 1.}
 
 \item{url}{\code{logical}. If \code{FALSE} (default), only the uuid is
 returned. If \code{TRUE}, a valid PhyloPic image url of the uuid is

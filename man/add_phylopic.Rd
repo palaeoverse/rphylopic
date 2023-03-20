@@ -27,15 +27,15 @@ from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 \item{uuid}{\code{character}. A valid uuid for a PhyloPic silhouette (such as
 that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
-\item{x}{\code{numeric}. x value of the silhouette center. Ignored if y and
-ysize are not specified.}
+\item{x}{\code{numeric}. x value of the silhouette center. Ignored if \code{y} and
+\code{ysize} are not specified.}
 
-\item{y}{\code{numeric}. y value of the silhouette center. Ignored if x and
-ysize are not specified.}
+\item{y}{\code{numeric}. y value of the silhouette center. Ignored if \code{x} and
+\code{ysize} are not specified.}
 
 \item{ysize}{\code{numeric}. Height of the silhouette. The width is
-determined by the aspect ratio of the original image. Ignored if x and y
-are not specified.}
+determined by the aspect ratio of the original image. Ignored if \code{x} and
+\code{y} are not specified.}
 
 \item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
 of the silhouette (0 is fully transparent, 1 is fully opaque).}

@@ -8,10 +8,10 @@
 #'   Rasterized thumbnails can be returned by using 64, 128, or 192. Finally,
 #'   using "twitter" will return a rasterized image that includes the PhyloPic
 #'   logo and is formatted for posting on social media.
-#' @return If `format` is "vector", a [Picture][grImport2::Picture-class] object
-#'   is returned. Otherwise, a png array representing the rasterized image is
-#'   returned. Either way, the uuid and download url are included as the "uuid"
-#'   and "url" attributes, respectively.
+#' @return If `format` is "vector", a [Picture][grImport2::Picture-class]
+#'   object is returned. Otherwise, a png array representing the rasterized
+#'   image is returned. Either way, the uuid and download url are included as
+#'   the "uuid" and "url" attributes, respectively.
 #' @export
 #' @examples
 #' # uuid

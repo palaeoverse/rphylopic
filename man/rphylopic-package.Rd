@@ -4,7 +4,7 @@
 \name{rphylopic-package}
 \alias{rphylopic}
 \alias{rphylopic-package}
-\title{rphylopic: Get Silhouettes of Organisms from Phylopic}
+\title{rphylopic: Get Silhouettes of Organisms from PhyloPic}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 

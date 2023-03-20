@@ -1,5 +1,5 @@
 Package: rphylopic
-Title: Get Silhouettes of Organisms from Phylopic
+Title: Get Silhouettes of Organisms from PhyloPic
 Description: Work with the PhyloPic Web Service (<http://api-docs.phylopic.org/v2/>) 
     to fetch silhouette images of organisms. Includes functions for adding 
     silhouettes to both base R plots and ggplot2 plots.
