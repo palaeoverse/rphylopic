@@ -98,7 +98,9 @@ url.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">uuid</span> <span class="op">&lt;-</span> <span class="fu">get_uuid</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Acropora cervicornis"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (total_items == 0) {    stop(paste0("Image resource not available for `name`. \n",         "Ensure provided name is a valid taxonomic name or ",         "try a species/genus resolution name."))} else if (total_items &lt; n) {    warning(paste0("Only ", total_items, " items are available."))    n &lt;- total_items}:</span> argument is of length zero</span>
 <span class="r-in"><span><span class="va">uuid</span> <span class="op">&lt;-</span> <span class="fu">get_uuid</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Dinosauria"</span>, n <span class="op">=</span> <span class="fl">5</span>, url <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (total_items == 0) {    stop(paste0("Image resource not available for `name`. \n",         "Ensure provided name is a valid taxonomic name or ",         "try a species/genus resolution name."))} else if (total_items &lt; n) {    warning(paste0("Only ", total_items, " items are available."))    n &lt;- total_items}:</span> argument is of length zero</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
