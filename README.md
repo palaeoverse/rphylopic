@@ -136,10 +136,14 @@ If you use the `rphylopic` package in your work, please acknowledge the contribu
 
 Gearty, W., Jones, L.A., Chamberlain, S. 2023. rphylopic: an R package for accessing and plotting PhyloPic silhouettes.
 
+# Cheat sheet
+
+[![](docs/cheatsheet.png)](https://palaeoverse.org/images/rphylopic-cheatsheet.pdf)
+
 <p align="left">
 
 <img src="man/figures/logo.png" width="120" />
 
 </p>
 
-[Hex logo by Miranta Kouvari](https://www.mirantakouvari.com)
+[Hex logo and cheatsheet by Miranta Kouvari](https://www.mirantakouvari.com)

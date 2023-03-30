@@ -2,6 +2,7 @@ rphylopic (development version)
 ==============
 
 * added functions for transforming PhyloPic silhouettes (flipping and rotating)
+* save_phylopic bg argument updated to be "transparent" by default
 
 rphylopic 1.0.0
 ==============
