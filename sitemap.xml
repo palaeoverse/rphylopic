@@ -28,6 +28,9 @@
     <loc>https://rphylopic.palaeoverse.org/reference/add_phylopic_base.html</loc>
   </url>
   <url>
+    <loc>https://rphylopic.palaeoverse.org/reference/flip_phylopic.html</loc>
+  </url>
+  <url>
     <loc>https://rphylopic.palaeoverse.org/reference/get_attribution.html</loc>
   </url>
   <url>
@@ -46,7 +49,10 @@
     <loc>https://rphylopic.palaeoverse.org/reference/pick_phylopic.html</loc>
   </url>
   <url>
-    <loc>https://rphylopic.palaeoverse.org/reference/recolor_png.html</loc>
+    <loc>https://rphylopic.palaeoverse.org/reference/recolor_phylopic.html</loc>
+  </url>
+  <url>
+    <loc>https://rphylopic.palaeoverse.org/reference/rotate_phylopic.html</loc>
   </url>
   <url>
     <loc>https://rphylopic.palaeoverse.org/reference/rphylopic-package.html</loc>

@@ -12,7 +12,7 @@ silhouette as a separate layer to an existing ggplot plot."><meta property="og:i
     
     <a class="navbar-brand me-2" href="../index.html">rphylopic</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,10 @@ silhouette as a separate layer to an existing ggplot plot.</p>
 <span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ysize <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  color <span class="op">=</span> <span class="st">"black"</span></span>
+<span>  color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  horizontal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  vertical <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  angle <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -74,36 +77,51 @@ from using <code><a href="get_phylopic.html">get_phylopic()</a></code>.</p></dd>
 
 
 <dt>name</dt>
-<dd><p>A taxonomic name to be passed to <code><a href="get_uuid.html">get_uuid()</a></code>.</p></dd>
+<dd><p><code>character</code>. A taxonomic name to be passed to <code><a href="get_uuid.html">get_uuid()</a></code>.</p></dd>
 
 
 <dt>uuid</dt>
-<dd><p>A valid uuid for a PhyloPic silhouette (such as that returned by
-<code><a href="get_uuid.html">get_uuid()</a></code> or <code><a href="pick_phylopic.html">pick_phylopic()</a></code>).</p></dd>
+<dd><p><code>character</code>. A valid uuid for a PhyloPic silhouette (such as
+that returned by <code><a href="get_uuid.html">get_uuid()</a></code> or <code><a href="pick_phylopic.html">pick_phylopic()</a></code>).</p></dd>
 
 
 <dt>x</dt>
-<dd><p>x value of the silhouette center. Ignored if <code>y</code> and <code>ysize</code> are not
-specified.</p></dd>
+<dd><p><code>numeric</code>. x value of the silhouette center. Ignored if <code>y</code> and
+<code>ysize</code> are not specified.</p></dd>
 
 
 <dt>y</dt>
-<dd><p>y value of the silhouette center. Ignored if <code>x</code> and <code>ysize</code> are not
-specified.</p></dd>
+<dd><p><code>numeric</code>. y value of the silhouette center. Ignored if <code>x</code> and
+<code>ysize</code> are not specified.</p></dd>
 
 
 <dt>ysize</dt>
-<dd><p>Height of the silhouette. The width is determined by the aspect
-ratio of the original image. Ignored if <code>x</code> and <code>y</code> are not specified.</p></dd>
+<dd><p><code>numeric</code>. Height of the silhouette. The width is
+determined by the aspect ratio of the original image. Ignored if <code>x</code> and
+<code>y</code> are not specified.</p></dd>
 
 
 <dt>alpha</dt>
-<dd><p>A value between 0 and 1, specifying the opacity of the
-silhouette (0 is fully transparent, 1 is fully opaque).</p></dd>
+<dd><p><code>numeric</code>. A value between 0 and 1, specifying the opacity
+of the silhouette (0 is fully transparent, 1 is fully opaque).</p></dd>
 
 
 <dt>color</dt>
-<dd><p>Color to plot the silhouette in.</p></dd>
+<dd><p><code>character</code>. Color to plot the silhouette in.</p></dd>
+
+
+<dt>horizontal</dt>
+<dd><p><code>logical</code>. Should the silhouette be flipped
+horizontally?</p></dd>
+
+
+<dt>vertical</dt>
+<dd><p><code>logical</code>. Should the silhouette be flipped vertically?</p></dd>
+
+
+<dt>angle</dt>
+<dd><p><code>numeric</code>. The number of degrees to rotate the silhouette
+clockwise. The default is no rotation.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -113,6 +131,11 @@ Use parameters <code>x</code>, <code>y</code>, and <code>ysize</code> to place t
 position on the plot. If all three of these parameters are unspecified,
 then the silhouette will be plotted to the full height and width of the
 plot. The aspect ratio of the silhouette will always be maintained.</p>
+<p>When specifying a horizontal and/or vertical flip <strong>and</strong> a rotation, the
+flip(s) will always occur first. If you would like to customize this
+behavior, you can flip and/or rotate the image within your own workflow
+using <code><a href="flip_phylopic.html">flip_phylopic()</a></code> and <code><a href="rotate_phylopic.html">rotate_phylopic()</a></code>.</p>
+<p>Note that png array objects can only be rotated by multiples of 90 degrees.</p>
     </div>
 
     <div class="section level2">
@@ -122,28 +145,31 @@ plot. The aspect ratio of the silhouette will always be maintained.</p>
 <span class="r-in"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu">add_phylopic</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Iris"</span>, alpha <span class="op">=</span> <span class="fl">.2</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span>, y <span class="op">=</span> <span class="va">Sepal.Width</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (total_items == 0) {    stop(paste0("Image resource not available for `name`. \n",         "Ensure provided name is a valid taxonomic name or ",         "try a species/genus resolution name."))} else if (total_items &lt; n) {    warning(paste0("Only ", total_items, " items are available."))    n &lt;- total_items}:</span> argument is of length zero</span>
+<span class="r-plt img"><img src="add_phylopic-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Put a silhouette anywhere based on UUID</span></span></span>
 <span class="r-in"><span><span class="va">posx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">posy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sizey</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0.4</span>, <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">angle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">hor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fl">10</span>, <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ver</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fl">10</span>, <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"darkorange"</span>, <span class="st">"grey42"</span>, <span class="st">"white"</span><span class="op">)</span>, <span class="fl">10</span>,</span></span>
 <span class="r-in"><span>  replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">alpha</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Since we are plotting a lot of the same image, we should just save</span></span></span>
 <span class="r-in"><span><span class="co"># the image in our environment first</span></span></span>
 <span class="r-in"><span><span class="va">cat</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_phylopic.html">get_phylopic</a></span><span class="op">(</span><span class="st">"23cd6aa4-9587-4a2e-8e26-de42885004c9"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in handle_url(handle, url, ...):</span> Must specify at least one of url or handle</span>
-<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>cat.x <span class="op">=</span> <span class="va">posx</span>, cat.y <span class="op">=</span> <span class="va">posy</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">cat.x</span>, <span class="va">cat.y</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>cat.x <span class="op">=</span> <span class="va">posx</span>, cat.y <span class="op">=</span> <span class="va">posy</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">cat.x</span>, <span class="va">cat.y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_blank.html" class="external-link">geom_blank</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu">add_phylopic</span><span class="op">(</span><span class="va">cat</span>, x <span class="op">=</span> <span class="va">posx</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">posy</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span></span>
-<span class="r-in"><span>                        ysize <span class="op">=</span> <span class="va">sizey</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, color <span class="op">=</span> <span class="va">cols</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu">add_phylopic</span><span class="op">(</span><span class="va">cat</span>, x <span class="op">=</span> <span class="va">posx</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, y <span class="op">=</span> <span class="va">posy</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, ysize <span class="op">=</span> <span class="va">sizey</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>                        color <span class="op">=</span> <span class="va">cols</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, alpha <span class="op">=</span> <span class="va">alpha</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, angle <span class="op">=</span> <span class="va">angle</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span></span>
+<span class="r-in"><span>                        horizontal <span class="op">=</span> <span class="va">hor</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, vertical <span class="op">=</span> <span class="va">ver</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in add_phylopic(cat, x = posx[i], y = posy[i], ysize = sizey[i],     color = cols[i]):</span> `img` should be of class Picture (for a vector image) or class array</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span>           (for a raster image).</span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"R Cat Herd!!"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="add_phylopic-1.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="add_phylopic-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
