@@ -39,7 +39,6 @@ Suggests:
     knitr,
     rmarkdown,
     covr
-VignetteBuilder: knitr
 Config/testthat/edition: 3
 URL: https://rphylopic.palaeoverse.org,
      https://github.com/palaeoverse-community/rphylopic,
