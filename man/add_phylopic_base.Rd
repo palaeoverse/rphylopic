@@ -61,7 +61,7 @@ position on the plot. If all three of these parameters are unspecified,
 then the silhouette will be plotted to the full height and width of the
 plot. The aspect ratio of the silhouette will always be maintained (even
 when a figure is resized). However, if the plot is resized afterwards, the
-absolute position of the silhouette may change.
+absolute size and/or position of the silhouette may change.
 
 When specifying a horizontal and/or vertical flip \strong{and} a rotation, the
 flip(s) will always occur first. If you would like to customize this
