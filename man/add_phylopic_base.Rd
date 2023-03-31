@@ -104,7 +104,7 @@ plot(posx, posy, type="n", main="A cat herd, on top of a cat",
 # plot background cat
 add_phylopic_base(cat, alpha=0.2)
 # overlay smaller cats
-for (i in 1:50) {
+for (i in 1:10) {
   add_phylopic_base(cat, x = posx[i], y = posy[i], ysize = size[i], alpha=.8)
 }
 }
