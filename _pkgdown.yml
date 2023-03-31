@@ -34,3 +34,10 @@ reference:
   contents:
   - add_phylopic
   - add_phylopic_base
+- title: Modifying silhouettes
+  desc: >
+    Functions to modify silhouettes in various ways.
+  contents:
+  - flip_phylopic
+  - rotate_phylopic
+  - recolor_phylopic

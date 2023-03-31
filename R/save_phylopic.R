@@ -13,6 +13,9 @@
 #'   and file extension should be included (e.g. "./phylopic.png"). If this
 #'   argument is `NULL` (default), the file is automatically saved in the
 #'   current working directory as a png file.
+#' @param bg \code{character}. The desired background color. By default this
+#' argument is set to "transparent". Note: .jpeg files are always exported
+#' with a background colour.
 #' @param ... Additional arguments available for the called grDevices
 #'   function. The called function is determined by the file extension used in
 #'   `path` (e.g. \code{\link[grDevices]{png}}).
@@ -37,7 +40,7 @@
 #' save_phylopic(img = img, path = "./phylopic.png",
 #'               width = 500, height = 500)
 #' }
-save_phylopic <- function(img = NULL, path = NULL, ...) {
+save_phylopic <- function(img = NULL, path = NULL, bg = "transparent", ...) {
   # Error handling -----------------------------------------------------
   # Image checking
   if (is.null(img)) {
@@ -73,7 +76,7 @@ save_phylopic <- function(img = NULL, path = NULL, ...) {
   # Filter for correct function
   fun <- formats[[type]]
   # Save file
-  do.call(fun, list(filename = path, ...))
+  do.call(fun, list(filename = path, bg = bg, ...))
   grid.picture(img)
-  dev.off()
+  invisible(dev.off())
 }

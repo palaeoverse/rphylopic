@@ -12,31 +12,43 @@ add_phylopic(
   y = NULL,
   ysize = NULL,
   alpha = 1,
-  color = "black"
+  color = "black",
+  horizontal = FALSE,
+  vertical = FALSE,
+  angle = 0
 )
 }
 \arguments{
 \item{img}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
 from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 
-\item{name}{A taxonomic name to be passed to \code{\link[=get_uuid]{get_uuid()}}.}
+\item{name}{\code{character}. A taxonomic name to be passed to \code{\link[=get_uuid]{get_uuid()}}.}
 
-\item{uuid}{A valid uuid for a PhyloPic silhouette (such as that returned by
-\code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
+\item{uuid}{\code{character}. A valid uuid for a PhyloPic silhouette (such as
+that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
-\item{x}{x value of the silhouette center. Ignored if \code{y} and \code{ysize} are not
-specified.}
+\item{x}{\code{numeric}. x value of the silhouette center. Ignored if \code{y} and
+\code{ysize} are not specified.}
 
-\item{y}{y value of the silhouette center. Ignored if \code{x} and \code{ysize} are not
-specified.}
+\item{y}{\code{numeric}. y value of the silhouette center. Ignored if \code{x} and
+\code{ysize} are not specified.}
 
-\item{ysize}{Height of the silhouette. The width is determined by the aspect
-ratio of the original image. Ignored if \code{x} and \code{y} are not specified.}
+\item{ysize}{\code{numeric}. Height of the silhouette. The width is
+determined by the aspect ratio of the original image. Ignored if \code{x} and
+\code{y} are not specified.}
 
-\item{alpha}{A value between 0 and 1, specifying the opacity of the
-silhouette (0 is fully transparent, 1 is fully opaque).}
+\item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
+of the silhouette (0 is fully transparent, 1 is fully opaque).}
 
-\item{color}{Color to plot the silhouette in.}
+\item{color}{\code{character}. Color to plot the silhouette in.}
+
+\item{horizontal}{\code{logical}. Should the silhouette be flipped
+horizontally?}
+
+\item{vertical}{\code{logical}. Should the silhouette be flipped vertically?}
+
+\item{angle}{\code{numeric}. The number of degrees to rotate the silhouette
+clockwise. The default is no rotation.}
 }
 \description{
 Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
@@ -48,6 +60,13 @@ Use parameters \code{x}, \code{y}, and \code{ysize} to place the silhouette at a
 position on the plot. If all three of these parameters are unspecified,
 then the silhouette will be plotted to the full height and width of the
 plot. The aspect ratio of the silhouette will always be maintained.
+
+When specifying a horizontal and/or vertical flip \strong{and} a rotation, the
+flip(s) will always occur first. If you would like to customize this
+behavior, you can flip and/or rotate the image within your own workflow
+using \code{\link[=flip_phylopic]{flip_phylopic()}} and \code{\link[=rotate_phylopic]{rotate_phylopic()}}.
+
+Note that png array objects can only be rotated by multiples of 90 degrees.
 }
 \examples{
 # Put a silhouette behind a plot based on a taxonomic name
@@ -60,16 +79,22 @@ ggplot(iris) +
 posx <- runif(10, 0, 10)
 posy <- runif(10, 0, 10)
 sizey <- runif(10, 0.4, 2)
+angle <- runif(10, 0, 360)
+hor <- sample(c(TRUE, FALSE), 10, TRUE)
+ver <- sample(c(TRUE, FALSE), 10, TRUE)
 cols <- sample(c("black", "darkorange", "grey42", "white"), 10,
   replace = TRUE)
+alpha <- runif(10, 0, 1)
 
 # Since we are plotting a lot of the same image, we should just save
 # the image in our environment first
 cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
-p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y))
+p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
+  geom_blank()
 for (i in 1:10) {
-  p <- p + add_phylopic(cat, x = posx[i], y = posy[i],
-                        ysize = sizey[i], color = cols[i])
+  p <- p + add_phylopic(cat, x = posx[i], y = posy[i], ysize = sizey[i],
+                        color = cols[i], alpha = alpha[i], angle = angle[i],
+                        horizontal = hor[i], vertical = ver[i])
 }
 p + ggtitle("R Cat Herd!!")
 }
