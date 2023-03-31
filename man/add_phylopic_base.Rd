@@ -79,6 +79,12 @@ add_phylopic_base(name = "Cat", x = 1, y = 1, ysize = .4)
 posx <- runif(50, 0, 1)
 posy <- runif(50, 0, 1)
 size <- runif(50, 0.01, 0.2)
+angle <- runif(50, 0, 360)
+hor <- sample(c(TRUE, FALSE), 50, TRUE)
+ver <- sample(c(TRUE, FALSE), 50, TRUE)
+cols <- sample(c("black", "darkorange", "grey42", "white"), 50,
+               replace = TRUE)
+alpha <- runif(50, 0, 1)
 
 # Since we are plotting a lot of the same image, we should just save
 # the image in our environment first
@@ -86,7 +92,9 @@ cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
 
 plot(posx, posy, type="n", main="A cat herd")
 for (i in 1:50) {
-  add_phylopic_base(cat, x = posx[i], y = posy[i], ysize = size[i])
+  add_phylopic_base(cat, x = posx[i], y = posy[i], ysize = size[i],
+                    color = cols[i], angle = angle[i],
+                    horizontal = hor[i], vertical = ver[i])
 }
 
 # Example using a cat background
