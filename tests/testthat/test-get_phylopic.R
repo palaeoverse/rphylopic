@@ -13,4 +13,8 @@ test_that("get_phylopic works", {
   expect_error(get_phylopic(uuid = c("1", 2)))
   expect_error(get_phylopic(uuid = NULL))
   expect_error(get_phylopic(uuid = uuid, format = "VHS"))
+  
+  # No 512px png available for this uuid
+  expect_warning(get_phylopic(uuid = "c8f71c27-71db-4b34-ac2d-e97fea8762cf",
+                              format = "512"))
 })
