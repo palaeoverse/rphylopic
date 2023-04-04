@@ -62,7 +62,7 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
   )
 }
 
-#' @importFrom ggplot2 ggproto Geom aes
+#' @importFrom ggplot2 ggproto Geom aes remove_missing
 #' @importFrom grid gTree gList nullGrob
 GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   required_aes = c("x", "y"),
@@ -71,7 +71,8 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   optional_aes = c("img", "name", "uuid"), # one and only one of these
   default_aes = aes(size = 1.5, alpha = 1, color = "black",
                     horizontal = FALSE, vertical = FALSE, angle = 0),
-  draw_panel = function(self, data, panel_params, coord) {
+  draw_panel = function(self, data, panel_params, coord, na.rm) {
+    data <- remove_missing(data, na.rm = na.rm, c("img", "name", "uuid"))
     data <- coord$transform(data, panel_params)
     # Check aesthetics are valid
     if (any(data$alpha > 1 | data$alpha < 0)) {
