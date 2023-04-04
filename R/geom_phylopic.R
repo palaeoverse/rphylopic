@@ -127,7 +127,14 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       imgs <- data$img
     }
     # Calculate height as percentage of y limits
-    heights <- data$size / diff(panel_params$y.range)
+    # (or r limits for polar coordinates)
+    if ("y.range" %in% names(panel_params)) {
+      heights <- data$size / diff(panel_params$y.range)
+    } else if ("r.range" %in% names(panel_params)) {
+      heights <- data$size / diff(panel_params$r.range)
+    } else {
+      heights <- data$size
+    }
     grobs <- lapply(seq_len(nrow(data)), function(i) {
       if (is.null(imgs[[i]])) {
         nullGrob()
