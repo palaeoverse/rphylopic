@@ -10,12 +10,12 @@ test_that("geom_phylopic works", {
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y, uuid = uuid), color = "purple", size = 10) +
     facet_wrap(~uuid) +
-    coord_cartesian(xlim = c(1,6), ylim = c(5, 30)) +
+    coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
     theme_classic(base_size = 16)
   expect_true(is.ggplot(gg))
   expect_true(is(gg$layers[[1]]$geom, "GeomPhylopic"))
   expect_doppelganger("geom_phylopic", gg)
-  
+
   # Errors and warnings
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y, uuid = uuid), alpha = -5)

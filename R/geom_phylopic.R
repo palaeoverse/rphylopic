@@ -30,7 +30,8 @@
 #' df <- data.frame(x = 2:5, y = seq(10, 25, 5),
 #'                  name = c("cat", "walrus", "house mouse", "iris"))
 #' ggplot(df) +
-#'   geom_phylopic(aes(x = x, y = y, name = name), color = "purple", size = 10) +
+#'   geom_phylopic(aes(x = x, y = y, name = name),
+#'                 color = "purple", size = 10) +
 #'   facet_wrap(~name) +
 #'   coord_cartesian(xlim = c(1,6), ylim = c(5, 30))
 geom_phylopic <- function(mapping = NULL, data = NULL,
@@ -77,7 +78,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
                  "`uuid` aesthetics."))
     }
     # Check supplied data types and retrieve silhouettes if need be
-    if (cols['name']) {
+    if (cols["name"]) {
       if (!is.character(data$name)) {
         stop("The `name` aesthetic should be of class character.")
       }
@@ -87,13 +88,14 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
         url <- tryCatch(get_uuid(name = name, url = TRUE),
                         error = function(cond) NA)
         if (is.na(url)) {
-          warning(paste0("`name` ", '"', name, '"', " returned no PhyloPic results."))
+          warning(paste0("`name` ", '"', name, '"',
+                         " returned no PhyloPic results."))
           return(NULL)
         }
         get_svg(url)
       })
       imgs <- imgs[data$name]
-    } else if (cols['uuid']) {
+    } else if (cols["uuid"]) {
       if (!is.character(data$uuid)) {
         stop("The `uuid` aesthetic should be of class character.")
       }
@@ -165,7 +167,7 @@ phylopicGrob <- function(img, x, y, height, color, alpha,
 }
 
 #' @importFrom grid grobName
-ggname <- function (prefix, grob) {
+ggname <- function(prefix, grob) {
   # copied from ggplot2
   grob$name <- grobName(grob, prefix)
   grob
