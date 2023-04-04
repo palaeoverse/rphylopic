@@ -5,10 +5,17 @@
 #' strings, or image objects (`img`).
 #'
 #' @details One (and only one) of the `img`, `name`, or `uuid` aesthetics must
-#'   be specified. Use the `x` and `y` aesthetics to place the silhouettes at
-#'   specified positions on the plot. The `size` aesthetic specifies the height
-#'   of the silhouettes in the units of the y axis. The aspect ratio of the
-#'   silhouettes will always be maintained.
+#'   be specified. The `img` aesthetic can be
+#'   [Picture][grImport2::Picture-class] objects or png array objects, e.g.,
+#'   from using [get_phylopic()]. Use the `x` and `y` aesthetics to place the
+#'   silhouettes at specified positions on the plot. The `size` aesthetic
+#'   specifies the height of the silhouettes in the units of the y axis. The
+#'   aspect ratio of the silhouettes will always be maintained.
+#'
+#'   The `alpha` and `color` aesthetics can be used to change the transparency
+#'   and color of the silhouettes, respectively. The `horizontal` and `vertical`
+#'   aesthetics can be used to flip the silhouettes. The `angle` aesthetic can
+#'   be used to rotate the silhouettes.
 #'
 #'   When specifying a horizontal and/or vertical flip **and** a rotation, the
 #'   flip(s) will always occur first. If you would like to customize this

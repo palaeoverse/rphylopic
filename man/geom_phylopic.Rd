@@ -71,10 +71,17 @@ strings, or image objects (\code{img}).
 }
 \details{
 One (and only one) of the \code{img}, \code{name}, or \code{uuid} aesthetics must
-be specified. Use the \code{x} and \code{y} aesthetics to place the silhouettes at
-specified positions on the plot. The \code{size} aesthetic specifies the height
-of the silhouettes in the units of the y axis. The aspect ratio of the
-silhouettes will always be maintained.
+be specified. The \code{img} aesthetic can be
+\link[grImport2:Picture-class]{Picture} objects or png array objects, e.g.,
+from using \code{\link[=get_phylopic]{get_phylopic()}}. Use the \code{x} and \code{y} aesthetics to place the
+silhouettes at specified positions on the plot. The \code{size} aesthetic
+specifies the height of the silhouettes in the units of the y axis. The
+aspect ratio of the silhouettes will always be maintained.
+
+The \code{alpha} and \code{color} aesthetics can be used to change the transparency
+and color of the silhouettes, respectively. The \code{horizontal} and \code{vertical}
+aesthetics can be used to flip the silhouettes. The \code{angle} aesthetic can
+be used to rotate the silhouettes.
 
 When specifying a horizontal and/or vertical flip \strong{and} a rotation, the
 flip(s) will always occur first. If you would like to customize this
@@ -88,7 +95,8 @@ library(ggplot2)
 df <- data.frame(x = 2:5, y = seq(10, 25, 5),
                  name = c("cat", "walrus", "house mouse", "iris"))
 ggplot(df) +
-  geom_phylopic(aes(x = x, y = y, name = name), color = "purple", size = 10) +
+  geom_phylopic(aes(x = x, y = y, name = name),
+                color = "purple", size = 10) +
   facet_wrap(~name) +
   coord_cartesian(xlim = c(1,6), ylim = c(5, 30))
 }
