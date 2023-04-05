@@ -73,8 +73,10 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   default_aes = aes(size = 1.5, alpha = 1, color = "black",
                     horizontal = FALSE, vertical = FALSE, angle = 0),
   draw_panel = function(self, data, panel_params, coord, na.rm = FALSE) {
+    # Clean and transform data
     data <- remove_missing(data, na.rm = na.rm, c("img", "name", "uuid"))
     data <- coord$transform(data, panel_params)
+
     # Check that aesthetics are valid
     if (any(data$alpha > 1 | data$alpha < 0)) {
       stop("`alpha` must be between 0 and 1.")
@@ -86,6 +88,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       stop(paste("Must specify one (and only one) of the `img`, `name`, or",
                  "`uuid` aesthetics."))
     }
+
     # Check supplied data types and retrieve silhouettes if need be
     if (cols["name"]) {
       if (!is.character(data$name)) {
@@ -128,6 +131,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       }
       imgs <- data$img
     }
+
     # Calculate height as percentage of y limits
     # (or r limits for polar coordinates)
     if ("y.range" %in% names(panel_params)) {
@@ -137,6 +141,10 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     } else {
       heights <- data$size
     }
+    # Hack to make silhouettes the full height of the plot
+    heights[is.infinite(heights)] <- 1
+
+    # Make a grob for each silhouette
     grobs <- lapply(seq_len(nrow(data)), function(i) {
       if (is.null(imgs[[i]])) {
         nullGrob()
@@ -146,6 +154,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
                      data$horizontal[i], data$vertical[i], data$angle[i])
       }
     })
+    # Return the grobs as a gTree
     ggname("geom_phylopic", gTree(children = do.call(gList, grobs)))
   }
 )
@@ -159,9 +168,10 @@ phylopicGrob <- function(img, x, y, height, color, alpha,
   if (!is.na(angle) && angle != 0) img <- rotate_phylopic(img, angle)
 
   # grobify (and recolor if necessary)
+  color <- if (color == "original") NULL else color
   if (is(img, "Picture")) { # svg
     gp_fun <- function(pars) {
-      if (!is.null(color) && color != "original") {
+      if (!is.null(color)) {
         pars$fill <- color
       }
       pars$alpha <- alpha
