@@ -5,7 +5,7 @@ test_that("add_phylopic works", {
 
   # phylopic in background, with name
   p <- ggplot(iris) +
-    add_phylopic(name = "Iris", alpha = .2) +
+    add_phylopic(x = 6.1, y = 3.2, name = "Iris", alpha = .2) +
     geom_point(aes(x = Sepal.Length, y = Sepal.Width))
   expect_doppelganger("phylopic in background", p)
 
@@ -13,7 +13,7 @@ test_that("add_phylopic works", {
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
                           format = "512")
   p <- ggplot(iris) +
-    add_phylopic(cat_png, alpha = .2, angle = 90, horizontal = TRUE) +
+    add_phylopic(cat_png, x = 6.1, y = 3.2, alpha = .2, angle = 90, horizontal = TRUE) +
     geom_point(aes(x = Sepal.Length, y = Sepal.Width))
   expect_doppelganger("phylopic png in background", p)
 
@@ -29,15 +29,11 @@ test_that("add_phylopic works", {
     replace = TRUE)
   alpha <- runif(50, 0, 1)
 
-  cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
   p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
-    geom_blank()
-  for (i in 1:50) {
-    p <- p +
-      add_phylopic(cat, x = posx[i], y = posy[i], ysize = sizey[i],
-                   color = cols[i], alpha = alpha[i],
-                   angle = angle[i], horizontal = hor[i], vertical = ver[i])
-  }
+    geom_blank() +
+    add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9", x = posx, y = posy, ysize = sizey,
+                 color = cols, alpha = alpha,
+                 angle = angle, horizontal = hor, vertical = ver)
   p <- p + ggtitle("R Cat Herd!!")
   expect_doppelganger("phylopics on top of plot", p)
 

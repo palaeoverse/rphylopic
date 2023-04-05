@@ -8,9 +8,9 @@ add_phylopic(
   img = NULL,
   name = NULL,
   uuid = NULL,
-  x = NULL,
-  y = NULL,
-  ysize = NULL,
+  x,
+  y,
+  ysize = Inf,
   alpha = 1,
   color = "black",
   horizontal = FALSE,
@@ -27,15 +27,13 @@ from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 \item{uuid}{\code{character}. A valid uuid for a PhyloPic silhouette (such as
 that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
-\item{x}{\code{numeric}. x value of the silhouette center. Ignored if \code{y} and
-\code{ysize} are not specified.}
+\item{x}{\code{numeric}. x value of the silhouette center.}
 
-\item{y}{\code{numeric}. y value of the silhouette center. Ignored if \code{x} and
-\code{ysize} are not specified.}
+\item{y}{\code{numeric}. y value of the silhouette center.}
 
 \item{ysize}{\code{numeric}. Height of the silhouette. The width is
-determined by the aspect ratio of the original image. Ignored if \code{x} and
-\code{y} are not specified.}
+determined by the aspect ratio of the original image. If "Inf", the
+default, the height will be as tall as will fit within the plot area.}
 
 \item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
 of the silhouette (0 is fully transparent, 1 is fully opaque).}
@@ -57,9 +55,12 @@ silhouette as a separate layer to an existing ggplot plot.
 \details{
 One (and only one) of \code{img}, \code{name}, or \code{uuid} must be specified.
 Use parameters \code{x}, \code{y}, and \code{ysize} to place the silhouette at a specified
-position on the plot. If all three of these parameters are unspecified,
-then the silhouette will be plotted to the full height and width of the
-plot. The aspect ratio of the silhouette will always be maintained.
+position on the plot. The aspect ratio of the silhouette will always be
+maintained.
+
+\code{x} and/or \code{y} may be vectors of numeric values if multiple silhouettes
+should be plotted at once. In this case, all other arguments may also be
+vectors of values, which will be recycled as necessary.
 
 When specifying a horizontal and/or vertical flip \strong{and} a rotation, the
 flip(s) will always occur first. If you would like to customize this

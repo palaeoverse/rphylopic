@@ -8,13 +8,11 @@
 #' @param name \code{character}. A taxonomic name to be passed to [get_uuid()].
 #' @param uuid \code{character}. A valid uuid for a PhyloPic silhouette (such as
 #'   that returned by [get_uuid()] or [pick_phylopic()]).
-#' @param x \code{numeric}. x value of the silhouette center. Ignored if `y` and
-#'   `ysize` are not specified.
-#' @param y \code{numeric}. y value of the silhouette center. Ignored if `x` and
-#'   `ysize` are not specified.
+#' @param x \code{numeric}. x value of the silhouette center.
+#' @param y \code{numeric}. y value of the silhouette center.
 #' @param ysize \code{numeric}. Height of the silhouette. The width is
-#'   determined by the aspect ratio of the original image. Ignored if `x` and
-#'   `y` are not specified.
+#'   determined by the aspect ratio of the original image. If "Inf", the
+#'   default, the height will be as tall as will fit within the plot area.
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
 #' @param color \code{character}. Color to plot the silhouette in.
@@ -25,9 +23,12 @@
 #'   clockwise. The default is no rotation.
 #' @details One (and only one) of `img`, `name`, or `uuid` must be specified.
 #'   Use parameters `x`, `y`, and `ysize` to place the silhouette at a specified
-#'   position on the plot. If all three of these parameters are unspecified,
-#'   then the silhouette will be plotted to the full height and width of the
-#'   plot. The aspect ratio of the silhouette will always be maintained.
+#'   position on the plot. The aspect ratio of the silhouette will always be
+#'   maintained.
+#'
+#'   `x` and/or `y` may be vectors of numeric values if multiple silhouettes
+#'   should be plotted at once. In this case, all other arguments may also be
+#'   vectors of values, which will be recycled as necessary.
 #'
 #'   When specifying a horizontal and/or vertical flip **and** a rotation, the
 #'   flip(s) will always occur first. If you would like to customize this
@@ -69,7 +70,7 @@
 #' }
 #' p + ggtitle("R Cat Herd!!")
 add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
-                         x = NULL, y = NULL, ysize = NULL,
+                         x, y, ysize = Inf,
                          alpha = 1, color = "black",
                          horizontal = FALSE, vertical = FALSE,
                          angle = 0) {
@@ -79,71 +80,34 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
   if (sum(sapply(list(img, name, uuid), is.null)) < 2) {
     stop("Only one of `img`, `name`, or `uuid` may be specified")
   }
-  if (alpha > 1 || alpha < 0) {
-    stop("`alpha` must be between 0 and 1.")
-  }
-  if (!is.null(name)) {
-    if (!is.character(name)) {
-      stop("`name` should be of class character.")
+
+  # Make all variables the same length
+  x_len <- length(x)
+  y_len <- length(y)
+  max_len <- max(x_len, y_len)
+  x <- rep_len(x, max_len)
+  y <- rep_len(y, max_len)
+  ysize <- rep_len(ysize, max_len)
+  alpha <- rep_len(alpha, max_len)
+  color <- rep_len(color, max_len)
+  horizontal <- rep_len(horizontal, max_len)
+  vertical <- rep_len(vertical, max_len)
+  angle <- rep_len(angle, max_len)
+  
+  # Put together all of the variables
+  args <- list(geom = GeomPhylopic, x = x, y = y, size = ysize,
+               alpha = alpha, color = color,
+               horizontal = horizontal, vertical = vertical, angle = angle)
+  # Only include the one silhouette argument
+  if (!is.null(img)) {
+    if (is.list(img)) {
+      args$img <- rep_len(img, max_len)
+    } else {
+      args$img <- rep_len(list(img), max_len)
     }
-    url <- get_uuid(name = name, url = TRUE)
-    if (is.na(url)) {
-      stop("`name` returned no PhyloPic results.")
-    }
-    img <- get_svg(url)
-  } else if (!is.null(uuid)) {
-    if (!is.character(uuid)) {
-      stop("`uuid` should be of class character.")
-    }
-    img <- get_phylopic(uuid)
-  } else if (!is(img, "Picture") && !is.array(img)) {
-    stop("`img` should be of class Picture (for a vector image) or class array
-          (for a raster image).")
   }
+  if (!is.null(name)) args$name <- rep_len(name, max_len)
+  if (!is.null(uuid)) args$uuid <- rep_len(uuid, max_len)
 
-  if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
-  if (!is.null(angle) && angle != 0) img <- rotate_phylopic(img, angle)
-
-  # get aspect ratio
-  if (is(img, "Picture")) { # svg
-    aspratio <- abs(diff(img@summary@xscale)) / abs(diff(img@summary@yscale))
-  } else { # png
-    aspratio <- ncol(img) / nrow(img)
-  }
-
-  if (!is.null(x) && !is.null(y) && !is.null(ysize)) {
-    ymin <- y - ysize / 2
-    ymax <- y + ysize / 2
-    xmin <- x - ysize * aspratio / 2
-    xmax <- x + ysize * aspratio / 2
-  } else {
-    ymin <- -Inf ## fill whole plot...
-    ymax <- Inf
-    xmin <- -Inf
-    xmax <- Inf
-  }
-
-  # grobify (and recolor if necessary)
-  if (is(img, "Picture")) { # svg
-    gp_fun <- function(pars) {
-      if (!is.null(color)) {
-        pars$fill <- color
-      }
-      pars$alpha <- alpha
-      pars
-    }
-    # modified from
-    # https://github.com/k-hench/hypoimg/blob/master/R/hypoimg_recolor_svg.R
-    img_grob <- pictureGrob(img, gpFUN = gp_fun)
-    img_grob <- gList(img_grob)
-    img_grob <- gTree(children = img_grob)
-  } else { # png
-    img <- recolor_phylopic(img, alpha, color)
-    img_grob <- rasterGrob(img)
-  }
-
-  return(
-    # use this instead of annotation_custom to support all coords
-    phylopic_inset(img_grob, xmin = xmin, ymin = ymin, xmax = xmax, ymax = ymax)
-  )
+  return(do.call(annotate, args))
 }
