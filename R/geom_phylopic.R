@@ -13,10 +13,11 @@
 #'   aspect ratio of the silhouettes will always be maintained.
 #'
 #'   The `alpha` and `color` aesthetics can be used to change the transparency
-#'   and color of the silhouettes, respectively. The `horizontal` and `vertical`
-#'   aesthetics can be used to flip the silhouettes. The `angle` aesthetic can
-#'   be used to rotate the silhouettes.
-#'
+#'   and color of the silhouettes, respectively. If "original" is specified for
+#'   the `color` aesthetic, the original color of the silhouette will be used.
+#'   
+#'   The `horizontal` and `vertical` aesthetics can be used to flip the
+#'   silhouettes. The `angle` aesthetic can be used to rotate the silhouettes.
 #'   When specifying a horizontal and/or vertical flip **and** a rotation, the
 #'   flip(s) will always occur first. If you would like to customize this
 #'   behavior, you can flip and/or rotate the image within your own workflow
@@ -71,10 +72,10 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   optional_aes = c("img", "name", "uuid"), # one and only one of these
   default_aes = aes(size = 1.5, alpha = 1, color = "black",
                     horizontal = FALSE, vertical = FALSE, angle = 0),
-  draw_panel = function(self, data, panel_params, coord, na.rm) {
+  draw_panel = function(self, data, panel_params, coord, na.rm = FALSE) {
     data <- remove_missing(data, na.rm = na.rm, c("img", "name", "uuid"))
     data <- coord$transform(data, panel_params)
-    # Check aesthetics are valid
+    # Check that aesthetics are valid
     if (any(data$alpha > 1 | data$alpha < 0)) {
       stop("`alpha` must be between 0 and 1.")
     }
@@ -160,7 +161,7 @@ phylopicGrob <- function(img, x, y, height, color, alpha,
   # grobify (and recolor if necessary)
   if (is(img, "Picture")) { # svg
     gp_fun <- function(pars) {
-      if (!is.null(color)) {
+      if (!is.null(color) && color != "original") {
         pars$fill <- color
       }
       pars$alpha <- alpha

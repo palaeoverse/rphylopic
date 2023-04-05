@@ -79,10 +79,11 @@ specifies the height of the silhouettes in the units of the y axis. The
 aspect ratio of the silhouettes will always be maintained.
 
 The \code{alpha} and \code{color} aesthetics can be used to change the transparency
-and color of the silhouettes, respectively. The \code{horizontal} and \code{vertical}
-aesthetics can be used to flip the silhouettes. The \code{angle} aesthetic can
-be used to rotate the silhouettes.
+and color of the silhouettes, respectively. If "original" is specified for
+the \code{color} aesthetic, the original color of the silhouette will be used.
 
+The \code{horizontal} and \code{vertical} aesthetics can be used to flip the
+silhouettes. The \code{angle} aesthetic can be used to rotate the silhouettes.
 When specifying a horizontal and/or vertical flip \strong{and} a rotation, the
 flip(s) will always occur first. If you would like to customize this
 behavior, you can flip and/or rotate the image within your own workflow
