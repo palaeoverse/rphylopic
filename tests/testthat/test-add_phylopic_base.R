@@ -28,15 +28,13 @@ test_that("add_phylopic_base works", {
                  replace = TRUE)
   alpha <- runif(50, 0, 1)
 
-  cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
   expect_doppelganger("phylopics on top of plot", function() {
     plot(posx, posy, type = "n", main = "A cat herd")
-    for (i in 1:50) {
-      add_phylopic_base(cat, x = posx[i], y = posy[i], ysize = sizey[i],
-                        color = cols[i], alpha = alpha[i],
-                        angle = angle[i],
-                        horizontal = hor[i], vertical = ver[i])
-    }
+    add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+                      x = posx, y = posy, ysize = sizey,
+                      color = cols, alpha = alpha,
+                      angle = angle,
+                      horizontal = hor, vertical = ver)
   })
 
   # Expect error
@@ -45,6 +43,6 @@ test_that("add_phylopic_base works", {
   expect_error(add_phylopic_base())
   expect_error(add_phylopic_base(cat, alpha = 3))
   expect_error(add_phylopic_base(name = 42))
-  expect_error(add_phylopic_base(name = "bueller"))
+  expect_warning(add_phylopic_base(name = "bueller"))
   expect_error(add_phylopic_base(uuid = 42))
 })

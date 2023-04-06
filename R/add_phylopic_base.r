@@ -165,6 +165,8 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   ysize <- ysize / abs(diff(ylims))
 
   tmp <- mapply(function(img, x, y, ysize, alpha, color, horizontal, vertical, angle) {
+    if (is.null(img)) return(NULL)
+
     if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
     if (angle != 0) img <- rotate_phylopic(img, angle)
 
