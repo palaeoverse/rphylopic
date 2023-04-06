@@ -45,7 +45,7 @@
 #'   add_phylopic(x = 6.1, y = 3.2, name = "Iris", alpha = .2) +
 #'   geom_point(aes(x = Sepal.Length, y = Sepal.Width))
 #'
-#' # Put a silhouette anywhere based on UUID
+#' # Put a silhouette in several places based on UUID
 #' posx <- runif(10, 0, 10)
 #' posy <- runif(10, 0, 10)
 #' sizey <- runif(10, 0.4, 2)
