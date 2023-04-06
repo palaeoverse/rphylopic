@@ -73,7 +73,7 @@ Note that png array objects can only be rotated by multiples of 90 degrees.
 # Put a silhouette behind a plot based on a taxonomic name
 library(ggplot2)
 ggplot(iris) +
-  add_phylopic(name = "Iris", alpha = .2) +
+  add_phylopic(x = 6.1, y = 3.2, name = "Iris", alpha = .2) +
   geom_point(aes(x = Sepal.Length, y = Sepal.Width))
 
 # Put a silhouette anywhere based on UUID

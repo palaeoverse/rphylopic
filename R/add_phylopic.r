@@ -36,15 +36,13 @@
 #'   using [flip_phylopic()] and [rotate_phylopic()].
 #'
 #'   Note that png array objects can only be rotated by multiples of 90 degrees.
-#' @importFrom grImport2 pictureGrob
-#' @importFrom grid rasterGrob gList gTree
-#' @importFrom methods is
+#' @importFrom ggplot2 annotate
 #' @export
 #' @examples
 #' # Put a silhouette behind a plot based on a taxonomic name
 #' library(ggplot2)
 #' ggplot(iris) +
-#'   add_phylopic(name = "Iris", alpha = .2) +
+#'   add_phylopic(x = 6.1, y = 3.2, name = "Iris", alpha = .2) +
 #'   geom_point(aes(x = Sepal.Length, y = Sepal.Width))
 #'
 #' # Put a silhouette anywhere based on UUID
