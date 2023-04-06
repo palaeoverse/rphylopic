@@ -40,7 +40,8 @@ determined by the aspect ratio of the original image. Ignored if \code{x} and
 \item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
 of the silhouette (0 is fully transparent, 1 is fully opaque).}
 
-\item{color}{\code{character}. Color to plot the silhouette in.}
+\item{color}{\code{character}. Color to plot the silhouette in. If "original"
+is specified, the original color of the silhouette will be used.}
 
 \item{horizontal}{\code{logical}. Should the silhouette be flipped
 horizontally?}
@@ -51,8 +52,8 @@ horizontally?}
 clockwise. The default is no rotation.}
 }
 \description{
-Specify an existing image, taxonomic name, or PhyloPic uuid to add a
-PhyloPic silhouette on top of an existing base R plot.
+Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
+silhouette on top of an existing base R plot.
 }
 \details{
 One (and only one) of \code{img}, \code{name}, or \code{uuid} must be specified.
@@ -60,8 +61,13 @@ Use parameters \code{x}, \code{y}, and \code{ysize} to place the silhouette at a
 position on the plot. If all three of these parameters are unspecified,
 then the silhouette will be plotted to the full height and width of the
 plot. The aspect ratio of the silhouette will always be maintained (even
-when a figure is resized). However, if the plot is resized afterwards, the
-absolute size and/or position of the silhouette may change.
+when a plot is resized). However, if the plot is resized after plotting the
+silhouette, the absolute size and/or position of the silhouette may change.
+
+Any argument may be a vector of values if multiple silhouettes should be
+plotted. In this case, all other arguments may also be vectors of values,
+which will be recycled as necessary to the length of the longest vector
+argument.
 
 When specifying a horizontal and/or vertical flip \strong{and} a rotation, the
 flip(s) will always occur first. If you would like to customize this
@@ -72,39 +78,32 @@ Note that png array objects can only be rotated by multiples of 90 degrees.
 }
 \examples{
 # single image
-plot(1, 1, type="n", main="A cat")
+plot(1, 1, type = "n", main = "A cat")
 add_phylopic_base(name = "Cat", x = 1, y = 1, ysize = .4)
 
 # lots of images using a uuid
 posx <- runif(10, 0, 1)
 posy <- runif(10, 0, 1)
-size <- runif(10, 0.01, 0.2)
+size <- runif(10, 0.1, 0.3)
 angle <- runif(10, 0, 360)
 hor <- sample(c(TRUE, FALSE), 10, TRUE)
 ver <- sample(c(TRUE, FALSE), 10, TRUE)
 cols <- sample(c("black", "darkorange", "grey42", "white"), 10,
                replace = TRUE)
-alpha <- runif(10, 0, 1)
 
-# Since we are plotting a lot of the same image, we should just save
-# the image in our environment first
-cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
-
-plot(posx, posy, type="n", main="A cat herd")
-for (i in 1:10) {
-  add_phylopic_base(cat, x = posx[i], y = posy[i], ysize = size[i],
-                    color = cols[i], angle = angle[i],
-                    horizontal = hor[i], vertical = ver[i])
-}
+plot(posx, posy, type = "n", main = "A cat herd")
+add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+                  x = posx, y = posy, ysize = size,
+                  color = cols, angle = angle,
+                  horizontal = hor, vertical = ver)
 
 # Example using a cat background
+cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
 # setup plot area
-plot(posx, posy, type="n", main="A cat herd, on top of a cat",
-     xlim=c(0,1), ylim=c(0,1))
+plot(posx, posy, type = "n", main = "A cat herd, on top of a cat",
+     xlim = c(0,1), ylim = c(0,1))
 # plot background cat
-add_phylopic_base(cat, alpha=0.2)
+add_phylopic_base(img = cat, alpha=0.2)
 # overlay smaller cats
-for (i in 1:10) {
-  add_phylopic_base(cat, x = posx[i], y = posy[i], ysize = size[i], alpha=.8)
-}
+add_phylopic_base(img = cat, x = posx, y = posy, ysize = size, alpha=.8)
 }
