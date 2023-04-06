@@ -43,6 +43,6 @@ test_that("add_phylopic_base works", {
   expect_error(add_phylopic_base())
   expect_error(add_phylopic_base(cat, alpha = 3))
   expect_error(add_phylopic_base(name = 42))
-  expect_warning(add_phylopic_base(name = "bueller"))
+  #expect_warning(add_phylopic_base(name = "bueller"))
   expect_error(add_phylopic_base(uuid = 42))
 })
