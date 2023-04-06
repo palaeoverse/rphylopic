@@ -85,17 +85,13 @@ hor <- sample(c(TRUE, FALSE), 10, TRUE)
 ver <- sample(c(TRUE, FALSE), 10, TRUE)
 cols <- sample(c("black", "darkorange", "grey42", "white"), 10,
   replace = TRUE)
-alpha <- runif(10, 0, 1)
+alpha <- runif(10, .3, 1)
 
-# Since we are plotting a lot of the same image, we should just save
-# the image in our environment first
-cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
 p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
-  geom_blank()
-for (i in 1:10) {
-  p <- p + add_phylopic(cat, x = posx[i], y = posy[i], ysize = sizey[i],
-                        color = cols[i], alpha = alpha[i], angle = angle[i],
-                        horizontal = hor[i], vertical = ver[i])
-}
+  geom_blank() +
+  add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+               x = posx, y = posy, ysize = sizey,
+               color = cols, alpha = alpha, angle = angle,
+               horizontal = hor, vertical = ver)
 p + ggtitle("R Cat Herd!!")
 }
