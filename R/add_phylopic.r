@@ -15,7 +15,8 @@
 #'   default, the height will be as tall as will fit within the plot area.
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
-#' @param color \code{character}. Color to plot the silhouette in.
+#' @param color \code{character}. Color to plot the silhouette in. If "original"
+#'   is specified, the original color of the silhouette will be used.
 #' @param horizontal \code{logical}. Should the silhouette be flipped
 #'   horizontally?
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
