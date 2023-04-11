@@ -91,6 +91,23 @@ using \code{\link[=flip_phylopic]{flip_phylopic()}} and \code{\link[=rotate_phyl
 
 Note that png array objects can only be rotated by multiples of 90 degrees.
 }
+\section{Aesthetics}{
+
+geom_phylopic understands the following aesthetics (required aesthetics are
+in bold):
+\itemize{
+\item \strong{x}
+\item \strong{y}
+\item img/uuid/name
+\item size
+\item color
+\item alpha
+\item horizontal
+\item vertical
+\item angle
+}
+}
+
 \examples{
 library(ggplot2)
 df <- data.frame(x = 2:5, y = seq(10, 25, 5),

@@ -24,6 +24,20 @@
 #'   using [flip_phylopic()] and [rotate_phylopic()].
 #'
 #'   Note that png array objects can only be rotated by multiples of 90 degrees.
+#' 
+#' @section Aesthetics:
+#' geom_phylopic understands the following aesthetics (required aesthetics are
+#' in bold):
+#'
+#' - **x**
+#' - **y**
+#' - img/uuid/name
+#' - size
+#' - color
+#' - alpha
+#' - horizontal
+#' - vertical
+#' - angle
 #'
 #' @param show.legend logical. Should this layer be included in the legends?
 #'   `FALSE`, the default, never includes, `NA` includes if any aesthetics are
