@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_phylopic.r
 \name{add_phylopic}
 \alias{add_phylopic}
-\title{Add a PhyloPic to a ggplot plot}
+\title{Annotate a ggplot plot with PhyloPics}
 \usage{
 add_phylopic(
   img = NULL,
@@ -40,7 +40,8 @@ default, the height will be as tall as will fit within the plot area.}
 of the silhouette (0 is fully transparent, 1 is fully opaque).}
 
 \item{color}{\code{character}. Color to plot the silhouette in. If "original"
-is specified, the original color of the silhouette will be used.}
+is specified, the original color of the silhouette will be used (usually
+the same as "black").}
 
 \item{horizontal}{\code{logical}. Should the silhouette be flipped
 horizontally?}
@@ -51,11 +52,11 @@ horizontally?}
 clockwise. The default is no rotation.}
 
 \item{remove_background}{\code{logical}. Should any white background be
-removed from the silhouette(s)?}
+removed from the silhouette(s)? See \code{\link[=recolor_phylopic]{recolor_phylopic()}} for details.}
 }
 \description{
-Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
-silhouette as a separate layer to an existing ggplot plot.
+Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
+silhouettes as a separate layer to an existing ggplot plot.
 }
 \details{
 One (and only one) of \code{img}, \code{name}, or \code{uuid} must be specified.
@@ -79,7 +80,7 @@ Note that png array objects can only be rotated by multiples of 90 degrees.
 # Put a silhouette behind a plot based on a taxonomic name
 library(ggplot2)
 ggplot(iris) +
-  add_phylopic(x = 6.1, y = 3.2, name = "Iris", alpha = .2) +
+  add_phylopic(x = 6.1, y = 3.2, name = "Iris", alpha = 0.2) +
   geom_point(aes(x = Sepal.Length, y = Sepal.Width))
 
 # Put a silhouette in several places based on UUID
@@ -91,7 +92,7 @@ hor <- sample(c(TRUE, FALSE), 10, TRUE)
 ver <- sample(c(TRUE, FALSE), 10, TRUE)
 cols <- sample(c("black", "darkorange", "grey42", "white"), 10,
   replace = TRUE)
-alpha <- runif(10, .3, 1)
+alpha <- runif(10, 0.3, 1)
 
 p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
   geom_blank() +

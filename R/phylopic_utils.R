@@ -151,7 +151,13 @@ transform_summary <- function(summary, mat) {
 #'   color is not changed.
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed? Only useful if `img` is a [Picture][grImport2::Picture-class]
-#'   object.
+#'   object. See details.
+#'
+#' @details Some PhyloPic silhouettes do not have a transparent background.
+#'   Consequently, when color is used with vectorized versions of these images,
+#'   the entire image--including the background--is recolored. Setting
+#'   `remove_background` to `TRUE` (the default) will remove any white parts of
+#'   the image (with should only be the background).
 #'
 #' @return A [Picture][grImport2::Picture-class] or png array object (matching
 #'   the type of `img`)

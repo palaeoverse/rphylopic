@@ -1,8 +1,8 @@
 #' Geom for adding PhyloPic silhouettes to a plot
 #'
-#' This geom acts like [ggplot2::geom_point()], except the specified silhouettes
-#' are used as points. Silhouettes can be specified by `name` strings, `uuid`
-#' strings, or image objects (`img`).
+#' This geom acts like [ggplot2::geom_point()], except that the specified
+#' silhouettes are used as points. Silhouettes can be specified by their `name`,
+#' `uuid`, or image objects (`img`).
 #'
 #' @details One (and only one) of the `img`, `name`, or `uuid` aesthetics must
 #'   be specified. The `img` aesthetic can be
@@ -14,8 +14,9 @@
 #'
 #'   The `alpha` and `color` aesthetics can be used to change the transparency
 #'   and color of the silhouettes, respectively. If "original" is specified for
-#'   the `color` aesthetic, the original color of the silhouette will be used.
-#'   
+#'   the `color` aesthetic, the original color of the silhouette will be used
+#'   (usually the same as "black").
+#'
 #'   The `horizontal` and `vertical` aesthetics can be used to flip the
 #'   silhouettes. The `angle` aesthetic can be used to rotate the silhouettes.
 #'   When specifying a horizontal and/or vertical flip **and** a rotation, the
@@ -24,27 +25,28 @@
 #'   using [flip_phylopic()] and [rotate_phylopic()].
 #'
 #'   Note that png array objects can only be rotated by multiples of 90 degrees.
-#' 
-#' @section Aesthetics:
-#' geom_phylopic understands the following aesthetics (required aesthetics are
-#' in bold):
+#'
+#' @section Aesthetics: geom_phylopic understands the following aesthetics
+#'   (required aesthetics are in bold):
 #'
 #' - **x**
 #' - **y**
-#' - img/uuid/name
+#' - **img/uuid/name**
 #' - size
 #' - color
 #' - alpha
 #' - horizontal
 #' - vertical
 #' - angle
+#' 
+#' Learn more about setting these aesthetics in [add_phylopic()].
 #'
 #' @param show.legend logical. Should this layer be included in the legends?
 #'   `FALSE`, the default, never includes, `NA` includes if any aesthetics are
 #'   mapped, and `TRUE` always includes. It can also be a named logical vector
 #'   to finely select the aesthetics to display.
 #' @param remove_background \code{logical}. Should any white background be
-#'   removed from the silhouette(s)?
+#'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_point
 #' @importFrom ggplot2 layer
@@ -65,6 +67,9 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
                           show.legend = FALSE,
                           inherit.aes = TRUE,
                           remove_background = TRUE) {
+  if (!is.logical(remove_background)) {
+    stop("`remove_background` should be a logical value.")
+  }
   layer(
     data = data,
     mapping = mapping,

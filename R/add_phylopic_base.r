@@ -1,7 +1,7 @@
-#' Add a PhyloPic to a base R plot
+#' Add PhyloPics to a base R plot
 #'
-#' Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
-#' silhouette on top of an existing base R plot.
+#' Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
+#' silhouettes on top of an existing base R plot (like [points()]).
 #'
 #' @param img A [Picture][grImport2::Picture-class] or png array object, e.g.,
 #'   from using [get_phylopic()].
@@ -18,14 +18,15 @@
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
 #' @param color \code{character}. Color to plot the silhouette in. If "original"
-#'   is specified, the original color of the silhouette will be used.
+#'   is specified, the original color of the silhouette will be used (usually
+#'   the same as "black").
 #' @param horizontal \code{logical}. Should the silhouette be flipped
 #'   horizontally?
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
 #' @param angle \code{numeric}. The number of degrees to rotate the silhouette
 #'   clockwise. The default is no rotation.
 #' @param remove_background \code{logical}. Should any white background be
-#'   removed from the silhouette(s)?
+#'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
 #' @details One (and only one) of `img`, `name`, or `uuid` must be specified.
 #'   Use parameters `x`, `y`, and `ysize` to place the silhouette at a specified
 #'   position on the plot. If all three of these parameters are unspecified,
@@ -53,7 +54,7 @@
 #' @examples
 #' # single image
 #' plot(1, 1, type = "n", main = "A cat")
-#' add_phylopic_base(name = "Cat", x = 1, y = 1, ysize = .4)
+#' add_phylopic_base(name = "Cat", x = 1, y = 1, ysize = 0.4)
 #'
 #' # lots of images using a uuid
 #' posx <- runif(10, 0, 1)
@@ -75,11 +76,11 @@
 #' cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
 #' # setup plot area
 #' plot(posx, posy, type = "n", main = "A cat herd, on top of a cat",
-#'      xlim = c(0,1), ylim = c(0,1))
+#'      xlim = c(0, 1), ylim = c(0, 1))
 #' # plot background cat
-#' add_phylopic_base(img = cat, alpha=0.2)
+#' add_phylopic_base(img = cat, alpha = 0.2)
 #' # overlay smaller cats
-#' add_phylopic_base(img = cat, x = posx, y = posy, ysize = size, alpha=.8)
+#' add_phylopic_base(img = cat, x = posx, y = posy, ysize = size, alpha = 0.8)
 add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
                               x = NULL, y = NULL, ysize = NULL,
                               alpha = 1, color = "black",
@@ -166,7 +167,8 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   y <- (y - ylims[1]) / diff(ylims)
   ysize <- ysize / abs(diff(ylims))
 
-  tmp <- mapply(function(img, x, y, ysize, alpha, color, horizontal, vertical, angle) {
+  tmp <- mapply(function(img, x, y, ysize, alpha, color,
+                         horizontal, vertical, angle) {
     if (is.null(img)) return(NULL)
 
     if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
@@ -175,7 +177,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     # recolor if necessary
     color <- if (color == "original") NULL else color
     img <- recolor_phylopic(img, alpha, color, remove_background)
-    
+
     # grobify and plot
     if (is(img, "Picture")) { # svg
       grid.picture(img, x = x, y = y, height = ysize, expansion = 0)

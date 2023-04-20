@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_phylopic_base.r
 \name{add_phylopic_base}
 \alias{add_phylopic_base}
-\title{Add a PhyloPic to a base R plot}
+\title{Add PhyloPics to a base R plot}
 \usage{
 add_phylopic_base(
   img = NULL,
@@ -42,7 +42,8 @@ determined by the aspect ratio of the original image. Ignored if \code{x} and
 of the silhouette (0 is fully transparent, 1 is fully opaque).}
 
 \item{color}{\code{character}. Color to plot the silhouette in. If "original"
-is specified, the original color of the silhouette will be used.}
+is specified, the original color of the silhouette will be used (usually
+the same as "black").}
 
 \item{horizontal}{\code{logical}. Should the silhouette be flipped
 horizontally?}
@@ -53,11 +54,11 @@ horizontally?}
 clockwise. The default is no rotation.}
 
 \item{remove_background}{\code{logical}. Should any white background be
-removed from the silhouette(s)?}
+removed from the silhouette(s)? See \code{\link[=recolor_phylopic]{recolor_phylopic()}} for details.}
 }
 \description{
-Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
-silhouette on top of an existing base R plot.
+Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
+silhouettes on top of an existing base R plot (like \code{\link[=points]{points()}}).
 }
 \details{
 One (and only one) of \code{img}, \code{name}, or \code{uuid} must be specified.
@@ -83,7 +84,7 @@ Note that png array objects can only be rotated by multiples of 90 degrees.
 \examples{
 # single image
 plot(1, 1, type = "n", main = "A cat")
-add_phylopic_base(name = "Cat", x = 1, y = 1, ysize = .4)
+add_phylopic_base(name = "Cat", x = 1, y = 1, ysize = 0.4)
 
 # lots of images using a uuid
 posx <- runif(10, 0, 1)
@@ -105,9 +106,9 @@ add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
 cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
 # setup plot area
 plot(posx, posy, type = "n", main = "A cat herd, on top of a cat",
-     xlim = c(0,1), ylim = c(0,1))
+     xlim = c(0, 1), ylim = c(0, 1))
 # plot background cat
-add_phylopic_base(img = cat, alpha=0.2)
+add_phylopic_base(img = cat, alpha = 0.2)
 # overlay smaller cats
-add_phylopic_base(img = cat, x = posx, y = posy, ysize = size, alpha=.8)
+add_phylopic_base(img = cat, x = posx, y = posy, ysize = size, alpha = 0.8)
 }

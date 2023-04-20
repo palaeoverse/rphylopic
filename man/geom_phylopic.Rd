@@ -66,12 +66,12 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{remove_background}{\code{logical}. Should any white background be
-removed from the silhouette(s)?}
+removed from the silhouette(s)? See \code{\link[=recolor_phylopic]{recolor_phylopic()}} for details.}
 }
 \description{
-This geom acts like \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}, except the specified silhouettes
-are used as points. Silhouettes can be specified by \code{name} strings, \code{uuid}
-strings, or image objects (\code{img}).
+This geom acts like \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}, except that the specified
+silhouettes are used as points. Silhouettes can be specified by their \code{name},
+\code{uuid}, or image objects (\code{img}).
 }
 \details{
 One (and only one) of the \code{img}, \code{name}, or \code{uuid} aesthetics must
@@ -84,7 +84,8 @@ aspect ratio of the silhouettes will always be maintained.
 
 The \code{alpha} and \code{color} aesthetics can be used to change the transparency
 and color of the silhouettes, respectively. If "original" is specified for
-the \code{color} aesthetic, the original color of the silhouette will be used.
+the \code{color} aesthetic, the original color of the silhouette will be used
+(usually the same as "black").
 
 The \code{horizontal} and \code{vertical} aesthetics can be used to flip the
 silhouettes. The \code{angle} aesthetic can be used to rotate the silhouettes.
@@ -96,13 +97,12 @@ using \code{\link[=flip_phylopic]{flip_phylopic()}} and \code{\link[=rotate_phyl
 Note that png array objects can only be rotated by multiples of 90 degrees.
 }
 \section{Aesthetics}{
-
-geom_phylopic understands the following aesthetics (required aesthetics are
-in bold):
+ geom_phylopic understands the following aesthetics
+(required aesthetics are in bold):
 \itemize{
 \item \strong{x}
 \item \strong{y}
-\item img/uuid/name
+\item \strong{img/uuid/name}
 \item size
 \item color
 \item alpha
@@ -110,6 +110,8 @@ in bold):
 \item vertical
 \item angle
 }
+
+Learn more about setting these aesthetics in \code{\link[=add_phylopic]{add_phylopic()}}.
 }
 
 \examples{

@@ -18,7 +18,7 @@ color is not changed.}
 
 \item{remove_background}{\code{logical}. Should any white background be
 removed? Only useful if \code{img} is a \link[grImport2:Picture-class]{Picture}
-object.}
+object. See details.}
 }
 \value{
 A \link[grImport2:Picture-class]{Picture} or png array object (matching
@@ -26,6 +26,13 @@ the type of \code{img})
 }
 \description{
 Function to recolor and change alpha levels of a PhyloPic image.
+}
+\details{
+Some PhyloPic silhouettes do not have a transparent background.
+Consequently, when color is used with vectorized versions of these images,
+the entire image--including the background--is recolored. Setting
+\code{remove_background} to \code{TRUE} (the default) will remove any white parts of
+the image (with should only be the background).
 }
 \seealso{
 Other transformations: 

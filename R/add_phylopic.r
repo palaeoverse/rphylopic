@@ -1,7 +1,7 @@
-#' Add a PhyloPic to a ggplot plot
+#' Annotate a ggplot plot with PhyloPics
 #'
-#' Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
-#' silhouette as a separate layer to an existing ggplot plot.
+#' Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
+#' silhouettes as a separate layer to an existing ggplot plot.
 #'
 #' @param img A [Picture][grImport2::Picture-class] or png array object, e.g.,
 #'   from using [get_phylopic()].
@@ -16,14 +16,15 @@
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
 #' @param color \code{character}. Color to plot the silhouette in. If "original"
-#'   is specified, the original color of the silhouette will be used.
+#'   is specified, the original color of the silhouette will be used (usually
+#'   the same as "black").
 #' @param horizontal \code{logical}. Should the silhouette be flipped
 #'   horizontally?
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
 #' @param angle \code{numeric}. The number of degrees to rotate the silhouette
 #'   clockwise. The default is no rotation.
 #' @param remove_background \code{logical}. Should any white background be
-#'   removed from the silhouette(s)?
+#'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
 #' @details One (and only one) of `img`, `name`, or `uuid` must be specified.
 #'   Use parameters `x`, `y`, and `ysize` to place the silhouette at a specified
 #'   position on the plot. The aspect ratio of the silhouette will always be
@@ -46,7 +47,7 @@
 #' # Put a silhouette behind a plot based on a taxonomic name
 #' library(ggplot2)
 #' ggplot(iris) +
-#'   add_phylopic(x = 6.1, y = 3.2, name = "Iris", alpha = .2) +
+#'   add_phylopic(x = 6.1, y = 3.2, name = "Iris", alpha = 0.2) +
 #'   geom_point(aes(x = Sepal.Length, y = Sepal.Width))
 #'
 #' # Put a silhouette in several places based on UUID
@@ -58,7 +59,7 @@
 #' ver <- sample(c(TRUE, FALSE), 10, TRUE)
 #' cols <- sample(c("black", "darkorange", "grey42", "white"), 10,
 #'   replace = TRUE)
-#' alpha <- runif(10, .3, 1)
+#' alpha <- runif(10, 0.3, 1)
 #'
 #' p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
 #'   geom_blank() +
@@ -91,7 +92,7 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
   horizontal <- rep_len(horizontal, max_len)
   vertical <- rep_len(vertical, max_len)
   angle <- rep_len(angle, max_len)
-  
+
   # Put together all of the variables
   args <- list(geom = GeomPhylopic, x = x, y = y, size = ysize,
                alpha = alpha, color = color,
