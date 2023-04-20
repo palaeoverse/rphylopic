@@ -230,8 +230,13 @@ rgb_to_rgba <- function(img) {
 #' @export
 recolor_phylopic.Picture <- function(img, alpha = 1, color = NULL,
                                      remove_background = TRUE) {
-  img@content <- lapply(img@content, function(group) {
-    group@content <- lapply(group@content, function(path) {
+  img <- recolor_content(img, alpha, color, remove_background)
+  return(img)
+}
+
+recolor_content <- function(x, alpha, color, remove_background) {
+  if (is(x@content[[1]], 'PicturePath')) {
+    tmp <- lapply(x@content, function(path) {
       # a bit of a hack until PhyloPic fixes these white backgrounds
       if (remove_background && path@gp$fill %in% c("#FFFFFFFF", "#FFFFFF")) {
         NULL
@@ -243,8 +248,11 @@ recolor_phylopic.Picture <- function(img, alpha = 1, color = NULL,
         path
       }
     })
-    group@content <- Filter(function(path) !is.null(path), group@content)
-    group
-  })
-  return(img)
+    x@content <- Filter(function(path) !is.null(path), tmp)
+    return(x)
+  } else { # need to go another level down
+    x@content <- lapply(x@content, recolor_content, alpha = alpha,
+                        color = color, remove_background = remove_background)
+    return(x)
+  }
 }
