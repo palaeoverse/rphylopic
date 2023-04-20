@@ -15,7 +15,8 @@ add_phylopic_base(
   color = "black",
   horizontal = FALSE,
   vertical = FALSE,
-  angle = 0
+  angle = 0,
+  remove_background = TRUE
 )
 }
 \arguments{
@@ -50,6 +51,9 @@ horizontally?}
 
 \item{angle}{\code{numeric}. The number of degrees to rotate the silhouette
 clockwise. The default is no rotation.}
+
+\item{remove_background}{\code{logical}. Should any white background be
+removed from the silhouette(s)?}
 }
 \description{
 Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
@@ -64,10 +68,10 @@ plot. The aspect ratio of the silhouette will always be maintained (even
 when a plot is resized). However, if the plot is resized after plotting the
 silhouette, the absolute size and/or position of the silhouette may change.
 
-Any argument may be a vector of values if multiple silhouettes should be
-plotted. In this case, all other arguments may also be vectors of values,
-which will be recycled as necessary to the length of the longest vector
-argument.
+Any argument (except for \code{remove_background}) may be a vector of values if
+multiple silhouettes should be plotted. In this case, all other arguments
+may also be vectors of values, which will be recycled as necessary to the
+length of the longest vector argument.
 
 When specifying a horizontal and/or vertical flip \strong{and} a rotation, the
 flip(s) will always occur first. If you would like to customize this

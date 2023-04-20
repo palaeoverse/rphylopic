@@ -24,6 +24,8 @@
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
 #' @param angle \code{numeric}. The number of degrees to rotate the silhouette
 #'   clockwise. The default is no rotation.
+#' @param remove_background \code{logical}. Should any white background be
+#'   removed from the silhouette(s)?
 #' @details One (and only one) of `img`, `name`, or `uuid` must be specified.
 #'   Use parameters `x`, `y`, and `ysize` to place the silhouette at a specified
 #'   position on the plot. If all three of these parameters are unspecified,
@@ -32,10 +34,10 @@
 #'   when a plot is resized). However, if the plot is resized after plotting the
 #'   silhouette, the absolute size and/or position of the silhouette may change.
 #'
-#'   Any argument may be a vector of values if multiple silhouettes should be
-#'   plotted. In this case, all other arguments may also be vectors of values,
-#'   which will be recycled as necessary to the length of the longest vector
-#'   argument.
+#'   Any argument (except for `remove_background`) may be a vector of values if
+#'   multiple silhouettes should be plotted. In this case, all other arguments
+#'   may also be vectors of values, which will be recycled as necessary to the
+#'   length of the longest vector argument.
 #'
 #'   When specifying a horizontal and/or vertical flip **and** a rotation, the
 #'   flip(s) will always occur first. If you would like to customize this
@@ -81,8 +83,8 @@
 add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
                               x = NULL, y = NULL, ysize = NULL,
                               alpha = 1, color = "black",
-                              horizontal = FALSE, vertical = FALSE,
-                              angle = 0) {
+                              horizontal = FALSE, vertical = FALSE, angle = 0,
+                              remove_background = TRUE) {
   if (all(sapply(list(img, name, uuid), is.null))) {
     stop("One of `img`, `name`, or `uuid` is required.")
   }
@@ -172,7 +174,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
 
     # recolor if necessary
     color <- if (color == "original") NULL else color
-    img <- recolor_phylopic(img, alpha, color)
+    img <- recolor_phylopic(img, alpha, color, remove_background)
     
     # grobify and plot
     if (is(img, "Picture")) { # svg

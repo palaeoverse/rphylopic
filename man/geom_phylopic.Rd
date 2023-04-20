@@ -12,7 +12,8 @@ geom_phylopic(
   ...,
   na.rm = FALSE,
   show.legend = FALSE,
-  inherit.aes = TRUE
+  inherit.aes = TRUE,
+  remove_background = TRUE
 )
 }
 \arguments{
@@ -63,6 +64,9 @@ to finely select the aesthetics to display.}
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
+
+\item{remove_background}{\code{logical}. Should any white background be
+removed from the silhouette(s)?}
 }
 \description{
 This geom acts like \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}, except the specified silhouettes

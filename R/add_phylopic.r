@@ -22,14 +22,17 @@
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
 #' @param angle \code{numeric}. The number of degrees to rotate the silhouette
 #'   clockwise. The default is no rotation.
+#' @param remove_background \code{logical}. Should any white background be
+#'   removed from the silhouette(s)?
 #' @details One (and only one) of `img`, `name`, or `uuid` must be specified.
 #'   Use parameters `x`, `y`, and `ysize` to place the silhouette at a specified
 #'   position on the plot. The aspect ratio of the silhouette will always be
 #'   maintained.
 #'
 #'   `x` and/or `y` may be vectors of numeric values if multiple silhouettes
-#'   should be plotted at once. In this case, all other arguments may also be
-#'   vectors of values, which will be recycled as necessary.
+#'   should be plotted at once. In this case, any other arguments (except for
+#'   `remove_background`) may also be vectors of values, which will be recycled
+#'   as necessary.
 #'
 #'   When specifying a horizontal and/or vertical flip **and** a rotation, the
 #'   flip(s) will always occur first. If you would like to customize this
@@ -67,8 +70,8 @@
 add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
                          x, y, ysize = Inf,
                          alpha = 1, color = "black",
-                         horizontal = FALSE, vertical = FALSE,
-                         angle = 0) {
+                         horizontal = FALSE, vertical = FALSE, angle = 0,
+                         remove_background = TRUE) {
   if (all(sapply(list(img, name, uuid), is.null))) {
     stop("One of `img`, `name`, or `uuid` is required.")
   }
@@ -92,7 +95,8 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
   # Put together all of the variables
   args <- list(geom = GeomPhylopic, x = x, y = y, size = ysize,
                alpha = alpha, color = color,
-               horizontal = horizontal, vertical = vertical, angle = angle)
+               horizontal = horizontal, vertical = vertical, angle = angle,
+               remove_background = remove_background)
   # Only include the one silhouette argument
   if (!is.null(img)) {
     if (is.list(img)) {

@@ -4,7 +4,7 @@
 \alias{recolor_phylopic}
 \title{Recolor a PhyloPic image}
 \usage{
-recolor_phylopic(img, alpha = 1, color = NULL)
+recolor_phylopic(img, alpha = 1, color = NULL, remove_background = TRUE)
 }
 \arguments{
 \item{img}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
@@ -15,6 +15,10 @@ of the silhouette.}
 
 \item{color}{\code{character}. Color to plot the silhouette in. If NULL, the
 color is not changed.}
+
+\item{remove_background}{\code{logical}. Should any white background be
+removed? Only useful if \code{img} is a \link[grImport2:Picture-class]{Picture}
+object.}
 }
 \value{
 A \link[grImport2:Picture-class]{Picture} or png array object (matching

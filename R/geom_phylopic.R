@@ -43,6 +43,8 @@
 #'   `FALSE`, the default, never includes, `NA` includes if any aesthetics are
 #'   mapped, and `TRUE` always includes. It can also be a named logical vector
 #'   to finely select the aesthetics to display.
+#' @param remove_background \code{logical}. Should any white background be
+#'   removed from the silhouette(s)?
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_point
 #' @importFrom ggplot2 layer
@@ -61,7 +63,8 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
                           ...,
                           na.rm = FALSE,
                           show.legend = FALSE,
-                          inherit.aes = TRUE) {
+                          inherit.aes = TRUE,
+                          remove_background = TRUE) {
   layer(
     data = data,
     mapping = mapping,
@@ -72,6 +75,7 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
     inherit.aes = inherit.aes,
     params = list(
       na.rm = na.rm,
+      remove_background = remove_background,
       ...
     )
   )
@@ -86,7 +90,8 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   optional_aes = c("img", "name", "uuid"), # one and only one of these
   default_aes = aes(size = 1.5, alpha = 1, color = "black",
                     horizontal = FALSE, vertical = FALSE, angle = 0),
-  draw_panel = function(self, data, panel_params, coord, na.rm = FALSE) {
+  draw_panel = function(self, data, panel_params, coord, na.rm = FALSE,
+                        remove_background = TRUE) {
     # Clean and transform data
     data <- remove_missing(data, na.rm = na.rm, c("img", "name", "uuid"))
     data <- coord$transform(data, panel_params)
@@ -165,7 +170,8 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       } else {
         phylopicGrob(imgs[[i]], data$x[i], data$y[i], heights[i],
                      data$colour[i], data$alpha[i],
-                     data$horizontal[i], data$vertical[i], data$angle[i])
+                     data$horizontal[i], data$vertical[i], data$angle[i],
+                     remove_background)
       }
     })
     # Return the grobs as a gTree
@@ -176,14 +182,15 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
 #' @importFrom grImport2 pictureGrob
 #' @importFrom grid rasterGrob gList gTree
 phylopicGrob <- function(img, x, y, height, color, alpha,
-                         horizontal, vertical, angle) {
+                         horizontal, vertical, angle,
+                         remove_background) {
   # modified from add_phylopic for now
   if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
   if (!is.na(angle) && angle != 0) img <- rotate_phylopic(img, angle)
 
   # recolor if necessary
   color <- if (color == "original") NULL else color
-  img <- recolor_phylopic(img, alpha, color)
+  img <- recolor_phylopic(img, alpha, color, remove_background)
 
   # grobify
   if (is(img, "Picture")) { # svg
