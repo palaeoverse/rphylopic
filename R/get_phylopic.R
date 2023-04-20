@@ -37,10 +37,24 @@ get_phylopic <- function(uuid = NULL, format = "vector") {
   image_info <- phy_GET(file.path("images", uuid))$`_links`
   if (format %in% c("64", "128", "192")) { # get thumbnail url
     thumbs <- image_info$thumbnailFiles
-    url <- thumbs$href[grepl(format, thumbs$sizes)]
+    ind <- grepl(format, thumbs$sizes)
+    if (!any(ind)) {
+      ind <- 1
+      warning(paste("No raster image with dimension", format, "available.",
+                    "Returning raster image with dimensions", rasters$sizes[1],
+                    "instead."))
+    }
+    url <- thumbs$href[ind]
   } else if (format %in% c("512", "1024", "1536")) { # get raster url
     rasters <- image_info$rasterFiles
-    url <- rasters$href[grepl(format, rasters$sizes)]
+    ind <- grepl(format, rasters$sizes)
+    if (!any(ind)) {
+      ind <- 1
+      warning(paste("No raster image with dimension", format, "available.",
+                    "Returning raster image with dimensions", rasters$sizes[1],
+                    "instead."))
+    }
+    url <- rasters$href[ind]
   } else if (format == "twitter") { # get twitter url
     url <- image_info$`twitter:image`$href
   } else if (format == "vector") { # get vector url
