@@ -181,25 +181,19 @@ phylopicGrob <- function(img, x, y, height, color, alpha,
   if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
   if (!is.na(angle) && angle != 0) img <- rotate_phylopic(img, angle)
 
-  # grobify (and recolor if necessary)
+  # recolor if necessary
   color <- if (color == "original") NULL else color
+  img <- recolor_phylopic(img, alpha, color)
+
+  # grobify
   if (is(img, "Picture")) { # svg
-    gp_fun <- function(pars) {
-      if (!is.null(color)) {
-        pars$fill <- color
-      }
-      pars$alpha <- alpha
-      pars
-    }
     # modified from
     # https://github.com/k-hench/hypoimg/blob/master/R/hypoimg_recolor_svg.R
     img_grob <- pictureGrob(img, x = x, y = y, height = height,
-                            default.units = "native", expansion = 0,
-                            gpFUN = gp_fun)
+                            default.units = "native", expansion = 0)
     img_grob <- gList(img_grob)
     img_grob <- gTree(children = img_grob)
   } else { # png
-    img <- recolor_phylopic(img, alpha, color)
     img_grob <- rasterGrob(img, x = x, y = y, height = height,
                            default.units = "native")
   }

@@ -170,20 +170,14 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
     if (angle != 0) img <- rotate_phylopic(img, angle)
 
-    # grobify (and recolor if necessary)
+    # recolor if necessary
     color <- if (color == "original") NULL else color
+    img <- recolor_phylopic(img, alpha, color)
+    
+    # grobify and plot
     if (is(img, "Picture")) { # svg
-      gp_fun <- function(pars) {
-        if (!is.null(color)) {
-          pars$fill <- color
-        }
-        pars$alpha <- alpha
-        pars
-      }
-      grid.picture(img, x = x, y = y, height = ysize, gpFUN = gp_fun,
-                   expansion = 0)
+      grid.picture(img, x = x, y = y, height = ysize, expansion = 0)
     } else { # png
-      img <- recolor_phylopic(img, alpha, color)
       grid.raster(img, x = x, y = y, height = ysize)
     }
   }, img = imgs, x = x, y = y, ysize = ysize, alpha = alpha, color = color,
