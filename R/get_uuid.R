@@ -43,6 +43,20 @@ get_uuid <- function(name = NULL, n = 1, url = FALSE) {
   # API call -------------------------------------------------------------
   opts <- list()
   if (!is.null(name)) opts$filter_name <- name
+  # Get clade uuid
+  opts$page <- 0
+  opts$embed_items <- "true"
+  api_return <- phy_GET("nodes", opts)
+  clade_uuid <- api_return$`_embedded`$items$uuid
+  if (is.null(clade_uuid)) {
+    stop(paste0("Image resource not available for `name`. \n",
+                "Ensure provided name is a valid taxonomic name or ",
+                "try a species/genus resolution name."))
+  }
+  # Reset options
+  opts <- list()
+  # First uuid should always be the closest link
+  opts$filter_clade <- clade_uuid[1]
   api_return <- phy_GET("images", opts)
   total_items <- api_return$totalItems
   if (total_items == 0) {
