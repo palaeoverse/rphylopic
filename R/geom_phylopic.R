@@ -26,12 +26,11 @@
 #'
 #'   Note that png array objects can only be rotated by multiples of 90 degrees.
 #'
-#' @section Aesthetics: geom_phylopic understands the following aesthetics
-#'   (required aesthetics are in bold):
+#' @section Aesthetics: geom_phylopic understands the following aesthetics:
 #'
-#' - **x**
-#' - **y**
-#' - **img/uuid/name**
+#' - **x** (required)
+#' - **y** (required)
+#' - **img/uuid/name** (one, and only one, required)
 #' - size
 #' - color
 #' - alpha

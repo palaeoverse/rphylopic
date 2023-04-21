@@ -97,12 +97,11 @@ using \code{\link[=flip_phylopic]{flip_phylopic()}} and \code{\link[=rotate_phyl
 Note that png array objects can only be rotated by multiples of 90 degrees.
 }
 \section{Aesthetics}{
- geom_phylopic understands the following aesthetics
-(required aesthetics are in bold):
+ geom_phylopic understands the following aesthetics:
 \itemize{
-\item \strong{x}
-\item \strong{y}
-\item \strong{img/uuid/name}
+\item \strong{x} (required)
+\item \strong{y} (required)
+\item \strong{img/uuid/name} (one, and only one, required)
 \item size
 \item color
 \item alpha
