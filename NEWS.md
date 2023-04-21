@@ -3,6 +3,10 @@ rphylopic (development version)
 
 * added functions for transforming PhyloPic silhouettes (flipping and rotating)
 * save_phylopic bg argument updated to be "transparent" by default
+* added geom_phylopic (#25)
+* vectorized add_phylopic and add_phylopic_base (#42)
+* recolor_phylopic now removes white backgrounds by default
+* fixed the handling of alpha values
 
 rphylopic 1.0.0
 ==============

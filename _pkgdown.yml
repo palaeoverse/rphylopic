@@ -32,6 +32,7 @@ reference:
   desc: >
     Functions for adding silhouettes to various plots.
   contents:
+  - geom_phylopic
   - add_phylopic
   - add_phylopic_base
 - title: Modifying silhouettes

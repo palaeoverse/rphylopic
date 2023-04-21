@@ -2,20 +2,21 @@
 % Please edit documentation in R/add_phylopic.r
 \name{add_phylopic}
 \alias{add_phylopic}
-\title{Add a PhyloPic to a ggplot plot}
+\title{Annotate a ggplot plot with PhyloPics}
 \usage{
 add_phylopic(
   img = NULL,
   name = NULL,
   uuid = NULL,
-  x = NULL,
-  y = NULL,
-  ysize = NULL,
+  x,
+  y,
+  ysize = Inf,
   alpha = 1,
   color = "black",
   horizontal = FALSE,
   vertical = FALSE,
-  angle = 0
+  angle = 0,
+  remove_background = TRUE
 )
 }
 \arguments{
@@ -27,20 +28,20 @@ from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 \item{uuid}{\code{character}. A valid uuid for a PhyloPic silhouette (such as
 that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
-\item{x}{\code{numeric}. x value of the silhouette center. Ignored if \code{y} and
-\code{ysize} are not specified.}
+\item{x}{\code{numeric}. x value of the silhouette center.}
 
-\item{y}{\code{numeric}. y value of the silhouette center. Ignored if \code{x} and
-\code{ysize} are not specified.}
+\item{y}{\code{numeric}. y value of the silhouette center.}
 
 \item{ysize}{\code{numeric}. Height of the silhouette. The width is
-determined by the aspect ratio of the original image. Ignored if \code{x} and
-\code{y} are not specified.}
+determined by the aspect ratio of the original image. If "Inf", the
+default, the height will be as tall as will fit within the plot area.}
 
 \item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
 of the silhouette (0 is fully transparent, 1 is fully opaque).}
 
-\item{color}{\code{character}. Color to plot the silhouette in.}
+\item{color}{\code{character}. Color to plot the silhouette in. If "original"
+is specified, the original color of the silhouette will be used (usually
+the same as "black").}
 
 \item{horizontal}{\code{logical}. Should the silhouette be flipped
 horizontally?}
@@ -49,17 +50,24 @@ horizontally?}
 
 \item{angle}{\code{numeric}. The number of degrees to rotate the silhouette
 clockwise. The default is no rotation.}
+
+\item{remove_background}{\code{logical}. Should any white background be
+removed from the silhouette(s)? See \code{\link[=recolor_phylopic]{recolor_phylopic()}} for details.}
 }
 \description{
-Specify an existing image, taxonomic name, or PhyloPic uuid to add a PhyloPic
-silhouette as a separate layer to an existing ggplot plot.
+Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
+silhouettes as a separate layer to an existing ggplot plot.
 }
 \details{
 One (and only one) of \code{img}, \code{name}, or \code{uuid} must be specified.
 Use parameters \code{x}, \code{y}, and \code{ysize} to place the silhouette at a specified
-position on the plot. If all three of these parameters are unspecified,
-then the silhouette will be plotted to the full height and width of the
-plot. The aspect ratio of the silhouette will always be maintained.
+position on the plot. The aspect ratio of the silhouette will always be
+maintained.
+
+\code{x} and/or \code{y} may be vectors of numeric values if multiple silhouettes
+should be plotted at once. In this case, any other arguments (except for
+\code{remove_background}) may also be vectors of values, which will be recycled
+as necessary.
 
 When specifying a horizontal and/or vertical flip \strong{and} a rotation, the
 flip(s) will always occur first. If you would like to customize this
@@ -72,10 +80,10 @@ Note that png array objects can only be rotated by multiples of 90 degrees.
 # Put a silhouette behind a plot based on a taxonomic name
 library(ggplot2)
 ggplot(iris) +
-  add_phylopic(name = "Iris", alpha = .2) +
+  add_phylopic(x = 6.1, y = 3.2, name = "Iris", alpha = 0.2) +
   geom_point(aes(x = Sepal.Length, y = Sepal.Width))
 
-# Put a silhouette anywhere based on UUID
+# Put a silhouette in several places based on UUID
 posx <- runif(10, 0, 10)
 posy <- runif(10, 0, 10)
 sizey <- runif(10, 0.4, 2)
@@ -84,17 +92,13 @@ hor <- sample(c(TRUE, FALSE), 10, TRUE)
 ver <- sample(c(TRUE, FALSE), 10, TRUE)
 cols <- sample(c("black", "darkorange", "grey42", "white"), 10,
   replace = TRUE)
-alpha <- runif(10, 0, 1)
+alpha <- runif(10, 0.3, 1)
 
-# Since we are plotting a lot of the same image, we should just save
-# the image in our environment first
-cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
 p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
-  geom_blank()
-for (i in 1:10) {
-  p <- p + add_phylopic(cat, x = posx[i], y = posy[i], ysize = sizey[i],
-                        color = cols[i], alpha = alpha[i], angle = angle[i],
-                        horizontal = hor[i], vertical = ver[i])
-}
+  geom_blank() +
+  add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+               x = posx, y = posy, ysize = sizey,
+               color = cols, alpha = alpha, angle = angle,
+               horizontal = hor, vertical = ver)
 p + ggtitle("R Cat Herd!!")
 }

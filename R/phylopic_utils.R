@@ -149,13 +149,23 @@ transform_summary <- function(summary, mat) {
 #'   of the silhouette.
 #' @param color \code{character}. Color to plot the silhouette in. If NULL, the
 #'   color is not changed.
+#' @param remove_background \code{logical}. Should any white background be
+#'   removed? Only useful if `img` is a [Picture][grImport2::Picture-class]
+#'   object. See details.
+#'
+#' @details Some PhyloPic silhouettes do not have a transparent background.
+#'   Consequently, when color is used with vectorized versions of these images,
+#'   the entire image--including the background--is recolored. Setting
+#'   `remove_background` to `TRUE` (the default) will remove any white parts of
+#'   the image (with should only be the background).
 #'
 #' @return A [Picture][grImport2::Picture-class] or png array object (matching
 #'   the type of `img`)
 #' @family transformations
 #' @importFrom grDevices rgb col2rgb
 #' @export
-recolor_phylopic <- function(img, alpha = 1, color = NULL) {
+recolor_phylopic <- function(img, alpha = 1, color = NULL,
+                             remove_background = TRUE) {
   if (!is.numeric(alpha) || alpha < 0 || alpha > 1) {
     stop("`alpha` must be a number between 0 and 1.")
   }
@@ -166,7 +176,8 @@ recolor_phylopic <- function(img, alpha = 1, color = NULL) {
 }
 
 #' @export
-recolor_phylopic.array <- function(img, alpha = 1, color = NULL) {
+recolor_phylopic.array <- function(img, alpha = 1, color = NULL,
+                                   remove_background = TRUE) {
   dims <- dim(img)
   if (length(dim(img)) != 3) {
     stop("`img` must be an array with three dimensions.")
@@ -217,15 +228,31 @@ rgb_to_rgba <- function(img) {
 }
 
 #' @export
-recolor_phylopic.Picture <- function(img, alpha = 1, color = NULL) {
-  img@content <- lapply(img@content, function(cont) {
-    for (i in seq_along(cont@content)) {
-      cont@content[[i]]@gp$alpha <- alpha
-      if (!is.null(color)) {
-        cont@content[[i]]@gp$fill <- color
-      }
-    }
-    cont
-  })
+recolor_phylopic.Picture <- function(img, alpha = 1, color = NULL,
+                                     remove_background = TRUE) {
+  img <- recolor_content(img, alpha, color, remove_background)
   return(img)
+}
+
+recolor_content <- function(x, alpha, color, remove_background) {
+  if (is(x@content[[1]], 'PicturePath')) {
+    tmp <- lapply(x@content, function(path) {
+      # a bit of a hack until PhyloPic fixes these white backgrounds
+      if (remove_background && path@gp$fill %in% c("#FFFFFFFF", "#FFFFFF")) {
+        NULL
+      } else {
+        path@gp$alpha <- alpha
+        if (!is.null(color)) {
+          path@gp$fill <- color
+        }
+        path
+      }
+    })
+    x@content <- Filter(function(path) !is.null(path), tmp)
+    return(x)
+  } else { # need to go another level down
+    x@content <- lapply(x@content, recolor_content, alpha = alpha,
+                        color = color, remove_background = remove_background)
+    return(x)
+  }
 }

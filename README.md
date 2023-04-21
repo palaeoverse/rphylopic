@@ -138,7 +138,7 @@ Gearty, W., Jones, L.A., Chamberlain, S. 2023. rphylopic: an R package for acces
 
 # Cheat sheet
 
-[![](docs/cheatsheet.png)](https://palaeoverse.org/images/rphylopic-cheatsheet.pdf)
+[![](man/figures/cheatsheet.png)](https://palaeoverse.org/images/rphylopic-cheatsheet.pdf)
 
 <p align="left">
 
