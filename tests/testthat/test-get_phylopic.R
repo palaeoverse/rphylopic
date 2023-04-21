@@ -6,7 +6,9 @@ test_that("get_phylopic works", {
   expect_true(is(get_phylopic(uuid = uuid, format = "vector"), "Picture"))
   expect_true(is(get_phylopic(uuid = uuid, format = "twitter"), "array"))
   expect_true(is(get_phylopic(uuid = uuid, format = "64"), "array"))
-  expect_true(is(get_phylopic(uuid = uuid, format = "512"), "array"))
+  expect_true(is(get_phylopic(uuid = uuid, format = "raster"), "array"))
+  expect_true(is(get_phylopic(uuid = uuid, format = "raster",
+                              height = 300), "array"))
   
   # Expect error
   expect_error(get_phylopic(uuid = 1))
@@ -14,7 +16,7 @@ test_that("get_phylopic works", {
   expect_error(get_phylopic(uuid = NULL))
   expect_error(get_phylopic(uuid = uuid, format = "VHS"))
   
-  # No 512px png available for this uuid
+  # 512 was deprecated for format
   expect_warning(get_phylopic(uuid = "c8f71c27-71db-4b34-ac2d-e97fea8762cf",
                               format = "512"))
 })

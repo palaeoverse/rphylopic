@@ -4,22 +4,26 @@
 \alias{get_phylopic}
 \title{Retrieve an image for a given PhyloPic uuid}
 \usage{
-get_phylopic(uuid = NULL, format = "vector")
+get_phylopic(uuid = NULL, format = "vector", height = 512)
 }
 \arguments{
-\item{uuid}{A PhyloPic image uuid.}
+\item{uuid}{\code{character}. A PhyloPic image uuid.}
 
-\item{format}{Format of the image. To return a vectorized image, use
-"vector". To return a rasterized image, use one of 512, 1024, or 1536.
-Rasterized thumbnails can be returned by using 64, 128, or 192. Finally,
-using "twitter" will return a rasterized image that includes the PhyloPic
-logo and is formatted for posting on social media.}
+\item{format}{\code{character}. Format of the image. To return a vectorized
+image, use "vector". To return a rasterized image, use "raster" and specify
+a desired \code{height}. Rasterized square thumbnails can be returned by using
+"64", "128", or "192". Finally, using "twitter" will return a rasterized
+image that includes the PhyloPic logo and is formatted for posting on
+social media.}
+
+\item{height}{\code{numeric}. If \code{format} is "raster", this is the desired
+height of the raster image. This is ignored for all other \code{format}s.}
 }
 \value{
-If \code{format} is "vector", a \link[grImport2:Picture-class]{Picture}
-object is returned. Otherwise, a png array representing the rasterized
-image is returned. Either way, the uuid and download url are included as
-the "uuid" and "url" attributes, respectively.
+If \code{format} is "vector", a \link[grImport2:Picture-class]{Picture} object
+is returned. Otherwise, a png array representing the rasterized image is
+returned. Either way, the uuid and download url are included as the "uuid"
+and "url" attributes, respectively.
 }
 \description{
 This retrieves a PhyloPic silhouette as a vectorized or rasterized object.
@@ -30,5 +34,5 @@ uuid <- "9fae30cd-fb59-4a81-a39c-e1826a35f612"
 
 # Get data for an image
 img_svg <- get_phylopic(uuid, format = "vector") # vector format
-img_png <- get_phylopic(uuid, format = "512") # raster format
+img_png <- get_phylopic(uuid, format = "raster") # raster format
 }

@@ -11,7 +11,7 @@ test_that("add_phylopic works", {
 
   # png phylopic in background
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                          format = "512")
+                          format = "raster")
   p <- ggplot(iris) +
     add_phylopic(cat_png, x = 6.1, y = 3.2, alpha = 0.2, angle = 90, horizontal = TRUE) +
     geom_point(aes(x = Sepal.Length, y = Sepal.Width))
