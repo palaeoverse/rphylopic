@@ -7,6 +7,7 @@ rphylopic (development version)
 * vectorized add_phylopic and add_phylopic_base (#42)
 * recolor_phylopic now removes white backgrounds by default
 * fixed the handling of alpha values
+* pick_phylopic updated to allow visualisation of multiple silhouettes at once (#43)
 
 rphylopic 1.0.0
 ==============

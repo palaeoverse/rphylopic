@@ -4,7 +4,7 @@
 \alias{pick_phylopic}
 \title{Pick a PhyloPic image from available options}
 \usage{
-pick_phylopic(name = NULL, n = 5, auto = NULL)
+pick_phylopic(name = NULL, n = 5, ncol = 1, nrow = 1, auto = NULL)
 }
 \arguments{
 \item{name}{\code{character}. A taxonomic name. Different taxonomic levels
@@ -15,10 +15,18 @@ requested \code{name}, multiple silhouettes may exist. If \code{n} exceeds the
 number of available images, all available uuids will be returned.
 Defaults to 5.}
 
+\item{ncol}{\code{numeric}. Number of columns in the plot grid (default:
+1). The number of silhouettes plotted at once is the product of \code{ncol}
+and \code{nrow}.}
+
+\item{nrow}{\code{numeric}. Number of rows in the plot grid (default: 1).
+The number of silhouettes plotted at once is the product of \code{ncol} and
+\code{nrow}.}
+
 \item{auto}{\code{numeric}. This argument allows the user to automate input
-into the menu choice. If the input value is \code{1}, requested images will be
-automatically cycled through with the final image returned. If the input
-value is \code{2}, the first returned image will be selected. If \code{NULL}
+into the menu choice. If the input value is \code{1}, the first returned image
+will be selected. If the input value is \code{2}, requested images will be
+automatically cycled through with the final image returned. If \code{NULL}
 (default), the user must interactively respond to the called menu.}
 }
 \value{
@@ -29,7 +37,7 @@ object and is also printed to console.
 \description{
 This function provides a visually interactive way to pick an image and
 valid uuid for an input taxonomic name. As multiple silhouettes can exist
-for each species in PhyloPic, this function is useful for choosing the
+for each organism in PhyloPic, this function is useful for choosing the
 right image/uuid for the user.
 }
 \details{
@@ -38,6 +46,9 @@ from a pool of silhouettes available for the input \code{name}.
 }
 \examples{
 \dontrun{
+# Defaults pane layout
 img <- pick_phylopic(name = "Canis lupus", n = 5)
+# 3 x 3 pane layout
+img <- pick_phylopic(name = "Scleractinia", n = 9, ncol = 3, nrow = 3)
 }
 }
