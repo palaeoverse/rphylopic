@@ -2,6 +2,17 @@
 #'
 #' This retrieves a PhyloPic silhouette as a vectorized or rasterized object.
 #'
+#' @details The `height` argument is ignored if the `format` argument is not set
+#'   to "raster". If `format` is "raster", the `height` argument species the
+#'   height of the desired raster object. The width of this raster object will
+#'   be determined by the original aspect ratio of the silhouette. If a
+#'   pre-rendered raster exists for the specified `height`, it will be
+#'   downloaded from PhyloPic. If not, the vector image from PhyloPic will be
+#'   used to render a raster object of the desired size.
+#'
+#'   When plotting "twitter" images with [rphylopic] functions, make sure to set
+#'   `color` to "original" to preserve the original colors of the image.
+#'
 #' @param uuid \code{character}. A PhyloPic image uuid.
 #' @param format \code{character}. Format of the image. To return a vectorized
 #'   image, use "vector". To return a rasterized image, use "raster" and specify
@@ -10,7 +21,8 @@
 #'   image that includes the PhyloPic logo and is formatted for posting on
 #'   social media.
 #' @param height \code{numeric}. If `format` is "raster", this is the desired
-#'   height of the raster image. This is ignored for all other `format`s.
+#'   height of the raster image in pixels. This is ignored for all other
+#'   `format`s.
 #' @return If `format` is "vector", a [Picture][grImport2::Picture-class] object
 #'   is returned. Otherwise, a png array representing the rasterized image is
 #'   returned. Either way, the uuid and download url are included as the "uuid"
