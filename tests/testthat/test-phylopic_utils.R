@@ -12,7 +12,7 @@ test_that("flip_phylopic works", {
   expect_equal(diff(cat@summary@yscale), diff(cat_flipped@summary@yscale))
 
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                          format = "512")
+                          format = "raster")
   expect_equal(dim(cat_png),
                dim(flip_phylopic(cat_png, horizontal = TRUE, vertical = TRUE)))
 
@@ -31,7 +31,7 @@ test_that("rotate_phylopic works", {
   expect_true(all.equal(rotate_phylopic(cat, 180)@summary@xscale,
                         cat@summary@xscale - cat@summary@xscale[2]))
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                          format = "512")
+                          format = "raster")
   expect_equal(rev(dim(cat_png)[1:2]), dim(rotate_phylopic(cat_png))[1:2])
 
   # Expect error
@@ -49,7 +49,7 @@ test_that("recolor_phylopic works", {
   expect_equal(cat_recolor@content[[1]]@content[[1]]@gp$alpha, .5)
 
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                          format = "512")
+                          format = "raster")
   cat_recolor <- recolor_phylopic(cat_png, .9, "purple")
   expect_equal(dim(recolor_phylopic(cat_png[, , 1, drop = FALSE], .5, "red")),
                dim(cat_recolor))
