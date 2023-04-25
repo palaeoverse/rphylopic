@@ -4,8 +4,6 @@ test_that("get_phylopic works", {
   
   # Expect true
   expect_true(is(get_phylopic(uuid = uuid, format = "vector"), "Picture"))
-  expect_true(is(get_phylopic(uuid = uuid, format = "twitter"), "array"))
-  expect_true(is(get_phylopic(uuid = uuid, format = "64"), "array"))
   expect_true(is(get_phylopic(uuid = uuid, format = "raster"), "array"))
   expect_true(is(get_phylopic(uuid = uuid, format = "raster",
                               height = 300), "array"))

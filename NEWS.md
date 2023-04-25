@@ -8,6 +8,7 @@ rphylopic (development version)
 * recolor_phylopic now removes white backgrounds by default
 * fixed the handling of alpha values
 * get_phylopic can now return any size raster image (#50)
+* removed the "thumbnail" and "twitter" format options for get_phylopic
 
 rphylopic 1.0.0
 ==============

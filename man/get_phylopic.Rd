@@ -11,35 +11,29 @@ get_phylopic(uuid = NULL, format = "vector", height = 512)
 
 \item{format}{\code{character}. Format of the image. To return a vectorized
 image, use "vector". To return a rasterized image, use "raster" and specify
-a desired \code{height}. Rasterized square thumbnails can be returned by using
-"64", "128", or "192". Finally, using "twitter" will return a rasterized
-image that includes the PhyloPic logo and is formatted for posting on
-social media.}
+a desired \code{height}.}
 
 \item{height}{\code{numeric}. If \code{format} is "raster", this is the desired
-height of the raster image in pixels. This is ignored for all other
-\code{format}s.}
+height of the raster image in pixels. This is ignored if \code{format} is
+"vector".}
 }
 \value{
 If \code{format} is "vector", a \link[grImport2:Picture-class]{Picture} object
-is returned. Otherwise, a png array representing the rasterized image is
-returned. Either way, the uuid and download url are included as the "uuid"
-and "url" attributes, respectively.
+is returned. If \code{format} is "raster", a png array representing the
+rasterized image is returned. Either way, the uuid and download url are
+included as the "uuid" and "url" attributes, respectively.
 }
 \description{
 This retrieves a PhyloPic silhouette as a vectorized or rasterized object.
 }
 \details{
 The \code{height} argument is ignored if the \code{format} argument is not set
-to "raster". If \code{format} is "raster", the \code{height} argument species the
+to "raster". If \code{format} is "raster", the \code{height} argument specifies the
 height of the desired raster object. The width of this raster object will
 be determined by the original aspect ratio of the silhouette. If a
-pre-rendered raster exists for the specified \code{height}, it will be
+pre-rendered raster exists with the desired dimensions, it will be
 downloaded from PhyloPic. If not, the vector image from PhyloPic will be
 used to render a raster object of the desired size.
-
-When plotting "twitter" images with \link{rphylopic} functions, make sure to set
-\code{color} to "original" to preserve the original colors of the image.
 }
 \examples{
 # uuid
