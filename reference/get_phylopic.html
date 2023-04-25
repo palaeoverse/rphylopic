@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">rphylopic</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,33 +51,45 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_phylopic</span><span class="op">(</span>uuid <span class="op">=</span> <span class="cn">NULL</span>, format <span class="op">=</span> <span class="st">"vector"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_phylopic</span><span class="op">(</span>uuid <span class="op">=</span> <span class="cn">NULL</span>, format <span class="op">=</span> <span class="st">"vector"</span>, height <span class="op">=</span> <span class="fl">512</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>uuid</dt>
-<dd><p>A PhyloPic image uuid.</p></dd>
+<dd><p><code>character</code>. A PhyloPic image uuid.</p></dd>
 
 
 <dt>format</dt>
-<dd><p>Format of the image. To return a vectorized image, use
-"vector". To return a rasterized image, use one of 512, 1024, or 1536.
-Rasterized thumbnails can be returned by using 64, 128, or 192. Finally,
-using "twitter" will return a rasterized image that includes the PhyloPic
-logo and is formatted for posting on social media.</p></dd>
+<dd><p><code>character</code>. Format of the image. To return a vectorized
+image, use "vector". To return a rasterized image, use "raster" and specify
+a desired <code>height</code>.</p></dd>
+
+
+<dt>height</dt>
+<dd><p><code>numeric</code>. If <code>format</code> is "raster", this is the desired
+height of the raster image in pixels. This is ignored if <code>format</code> is
+"vector".</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>If <code>format</code> is "vector", a <a href="https://rdrr.io/pkg/grImport2/man/Picture-class.html" class="external-link">Picture</a></p>
-
-
-<p>object is returned. Otherwise, a png array representing the rasterized
-image is returned. Either way, the uuid and download url are included as
-the "uuid" and "url" attributes, respectively.</p>
+<p>If <code>format</code> is "vector", a <a href="https://rdrr.io/pkg/grImport2/man/Picture-class.html" class="external-link">Picture</a> object
+is returned. If <code>format</code> is "raster", a png array representing the
+rasterized image is returned. Either way, the uuid and download url are
+included as the "uuid" and "url" attributes, respectively.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>The <code>height</code> argument is ignored if the <code>format</code> argument is not set
+to "raster". If <code>format</code> is "raster", the <code>height</code> argument specifies the
+height of the desired raster object. The width of this raster object will
+be determined by the original aspect ratio of the silhouette. If a
+pre-rendered raster exists with the desired dimensions, it will be
+downloaded from PhyloPic. If not, the vector image from PhyloPic will be
+used to render a raster object of the desired size.</p>
     </div>
 
     <div class="section level2">
@@ -87,7 +99,7 @@ the "uuid" and "url" attributes, respectively.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get data for an image</span></span></span>
 <span class="r-in"><span><span class="va">img_svg</span> <span class="op">&lt;-</span> <span class="fu">get_phylopic</span><span class="op">(</span><span class="va">uuid</span>, format <span class="op">=</span> <span class="st">"vector"</span><span class="op">)</span> <span class="co"># vector format</span></span></span>
-<span class="r-in"><span><span class="va">img_png</span> <span class="op">&lt;-</span> <span class="fu">get_phylopic</span><span class="op">(</span><span class="va">uuid</span>, format <span class="op">=</span> <span class="st">"512"</span><span class="op">)</span> <span class="co"># raster format</span></span></span>
+<span class="r-in"><span><span class="va">img_png</span> <span class="op">&lt;-</span> <span class="fu">get_phylopic</span><span class="op">(</span><span class="va">uuid</span>, format <span class="op">=</span> <span class="st">"raster"</span><span class="op">)</span> <span class="co"># raster format</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
