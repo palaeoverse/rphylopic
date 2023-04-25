@@ -52,19 +52,16 @@ get_uuid <- function(name = NULL, n = 1, url = FALSE) {
     # Attempt to use autocomplete for no matched data
     mch <- phy_GET("autocomplete", list(query = name))
     # Use first match (the best match)
-    mch <- mch$matches[1]
+    mch <- mch$matches
     # No match
     if (is.null(unlist(mch))) {
-      stop(paste0("Image resource not available for `name`. \n",
+      stop(paste0("Image resource not available for '", name, "'. \n",
                   "Ensure provided name is a valid taxonomic name or ",
                   "try a species/genus resolution name."))
+    } else {
+      stop(paste0("Image resource not available for '", name, "'. ",
+                     "Did you mean one of the following? \n", toString(mch)))
     }
-    opts$filter_name[1] <- mch
-    api_return <- phy_GET("nodes", opts)
-    clade_uuid <- api_return$`_embedded`$items$uuid
-    warning(paste0("Image resource not available for '", name, "' and has ",
-                   "been automatically matched to '", mch, "'.\n",
-                   "Check spelling of `name` if this is undesirable."))
   } 
   # Reset options
   opts <- list()
