@@ -10,7 +10,7 @@ test_that("add_phylopic_base works", {
   # png phylopic in background
   expect_doppelganger("phylopic png in background", function() {
     cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                            format = "512")
+                            format = "raster")
     plot(1, 1, type = "n", main = "A cat")
     add_phylopic_base(cat_png, x = 1, y = 1, ysize = .4, color = "blue",
                       alpha = .5, angle = -90, horizontal = TRUE)
