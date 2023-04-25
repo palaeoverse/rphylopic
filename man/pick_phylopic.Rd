@@ -4,7 +4,7 @@
 \alias{pick_phylopic}
 \title{Pick a PhyloPic image from available options}
 \usage{
-pick_phylopic(name = NULL, n = 5, ncol = 1, nrow = 1, auto = NULL)
+pick_phylopic(name = NULL, n = 5, view = 1, auto = NULL)
 }
 \arguments{
 \item{name}{\code{character}. A taxonomic name. Different taxonomic levels
@@ -15,13 +15,8 @@ requested \code{name}, multiple silhouettes may exist. If \code{n} exceeds the
 number of available images, all available uuids will be returned.
 Defaults to 5.}
 
-\item{ncol}{\code{numeric}. Number of columns in the plot grid (default:
-1). The number of silhouettes plotted at once is the product of \code{ncol}
-and \code{nrow}.}
-
-\item{nrow}{\code{numeric}. Number of rows in the plot grid (default: 1).
-The number of silhouettes plotted at once is the product of \code{ncol} and
-\code{nrow}.}
+\item{view}{\code{numeric}. Number of silhouettes that should be plotted
+at the same time. Defaults to 1.}
 
 \item{auto}{\code{numeric}. This argument allows the user to automate input
 into the menu choice. If the input value is \code{1}, the first returned image

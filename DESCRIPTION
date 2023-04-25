@@ -29,7 +29,6 @@ Imports:
     graphics,
     png,
     grImport2,
-    ggpubr,
     rsvg,
     httr,
     curl,

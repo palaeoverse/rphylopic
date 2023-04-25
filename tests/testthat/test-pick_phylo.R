@@ -9,7 +9,7 @@ test_that("pick_phylopic works", {
   expect_true(is(pick_phylopic(name = "Homo sapiens", n = 3, auto = 2),
                  "Picture"))
   expect_true(is(pick_phylopic(name = "Bacteria", n = 13,
-                               ncol = 5, nrow = 5, auto = 2),
+                               view = 5, auto = 2),
                  "Picture"))
   
   # Expect warning
@@ -21,5 +21,5 @@ test_that("pick_phylopic works", {
   expect_error(pick_phylopic(name = "Acropora", n = "5"))
   expect_error(pick_phylopic(name = "Homo sapiens", n = 3, auto = 0))
   expect_error(pick_phylopic(name = "Acropora", ncol = NULL))
-  expect_error(pick_phylopic(name = "Acropora", nrow = "5"))
+  expect_error(pick_phylopic(name = "Acropora", view = "5"))
 })

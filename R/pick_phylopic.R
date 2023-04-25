@@ -1,3 +1,6 @@
+## declare variables that are used within aes() to prevent
+## R CMD check from complaining
+utils::globalVariables(c("x", "y", "uuid", "label"))
 #' Pick a PhyloPic image from available options
 #'
 #' This function provides a visually interactive way to pick an image and
@@ -11,12 +14,8 @@
 #'   requested `name`, multiple silhouettes may exist. If `n` exceeds the
 #'   number of available images, all available uuids will be returned.
 #'   Defaults to 5.
-#' @param ncol \code{numeric}. Number of columns in the plot grid (default:
-#'   1). The number of silhouettes plotted at once is the product of `ncol`
-#'   and `nrow`.
-#' @param nrow \code{numeric}. Number of rows in the plot grid (default: 1).
-#'   The number of silhouettes plotted at once is the product of `ncol` and
-#'   `nrow`.
+#' @param view \code{numeric}. Number of silhouettes that should be plotted
+#'   at the same time. Defaults to 1.
 #' @param auto \code{numeric}. This argument allows the user to automate input
 #'   into the menu choice. If the input value is `1`, the first returned image 
 #'   will be selected. If the input value is `2`, requested images will be
@@ -33,7 +32,8 @@
 #' @importFrom grid grid.newpage grid.text
 #' @importFrom grImport2 grid.picture grobify
 #' @importFrom utils menu
-#' @importFrom ggpubr ggarrange
+#' @importFrom ggplot2 ggplot geom_text facet_wrap theme theme_void 
+#' @importFrom ggplot2 coord_cartesian element_blank
 #' @export
 #' @examples \dontrun{
 #' # Defaults pane layout
@@ -41,13 +41,13 @@
 #' # 3 x 3 pane layout
 #' img <- pick_phylopic(name = "Scleractinia", n = 9, ncol = 3, nrow = 3)
 #' }
-pick_phylopic <- function(name = NULL, n = 5, ncol = 1, nrow = 1, auto = NULL) {
+pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
   # Error handling
   if (!is.null(auto) && !auto %in% c(1, 2)) {
     stop("`auto` must be of value: NULL, 1, or 2")
   }
-  if (!is.numeric(ncol) || !is.numeric(nrow)) {
-    stop("`ncol` and `nrow` must be of class numeric.")
+  if (!is.numeric(view)) {
+    stop("`view` must be of class numeric.")
   }
   
   # Internal function for plotting selected image
@@ -86,16 +86,12 @@ pick_phylopic <- function(name = NULL, n = 5, ncol = 1, nrow = 1, auto = NULL) {
     return(img)
   }
   
-  # Generate list of uuids for batch viewing
-  # How many silhouettes should be plotted at once?
-  batch <- prod(ncol, nrow)
-  
   # Suppress warnings when there is an uneven split
-  if ((length(uuids) %% batch) != 0) {
+  if ((length(uuids) %% view) != 0) {
     uuids <- suppressWarnings(
-      split(x = uuids, f = ceiling(seq_along(uuids) / batch)))
+      split(x = uuids, f = ceiling(seq_along(uuids) / view)))
   } else {
-    uuids <- split(x = uuids, f = ceiling(seq_along(uuids) / batch))
+    uuids <- split(x = uuids, f = ceiling(seq_along(uuids) / view))
   }
   
   # Cycle through list
@@ -112,13 +108,24 @@ pick_phylopic <- function(name = NULL, n = 5, ncol = 1, nrow = 1, auto = NULL) {
     
     # Set up menu
     if (is.null(auto)) {
-      # Grobify images
-      img <- lapply(img, grobify)
-      # Plot image choices
-      print(ggarrange(plotlist = img, nrow = nrow, ncol = ncol, 
-                      labels = 1:length(img)))
+      # Set up plotting dataframe
+      df <- data.frame(x = 0.5, y = 0.5, uuid = uuids[[i]], 
+                       label = seq_len(length(uuids[[i]])))
+      # Set factor levels to ensure consistent plotting order
+      df$uuid <- factor(x = df$uuid, levels = df$uuid)
+      # Plot silhouettes
+      p <- ggplot(data = df) +
+        geom_phylopic(aes(x = x, y = y, uuid = as.character(uuid)),
+                      size = 1) +
+        geom_text(aes(x = 0, y = 1, label = label), 
+                  fontface = "bold", size = 5, color = "purple") +
+        facet_wrap(~uuid) +
+        theme_void() +
+        theme(strip.text = element_blank()) +
+        coord_cartesian(xlim = c(0, 1), ylim = c(0, 1))
+      print(p)
       m <- menu(choices = c(att_string, "Next"), title = paste0(
-        "Choose an option (", i, "/", ceiling(n_uuids / batch), " pages):"))
+        "Choose an option (", i, "/", ceiling(n_uuids / view), " pages):"))
     } else {
       # Select final uuid
       if (auto == 2) {
