@@ -44,6 +44,6 @@ from a pool of silhouettes available for the input \code{name}.
 # Defaults pane layout
 img <- pick_phylopic(name = "Canis lupus", n = 5)
 # 3 x 3 pane layout
-img <- pick_phylopic(name = "Scleractinia", n = 9, ncol = 3, nrow = 3)
+img <- pick_phylopic(name = "Scleractinia", n = 9, view = 9)
 }
 }

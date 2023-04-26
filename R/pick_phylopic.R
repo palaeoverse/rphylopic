@@ -30,16 +30,18 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #'   from a pool of silhouettes available for the input `name`.
 #'
 #' @importFrom grid grid.newpage grid.text
-#' @importFrom grImport2 grid.picture grobify
+#' @importFrom grImport2 grid.picture
 #' @importFrom utils menu
 #' @importFrom ggplot2 ggplot geom_text facet_wrap theme theme_void 
-#' @importFrom ggplot2 coord_cartesian element_blank
+#' @importFrom ggplot2 coord_cartesian scale_x_continuous scale_y_continuous
+#' @importFrom ggplot2 element_blank expansion
+#' @importFrom pbapply pblapply
 #' @export
 #' @examples \dontrun{
 #' # Defaults pane layout
 #' img <- pick_phylopic(name = "Canis lupus", n = 5)
 #' # 3 x 3 pane layout
-#' img <- pick_phylopic(name = "Scleractinia", n = 9, ncol = 3, nrow = 3)
+#' img <- pick_phylopic(name = "Scleractinia", n = 9, view = 9)
 #' }
 pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
   # Error handling
@@ -97,7 +99,12 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
   # Cycle through list
   for (i in seq_along(uuids)) {
     # Get image data
-    img <- sapply(uuids[[i]], get_phylopic)
+    height <- 1024 / ceiling(sqrt(view))
+    if (view > 1 && length(uuids[[i]] > 1)) {
+      img <- pblapply(uuids[[i]], get_phylopic, format = "raster", height)
+    } else {
+      img <- sapply(uuids[[i]], get_phylopic)
+    }
     # Get attribution data
     att <- lapply(uuids[[i]], get_attribution)
     # Attribution text
@@ -109,20 +116,24 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
     # Set up menu
     if (is.null(auto)) {
       # Set up plotting dataframe
+      dims <- sapply(img, dim)
       df <- data.frame(x = 0.5, y = 0.5, uuid = uuids[[i]], 
                        label = seq_len(length(uuids[[i]])))
       # Set factor levels to ensure consistent plotting order
       df$uuid <- factor(x = df$uuid, levels = df$uuid)
+      df$img <- img
       # Plot silhouettes
       p <- ggplot(data = df) +
-        geom_phylopic(aes(x = x, y = y, uuid = as.character(uuid)),
-                      size = 1) +
+        geom_phylopic(aes(x = x, y = y, img = img),
+                      size = sapply(height / dims[2,], min, 1)) +
         geom_text(aes(x = 0, y = 1, label = label), 
                   fontface = "bold", size = 5, color = "purple") +
         facet_wrap(~uuid) +
+        scale_x_continuous(expand = expansion(0, .1)) +
+        scale_y_continuous(expand = expansion(0, .1)) +
+        coord_cartesian(xlim = c(0, 1), ylim = c(0, 1)) +
         theme_void() +
-        theme(strip.text = element_blank()) +
-        coord_cartesian(xlim = c(0, 1), ylim = c(0, 1))
+        theme(strip.text = element_blank())
       print(p)
       m <- menu(choices = c(att_string, "Next"), title = paste0(
         "Choose an option (", i, "/", ceiling(n_uuids / view), " pages):"))
