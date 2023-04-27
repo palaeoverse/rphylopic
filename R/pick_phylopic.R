@@ -1,38 +1,43 @@
 ## declare variables that are used within aes() to prevent
 ## R CMD check from complaining
 utils::globalVariables(c("x", "y", "uuid", "label"))
+
 #' Pick a PhyloPic image from available options
 #'
-#' This function provides a visually interactive way to pick an image and
-#' valid uuid for an input taxonomic name. As multiple silhouettes can exist
-#' for each organism in PhyloPic, this function is useful for choosing the
-#' right image/uuid for the user.
+#' This function provides a visually interactive way to pick an image and valid
+#' uuid for an input taxonomic name. As multiple silhouettes can exist for each
+#' organism in PhyloPic, this function is useful for choosing the right
+#' image/uuid for the user.
 #'
 #' @param name \code{character}. A taxonomic name. Different taxonomic levels
 #'   are supported (e.g. species, genus, family).
 #' @param n \code{numeric}. How many uuids should be viewed? Depending on the
-#'   requested `name`, multiple silhouettes may exist. If `n` exceeds the
-#'   number of available images, all available uuids will be returned.
-#'   Defaults to 5.
-#' @param view \code{numeric}. Number of silhouettes that should be plotted
-#'   at the same time. Defaults to 1.
+#'   requested `name`, multiple silhouettes may exist. If `n` exceeds the number
+#'   of available images, all available uuids will be returned. Defaults to 5.
+#' @param view \code{numeric}. Number of silhouettes that should be plotted at
+#'   the same time. Defaults to 1.
 #' @param auto \code{numeric}. This argument allows the user to automate input
-#'   into the menu choice. If the input value is `1`, the first returned image 
+#'   into the menu choice. If the input value is `1`, the first returned image
 #'   will be selected. If the input value is `2`, requested images will be
 #'   automatically cycled through with the final image returned. If `NULL`
 #'   (default), the user must interactively respond to the called menu.
 #'
-#' @return A [Picture][grImport2::Picture-class] object is returned. The uuid
-#'   of the selected image is saved as the "uuid" attribute of the returned
-#'   object and is also printed to console.
+#' @return A [Picture][grImport2::Picture-class] object is returned. The uuid of
+#'   the selected image is saved as the "uuid" attribute of the returned object
+#'   and is also printed to console.
 #'
 #' @details This function allows the user to visually select the desired image
 #'   from a pool of silhouettes available for the input `name`.
 #'
+#'   Note that while the `view` argument can be any positive integer,
+#'   weaker/older computers may have issues displaying very large numbers of
+#'   images at the same time (i.e. `view` > 9). If no images are displayed in
+#'   your plotting environment, try decreasing the value of `view`.
+#'
 #' @importFrom grid grid.newpage grid.text
 #' @importFrom grImport2 grid.picture
 #' @importFrom utils menu
-#' @importFrom ggplot2 ggplot facet_wrap theme theme_void 
+#' @importFrom ggplot2 ggplot facet_wrap theme theme_void
 #' @importFrom ggplot2 coord_equal
 #' @importFrom ggplot2 element_text expansion
 #' @importFrom pbapply pblapply
@@ -53,10 +58,10 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
   }
   
   # Internal function for plotting selected image
-  return_img <- function(uuids) {
-    img <- get_phylopic(uuid = uuids)
-    att <- get_attribution(uuid = uuids)
-    print(uuids)
+  return_img <- function(uuid) {
+    img <- get_phylopic(uuid = uuid)
+    att <- get_attribution(uuid = uuid)
+    print(uuid)
     grid.newpage()
     grid.picture(img)
     # Add text for attribution
@@ -81,7 +86,7 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
     return(img)
   }
   
-  # Return data if only one image
+  # Return data if only one image exists
   if (n_uuids == 1) {
     message("This is the only image. Returning this uuid data.")
     img <- return_img(uuids = uuids)
@@ -100,7 +105,7 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
   for (i in seq_along(uuids)) {
     # Get image data
     height <- 1024 / ceiling(sqrt(view))
-    if (view > 1 && length(uuids[[i]] > 1)) {
+    if (view > 1 && length(uuids[[i]]) > 1) {
       img <- pblapply(uuids[[i]], get_phylopic, format = "raster", height)
     } else {
       img <- sapply(uuids[[i]], get_phylopic)
@@ -108,8 +113,9 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
     # Get attribution data
     att <- lapply(uuids[[i]], get_attribution)
     # Attribution text
+    n_spaces <- 3 + floor(log10(length(att) + 1))
     att_string <- lapply(att, function(x){
-      paste0(x$contributor, " (", x$created, ").\n   License: ", x$license)
+      paste0(x$contributor, " (", x$created, ").\n", strrep(" ", n_spaces), "License: ", x$license)
     })
     att_string <- unlist(att_string)
     
@@ -135,12 +141,13 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
       print(p)
       m <- menu(choices = c(att_string, "Next"), title = paste0(
         "Choose an option (", i, "/", ceiling(n_uuids / view), " pages):"))
+      if (m == 0) return()
     } else {
       # Select final uuid
       if (auto == 2) {
         # Update i (final batch)
         i <- length(uuids)
-        # Update m  to 'next' valye (force final image of final batch)
+        # Update m  to 'next' value (force final image of final batch)
         n_plotted <- length(uuids[[i]])
         m <- n_plotted + 1
       } else if (auto == 1) {

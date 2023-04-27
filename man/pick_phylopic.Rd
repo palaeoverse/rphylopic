@@ -11,12 +11,11 @@ pick_phylopic(name = NULL, n = 5, view = 1, auto = NULL)
 are supported (e.g. species, genus, family).}
 
 \item{n}{\code{numeric}. How many uuids should be viewed? Depending on the
-requested \code{name}, multiple silhouettes may exist. If \code{n} exceeds the
-number of available images, all available uuids will be returned.
-Defaults to 5.}
+requested \code{name}, multiple silhouettes may exist. If \code{n} exceeds the number
+of available images, all available uuids will be returned. Defaults to 5.}
 
-\item{view}{\code{numeric}. Number of silhouettes that should be plotted
-at the same time. Defaults to 1.}
+\item{view}{\code{numeric}. Number of silhouettes that should be plotted at
+the same time. Defaults to 1.}
 
 \item{auto}{\code{numeric}. This argument allows the user to automate input
 into the menu choice. If the input value is \code{1}, the first returned image
@@ -25,19 +24,24 @@ automatically cycled through with the final image returned. If \code{NULL}
 (default), the user must interactively respond to the called menu.}
 }
 \value{
-A \link[grImport2:Picture-class]{Picture} object is returned. The uuid
-of the selected image is saved as the "uuid" attribute of the returned
-object and is also printed to console.
+A \link[grImport2:Picture-class]{Picture} object is returned. The uuid of
+the selected image is saved as the "uuid" attribute of the returned object
+and is also printed to console.
 }
 \description{
-This function provides a visually interactive way to pick an image and
-valid uuid for an input taxonomic name. As multiple silhouettes can exist
-for each organism in PhyloPic, this function is useful for choosing the
-right image/uuid for the user.
+This function provides a visually interactive way to pick an image and valid
+uuid for an input taxonomic name. As multiple silhouettes can exist for each
+organism in PhyloPic, this function is useful for choosing the right
+image/uuid for the user.
 }
 \details{
 This function allows the user to visually select the desired image
 from a pool of silhouettes available for the input \code{name}.
+
+Note that while the \code{view} argument can be any positive integer,
+weaker/older computers may have issues displaying very large numbers of
+images at the same time (i.e. \code{view} > 9). If no images are displayed in
+your plotting environment, try decreasing the value of \code{view}.
 }
 \examples{
 \dontrun{
