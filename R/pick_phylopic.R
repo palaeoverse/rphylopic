@@ -109,7 +109,7 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
     att <- lapply(uuids[[i]], get_attribution)
     # Attribution text
     att_string <- lapply(att, function(x){
-      paste0(x$contributor, " (", x$created, "). License: ", x$license)
+      paste0(x$contributor, " (", x$created, ").\n   License: ", x$license)
     })
     att_string <- unlist(att_string)
     
@@ -130,6 +130,7 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
         coord_equal(xlim = c(0, 1), ylim = c(0, 1)) +
         theme_void() +
         theme(strip.text = element_text(face = "bold",
+                                        size = 11,
                                         color = "purple"))
       print(p)
       m <- menu(choices = c(att_string, "Next"), title = paste0(
