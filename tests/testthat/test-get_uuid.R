@@ -9,7 +9,6 @@ test_that("get_uuid works", {
   # Expect warnings
   expect_warning(is.character(get_uuid(name = "Acropora", n = 50, url = TRUE)))
   # Expect errors
-  expect_error(get_uuid(name = "Didgeridoo"))
   expect_error(get_uuid(name = 1))
   expect_error(get_uuid(name = "Acropora cervicornis", url = 1))
   expect_error(get_uuid(name = "Acropora cervicornis", n = "5"))

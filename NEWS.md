@@ -9,6 +9,7 @@ rphylopic (development version)
 * fixed the handling of alpha values
 * get_phylopic can now return any size raster image (#50)
 * removed the "thumbnail" and "twitter" format options for get_phylopic
+* fixed how silhouettes are gathered from PhyloPic (#51)
 * pick_phylopic updated to allow visualisation of multiple silhouettes at once (#43)
 
 rphylopic 1.0.0

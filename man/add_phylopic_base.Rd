@@ -84,7 +84,8 @@ Note that png array objects can only be rotated by multiples of 90 degrees.
 \examples{
 # single image
 plot(1, 1, type = "n", main = "A cat")
-add_phylopic_base(name = "Cat", x = 1, y = 1, ysize = 0.4)
+add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+                  x = 1, y = 1, ysize = 0.4)
 
 # lots of images using a uuid
 posx <- runif(10, 0, 1)
