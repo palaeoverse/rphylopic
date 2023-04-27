@@ -2,16 +2,27 @@
 #'
 #' This retrieves a PhyloPic silhouette as a vectorized or rasterized object.
 #'
-#' @param uuid A PhyloPic image uuid.
-#' @param format Format of the image. To return a vectorized image, use
-#'   "vector". To return a rasterized image, use one of 512, 1024, or 1536.
-#'   Rasterized thumbnails can be returned by using 64, 128, or 192. Finally,
-#'   using "twitter" will return a rasterized image that includes the PhyloPic
-#'   logo and is formatted for posting on social media.
-#' @return If `format` is "vector", a [Picture][grImport2::Picture-class]
-#'   object is returned. Otherwise, a png array representing the rasterized
-#'   image is returned. Either way, the uuid and download url are included as
-#'   the "uuid" and "url" attributes, respectively.
+#' @details The `height` argument is ignored if the `format` argument is not set
+#'   to "raster". If `format` is "raster", the `height` argument specifies the
+#'   height of the desired raster object. The width of this raster object will
+#'   be determined by the original aspect ratio of the silhouette. If a
+#'   pre-rendered raster exists with the desired dimensions, it will be
+#'   downloaded from PhyloPic. If not, the vector image from PhyloPic will be
+#'   used to render a raster object of the desired size.
+#'
+#' @param uuid \code{character}. A PhyloPic image uuid.
+#' @param format \code{character}. Format of the image. To return a vectorized
+#'   image, use "vector". To return a rasterized image, use "raster" and specify
+#'   a desired `height`.
+#' @param height \code{numeric}. If `format` is "raster", this is the desired
+#'   height of the raster image in pixels. This is ignored if `format` is
+#'   "vector".
+#' @return If `format` is "vector", a [Picture][grImport2::Picture-class] object
+#'   is returned. If `format` is "raster", a png array representing the
+#'   rasterized image is returned. Either way, the uuid and download url are
+#'   included as the "uuid" and "url" attributes, respectively.
+#' @importFrom rsvg rsvg_png
+#' @importFrom png readPNG
 #' @export
 #' @examples
 #' # uuid
@@ -19,8 +30,8 @@
 #'
 #' # Get data for an image
 #' img_svg <- get_phylopic(uuid, format = "vector") # vector format
-#' img_png <- get_phylopic(uuid, format = "512") # raster format
-get_phylopic <- function(uuid = NULL, format = "vector") {
+#' img_png <- get_phylopic(uuid, format = "raster") # raster format
+get_phylopic <- function(uuid = NULL, format = "vector", height = 512) {
   # Error handling -------------------------------------------------------
   if (is.null(uuid)) {
     stop("A `uuid` is required (hint: use `get_uuid()`).")
@@ -31,39 +42,37 @@ get_phylopic <- function(uuid = NULL, format = "vector") {
   if (!is.character(uuid)) {
     stop("`uuid` is not of class character.")
   }
-  format <- match.arg(as.character(format),
-                    c("64", "128", "192", "512", "1024", "1536", "twitter",
-                      "vector"))
-  image_info <- phy_GET(file.path("images", uuid))$`_links`
-  if (format %in% c("64", "128", "192")) { # get thumbnail url
-    thumbs <- image_info$thumbnailFiles
-    ind <- grepl(format, thumbs$sizes)
-    if (!any(ind)) {
-      ind <- 1
-      warning(paste("No raster image with dimension", format, "available.",
-                    "Returning raster image with dimensions", rasters$sizes[1],
-                    "instead."))
-    }
-    url <- thumbs$href[ind]
-  } else if (format %in% c("512", "1024", "1536")) { # get raster url
-    rasters <- image_info$rasterFiles
-    ind <- grepl(format, rasters$sizes)
-    if (!any(ind)) {
-      ind <- 1
-      warning(paste("No raster image with dimension", format, "available.",
-                    "Returning raster image with dimensions", rasters$sizes[1],
-                    "instead."))
-    }
-    url <- rasters$href[ind]
-  } else if (format == "twitter") { # get twitter url
-    url <- image_info$`twitter:image`$href
-  } else if (format == "vector") { # get vector url
-    url <- image_info$vectorFile$href
+  if (is.numeric(format) || grepl("^[[:digit:]]+$", as.character(format))) {
+    lifecycle::deprecate_warn("1.1.0",
+                              paste0("get_phylopic(format = '",
+                                     "no longer supports numeric values')"),
+                              details = paste0("Use the `height` argument ",
+                                               "instead with the `format` ",
+                                               "argument set to \"raster\"."))
+    height <- as.numeric(format)
+    format <- "raster"
   }
-  ret <- if (format == "vector") get_svg(url) else get_png(url)
-  attr(ret, "uuid") <- uuid
-  attr(ret, "url") <- url
-  ret
+  format <- match.arg(as.character(format), c("raster", "vector"))
+  image_info <- phy_GET(file.path("images", uuid))$`_links`
+  if (format == "raster") { # get raster
+    rasters <- image_info$rasterFiles
+    # check if there is an existing file with the desired height
+    ind <- grepl(paste0("x", height), rasters$sizes)
+    if (any(ind)) {
+      url <- rasters$href[ind]
+      img <- get_png(url)
+    } else {
+      url <- image_info$vectorFile$href
+      # use the svg to make a png with the desired height
+      img <- readPNG(rsvg_png(image_info$vectorFile$href, height = height))
+    }
+  } else if (format == "vector") { # get vector
+    url <- image_info$vectorFile$href
+    img <- get_svg(url)
+  }
+  attr(img, "uuid") <- uuid
+  attr(img, "url") <- url
+  img
 }
 
 #' @importFrom httr GET

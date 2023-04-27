@@ -18,7 +18,7 @@ test_that("geom_phylopic works", {
   expect_doppelganger("geom_phylopic", gg)
   
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                          format = "512")
+                          format = "raster")
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y), img = list(cat_png),
                   color = "purple", size = 10) +
