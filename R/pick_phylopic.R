@@ -82,14 +82,14 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
   
   # Return data if only one image requested
   if (n == 1) {
-    img <- return_img(uuids = uuids)
+    img <- return_img(uuid = uuids)
     return(img)
   }
   
   # Return data if only one image exists
   if (n_uuids == 1) {
     message("This is the only image. Returning this uuid data.")
-    img <- return_img(uuids = uuids)
+    img <- return_img(uuid = uuids)
     return(img)
   }
   
@@ -131,7 +131,8 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
       # Plot silhouettes
       p <- ggplot(data = df) +
         geom_phylopic(aes(x = x, y = y, img = img),
-                      size = sapply(height / dims[2,], min, 1)) +
+                      size = sapply(height / dims[2,], min, 1),
+                      color = "original") +
         facet_wrap(~label) +
         coord_equal(xlim = c(0, 1), ylim = c(0, 1)) +
         theme_void() +
@@ -158,16 +159,16 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
     # Make selection
     n_plotted <- length(uuids[[i]])
     if (m != (n_plotted + 1)) {
-      uuids <- uuids[[i]][m]
-      img <- return_img(uuids = uuids)
+      uuid <- uuids[[i]][m]
+      img <- return_img(uuid = uuid)
       return(img)
     }
     
     # If final image available reached, return
     if (i == length(uuids)) {
       message("This is the final image. Returning this uuid data.")
-      uuids <- uuids[[i]][n_plotted]
-      img <- return_img(uuids = uuids)
+      uuid <- uuids[[i]][n_plotted]
+      img <- return_img(uuid = uuid)
       return(img)
     }
   }
