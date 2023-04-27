@@ -32,9 +32,9 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #' @importFrom grid grid.newpage grid.text
 #' @importFrom grImport2 grid.picture
 #' @importFrom utils menu
-#' @importFrom ggplot2 ggplot geom_text facet_wrap theme theme_void 
-#' @importFrom ggplot2 coord_cartesian scale_x_continuous scale_y_continuous
-#' @importFrom ggplot2 element_blank expansion
+#' @importFrom ggplot2 ggplot facet_wrap theme theme_void 
+#' @importFrom ggplot2 coord_equal
+#' @importFrom ggplot2 element_text expansion
 #' @importFrom pbapply pblapply
 #' @export
 #' @examples \dontrun{
@@ -126,14 +126,11 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
       p <- ggplot(data = df) +
         geom_phylopic(aes(x = x, y = y, img = img),
                       size = sapply(height / dims[2,], min, 1)) +
-        geom_text(aes(x = 0, y = 1, label = label), 
-                  fontface = "bold", size = 5, color = "purple") +
-        facet_wrap(~uuid) +
-        scale_x_continuous(expand = expansion(0, .1)) +
-        scale_y_continuous(expand = expansion(0, .1)) +
-        coord_cartesian(xlim = c(0, 1), ylim = c(0, 1)) +
+        facet_wrap(~label) +
+        coord_equal(xlim = c(0, 1), ylim = c(0, 1)) +
         theme_void() +
-        theme(strip.text = element_blank())
+        theme(strip.text = element_text(face = "bold",
+                                        color = "purple"))
       print(p)
       m <- menu(choices = c(att_string, "Next"), title = paste0(
         "Choose an option (", i, "/", ceiling(n_uuids / view), " pages):"))
