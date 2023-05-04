@@ -122,16 +122,21 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
     # Set up menu
     if (is.null(auto)) {
       # Set up plotting dataframe
-      dims <- sapply(img, dim)
       df <- data.frame(x = 0.5, y = 0.5, uuid = uuids[[i]], 
                        label = seq_len(length(uuids[[i]])))
+      if (view > 1) {
+        dims <- sapply(img, dim)
+        df$size <- sapply(height / dims[2,], min, 1)
+      } else {
+        df$size <- 1
+      }
       # Set factor levels to ensure consistent plotting order
       df$uuid <- factor(x = df$uuid, levels = df$uuid)
       df$img <- img
       # Plot silhouettes
       p <- ggplot(data = df) +
         geom_phylopic(aes(x = x, y = y, img = img),
-                      size = sapply(height / dims[2,], min, 1),
+                      size = df$size,
                       color = "original") +
         facet_wrap(~label) +
         coord_equal(xlim = c(0, 1), ylim = c(0, 1)) +
