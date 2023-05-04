@@ -46,3 +46,4 @@ URL: https://rphylopic.palaeoverse.org,
      https://github.com/palaeoverse-community/rphylopic,
      https://palaeoverse.org
 BugReports: https://github.com/palaeoverse-community/rphylopic/issues
+VignetteBuilder: knitr
