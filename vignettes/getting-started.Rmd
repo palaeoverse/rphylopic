@@ -12,16 +12,16 @@ vignette: >
 **Last updated:** `r Sys.Date()`
 
 ```{r setup, include = FALSE, eval = TRUE}
-knitr::opts_chunk$set(echo = FALSE, include = TRUE, eval = FALSE,
-                      out.width = "100%", fig.width = 7.2, fig.height = 6, dpi = 200,
-                      fig.path = "")
+knitr::opts_chunk$set(echo = TRUE, include = TRUE, eval = TRUE,
+                      out.width = "100%", fig.width = 7.2, fig.height = 5,
+                      dpi = 200)
 library(devtools)
 load_all()
 ```
 
 # Introduction
 
-`rphylopic` is a package that allows users to easily fetch and visualize silhouettes of organisms from [PhyloPic](https://www.phylopic.org). The package allows users to add silhouettes as layers or as data points to both base R and ggplot2 plots. Additional functionality also allows users to pick between available silhouettes, transform them, and save image files. This vignette will give you an overview of the package and provide example usage.
+`rphylopic` is a package that allows users to easily fetch and visualize silhouettes of organisms from [PhyloPic](https://www.phylopic.org). The package allows users to add silhouettes as layers or as data points to both base R and ggplot2 plots. Additional functionality allows users to pick between available silhouettes, transform them (e.g., rotate and recolor), and save image files. This vignette will give you an overview of the package and provide example usage.
 
 ## Installation
 
@@ -38,13 +38,13 @@ install.packages("devtools")
 devtools::install_github("palaeoverse-community/rphylopic")
 ```
 
-You can now load `rphylopic`` using the default `library` function:
+You can now load `rphylopic` using the default `library` function:
 
 ```{r}
 library(rphylopic)
 ```
 
-**Before we get onto the good stuff, the development team has a small request**. If you use `rphylopic`` in your research, please cite the associated publication. This will help us to continue our work in supporting you to do yours. You can access the appropriate citation via:
+**Before we get onto the good stuff, the development team has a small request**. If you use `rphylopic` in your research, please cite the associated publication. This will help us to continue our work in supporting you to do yours. You can access the appropriate citation via:
 
 ```{r}
 citation("rphylopic")
@@ -52,14 +52,16 @@ citation("rphylopic")
 
 # How does it work?
 
+Every silhouette available via [PhyloPic](https://www.phylopic.org) has a universally unique identifier (UUID). The first step to get a PhyloPic silhouette into R is to get a UUID. To do so via `rphylopic` you can use the `get_uuid` function to search [PhyloPic](https://www.phylopic.org) based on a taxonomic name (e.g. *Canis lupus*) and return the first matched UUID. Using the returned UUID, you can then fetch the respective silhouette using `get_phylopic`. However, multiple silhouettes (and hence UUIDs) can exist for a searched taxon. The `n` argument in `get_uuid` allows you to fetch `n` matched UUIDs.
+
 ## Get an image uuid
 
 ```{r eval = TRUE}
 # Load rphylopic
 library(rphylopic)
-# Get a single image uuid for a species
-uuid <- get_uuid(name = "Canis lupus", n = 1)
-# Get the image for that uuid
+# Get a single image UUID for a species
+uuid <- get_uuid(name = "Canis lupus")
+# Get the image for that UUID
 img <- get_phylopic(uuid = uuid)
 # But multiple silhouettes can exist per species...
 uuid <- get_uuid(name = "Canis lupus", n = 5)
@@ -67,35 +69,58 @@ uuid <- get_uuid(name = "Canis lupus", n = 5)
 
 ## Pick an image
 
-```{r}
+As multiple silhouettes can exist for the search taxon, it can be difficult to pick the correct UUID, especially without visualising the images. The `pick_phylopic` function plots all requested silhouettes and provides an interactive menu to allow you to select the right image for you. Let's go with option 1!
+
+```{r, eval = FALSE}
 # How do I pick?!
 # It's difficult without seeing the image itself, let's use:
-img <- pick_phylopic(name = "Canis lupus", n = 5)
+img <- pick_phylopic(name = "Canis lupus", n = 4, view = 4)
 ```
 
 ## Plot an image
 
+Now we have selected our silhouette, we can make some plots!
+
 ### Base R
+
+Let's start with Base R by using `add_phylopic_base`:
 
 ```{r}
 # OK, now we've got the image we want... let's add it to a plot!
-plot(x = 1, y = 1, type = "n")
+plot(x = 1, y = 1, type = "n", ann = FALSE)
 add_phylopic_base(img = img, x = 1.25, y = 1.25, ysize = 0.25)
 
-# But can't we just add an image straight away using the uuid? Sure!
+# But can't we just add an image straight away using the UUID? Sure!
 uuid <- get_uuid(name = "Canis lupus", n = 1)
 add_phylopic_base(uuid = uuid, x = 1, y = 1, ysize = 0.25)
 
 # What about just using the first image linked to the name? Definitely!
 add_phylopic_base(name = "Canis lupus", x = 0.75, y = 0.75, ysize = 0.25)
-
-# Black is a bit boring? OK...
-add_phylopic_base(name = "Canis lupus", x = 0.75, y = 1.25, ysize = 0.25, color = "orange")
 ```
+
+Ah, you've found out our little secret! You can actually skip the steps of getting the UUID altogether by just searching for the desired taxon in `add_phylopic_base`. However, this will always return the first matched silhouette meaning you might be missing out on all the other options! It's always worth checking out your options with `pick_phylopic` first.
+
+If you want to plot your data as silhouettes, you can also use `add_phylopic_base` no problem. Let's try with the `iris` data set from `ggplot2`!
+
+```{r}
+# Load library
+library(ggplot2)
+# Load data
+data("iris")
+# Set up data
+plot(x = iris$Petal.Length, y = iris$Petal.Width, type = "n",
+     xlab = "Petal Length", ylab = "Petal Width")
+# Plot data points
+add_phylopic_base(name = "Iris",
+                  x = iris$Petal.Length,
+                  y = iris$Petal.Width,
+                  ysize = 0.25)
+```
+
 
 ### ggplot2
 
-```{r}
+```{r, eval = FALSE}
 # All of this functionality is available for ggplot2 as well...
 # But we use add_phylopic instead!
 library(ggplot2)
@@ -135,7 +160,7 @@ get_attribution(uuid = uuid)
 
 ## Save an image
 
-```{r}
+```{r, eval = FALSE}
 # How do I save an image?
 # Get image
 img <- pick_phylopic(name = "Phascolarctos cinereus", n = 1)
