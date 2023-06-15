@@ -32,7 +32,7 @@ Some PhyloPic silhouettes do not have a transparent background.
 Consequently, when color is used with vectorized versions of these images,
 the entire image--including the background--is recolored. Setting
 \code{remove_background} to \code{TRUE} (the default) will remove any white parts of
-the image (with should only be the background).
+the image (which should only be the background).
 }
 \seealso{
 Other transformations: 

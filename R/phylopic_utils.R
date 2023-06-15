@@ -157,7 +157,7 @@ transform_summary <- function(summary, mat) {
 #'   Consequently, when color is used with vectorized versions of these images,
 #'   the entire image--including the background--is recolored. Setting
 #'   `remove_background` to `TRUE` (the default) will remove any white parts of
-#'   the image (with should only be the background).
+#'   the image (which should only be the background).
 #'
 #' @return A [Picture][grImport2::Picture-class] or png array object (matching
 #'   the type of `img`)
