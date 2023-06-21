@@ -15,7 +15,7 @@ Authors@R: c(
       role = c("ctb"))
   )
 License: GPL (>= 3)
-Language: en-GB
+Language: en-US
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
