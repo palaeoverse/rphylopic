@@ -240,7 +240,7 @@ revts(ggtree(vertebrate.tree, size = 1)) +
                      labels = seq(500, 0, -100),
                      limits = c(-500, 0)) +
   coord_geo_polar(dat = "periods") +
-  theme(line = element_line(linewidth = .75),
+  theme(line = element_line(linewidth = 1),
         axis.text.r = element_text(size = 5, hjust = -0.5, vjust = -1.5))
 ```
 
