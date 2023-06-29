@@ -20,3 +20,4 @@ Makefile
 ^doc$
 ^pkgdown$
 ^CRAN-SUBMISSION$
+^revdep$
