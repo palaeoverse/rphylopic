@@ -52,7 +52,7 @@ You may have noticed in the preview that the silhouette was a little slanted. Le
 
 ```{r}
 # It's a little slanted, so let's rotate it a little bit
-penguin_rot <- rotate_phylopic(penguin, 15)
+penguin_rot <- rotate_phylopic(img = penguin, angle = 15)
 ```
 
 Now, let's clean the data and split the data among the three species:
@@ -268,8 +268,8 @@ add_phylopic_base(img = vertebrate.data$svg,
 Note that only a single size is specified and aspect ratio is always maintained, hence why the silhouettes all have the same height but different widths. Let's fix some of the silhouettes by rotating them 90 degrees:
 
 ```{r}
-vertebrate.data$svg[[1]] <- rotate_phylopic(vertebrate.data$svg[[1]])
-vertebrate.data$svg[[8]] <- rotate_phylopic(vertebrate.data$svg[[8]])
+vertebrate.data$svg[[1]] <- rotate_phylopic(img = vertebrate.data$svg[[1]])
+vertebrate.data$svg[[8]] <- rotate_phylopic(img = vertebrate.data$svg[[8]])
 ```
 
 And now the finished product:
