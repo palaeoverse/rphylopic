@@ -27,6 +27,7 @@ reference:
   - pick_phylopic
   - get_phylopic
   - get_attribution
+  - browse_phylopic
   - save_phylopic
 - title: Adding silhouettes to plots
   desc: >
