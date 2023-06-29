@@ -62,7 +62,7 @@ get_uuid <- function(name = NULL, n = 1, url = FALSE) {
       stop(paste0("Image resource not available for '", name, "'. ",
                      "Did you mean one of the following? \n", toString(mch)))
     }
-  } 
+  }
   # Reset options
   opts <- list()
   # First uuid should always be the closest link
@@ -82,7 +82,7 @@ get_uuid <- function(name = NULL, n = 1, url = FALSE) {
     uuids <- api_return$`_links`$items$href
     uuids <- sub("/images/", "", uuids)
     uuids <- sub("(\\?build=\\d+)$", "", uuids)
-    
+
     # Get image URLs --------------------------------------------------------
     if (url) {
       href <- api_return$`_embedded`$items$`_links`$vectorFile$href

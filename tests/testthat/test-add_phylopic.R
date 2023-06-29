@@ -13,7 +13,8 @@ test_that("add_phylopic works", {
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
                           format = "raster")
   p <- ggplot(iris) +
-    add_phylopic(cat_png, x = 6.1, y = 3.2, alpha = 0.2, angle = 90, horizontal = TRUE) +
+    add_phylopic(cat_png, x = 6.1, y = 3.2, alpha = 0.2, angle = 90,
+                 horizontal = TRUE) +
     geom_point(aes(x = Sepal.Length, y = Sepal.Width))
   expect_doppelganger("phylopic png in background", p)
 
@@ -31,7 +32,8 @@ test_that("add_phylopic works", {
 
   p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
     geom_blank() +
-    add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9", x = posx, y = posy, ysize = sizey,
+    add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+                 x = posx, y = posy, ysize = sizey,
                  color = cols, alpha = alpha,
                  angle = angle, horizontal = hor, vertical = ver)
   p <- p + ggtitle("R Cat Herd!!")

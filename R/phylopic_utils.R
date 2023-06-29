@@ -235,7 +235,7 @@ recolor_phylopic.Picture <- function(img, alpha = 1, color = NULL,
 }
 
 recolor_content <- function(x, alpha, color, remove_background) {
-  if (is(x@content[[1]], 'PicturePath')) {
+  if (is(x@content[[1]], "PicturePath")) {
     tmp <- lapply(x@content, function(path) {
       # a bit of a hack until PhyloPic fixes these white backgrounds
       if (remove_background && path@gp$fill %in% c("#FFFFFFFF", "#FFFFFF")) {
