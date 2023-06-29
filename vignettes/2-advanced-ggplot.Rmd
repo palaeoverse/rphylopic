@@ -15,8 +15,6 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE, include = TRUE, eval = TRUE,
                       out.width = "100%", fig.width = 7.2, fig.height = 7.2,
                       dpi = 200)
-library(devtools)
-load_all()
 ```
 
 <div style="text-align: justify">
@@ -36,8 +34,9 @@ First, let's load our libraries and the penguin data:
 library(rphylopic)
 library(ggplot2)
 library(palmerpenguins)
-# Get penguin data
+# Get penguin data and clean it
 data(penguins)
+penguins_subset <- subset(penguins, !is.na(sex))
 ```
 
 Now, let's pick a silhouette to use for the penguins. Let's pick #2:
@@ -61,46 +60,40 @@ penguin_rot <- rotate_phylopic(penguin, 15)
 Now, let's draft the plot that we want to make. In this case, let's plot the penguins' bill lengths vs. their flipper lengths:
 
 ```{r}
-ggplot(subset(penguins, !is.na(sex))) +
+ggplot(penguins_subset) +
   geom_point(aes(x = bill_length_mm, y = flipper_length_mm)) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
-  scale_size_continuous(guide = NULL) +
-  scale_colour_manual("Sex", values = c("orange", "blue"),
-                      labels = c("Female", "Male")) +
   facet_wrap(~species, ncol = 1) +
-  theme_bw(base_size = 15) +
-  theme(legend.position = c(0.9, 0.9))
+  theme_bw(base_size = 15)
 ```
 
 That's a nice basic plot! But you know what would make it nicer? If we used little penguins instead of points! To do that, we can use the `geom_phylopic()` function instead of the `geom_point()` function. Note that we need to wrap the penguin image in a `list()` call to make it a repeatable object (in this case, we want to use the same image for each x-y pair):
 
 ```{r}
-ggplot(subset(penguins, !is.na(sex))) +
+ggplot(penguins_subset) +
   geom_phylopic(img = list(penguin_rot),
                 aes(x = bill_length_mm, y = flipper_length_mm)) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
   facet_wrap(~species, ncol = 1) +
-  theme_bw(base_size = 15) +
-  theme(legend.position = c(0.9, 0.9))
+  theme_bw(base_size = 15)
 ```
 
 Oh no, the silhouettes are so small! The default silhouette size for `geom_phylopic()` is 1.5, which is way too small given the range of the y-axis here. Let's make the size of the silhouettes relative to the penguins' body masses. `{ggplot2}` should work its magic and make them reasonable sizes for the plot:
 
 ```{r}
-ggplot(subset(penguins, !is.na(sex))) +
+ggplot(penguins_subset) +
   geom_phylopic(img = list(penguin_rot),
                 aes(x = bill_length_mm, y = flipper_length_mm,
                     size = body_mass_g)) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
   facet_wrap(~species, ncol = 1) +
-  theme_bw(base_size = 15) +
-  theme(legend.position = c(0.9, 0.9))
+  theme_bw(base_size = 15)
 ```
 
 Finally, let's color the female and male penguins with different colors. Note that the default for `geom_phylopic()` is to not display a legend, so we need to set `show.legend = TRUE`. However, we only want a legend for the colors, so we use `guide = "none"` for the size scale:
 
 ```{r}
-ggplot(subset(penguins, !is.na(sex))) +
+ggplot(penguins_subset) +
   geom_phylopic(img = list(penguin_rot),
                 aes(x = bill_length_mm, y = flipper_length_mm,
                     size = body_mass_g, colour = sex),
@@ -155,9 +148,6 @@ ggplot() +
 Now, as with the penguin figure above, we can easily replace those points with silhouettes.
 
 ```{r fig.height = 3.5}
-# Get map data
-world <- map_data(map = "world")
-# Make map
 ggplot() +
   geom_polygon(data = world, aes(x = long, y = lat, group = group), 
                fill = "lightgray", colour = "darkgrey", linewidth = 0.1) +

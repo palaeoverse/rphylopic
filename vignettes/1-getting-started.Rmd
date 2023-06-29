@@ -15,8 +15,6 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE, include = TRUE, eval = TRUE,
                       out.width = "100%", fig.width = 7.2, fig.height = 5,
                       dpi = 200)
-library(devtools)
-load_all()
 ```
 
 <div style="text-align: justify">
