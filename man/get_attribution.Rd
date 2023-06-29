@@ -4,14 +4,18 @@
 \alias{get_attribution}
 \title{Get PhyloPic attribution data}
 \usage{
-get_attribution(uuid = NULL)
+get_attribution(uuid = NULL, text = FALSE)
 }
 \arguments{
 \item{uuid}{\code{character}. A valid uuid for a PhyloPic silhouette such
 as that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}.}
+
+\item{text}{\code{logical}. Should attribution information be returned as
+a text paragraph? Defaults to \code{FALSE}.}
 }
 \value{
-A \code{list} of PhyloPic attribution data for an image \code{uuid}.
+A \code{list} of PhyloPic attribution data for an image \code{uuid} or
+a text output of relevant attribution information.
 }
 \description{
 This function provides a convenient way to obtain attribution data
@@ -20,11 +24,17 @@ for PhyloPic images via an image uuid returned by \code{\link[=get_uuid]{get_uui
 \details{
 This function returns image \code{uuid} specific attribution data,
 including: contributor name, contributor uuid, contributor contact,
-image uuid and license.
+image uuid, license, and license abbreviation. If \code{text} is set to
+\code{TRUE}, a text paragraph with the contributor name, year of contribution,
+and license type is returned.
 }
 \examples{
 # Get valid uuid
 uuid <- get_uuid(name = "Acropora cervicornis")
 # Get attribution data for uuid
 attri <- get_attribution(uuid = uuid)
+# Get valid uuids
+uuid <- get_uuid(name = "Scleractinia", n = 5)
+# Get attribution data for uuid
+get_attribution(uuid = uuid, text = TRUE)
 }
