@@ -1,6 +1,7 @@
 rphylopic (development version)
 ==============
 
+* added preview argument to get_phylopic (#59)
 * added functions for transforming PhyloPic silhouettes (flipping and rotating)
 * save_phylopic bg argument updated to be "transparent" by default
 * added geom_phylopic (#25)

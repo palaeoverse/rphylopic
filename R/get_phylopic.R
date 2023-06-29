@@ -17,6 +17,8 @@
 #' @param height \code{numeric}. If `format` is "raster", this is the desired
 #'   height of the raster image in pixels. This is ignored if `format` is
 #'   "vector".
+#' @param preview \code{logical}. If `preview` is `TRUE`, the returned
+#'   image is plotted. Defaults to `FALSE`.
 #' @return If `format` is "vector", a [Picture][grImport2::Picture-class] object
 #'   is returned. If `format` is "raster", a png array representing the
 #'   rasterized image is returned. Either way, the uuid and download url are
@@ -31,7 +33,8 @@
 #' # Get data for an image
 #' img_svg <- get_phylopic(uuid, format = "vector") # vector format
 #' img_png <- get_phylopic(uuid, format = "raster") # raster format
-get_phylopic <- function(uuid = NULL, format = "vector", height = 512) {
+get_phylopic <- function(uuid = NULL, format = "vector", height = 512,
+                         preview = FALSE) {
   # Error handling -------------------------------------------------------
   if (is.null(uuid)) {
     stop("A `uuid` is required (hint: use `get_uuid()`).")
@@ -41,6 +44,9 @@ get_phylopic <- function(uuid = NULL, format = "vector", height = 512) {
   }
   if (!is.character(uuid)) {
     stop("`uuid` is not of class character.")
+  }
+  if (!is.logical(preview)) {
+    stop("`preview` is not of class logical.")
   }
   if (is.numeric(format) || grepl("^[[:digit:]]+$", as.character(format))) {
     lifecycle::deprecate_warn("1.1.0",
@@ -70,6 +76,11 @@ get_phylopic <- function(uuid = NULL, format = "vector", height = 512) {
     url <- image_info$vectorFile$href
     img <- get_svg(url)
   }
+  # Should the image be previewed?
+  if (preview) {
+    add_phylopic_base(img = img, x = 0.5, y = 0.5)
+  }
+  
   attr(img, "uuid") <- uuid
   attr(img, "url") <- url
   img
