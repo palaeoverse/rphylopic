@@ -34,7 +34,7 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #'   images at the same time (i.e. `view` > 9). If no images are displayed in
 #'   your plotting environment, try decreasing the value of `view`.
 #'
-#' @importFrom grid grid.newpage grid.text
+#' @importFrom grid grid.newpage grid.text gpar
 #' @importFrom grImport2 grid.picture
 #' @importFrom utils menu
 #' @importFrom ggplot2 ggplot facet_wrap theme theme_void

@@ -46,8 +46,8 @@
 #'   using [flip_phylopic()] and [rotate_phylopic()].
 #'
 #'   Note that png array objects can only be rotated by multiples of 90 degrees.
-#' @importFrom graphics par
-#' @importFrom grid grid.raster gpar
+#' @importFrom graphics par grconvertX grconvertY
+#' @importFrom grid grid.raster
 #' @importFrom grImport2 grid.picture
 #' @importFrom methods is
 #' @export
@@ -145,31 +145,18 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   usr_x <- if (par()$xlog) 10^usr[1:2] else usr[1:2]
   usr_y <- if (par()$ylog) 10^usr[3:4] else usr[3:4]
 
-  # get plot area percentages
-  # note that this means that changing the plot size AFTER plotting may
-  # affect the position of the PhyloPic
-  plt <- par()$plt
-  plt_x <- plt[1:2]
-  plt_y <- plt[3:4]
-
-  # get figure limits
-  width <- diff(usr_x) / diff(plt_x)
-  xlims <- c(usr_x[1] - plt_x[1] * width, usr_x[2] + (1 - plt_x[2]) * width)
-  height <- diff(usr_y) / diff(plt_y)
-  ylims <- c(usr_y[1] - plt_y[1] * height, usr_y[2] + (1 - plt_y[2]) * height)
-
   # set default position and size if need be
   if (is.null(x)) x <- mean(usr_x)
   if (is.null(y)) y <- mean(usr_y)
   if (is.null(ysize)) ysize <- abs(diff(usr_y))
 
-  # convert x, y, and ysize to percentages
-  x <- (x - xlims[1]) / diff(xlims)
-  y <- (y - ylims[1]) / diff(ylims)
-  ysize <- ysize / abs(diff(ylims))
+  # convert x, y, and ysize to normalized device coordinates
+  x <- grconvertX(x, to = "ndc")
+  y <- grconvertY(y, to = "ndc")
+  ysize <- grconvertY(ysize, to = "ndc") - grconvertY(0, to = "ndc")
 
-  tmp <- mapply(function(img, x, y, ysize, alpha, color,
-                         horizontal, vertical, angle) {
+  invisible(mapply(function(img, x, y, ysize, alpha, color,
+                            horizontal, vertical, angle) {
     if (is.null(img)) return(NULL)
 
     if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
@@ -186,5 +173,5 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
       grid.raster(img, x = x, y = y, height = ysize)
     }
   }, img = imgs, x = x, y = y, ysize = ysize, alpha = alpha, color = color,
-     horizontal = horizontal, vertical = vertical, angle = angle)
+     horizontal = horizontal, vertical = vertical, angle = angle))
 }

@@ -37,7 +37,7 @@
 #' - horizontal
 #' - vertical
 #' - angle
-#' 
+#'
 #' Learn more about setting these aesthetics in [add_phylopic()].
 #'
 #' @param show.legend logical. Should this layer be included in the legends?
