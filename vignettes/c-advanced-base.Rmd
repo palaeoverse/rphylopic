@@ -112,7 +112,8 @@ for (i in seq_along(species_split)) {
        xlim = range(penguins_subset$bill_length_mm, na.rm = TRUE),
        ylim = range(penguins_subset$flipper_length_mm, na.rm = TRUE))
   add_phylopic_base(img = penguin_rot,
-                    x = species_data$bill_length_mm, y = species_data$flipper_length_mm,
+                    x = species_data$bill_length_mm,
+                    y = species_data$flipper_length_mm,
                     ysize = species_data$body_mass_g /
                       max(penguins_subset$body_mass_g, na.rm = TRUE) * 8)
 }
@@ -130,7 +131,8 @@ for (i in seq_along(species_split)) {
        xlim = range(penguins_subset$bill_length_mm, na.rm = TRUE),
        ylim = range(penguins_subset$flipper_length_mm, na.rm = TRUE))
   add_phylopic_base(img = penguin_rot,
-                    x = species_data$bill_length_mm, y = species_data$flipper_length_mm,
+                    x = species_data$bill_length_mm,
+                    y = species_data$flipper_length_mm,
                     ysize = species_data$body_mass_g /
                       max(penguins_subset$body_mass_g, na.rm = TRUE) * 8,
                     col = ifelse(species_data$sex == "male", "blue", "orange"))
