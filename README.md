@@ -5,14 +5,14 @@
 [![codecov](https://codecov.io/gh/palaeoverse-community/rphylopic/branch/main/graph/badge.svg?token=HQQO2CRIKT)](https://app.codecov.io/gh/palaeoverse-community/rphylopic)
 [![CRAN status](https://www.r-pkg.org/badges/version/rphylopic)](https://CRAN.R-project.org/package=rphylopic)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/rphylopic)](https://cran.r-project.org/package=rphylopic)
-[![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/ThePalaeoverse.svg?style=social&label=Follow%20%40ThePalaeoverse)](https://twitter.com/ThePalaeoverse)
+[![Twitter URL](https://img.shields.io/twitter/follow/:ThePalaeoverse)](https://twitter.com/intent/follow?screen_name=ThePalaeoverse)
 <!-- badges: end -->
 
 <img src="https://images.phylopic.org/images/c65573fb-2659-46b9-b7a0-065232a2a08b/vector.svg"  width="150" height="150">
 
 The purpose of the `rphylopic` package is to allow users to add silhouettes of organisms to plots generated in base R and `ggplot2`. To do so, it uses silhouettes made available via the [PhyloPic website](http://phylopic.org/).
 
-`rphylopic` was originally developed and maintained by [Scott Chamberlain](https://scottchamberlain.info). From ver. 1.0.0, the package is now developed and maintained by [William Gearty](https://williamgearty.com) and [Lewis A. Jones](https://www.lewisajones.com) from the [Palaeoverse team](https://palaeoverse.org).
+`rphylopic` was originally developed and maintained by [Scott Chamberlain](https://scottchamberlain.info). From ver. 1.0.0, the package is now developed and maintained by [William Gearty](https://williamgearty.com) and [Lewis A. Jones](https://lewisajones.com) from the [Palaeoverse team](https://palaeoverse.org).
 
 ## Installation
 
