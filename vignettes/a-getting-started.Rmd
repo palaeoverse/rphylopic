@@ -150,7 +150,8 @@ ggplot() +
   coord_cartesian(xlim = c(0.6, 1.4), ylim = c(0.6, 1.4)) +
   add_phylopic(img = img_flip, x = 1.25, y = 1.25, ysize = 0.25) +
   add_phylopic(img = img_rot, x = 1, y = 1, ysize = 0.25) +
-  add_phylopic(img = img_col, x = 0.75, y = 0.75, ysize = 0.25, color = "original")
+  add_phylopic(img = img_col, x = 0.75, y = 0.75, ysize = 0.25,
+               color = "original")
 ```
 
 You'll notice that the rotated silhouette is smaller than the other two silhouettes. This is because our functions have arguments to specify the height (`ysize`). The width is automatically set to maintain the original aspect ratio of the silhouette. In this case, the aspect ratio of the rotated silhouette has changed, so the same height results in a smaller silhouette overall.

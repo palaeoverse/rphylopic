@@ -155,8 +155,8 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   y <- grconvertY(y, to = "ndc")
   ysize <- grconvertY(ysize, to = "ndc") - grconvertY(0, to = "ndc")
 
-  tmp <- mapply(function(img, x, y, ysize, alpha, color,
-                         horizontal, vertical, angle) {
+  invisible(mapply(function(img, x, y, ysize, alpha, color,
+                            horizontal, vertical, angle) {
     if (is.null(img)) return(NULL)
 
     if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
@@ -173,5 +173,5 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
       grid.raster(img, x = x, y = y, height = ysize)
     }
   }, img = imgs, x = x, y = y, ysize = ysize, alpha = alpha, color = color,
-     horizontal = horizontal, vertical = vertical, angle = angle)
+     horizontal = horizontal, vertical = vertical, angle = angle))
 }

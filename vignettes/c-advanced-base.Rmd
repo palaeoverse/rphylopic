@@ -73,12 +73,11 @@ par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
 # Loop over the species and create a plot for each one
 for (i in seq_along(species_split)) {
   species_data <- species_split[[i]]
-  
   plot(x = species_data$bill_length_mm, y = species_data$flipper_length_mm,
        xlab = "Bill length (mm)", ylab = "Flipper length (mm)",
        main = names(species_split)[i],
-       xlim = range(penguins_subset$bill_length_mm, na.rm = T),
-       ylim = range(penguins_subset$flipper_length_mm, na.rm = T))
+       xlim = range(penguins_subset$bill_length_mm, na.rm = TRUE),
+       ylim = range(penguins_subset$flipper_length_mm, na.rm = TRUE))
 }
 ```
 
@@ -93,10 +92,11 @@ for (i in seq_along(species_split)) {
   species_data <- species_split[[i]]
   plot(NA, xlab = "Bill length (mm)", ylab = "Flipper length (mm)",
        main = names(species_split)[i],
-       xlim = range(penguins_subset$bill_length_mm, na.rm = T),
-       ylim = range(penguins_subset$flipper_length_mm, na.rm = T))
+       xlim = range(penguins_subset$bill_length_mm, na.rm = TRUE),
+       ylim = range(penguins_subset$flipper_length_mm, na.rm = TRUE))
   add_phylopic_base(img = penguin_rot,
-                    x = species_data$bill_length_mm, y = species_data$flipper_length_mm)
+                    x = species_data$bill_length_mm,
+                    y = species_data$flipper_length_mm)
 }
 ```
 
@@ -109,8 +109,8 @@ for (i in seq_along(species_split)) {
   species_data <- species_split[[i]]
   plot(NA, xlab = "Bill length (mm)", ylab = "Flipper length (mm)",
        main = names(species_split)[i],
-       xlim = range(penguins_subset$bill_length_mm, na.rm = T),
-       ylim = range(penguins_subset$flipper_length_mm, na.rm = T))
+       xlim = range(penguins_subset$bill_length_mm, na.rm = TRUE),
+       ylim = range(penguins_subset$flipper_length_mm, na.rm = TRUE))
   add_phylopic_base(img = penguin_rot,
                     x = species_data$bill_length_mm, y = species_data$flipper_length_mm,
                     ysize = species_data$body_mass_g /
@@ -127,8 +127,8 @@ for (i in seq_along(species_split)) {
   species_data <- species_split[[i]]
   plot(NA, xlab = "Bill length (mm)", ylab = "Flipper length (mm)",
        main = names(species_split)[i],
-       xlim = range(penguins_subset$bill_length_mm, na.rm = T),
-       ylim = range(penguins_subset$flipper_length_mm, na.rm = T))
+       xlim = range(penguins_subset$bill_length_mm, na.rm = TRUE),
+       ylim = range(penguins_subset$flipper_length_mm, na.rm = TRUE))
   add_phylopic_base(img = penguin_rot,
                     x = species_data$bill_length_mm, y = species_data$flipper_length_mm,
                     ysize = species_data$body_mass_g /
@@ -167,7 +167,7 @@ tetrapods <- subset(tetrapods, genus == "Mesosaurus")
 
 Now, let's plot those occurrences on a world map. Here we use the `{geodata}` and `{raster}` packages to generate the map. Then we add colored points on top of this. Note that we use `alpha = 0.75` in case there are multiple occurrences in the same place. That way, the darker the color, the more occurrences in that geographic location.
 
-```{r fig.height = 5}
+```{r fig.height = 5, message = FALSE}
 # Get map data from geodata
 world <- world(path = tempdir())
 # Make map
@@ -204,18 +204,19 @@ We can use a vectorized version of the `get_uuid()` function to retrieve UUID va
 
 ```{r}
 # Make a data.frame for the PhyloPic names
-vertebrate.data <- data.frame(species = vertebrate.tree$tip.label, uuid = NA)
+vertebrate_data <- data.frame(species = vertebrate.tree$tip.label, uuid = NA)
 # Try to get PhyloPic UUIDs for the species names
-vertebrate.data$uuid <- sapply(vertebrate.tree$tip.label,
-                               function(x) tryCatch(get_uuid(x),
-                                                    error = function(e) NA))
-vertebrate.data
+vertebrate_data$uuid <- sapply(vertebrate.tree$tip.label,
+                               function(x) {
+                                 tryCatch(get_uuid(x), error = function(e) NA)
+                                 })
+vertebrate_data
 ```
 
 Oh no, we weren't able to find a silhouette for *Myotis lucifugus* (little brown bat)! Good thing we used `tryCatch()`! Given the coarse resolution of this phylogeny, we can just grab a silhouette for the subfamily (Vespertilioninae):
 
 ```{r}
-vertebrate.data$uuid[vertebrate.data$species == "Myotis_lucifugus"] <-
+vertebrate_data$uuid[vertebrate_data$species == "Myotis_lucifugus"] <-
   get_uuid("Vespertilioninae")
 ```
 
@@ -225,18 +226,19 @@ I'm also not a huge fan of the boar picture. Let's choose an alternative with `p
 # Pick a different boar image; we'll pick #2
 boar_svg <- pick_phylopic("Sus scrofa", view = 5)
 # Extract the UUID
-vertebrate.data$uuid[vertebrate.data$species == "Sus_scrofa"] <-
+vertebrate_data$uuid[vertebrate_data$species == "Sus_scrofa"] <-
   attr(boar_svg, "uuid")
 ```
 
 ```{r echo = FALSE}
-vertebrate.data$uuid[vertebrate.data$species == "Sus_scrofa"] <- "87047da1-b40e-4b31-8492-4db262f129f5"
+vertebrate_data$uuid[vertebrate_data$species == "Sus_scrofa"] <-
+  "87047da1-b40e-4b31-8492-4db262f129f5"
 ```
 
 Now that we've got our phylogeny and UUIDs, we could go ahead and create our figure. However, time for a quick aside. The time required for `add_phylopic_base()` and the other **rphylopic** visualization functions scales with the number of *unique* names/UUIDs, not the number of plotted silhouettes. Therefore, if you are plotting a lot of *different* silhouettes, these functions can take quite a long time to poll PhyloPic for each unique name, download the silhouettes, and convert them to be added to the plot. If you plan to use the same silhouettes for multiple figures, we strongly suggest that you poll PhyloPic yourself using `get_phylopic()` or `pick_phylopic()`, save the silhouettes to your R environment, and then these use image objects in the visualization functions (with the `img` argument/aesthetic). Following this advice, let's get image objects for these 11 species before we make our figure. Note that, since we've used `get_uuid()` to get these 11 UUIDs, we know that they are valid, so we don't need to catch any errors this time.
 
 ```{r}
-vertebrate.data$svg <- lapply(vertebrate.data$uuid, get_phylopic)
+vertebrate_data$svg <- lapply(vertebrate_data$uuid, get_phylopic)
 ```
 
 Now let's go ahead and plot our phylogeny with the `{ape}` package:
@@ -261,15 +263,15 @@ That's looking a lot prettier! Let's go ahead and replace the tip labels with ou
 ```{r}
 plot(vertebrate.tree, show.tip.label = FALSE)
 axis_geo_phylo(intervals = "periods")
-add_phylopic_base(img = vertebrate.data$svg,
+add_phylopic_base(img = vertebrate_data$svg,
                   x = max(nodeHeights(vertebrate.tree)), y = 1:11, ysize = 0.5)
 ```
 
 Note that only a single size is specified and aspect ratio is always maintained, hence why the silhouettes all have the same height but different widths. Let's fix some of the silhouettes by rotating them 90 degrees:
 
 ```{r}
-vertebrate.data$svg[[1]] <- rotate_phylopic(img = vertebrate.data$svg[[1]])
-vertebrate.data$svg[[8]] <- rotate_phylopic(img = vertebrate.data$svg[[8]])
+vertebrate_data$svg[[1]] <- rotate_phylopic(img = vertebrate_data$svg[[1]])
+vertebrate_data$svg[[8]] <- rotate_phylopic(img = vertebrate_data$svg[[8]])
 ```
 
 And now the finished product:
@@ -277,7 +279,7 @@ And now the finished product:
 ```{r}
 plot(vertebrate.tree, show.tip.label = FALSE)
 axis_geo_phylo(intervals = "periods")
-add_phylopic_base(img = vertebrate.data$svg,
+add_phylopic_base(img = vertebrate_data$svg,
                   x = max(nodeHeights(vertebrate.tree)), y = 1:11, ysize = 0.5)
 ```
 
