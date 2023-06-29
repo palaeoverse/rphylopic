@@ -1,5 +1,5 @@
-rphylopic (development version)
-==============
+rphylopic 1.1.0
+===============
 
 * added functions for transforming PhyloPic silhouettes (flipping and rotating)
 * save_phylopic bg argument updated to be "transparent" by default
@@ -10,7 +10,9 @@ rphylopic (development version)
 * get_phylopic can now return any size raster image (#50)
 * removed the "thumbnail" and "twitter" format options for get_phylopic
 * fixed how silhouettes are gathered from PhyloPic (#51)
-* pick_phylopic updated to allow visualisation of multiple silhouettes at once (#43)
+* pick_phylopic updated to allow visualization of multiple silhouettes at once (#43)
+* fixed add_phylopic_base for multi-panel figures
+* added three vignettes (#49, #55)
 
 rphylopic 1.0.0
 ==============
