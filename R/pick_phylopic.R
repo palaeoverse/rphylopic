@@ -123,7 +123,7 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
     # Set up menu
     if (is.null(auto)) {
       # Set up plotting dataframe
-      df <- data.frame(x = 0.5, y = 0.5, uuid = uuids[[i]], 
+      df <- data.frame(x = 0.5, y = 0.5, uuid = uuids[[i]],
                        label = seq_len(length(uuids[[i]])))
       if (view > 1) {
         dims <- sapply(img, dim)
