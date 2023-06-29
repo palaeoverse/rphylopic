@@ -21,7 +21,7 @@ knitr::opts_chunk$set(echo = TRUE, include = TRUE, eval = TRUE,
 
 # Introduction
 
-Herein we provide three example applications of the **rphylopic** package in combination with the `{ggplot2}` package. However, note that all demonstrated functionality is also available for base R and showcased in a [separate vignette](3-advanced-base.html).
+Herein we provide three example applications of the **rphylopic** package in combination with the `{ggplot2}` package. However, note that all demonstrated functionality is also available for base R and showcased in a [separate vignette](c-advanced-base.html).
 
 # Basic accession and transformation
 

@@ -181,7 +181,7 @@ save_phylopic(img = img)
 ## More advanced examples
 Now that you've learned the ropes of **rphylopic**, how about you check out some more advanced examples?
 
-- [Advanced examples in ggplot2](2-advanced-ggplot.html)
-- [Advanced examples in base R](3-advanced-base.html)
+- [Advanced examples in ggplot2](b-advanced-ggplot.html)
+- [Advanced examples in base R](c-advanced-base.html)
 
 </div>
