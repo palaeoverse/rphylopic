@@ -115,8 +115,8 @@ Learn more about setting these aesthetics in \code{\link[=add_phylopic]{add_phyl
 
 \examples{
 library(ggplot2)
-df <- data.frame(x = 2:5, y = seq(10, 25, 5),
-                 name = c("cat", "walrus", "house mouse", "iris"))
+df <- data.frame(x = 2:4, y = seq(10, 20, 5),
+                 name = c("cat", "walrus", "house mouse"))
 ggplot(df) +
   geom_phylopic(aes(x = x, y = y, name = name),
                 color = "purple", size = 10) +
