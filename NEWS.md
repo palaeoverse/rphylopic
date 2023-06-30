@@ -1,3 +1,6 @@
+rphylopic (development version)
+===============================
+
 rphylopic 1.1.0
 ===============
 
