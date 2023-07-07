@@ -184,7 +184,8 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
 )
 
 #' @importFrom grImport2 pictureGrob
-#' @importFrom grid rasterGrob gList gTree
+#' @importFrom grid rasterGrob gList gTree nullGrob
+#' @importFrom methods slotNames
 phylopicGrob <- function(img, x, y, height, color, alpha,
                          horizontal, vertical, angle,
                          remove_background) {
@@ -198,12 +199,21 @@ phylopicGrob <- function(img, x, y, height, color, alpha,
 
   # grobify
   if (is(img, "Picture")) { # svg
-    # modified from
-    # https://github.com/k-hench/hypoimg/blob/master/R/hypoimg_recolor_svg.R
-    img_grob <- pictureGrob(img, x = x, y = y, height = height,
-                            default.units = "native", expansion = 0)
-    img_grob <- gList(img_grob)
-    img_grob <- gTree(children = img_grob)
+    if ("summary" %in% slotNames(img) &&
+        all(c("xscale", "yscale") %in% slotNames(img@summary)) &&
+        is.numeric(img@summary@xscale) && length(img@summary@xscale) == 2 &&
+        all(is.finite(img@summary@xscale)) && diff(img@summary@xscale) != 0 &&
+        is.numeric(img@summary@yscale) && length(img@summary@yscale) == 2 &&
+        all(is.finite(img@summary@yscale)) && diff(img@summary@yscale) != 0) {
+      # modified from
+      # https://github.com/k-hench/hypoimg/blob/master/R/hypoimg_recolor_svg.R
+      img_grob <- pictureGrob(img, x = x, y = y, height = height,
+                              default.units = "native", expansion = 0)
+      img_grob <- gList(img_grob)
+      img_grob <- gTree(children = img_grob)
+    } else {
+      img_grob <- nullGrob()
+    }
   } else { # png
     img_grob <- rasterGrob(img, x = x, y = y, height = height,
                            default.units = "native")

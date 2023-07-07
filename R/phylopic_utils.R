@@ -231,28 +231,31 @@ rgb_to_rgba <- function(img) {
 recolor_phylopic.Picture <- function(img, alpha = 1, color = NULL,
                                      remove_background = TRUE) {
   img <- recolor_content(img, alpha, color, remove_background)
+  if (length(img@content) == 0) stop("Invalid 'Picture' object")
   return(img)
 }
 
+#' @importFrom methods slotNames
 recolor_content <- function(x, alpha, color, remove_background) {
-  if (is(x@content[[1]], "PicturePath")) {
-    tmp <- lapply(x@content, function(path) {
+  tmp <- lapply(x@content, function(element) {
+    if (is(element, "PicturePath")) {
       # a bit of a hack until PhyloPic fixes these white backgrounds
-      if (remove_background && path@gp$fill %in% c("#FFFFFFFF", "#FFFFFF")) {
-        NULL
+      if (remove_background && "gp" %in% slotNames(element) &&
+          "fill" %in% names(element@gp) &&
+          element@gp$fill %in% c("#FFFFFFFF", "#FFFFFF")) {
+        return(NULL)
       } else {
-        path@gp$alpha <- alpha
+        element@gp$alpha <- alpha
         if (!is.null(color)) {
-          path@gp$fill <- color
+          element@gp$fill <- color
         }
-        path
+        return(element)
       }
-    })
-    x@content <- Filter(function(path) !is.null(path), tmp)
-    return(x)
-  } else { # need to go another level down
-    x@content <- lapply(x@content, recolor_content, alpha = alpha,
-                        color = color, remove_background = remove_background)
-    return(x)
-  }
+    } else if (is(element, "PictureGroup")) {
+      # need to go another level down
+      recolor_content(element, alpha, color, remove_background)
+    }
+  })
+  x@content <- Filter(function(element) !is.null(element), tmp)
+  return(x)
 }

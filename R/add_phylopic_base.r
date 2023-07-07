@@ -49,7 +49,7 @@
 #' @importFrom graphics par grconvertX grconvertY
 #' @importFrom grid grid.raster
 #' @importFrom grImport2 grid.picture
-#' @importFrom methods is
+#' @importFrom methods is slotNames
 #' @export
 #' @examples
 #' # single image
@@ -168,7 +168,16 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
 
     # grobify and plot
     if (is(img, "Picture")) { # svg
-      grid.picture(img, x = x, y = y, height = ysize, expansion = 0)
+      if ("summary" %in% slotNames(img) &&
+          all(c("xscale", "yscale") %in% slotNames(img@summary)) &&
+          is.numeric(img@summary@xscale) && length(img@summary@xscale) == 2 &&
+          all(is.finite(img@summary@xscale)) && diff(img@summary@xscale) != 0 &&
+          is.numeric(img@summary@yscale) && length(img@summary@yscale) == 2 &&
+          all(is.finite(img@summary@yscale)) && diff(img@summary@yscale) != 0) {
+        grid.picture(img, x = x, y = y, height = ysize, expansion = 0)
+      } else {
+        return(NULL)
+      }
     } else { # png
       grid.raster(img, x = x, y = y, height = ysize)
     }
