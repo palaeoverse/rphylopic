@@ -1,5 +1,7 @@
 # rphylopic (development version)
 
+* added preview argument to get_phylopic (#59)
+
 # rphylopic 1.1.1
 
 * Minor fixes for Fedora
