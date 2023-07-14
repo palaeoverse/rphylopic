@@ -1,5 +1,8 @@
 # rphylopic (development version)
 
+* added text argument to get_attribution (#56)
+* get_attribution now handles multiple uuids
+
 # rphylopic 1.1.1
 
 * Minor fixes for Fedora
@@ -7,8 +10,6 @@
 
 # rphylopic 1.1.0
 
-* added text argument to get_attribution
-* get_attribution now handles multiple uuids
 * added functions for transforming PhyloPic silhouettes (flipping and rotating)
 * save_phylopic bg argument updated to be "transparent" by default
 * added geom_phylopic (#25)
