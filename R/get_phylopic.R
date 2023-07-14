@@ -25,6 +25,8 @@
 #'   included as the "uuid" and "url" attributes, respectively.
 #' @importFrom rsvg rsvg_png
 #' @importFrom png readPNG
+#' @importFrom grid grid.newpage grid.raster
+#' @importFrom grImport2 grid.picture
 #' @export
 #' @examples
 #' # uuid
@@ -78,7 +80,12 @@ get_phylopic <- function(uuid = NULL, format = "vector", height = 512,
   }
   # Should the image be previewed?
   if (preview) {
-    add_phylopic_base(img = img, x = 0.5, y = 0.5)
+    grid.newpage()
+    if (format == "vector") {
+      grid.picture(img)
+    } else {
+      grid.raster(img)
+    }
   }
   
   attr(img, "uuid") <- uuid
