@@ -1,5 +1,6 @@
 # rphylopic (development version)
 
+* added browse_phylopic function (#60)
 * added preview argument to get_phylopic (#59)
 
 # rphylopic 1.1.1
