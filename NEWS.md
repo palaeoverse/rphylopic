@@ -1,5 +1,11 @@
-rphylopic (development version)
-==============
+# rphylopic (development version)
+
+# rphylopic 1.1.1
+
+* Minor fixes for Fedora
+* Better handling of malformed Picture objects
+
+# rphylopic 1.1.0
 
 * added text argument to get_attribution
 * get_attribution now handles multiple uuids
@@ -12,10 +18,11 @@ rphylopic (development version)
 * get_phylopic can now return any size raster image (#50)
 * removed the "thumbnail" and "twitter" format options for get_phylopic
 * fixed how silhouettes are gathered from PhyloPic (#51)
-* pick_phylopic updated to allow visualisation of multiple silhouettes at once (#43)
+* pick_phylopic updated to allow visualization of multiple silhouettes at once (#43)
+* fixed add_phylopic_base for multi-panel figures
+* added three vignettes (#49, #55)
 
-rphylopic 1.0.0
-==============
+# rphylopic 1.0.0
 
 * rphylopic has now been transferred to the Palaeoverse community (new maintainer: William Gearty and author: Lewis Jones)
 * The package has been updated to work with PhyloPic API ver. >=2.1.1
@@ -29,8 +36,7 @@ rphylopic 1.0.0
   * save_phylopic: this function enables users to save PhyloPic silhouettes using various formats (replaces save_png)
   
 
-rphylopic 0.3.4
-==============
+# rphylopic 0.3.4
 
 ### NEW FEATURES
 
@@ -40,8 +46,7 @@ rphylopic 0.3.4
   + `messager`
   + `message_parallel` 
 
-rphylopic 0.3.0
-===============
+# rphylopic 0.3.0
 
 ### NEW FEATURES
 
@@ -56,8 +61,7 @@ rphylopic 0.3.0
 * `plot_phylopic_base()` was removed, see `?add_phylopic_base` (#27) (#28)
 
 
-rphylopic 0.2.0
-===============
+# rphylopic 0.2.0
 
 ### NEW FEATURES
 

@@ -16,7 +16,7 @@ test_that("geom_phylopic works", {
   expect_true(is.ggplot(gg))
   expect_true(is(gg$layers[[1]]$geom, "GeomPhylopic"))
   expect_doppelganger("geom_phylopic", gg)
-  
+
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
                           format = "raster")
   gg <- ggplot(df) +
