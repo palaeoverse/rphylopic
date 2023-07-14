@@ -34,7 +34,7 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #'   images at the same time (i.e. `view` > 9). If no images are displayed in
 #'   your plotting environment, try decreasing the value of `view`.
 #'
-#' @importFrom grid grid.newpage grid.text
+#' @importFrom grid grid.newpage grid.text gpar
 #' @importFrom grImport2 grid.picture
 #' @importFrom utils menu
 #' @importFrom ggplot2 ggplot facet_wrap theme theme_void
@@ -56,7 +56,7 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
   if (!is.numeric(view)) {
     stop("`view` must be of class numeric.")
   }
-  
+
   # Internal function for plotting selected image
   return_img <- function(uuid) {
     img <- get_phylopic(uuid = uuid)
@@ -79,20 +79,20 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
   uuids <- get_uuid(name = name, n = n, url = FALSE)
   # Record length
   n_uuids <- length(uuids)
-  
+
   # Return data if only one image requested
   if (n == 1) {
     img <- return_img(uuid = uuids)
     return(img)
   }
-  
+
   # Return data if only one image exists
   if (n_uuids == 1) {
     message("This is the only image. Returning this uuid data.")
     img <- return_img(uuid = uuids)
     return(img)
   }
-  
+
   # Suppress warnings when there is an uneven split
   if ((length(uuids) %% view) != 0) {
     uuids <- suppressWarnings(
@@ -100,7 +100,7 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
   } else {
     uuids <- split(x = uuids, f = ceiling(seq_along(uuids) / view))
   }
-  
+
   # Cycle through list
   for (i in seq_along(uuids)) {
     # Get image data
@@ -114,19 +114,20 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
     att <- lapply(uuids[[i]], get_attribution)
     # Attribution text
     n_spaces <- 3 + floor(log10(length(att) + 1))
-    att_string <- lapply(att, function(x){
-      paste0(x$contributor, " (", x$created, ").\n", strrep(" ", n_spaces), "License: ", x$license)
+    att_string <- lapply(att, function(x) {
+      paste0(x$contributor, " (", x$created, ").\n", strrep(" ", n_spaces),
+             "License: ", x$license)
     })
     att_string <- unlist(att_string)
-    
+
     # Set up menu
     if (is.null(auto)) {
       # Set up plotting dataframe
-      df <- data.frame(x = 0.5, y = 0.5, uuid = uuids[[i]], 
+      df <- data.frame(x = 0.5, y = 0.5, uuid = uuids[[i]],
                        label = seq_len(length(uuids[[i]])))
       if (view > 1) {
         dims <- sapply(img, dim)
-        df$size <- sapply(height / dims[2,], min, 1)
+        df$size <- sapply(height / dims[2, ], min, 1)
       } else {
         df$size <- 1
       }
@@ -160,7 +161,7 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
         m <- 1
       }
     }
-    
+
     # Make selection
     n_plotted <- length(uuids[[i]])
     if (m != (n_plotted + 1)) {
@@ -168,7 +169,7 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1, auto = NULL) {
       img <- return_img(uuid = uuid)
       return(img)
     }
-    
+
     # If final image available reached, return
     if (i == length(uuids)) {
       message("This is the final image. Returning this uuid data.")
