@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/palaeoverse-community/rphylopic",
   "issueTracker": "https://github.com/palaeoverse-community/rphylopic/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.2 (2022-10-31 ucrt)",
+  "runtimePlatform": "R version 4.2.3 (2023-03-15 ucrt)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -123,6 +123,102 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=covr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "phytools",
+      "name": "phytools",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=phytools"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "palaeoverse",
+      "name": "palaeoverse",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=palaeoverse"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ggtree",
+      "name": "ggtree",
+      "provider": {
+        "@id": "https://www.bioconductor.org",
+        "@type": "Organization",
+        "name": "Bioconductor",
+        "url": "https://www.bioconductor.org"
+      },
+      "sameAs": "https://bioconductor.org/packages/release/bioc/html/ggtree.html"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "geodata",
+      "name": "geodata",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=geodata"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ape",
+      "name": "ape",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ape"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "deeptime",
+      "name": "deeptime",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=deeptime"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "palmerpenguins",
+      "name": "palmerpenguins",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=palmerpenguins"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "raster",
+      "name": "raster",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=raster"
     }
   ],
   "softwareRequirements": {
@@ -231,9 +327,33 @@
       "identifier": "methods",
       "name": "methods"
     },
+    "12": {
+      "@type": "SoftwareApplication",
+      "identifier": "lifecycle",
+      "name": "lifecycle",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=lifecycle"
+    },
+    "13": {
+      "@type": "SoftwareApplication",
+      "identifier": "pbapply",
+      "name": "pbapply",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=pbapply"
+    },
     "SystemRequirements": null
   },
-  "fileSize": "2702.159KB",
+  "fileSize": "11812.935KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -248,20 +368,18 @@
           "@type": "Person",
           "givenName": ["Lewis", "A."],
           "familyName": "Jones"
-        },
-        {
-          "@type": "Person",
-          "givenName": "Scott",
-          "familyName": "Chamberlain"
         }
       ],
-      "name": "rphylopic: an R package for accessing and plotting PhyloPic silhouettes",
+      "name": "rphylopic: An R package for fetching, transforming, and visualising PhyloPic silhouettes",
+      "identifier": "10.1101/2023.06.22.546191",
+      "@id": "https://doi.org/10.1101/2023.06.22.546191",
+      "sameAs": "https://doi.org/10.1101/2023.06.22.546191",
       "isPartOf": {
         "@type": "PublicationIssue",
         "datePublished": "2023",
         "isPartOf": {
           "@type": ["PublicationVolume", "Periodical"],
-          "name": "TBD"
+          "name": "bioRxiv"
         }
       }
     }

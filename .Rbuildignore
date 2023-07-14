@@ -17,6 +17,8 @@ Makefile
 ^\.github$
 ^_pkgdown\.yml$
 ^docs$
+^doc$
 ^pkgdown$
 ^CRAN-SUBMISSION$
 ^\.DS_Store$
+^revdep$
