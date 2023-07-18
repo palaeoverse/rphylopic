@@ -35,11 +35,11 @@ Imports:
     curl,
     methods,
     lifecycle,
-    pbapply
+    pbapply,
+    knitr
 Suggests:
     testthat (>= 3.0.0),
     vdiffr (>= 1.0.0),
-    knitr,
     rmarkdown,
     covr,
     phytools,

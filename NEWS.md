@@ -1,5 +1,7 @@
 # rphylopic (development version)
 
+* added text argument to get_attribution (#56)
+* get_attribution now handles multiple uuids
 * added browse_phylopic function (#60)
 * added preview argument to get_phylopic (#59)
 
