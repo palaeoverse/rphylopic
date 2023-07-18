@@ -20,4 +20,5 @@ Makefile
 ^doc$
 ^pkgdown$
 ^CRAN-SUBMISSION$
+^\.DS_Store$
 ^revdep$

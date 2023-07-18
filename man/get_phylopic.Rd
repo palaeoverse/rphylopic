@@ -4,7 +4,7 @@
 \alias{get_phylopic}
 \title{Retrieve an image for a given PhyloPic uuid}
 \usage{
-get_phylopic(uuid = NULL, format = "vector", height = 512)
+get_phylopic(uuid = NULL, format = "vector", height = 512, preview = FALSE)
 }
 \arguments{
 \item{uuid}{\code{character}. A PhyloPic image uuid.}
@@ -16,6 +16,9 @@ a desired \code{height}.}
 \item{height}{\code{numeric}. If \code{format} is "raster", this is the desired
 height of the raster image in pixels. This is ignored if \code{format} is
 "vector".}
+
+\item{preview}{\code{logical}. If \code{preview} is \code{TRUE}, the returned
+image is plotted. Defaults to \code{FALSE}.}
 }
 \value{
 If \code{format} is "vector", a \link[grImport2:Picture-class]{Picture} object
