@@ -62,27 +62,35 @@ for PhyloPic images via an image uuid returned by <code><a href="get_uuid.html">
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_attribution</span><span class="op">(</span>uuid <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_attribution</span><span class="op">(</span>uuid <span class="op">=</span> <span class="cn">NULL</span>, text <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>uuid</dt>
-<dd><p><code>character</code>. A valid uuid for a PhyloPic silhouette such
-as that returned by <code><a href="get_uuid.html">get_uuid()</a></code> or <code><a href="pick_phylopic.html">pick_phylopic()</a></code>.</p></dd>
+<dd><p><code>character</code>. A vector of valid uuid(s) for PhyloPic
+silhouette(s) such as that returned by <code><a href="get_uuid.html">get_uuid()</a></code> or <code><a href="pick_phylopic.html">pick_phylopic()</a></code>.</p></dd>
+
+
+<dt>text</dt>
+<dd><p><code>logical</code>. Should attribution information be returned as
+a text paragraph? Defaults to <code>FALSE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A <code>list</code> of PhyloPic attribution data for an image <code>uuid</code>.</p>
+<p>A <code>list</code> of PhyloPic attribution data for an image <code>uuid</code> or
+a text output of relevant attribution information.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>This function returns image <code>uuid</code> specific attribution data,
 including: contributor name, contributor uuid, contributor contact,
-image uuid and license.</p>
+image uuid, license, and license abbreviation. If <code>text</code> is set to
+<code>TRUE</code>, a text paragraph with the contributor name, year of contribution,
+and license type is returned.</p>
     </div>
 
     <div class="section level2">
@@ -91,6 +99,11 @@ image uuid and license.</p>
 <span class="r-in"><span><span class="va">uuid</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_uuid.html">get_uuid</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Acropora cervicornis"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Get attribution data for uuid</span></span></span>
 <span class="r-in"><span><span class="va">attri</span> <span class="op">&lt;-</span> <span class="fu">get_attribution</span><span class="op">(</span>uuid <span class="op">=</span> <span class="va">uuid</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Get list of valid uuids</span></span></span>
+<span class="r-in"><span><span class="va">uuids</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_uuid.html">get_uuid</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Scleractinia"</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Get attribution data for uuids</span></span></span>
+<span class="r-in"><span><span class="fu">get_attribution</span><span class="op">(</span>uuid <span class="op">=</span> <span class="va">uuids</span>, text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023). Silhouettes were contributed by Victor Piñon-González, 2023 (CC0 1.0) and Guillaume Dera, 2022 (CC0 1.0).</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
