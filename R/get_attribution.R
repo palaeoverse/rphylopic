@@ -3,8 +3,8 @@
 #' This function provides a convenient way to obtain attribution data
 #' for PhyloPic images via an image uuid returned by [get_uuid()].
 #'
-#' @param uuid \code{character}. A valid uuid for a PhyloPic silhouette such
-#'   as that returned by [get_uuid()] or [pick_phylopic()].
+#' @param uuid \code{character}. A vector of valid uuid(s) for PhyloPic 
+#'   silhouette(s) such as that returned by [get_uuid()] or [pick_phylopic()].
 #' @param text \code{logical}. Should attribution information be returned as 
 #' a text paragraph? Defaults to `FALSE`.
 #'
@@ -16,6 +16,7 @@
 #'   image uuid, license, and license abbreviation. If `text` is set to
 #'   `TRUE`, a text paragraph with the contributor name, year of contribution,
 #'    and license type is returned.
+#' @importFrom knitr combine_words
 #' @export
 #' @examples
 #' # Get valid uuid
@@ -95,7 +96,7 @@ get_attribution <- function(uuid = NULL, text = FALSE) {
     att <- unique(unlist(att))
     # Convert to string
     if (length(att) > 1) {
-      att[length(att)] <- paste0("and ", att[length(att)])
+      att <- combine_words(att, oxford_comma = TRUE)
       att <- paste0("Silhouettes were contributed by ", toString(att), ".")
     } else {
       att <- paste0("Silhouette was contributed by ", toString(att), ".")

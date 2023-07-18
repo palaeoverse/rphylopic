@@ -7,8 +7,8 @@
 get_attribution(uuid = NULL, text = FALSE)
 }
 \arguments{
-\item{uuid}{\code{character}. A valid uuid for a PhyloPic silhouette such
-as that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}.}
+\item{uuid}{\code{character}. A vector of valid uuid(s) for PhyloPic
+silhouette(s) such as that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}.}
 
 \item{text}{\code{logical}. Should attribution information be returned as
 a text paragraph? Defaults to \code{FALSE}.}
