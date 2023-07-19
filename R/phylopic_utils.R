@@ -147,8 +147,10 @@ transform_summary <- function(summary, mat) {
 #'   from using [get_phylopic()].
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette.
-#' @param color \code{character}. Color to plot the silhouette in. If NULL, the
-#'   color is not changed.
+#' @param color \code{character}. Color to make the outline of the silhouette.
+#'   If NULL, the outline color is not changed.
+#' @param fill \code{character}. Color to make the body of the silhouette. If
+#'   NULL, the body color is not changed.
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed? Only useful if `img` is a [Picture][grImport2::Picture-class]
 #'   object. See details.
@@ -164,7 +166,7 @@ transform_summary <- function(summary, mat) {
 #' @family transformations
 #' @importFrom grDevices rgb col2rgb
 #' @export
-recolor_phylopic <- function(img, alpha = 1, color = NULL,
+recolor_phylopic <- function(img, alpha = 1, color = NULL, fill = NULL,
                              remove_background = TRUE) {
   if (!is.numeric(alpha) || alpha < 0 || alpha > 1) {
     stop("`alpha` must be a number between 0 and 1.")
@@ -176,7 +178,7 @@ recolor_phylopic <- function(img, alpha = 1, color = NULL,
 }
 
 #' @export
-recolor_phylopic.array <- function(img, alpha = 1, color = NULL,
+recolor_phylopic.array <- function(img, alpha = 1, color = NULL, fill = NULL,
                                    remove_background = TRUE) {
   dims <- dim(img)
   if (length(dim(img)) != 3) {
@@ -195,10 +197,10 @@ recolor_phylopic.array <- function(img, alpha = 1, color = NULL,
                "More than four channels is not supported."))
   }
   dims <- dim(img) # update dimensions
-  if (is.null(color)) {
+  if (is.null(fill)) {
     new_img <- array(c(img[, , 1:3], img[, , 4] * alpha), dim = dims)
   } else {
-    cols <- col2rgb(color) / 255
+    cols <- col2rgb(fill) / 255
     imglen <- length(img[, , 1])
     new_img <- array(c(rep(cols[1, 1], imglen),
                        rep(cols[2, 1], imglen),
@@ -206,6 +208,7 @@ recolor_phylopic.array <- function(img, alpha = 1, color = NULL,
                        img[, , 4] * alpha), dim = dims)
   }
   return(new_img)
+  # TODO: outline color?
 }
 
 ga_to_rgba <- function(img) {
@@ -228,15 +231,15 @@ rgb_to_rgba <- function(img) {
 }
 
 #' @export
-recolor_phylopic.Picture <- function(img, alpha = 1, color = NULL,
+recolor_phylopic.Picture <- function(img, alpha = 1, color = NULL, fill = NULL,
                                      remove_background = TRUE) {
-  img <- recolor_content(img, alpha, color, remove_background)
+  img <- recolor_content(img, alpha, color, fill, remove_background)
   if (length(img@content) == 0) stop("Invalid 'Picture' object")
   return(img)
 }
 
 #' @importFrom methods slotNames
-recolor_content <- function(x, alpha, color, remove_background) {
+recolor_content <- function(x, alpha, color, fill, remove_background) {
   tmp <- lapply(x@content, function(element) {
     if (is(element, "PicturePath")) {
       # a bit of a hack until PhyloPic fixes these white backgrounds
@@ -247,13 +250,16 @@ recolor_content <- function(x, alpha, color, remove_background) {
       } else {
         element@gp$alpha <- alpha
         if (!is.null(color)) {
-          element@gp$fill <- color
+          element@gp$col <- color
+        }
+        if (!is.null(fill)) {
+          element@gp$fill <- fill
         }
         return(element)
       }
     } else if (is(element, "PictureGroup")) {
       # need to go another level down
-      recolor_content(element, alpha, color, remove_background)
+      recolor_content(element, alpha, color, fill, remove_background)
     }
   })
   x@content <- Filter(function(element) !is.null(element), tmp)

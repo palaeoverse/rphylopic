@@ -12,7 +12,8 @@ add_phylopic(
   y,
   ysize = Inf,
   alpha = 1,
-  color = "black",
+  color = "transparent",
+  fill = "black",
   horizontal = FALSE,
   vertical = FALSE,
   angle = 0,
@@ -39,9 +40,13 @@ default, the height will be as tall as will fit within the plot area.}
 \item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
 of the silhouette (0 is fully transparent, 1 is fully opaque).}
 
-\item{color}{\code{character}. Color to plot the silhouette in. If "original"
-is specified, the original color of the silhouette will be used (usually
-the same as "black").}
+\item{color}{\code{character}. Color to plot the silhouette outline in. If
+"original" is specified, the original color of the silhouette outline will
+be used (usually the same as "transparent").}
+
+\item{fill}{\code{character}. Color to plot the silhouette body in. If
+"original" is specified, the original color of the silhouette will be used
+(usually the same as "black").}
 
 \item{horizontal}{\code{logical}. Should the silhouette be flipped
 horizontally?}
@@ -69,12 +74,16 @@ should be plotted at once. In this case, any other arguments (except for
 \code{remove_background}) may also be vectors of values, which will be recycled
 as necessary.
 
+If only \code{color} is specified (and \code{fill} is NA), the outline and fill color
+will be the same.
+
 When specifying a horizontal and/or vertical flip \strong{and} a rotation, the
 flip(s) will always occur first. If you would like to customize this
 behavior, you can flip and/or rotate the image within your own workflow
 using \code{\link[=flip_phylopic]{flip_phylopic()}} and \code{\link[=rotate_phylopic]{rotate_phylopic()}}.
 
 Note that png array objects can only be rotated by multiples of 90 degrees.
+Also, outline colors do not currently work for png array objects.
 }
 \examples{
 # Put a silhouette behind a plot based on a taxonomic name
