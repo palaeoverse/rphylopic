@@ -4,6 +4,7 @@
 * get_attribution now handles multiple uuids
 * added browse_phylopic function (#60)
 * added preview argument to get_phylopic (#59)
+* switched to {maps} package in base R advanced vignette
 
 # rphylopic 1.1.1
 
