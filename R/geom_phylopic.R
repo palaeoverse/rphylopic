@@ -208,9 +208,21 @@ phylopic_env$glyph_ind <- 1
 #'   silhouettes will be used as ordered as key glyphs one by one, with
 #'   recycling as necessary.
 #'
-#'   Note that this can be fairly nonsensical for size legends.
+#'   Note that the relative sizes of the silhouettes are fixed. Therefore, this
+#'   function should not be used for size legends.
 #' @importFrom grid nullGrob unit
 #' @export
+#' @examples
+#' library(ggplot2)
+#' df <- data.frame(x = c(2, 4), y = c(10, 20),
+#'                  name = c("Felis silvestris catus", "Odobenus rosmarus"))
+#' ggplot(df) +
+#'   geom_phylopic(aes(x = x, y = y, name = name, color = name), size = 10,
+#'                 show.legend = TRUE,
+#'                 key_glyph = phylopic_key_glyph(name =
+#'                                                c("Felis silvestris catus",
+#'                                                  "Odobenus rosmarus"))) +
+#'   coord_cartesian(xlim = c(1,6), ylim = c(5, 30))
 phylopic_key_glyph <- function(img = NULL, name = NULL, uuid = NULL) {
   if (sum(sapply(list(img, name, uuid), Negate(is.null))) != 1) {
     stop(paste("Must specify one (and only one) of the `img`, `name`, or",
@@ -264,9 +276,10 @@ phylopic_key_glyph <- function(img = NULL, name = NULL, uuid = NULL) {
     if (is.null(imgs[[i]])) {
       grob <- nullGrob()
     } else {
+      asp_rat <- aspect_ratio(imgs[[i]])
+      height <- unit(ifelse(asp_rat >= 1, .95 / asp_rat, .95), "npc")
       grob <- phylopicGrob(imgs[[i]], 0.5, 0.5,
-                           unit(data$size[1] / size[2], "npc"),
-                           data$colour[1], data$alpha[1],
+                           height, data$colour[1], data$alpha[1],
                            data$horizontal[1], data$vertical[1], data$angle[1],
                            phylopic_env$remove_background)
     }
@@ -322,4 +335,13 @@ ggname <- function(prefix, grob) {
   # copied from ggplot2
   grob$name <- grobName(grob, prefix)
   grob
+}
+
+aspect_ratio <- function(img) {
+  if(is(img, 'Picture')) {
+    return(abs(diff(img@summary@xscale)) / abs(diff(img@summary@yscale)))
+  } else {
+    dims <- dim(img)
+    return(dims[2] / dims[1])
+  }
 }

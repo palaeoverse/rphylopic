@@ -27,5 +27,18 @@ silhouettes should be used as key glyphs. In this case, the specified
 silhouettes will be used as ordered as key glyphs one by one, with
 recycling as necessary.
 
-Note that this can be fairly nonsensical for size legends.
+Note that the relative sizes of the silhouettes are fixed. Therefore, this
+function should not be used for size legends.
+}
+\examples{
+library(ggplot2)
+df <- data.frame(x = c(2, 4), y = c(10, 20),
+                 name = c("Felis silvestris catus", "Odobenus rosmarus"))
+ggplot(df) +
+  geom_phylopic(aes(x = x, y = y, name = name, color = name), size = 10,
+                show.legend = TRUE,
+                key_glyph = phylopic_key_glyph(name =
+                                               c("Felis silvestris catus",
+                                                 "Odobenus rosmarus"))) +
+  coord_cartesian(xlim = c(1,6), ylim = c(5, 30))
 }
