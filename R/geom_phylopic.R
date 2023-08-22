@@ -68,6 +68,11 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
   if (!is.logical(remove_background)) {
     stop("`remove_background` should be a logical value.")
   }
+  # We need to do this before passing to the layer
+  dots <- list(...)
+  if ("img" %in% names(dots) && (is(dots$img, 'Picture') || is.array(dots$img))) {
+    dots$img <- list(dots$img)
+  }
   layer(
     data = data,
     mapping = mapping,
@@ -76,10 +81,10 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
     position = position,
     show.legend = show.legend,
     inherit.aes = inherit.aes,
-    params = list(
+    params = c(
       na.rm = na.rm,
       remove_background = remove_background,
-      ...
+      dots
     )
   )
 }

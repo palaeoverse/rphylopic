@@ -5,6 +5,7 @@
 * added browse_phylopic function (#60)
 * added preview argument to get_phylopic (#59)
 * switched to {maps} package in base R advanced vignette
+* geom_phylopic now properly handles a single unlisted image object passed to the "img" parameter (#75)
 
 # rphylopic 1.1.1
 
