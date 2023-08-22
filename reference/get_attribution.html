@@ -62,7 +62,7 @@ for PhyloPic images via an image uuid returned by <code><a href="get_uuid.html">
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_attribution</span><span class="op">(</span>uuid <span class="op">=</span> <span class="cn">NULL</span>, text <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_attribution</span><span class="op">(</span>uuid <span class="op">=</span> <span class="cn">NULL</span>, img <span class="op">=</span> <span class="cn">NULL</span>, text <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -70,6 +70,12 @@ for PhyloPic images via an image uuid returned by <code><a href="get_uuid.html">
     <dl><dt>uuid</dt>
 <dd><p><code>character</code>. A vector of valid uuid(s) for PhyloPic
 silhouette(s) such as that returned by <code><a href="get_uuid.html">get_uuid()</a></code> or <code><a href="pick_phylopic.html">pick_phylopic()</a></code>.</p></dd>
+
+
+<dt>img</dt>
+<dd><p>A <a href="https://rdrr.io/pkg/grImport2/man/Picture-class.html" class="external-link">Picture</a> or png array object from
+<code><a href="get_phylopic.html">get_phylopic()</a></code>. A list of these objects can also be supplied. If <code>img</code>
+is supplied, <code>uuid</code> is ignored. Defaults to NULL.</p></dd>
 
 
 <dt>text</dt>
