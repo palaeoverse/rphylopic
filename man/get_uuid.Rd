@@ -4,7 +4,7 @@
 \alias{get_uuid}
 \title{Get a PhyloPic uuid}
 \usage{
-get_uuid(name = NULL, n = 1, url = FALSE)
+get_uuid(name = NULL, n = 1, filter = NULL, url = FALSE)
 }
 \arguments{
 \item{name}{\code{character}. A taxonomic name. Various taxonomic levels
@@ -15,6 +15,11 @@ which will skip the taxonomic filtering of the PhyloPic database.}
 the requested \code{name}, multiple silhouettes might exist. If \code{n} exceeds
 the number of available images, all available uuids will be returned.
 This argument defaults to 1.}
+
+\item{filter}{\code{character}. Filter uuid(s) by usage license. Use "by"
+to limit results to image uuids which do not require attribution, "nc"
+for image uuids which allow commercial usage, and "sa" for image uuids
+without a StandAlone clause. The user can also combine these filters.}
 
 \item{url}{\code{logical}. If \code{FALSE} (default), only the uuid is
 returned. If \code{TRUE}, a valid PhyloPic image url of the uuid is
