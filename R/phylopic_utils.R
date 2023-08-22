@@ -259,3 +259,47 @@ recolor_content <- function(x, alpha, color, remove_background) {
   x@content <- Filter(function(element) !is.null(element), tmp)
   return(x)
 }
+
+#' Plot a vector representation of a PhyloPic silhouette
+#' @param img A [Picture][grImport2::Picture-class] object, e.g., from using
+#'   [get_phylopic()].
+#' @param ... Other arguments passed on to [grImport2::grid.picture()].
+#' @importFrom grid grid.newpage
+#' @importFrom grImport2 grid.picture
+#' @export
+plot.Picture <- function(img, ...) {
+  grid.newpage()
+  grid.picture(img, ...)
+}
+
+#' Plot a raster representation of a PhyloPic silhouette
+#' @param img A png array object, e.g., from using [get_phylopic()].
+#' @param ... Other arguments passed on to [grid::grid.raster()].
+#' @importFrom grid grid.newpage grid.raster
+#' @export
+plot.phylopic <- function(img, ...) {
+  grid.newpage()
+  grid.raster(img, ...)
+}
+
+#' @export
+print.Picture <- function(img) {
+  dims <- c(abs(diff(img@summary@xscale)), abs(diff(img@summary@yscale)))
+  cat(paste0("Vector representation of a PhyloPic silhouette.",
+             "\nDimensions: ", dims[1], " pixels wide and ",
+             dims[2], " pixels tall.",
+             "\nuuid: ", attr(img, "uuid"),
+             "\nURL: ", attr(img, "url")))
+  invisible(img)
+}
+
+#' @export
+print.phylopic <- function(img) {
+  dims <- dim(img)
+  cat(paste0("Raster representation of a PhyloPic silhouette.",
+             "\nDimensions: ", dims[2], " pixels wide and ",
+             dims[1], " pixels tall.",
+             "\nuuid: ", attr(img, "uuid"),
+             "\nURL: ", attr(img, "url")))
+  invisible(img)
+}
