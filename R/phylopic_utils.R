@@ -267,9 +267,9 @@ recolor_content <- function(x, alpha, color, remove_background) {
 #' @importFrom grid grid.newpage
 #' @importFrom grImport2 grid.picture
 #' @export
-plot.Picture <- function(img, ...) {
+plot.Picture <- function(x, ...) {
   grid.newpage()
-  grid.picture(img, ...)
+  grid.picture(x, ...)
 }
 
 #' Plot a raster representation of a PhyloPic silhouette
@@ -277,29 +277,40 @@ plot.Picture <- function(img, ...) {
 #' @param ... Other arguments passed on to [grid::grid.raster()].
 #' @importFrom grid grid.newpage grid.raster
 #' @export
-plot.phylopic <- function(img, ...) {
+plot.phylopic <- function(x, ...) {
   grid.newpage()
-  grid.raster(img, ...)
+  grid.raster(x, ...)
 }
 
+#' @rdname get_phylopic
+#' @param ... Ignored
 #' @export
-print.Picture <- function(img) {
-  dims <- c(abs(diff(img@summary@xscale)), abs(diff(img@summary@yscale)))
+print.Picture <- function(x, ...) {
+  dims <- c(abs(diff(x@summary@xscale)), abs(diff(x@summary@yscale)))
   cat(paste0("Vector representation of a PhyloPic silhouette.",
              "\nDimensions: ", dims[1], " pixels wide and ",
              dims[2], " pixels tall.",
-             "\nuuid: ", attr(img, "uuid"),
-             "\nURL: ", attr(img, "url")))
-  invisible(img)
+             "\nuuid: ", attr(x, "uuid"),
+             "\nURL: ", attr(x, "url")))
+  invisible(x)
 }
 
+# runs print() when you just type the object name (S4-specific)
+setMethod(f = "show",
+          signature = "Picture",
+          definition = function(object){
+            print(object)
+          })
+
+#' @rdname get_phylopic
+#' @param ... Ignored
 #' @export
-print.phylopic <- function(img) {
-  dims <- dim(img)
+print.phylopic <- function(x, ...) {
+  dims <- dim(x)
   cat(paste0("Raster representation of a PhyloPic silhouette.",
              "\nDimensions: ", dims[2], " pixels wide and ",
              dims[1], " pixels tall.",
-             "\nuuid: ", attr(img, "uuid"),
-             "\nURL: ", attr(img, "url")))
-  invisible(img)
+             "\nuuid: ", attr(x, "uuid"),
+             "\nURL: ", attr(x, "url")))
+  invisible(x)
 }

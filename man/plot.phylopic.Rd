@@ -4,12 +4,12 @@
 \alias{plot.phylopic}
 \title{Plot a raster representation of a PhyloPic silhouette}
 \usage{
-\method{plot}{phylopic}(img, ...)
+\method{plot}{phylopic}(x, ...)
 }
 \arguments{
-\item{img}{A png array object, e.g., from using \code{\link[=get_phylopic]{get_phylopic()}}.}
-
 \item{...}{Other arguments passed on to \code{\link[grid:grid.raster]{grid::grid.raster()}}.}
+
+\item{img}{A png array object, e.g., from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 }
 \description{
 Plot a raster representation of a PhyloPic silhouette

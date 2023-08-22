@@ -4,13 +4,13 @@
 \alias{plot.Picture}
 \title{Plot a vector representation of a PhyloPic silhouette}
 \usage{
-\method{plot}{Picture}(img, ...)
+\method{plot}{Picture}(x, ...)
 }
 \arguments{
+\item{...}{Other arguments passed on to \code{\link[grImport2:grid.picture]{grImport2::grid.picture()}}.}
+
 \item{img}{A \link[grImport2:Picture-class]{Picture} object, e.g., from using
 \code{\link[=get_phylopic]{get_phylopic()}}.}
-
-\item{...}{Other arguments passed on to \code{\link[grImport2:grid.picture]{grImport2::grid.picture()}}.}
 }
 \description{
 Plot a vector representation of a PhyloPic silhouette
