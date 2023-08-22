@@ -260,10 +260,16 @@ recolor_content <- function(x, alpha, color, remove_background) {
   return(x)
 }
 
-#' Plot a vector representation of a PhyloPic silhouette
-#' @param img A [Picture][grImport2::Picture-class] object, e.g., from using
-#'   [get_phylopic()].
-#' @param ... Other arguments passed on to [grImport2::grid.picture()].
+#' Preview a PhyloPic silhouette
+#'
+#' Preview a raster or vector representation of a PhyloPic silhouette. This will
+#' plot the silhouette on a new page in your default plotting device.
+#' @rdname plot_phylopic
+#' @aliases plot_phylopic
+#' @param x A [Picture][grImport2::Picture-class] or png array object, e.g.,
+#'   from using [get_phylopic()].
+#' @param ... Other arguments passed on to [grImport2::grid.picture()] or
+#'   [grid::grid.raster()].
 #' @importFrom grid grid.newpage
 #' @importFrom grImport2 grid.picture
 #' @export
@@ -272,9 +278,7 @@ plot.Picture <- function(x, ...) {
   grid.picture(x, ...)
 }
 
-#' Plot a raster representation of a PhyloPic silhouette
-#' @param img A png array object, e.g., from using [get_phylopic()].
-#' @param ... Other arguments passed on to [grid::grid.raster()].
+#' @rdname plot_phylopic
 #' @importFrom grid grid.newpage grid.raster
 #' @export
 plot.phylopic <- function(x, ...) {
