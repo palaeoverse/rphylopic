@@ -11,9 +11,9 @@ get_uuid(name = NULL, img = NULL, n = 1, url = FALSE)
 are supported (e.g. species, genus, family). NULL can also be supplied
 which will skip the taxonomic filtering of the PhyloPic database.}
 
-\item{img}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
-from using \code{\link[=get_phylopic]{get_phylopic()}}. If supplied, \code{name} and \code{n} are ignored.
-Defaults to NULL.}
+\item{img}{A \link[grImport2:Picture-class]{Picture} or png array object from
+\code{\link[=get_phylopic]{get_phylopic()}}. A list of these objects can also be supplied. If \code{img}
+is supplied, \code{name} and \code{n} are ignored. Defaults to NULL.}
 
 \item{n}{\code{numeric}. How many uuids should be returned? Depending on
 the requested \code{name}, multiple silhouettes might exist. If \code{n} exceeds

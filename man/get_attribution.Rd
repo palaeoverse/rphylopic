@@ -10,9 +10,9 @@ get_attribution(uuid = NULL, img = NULL, text = FALSE)
 \item{uuid}{\code{character}. A vector of valid uuid(s) for PhyloPic
 silhouette(s) such as that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}.}
 
-\item{img}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
-from using \code{\link[=get_phylopic]{get_phylopic()}}. If supplied, \code{uuid} is ignored. Defaults to
-NULL.}
+\item{img}{A \link[grImport2:Picture-class]{Picture} or png array object from
+\code{\link[=get_phylopic]{get_phylopic()}}. A list of these objects can also be supplied. If \code{img}
+is supplied, \code{uuid} is ignored. Defaults to NULL.}
 
 \item{text}{\code{logical}. Should attribution information be returned as
 a text paragraph? Defaults to \code{FALSE}.}
