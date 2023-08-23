@@ -287,6 +287,8 @@ plot.phylopic <- function(x, ...) {
 }
 
 #' @rdname get_phylopic
+#' @param x A [Picture][grImport2::Picture-class] or png array object, e.g.,
+#'   from using [get_phylopic()].
 #' @param ... Ignored
 #' @export
 print.Picture <- function(x, ...) {
@@ -307,7 +309,6 @@ setMethod(f = "show",
           })
 
 #' @rdname get_phylopic
-#' @param ... Ignored
 #' @export
 print.phylopic <- function(x, ...) {
   dims <- dim(x)

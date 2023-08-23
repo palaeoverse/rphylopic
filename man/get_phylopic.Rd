@@ -26,6 +26,9 @@ height of the raster image in pixels. This is ignored if \code{format} is
 \item{preview}{\code{logical}. If \code{preview} is \code{TRUE}, the returned
 image is plotted. Defaults to \code{FALSE}.}
 
+\item{x}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
+from using \code{\link[=get_phylopic]{get_phylopic()}}.}
+
 \item{...}{Ignored}
 }
 \value{
