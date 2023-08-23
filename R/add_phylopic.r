@@ -15,10 +15,10 @@
 #'   default, the height will be as tall as will fit within the plot area.
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
-#' @param color \code{character}. Color to plot the silhouette outline in. If
+#' @param color \code{character}. Color of silhouette outline. If
 #'   "original" is specified, the original color of the silhouette outline will
 #'   be used (usually the same as "transparent").
-#' @param fill \code{character}. Color to plot the silhouette body in. If
+#' @param fill \code{character}. Color of silhouette. If
 #'   "original" is specified, the original color of the silhouette will be used
 #'   (usually the same as "black").
 #' @param horizontal \code{logical}. Should the silhouette be flipped
