@@ -5,6 +5,7 @@
 * added browse_phylopic function (#60)
 * added preview argument to get_phylopic (#59)
 * switched to {maps} package in base R advanced vignette
+* added img argument to get_uuid and get_attribution
 * added plot and print methods for silhouette objects (#73)
 
 # rphylopic 1.1.1
