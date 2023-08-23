@@ -25,6 +25,8 @@
 #'   clockwise. The default is no rotation.
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
+#' @param verbose \code{logical}. Should the attribution information for the
+#'   used silhouettes be printed to the console (see [get_attribution()])?
 #' @details One (and only one) of `img`, `name`, or `uuid` must be specified.
 #'   Use parameters `x`, `y`, and `ysize` to place the silhouette at a specified
 #'   position on the plot. The aspect ratio of the silhouette will always be
@@ -72,7 +74,7 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
                          x, y, ysize = Inf,
                          alpha = 1, color = "black",
                          horizontal = FALSE, vertical = FALSE, angle = 0,
-                         remove_background = TRUE) {
+                         remove_background = TRUE, verbose = FALSE) {
   if (all(sapply(list(img, name, uuid), is.null))) {
     stop("One of `img`, `name`, or `uuid` is required.")
   }
@@ -97,7 +99,7 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
   args <- list(geom = GeomPhylopic, x = x, y = y, size = ysize,
                alpha = alpha, color = color,
                horizontal = horizontal, vertical = vertical, angle = angle,
-               remove_background = remove_background)
+               remove_background = remove_background, verbose = verbose)
   # Only include the one silhouette argument
   if (!is.null(img)) {
     if (is.list(img)) {

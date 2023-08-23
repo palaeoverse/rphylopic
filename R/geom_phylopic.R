@@ -38,7 +38,7 @@
 #' - vertical
 #' - angle
 #'
-#' Learn more about setting these aesthetics in [add_phylopic()].
+#'   Learn more about setting these aesthetics in [add_phylopic()].
 #'
 #' @param show.legend logical. Should this layer be included in the legends?
 #'   `FALSE`, the default, never includes, `NA` includes if any aesthetics are
@@ -46,6 +46,8 @@
 #'   to finely select the aesthetics to display.
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
+#' @param verbose \code{logical}. Should the attribution information for the
+#'   used silhouettes be printed to the console (see [get_attribution()])?
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_point
 #' @importFrom ggplot2 layer
@@ -64,9 +66,13 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
                           na.rm = FALSE,
                           show.legend = FALSE,
                           inherit.aes = TRUE,
-                          remove_background = TRUE) {
+                          remove_background = TRUE,
+                          verbose = FALSE) {
   if (!is.logical(remove_background)) {
     stop("`remove_background` should be a logical value.")
+  }
+  if (!is.logical(verbose)) {
+    stop("`verbose` should be a logical value.")
   }
   layer(
     data = data,
@@ -79,6 +85,7 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
     params = list(
       na.rm = na.rm,
       remove_background = remove_background,
+      verbose = verbose,
       ...
     )
   )
@@ -94,7 +101,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   default_aes = aes(size = 1.5, alpha = 1, color = "black",
                     horizontal = FALSE, vertical = FALSE, angle = 0),
   draw_panel = function(self, data, panel_params, coord, na.rm = FALSE,
-                        remove_background = TRUE) {
+                        remove_background = TRUE, verbose = FALSE) {
     # Clean and transform data
     data <- remove_missing(data, na.rm = na.rm, c("img", "name", "uuid"))
     data <- coord$transform(data, panel_params)
@@ -113,20 +120,25 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
 
     # Check supplied data types and retrieve silhouettes if need be
     if (cols["name"]) {
+      if (!verbose) {
+        warning(paste("You've used the `name` aesthetic/argument. You may want",
+                      "to use `verbose = TRUE` to get attribution information",
+                      "for the silhouettes."), call. = FALSE)
+      }
       if (!is.character(data$name)) {
         stop("The `name` aesthetic should be of class character.")
       }
       # Get PhyloPic for each unique name
       name_unique <- unique(data$name)
       imgs <- sapply(name_unique, function(name) {
-        url <- tryCatch(get_uuid(name = name, url = TRUE),
+        uuid <- tryCatch(get_uuid(name = name),
                         error = function(cond) NA)
-        if (is.na(url)) {
+        if (is.na(uuid)) {
           warning(paste0("`name` ", '"', name, '"',
-                         " returned no PhyloPic results."))
+                         " returned no PhyloPic results."), call. = FALSE)
           return(NULL)
         }
-        get_svg(url)
+        get_phylopic(uuid)
       })
       imgs <- imgs[data$name]
     } else if (cols["uuid"]) {
@@ -139,7 +151,8 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
         img <- tryCatch(get_phylopic(uuid),
                         error = function(cond) NULL)
         if (is.null(img)) {
-          warning(paste0('"', uuid, '"', " is not a valid PhyloPic `uuid`."))
+          warning(paste0('"', uuid, '"', " is not a valid PhyloPic `uuid`."),
+                  call. = FALSE)
         }
         img
       })
@@ -152,6 +165,9 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
                    "vector image) or class array (for a raster image)."))
       }
       imgs <- data$img
+    }
+    if (verbose) {
+      get_attribution(img = imgs, text = TRUE)
     }
 
     # Calculate height as percentage of y limits

@@ -13,7 +13,8 @@ geom_phylopic(
   na.rm = FALSE,
   show.legend = FALSE,
   inherit.aes = TRUE,
-  remove_background = TRUE
+  remove_background = TRUE,
+  verbose = FALSE
 )
 }
 \arguments{
@@ -67,6 +68,9 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{remove_background}{\code{logical}. Should any white background be
 removed from the silhouette(s)? See \code{\link[=recolor_phylopic]{recolor_phylopic()}} for details.}
+
+\item{verbose}{\code{logical}. Should the attribution information for the
+used silhouettes be printed to the console (see \code{\link[=get_attribution]{get_attribution()}})?}
 }
 \description{
 This geom acts like \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}, except that the specified
@@ -108,9 +112,9 @@ Note that png array objects can only be rotated by multiples of 90 degrees.
 \item horizontal
 \item vertical
 \item angle
-}
 
 Learn more about setting these aesthetics in \code{\link[=add_phylopic]{add_phylopic()}}.
+}
 }
 
 \examples{
