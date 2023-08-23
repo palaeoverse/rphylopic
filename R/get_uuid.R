@@ -14,10 +14,10 @@
 #'   the requested `name`, multiple silhouettes might exist. If `n` exceeds
 #'   the number of available images, all available uuids will be returned.
 #'   This argument defaults to 1.
-#' @param filter \code{character}. Filter uuid(s) by usage license. Use "by"
-#'   to limit results to image uuids which do not require attribution, "nc" 
-#'   for image uuids which allow commercial usage, and "sa" for image uuids 
-#'   without a StandAlone clause. The user can also combine these filters.
+#' @param filter \code{character}. Filter uuid(s) by usage license. Use "by" to
+#'   limit results to image uuids which do not require attribution, "nc" for
+#'   image uuids which allow commercial usage, and "sa" for image uuids without
+#'   a StandAlone clause. The user can also combine these filters as a vector.
 #' @param url \code{logical}. If \code{FALSE} (default), only the uuid is
 #'   returned. If \code{TRUE}, a valid PhyloPic image url of the uuid is
 #'   returned.
@@ -61,7 +61,7 @@ get_uuid <- function(name = NULL, img = NULL, n = 1, filter = NULL,
   if (!is.numeric(n)) {
     stop("`n` should be of class numeric.")
   }
-  if (!is.null(filter) && !filter %in% c("by", "nc", "sa")) {
+  if (!is.null(filter) && !all(filter %in% c("by", "nc", "sa"))) {
     stop("`filter` should be NULL or either: 'by', 'nc', or 'sa'.")
   }
   if (!is.logical(url)) {

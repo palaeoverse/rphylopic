@@ -50,7 +50,7 @@
 #'   aesthetic. Use "by" to limit results to images which do not require
 #'   attribution, "nc" for images which allows commercial usage, and "sa" for
 #'   images without a StandAlone clause. The user can also combine these
-#'   filters.
+#'   filters as a vector.
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_point
 #' @inheritParams pick_phylopic
@@ -103,7 +103,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
                     horizontal = FALSE, vertical = FALSE, angle = 0),
   draw_panel = function(self, data, panel_params, coord, na.rm = FALSE,
                         remove_background = TRUE, filter = NULL) {
-    if (!is.null(filter) && is.na(filter)) filter <- NULL
+    if (is.list(filter)) filter <- filter[[1]]
     # Clean and transform data
     data <- remove_missing(data, na.rm = na.rm, c("img", "name", "uuid"))
     data <- coord$transform(data, panel_params)
@@ -131,8 +131,12 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
         url <- tryCatch(get_uuid(name = name, url = TRUE, filter = filter),
                         error = function(cond) NA)
         if (is.na(url)) {
-          warning(paste0("`name` ", '"', name, '"',
-                         " returned no PhyloPic results."))
+          text <- paste0("`name` ", '"', name, '"')
+          if (!is.null(filter)) {
+            text <- paste0(text, " with `filter` ", '"',
+                           paste0(filter, collapse = "/"), '"')
+          }
+          warning(paste0(text, " returned no PhyloPic results."))
           return(NULL)
         }
         get_svg(url)

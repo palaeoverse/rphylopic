@@ -11,7 +11,7 @@
 #' @param filter \code{character}. Filter by usage license if `name` is defined.
 #'   Use "by" to limit results to images which do not require attribution, "nc" 
 #'   for images which allows commercial usage, and "sa" for images without a 
-#'   StandAlone clause. The user can also combine these filters.
+#'   StandAlone clause. The user can also combine these filters as a vector.
 #' @param x \code{numeric}. x value of the silhouette center. Ignored if `y` and
 #'   `ysize` are not specified.
 #' @param y \code{numeric}. y value of the silhouette center. Ignored if `x` and
@@ -112,8 +112,12 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
       url <- tryCatch(get_uuid(name = x, filter = filter, url = TRUE),
                       error = function(cond) NA)
       if (is.na(url)) {
-        warning(paste0("`name` ", '"', x, '"',
-                       " returned no PhyloPic results."))
+        text <- paste0("`name` ", '"', name, '"')
+        if (!is.null(filter)) {
+          text <- paste0(text, " with `filter` ", '"',
+                         paste0(filter, collapse = "/"), '"')
+        }
+        warning(paste0(text, " returned no PhyloPic results."))
         return(NULL)
       }
       get_svg(url)
