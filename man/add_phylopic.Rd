@@ -8,6 +8,7 @@ add_phylopic(
   img = NULL,
   name = NULL,
   uuid = NULL,
+  filter = NULL,
   x,
   y,
   ysize = Inf,
@@ -27,6 +28,11 @@ from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 
 \item{uuid}{\code{character}. A valid uuid for a PhyloPic silhouette (such as
 that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
+
+\item{filter}{\code{character}. Filter by usage license if \code{name} is defined.
+Use "by" to limit results to images which do not require attribution, "nc"
+for images which allows commercial usage, and "sa" for images without a
+StandAlone clause. The user can also combine these filters.}
 
 \item{x}{\code{numeric}. x value of the silhouette center.}
 

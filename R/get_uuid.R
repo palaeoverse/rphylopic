@@ -33,7 +33,8 @@
 #' @examples
 #' uuid <- get_uuid(name = "Acropora cervicornis")
 #' uuid <- get_uuid(name = "Dinosauria", n = 5, url = TRUE)
-get_uuid <- function(name = NULL, img = NULL, n = 1, filter = NULL, url = FALSE) {
+get_uuid <- function(name = NULL, img = NULL, n = 1, filter = NULL,
+                     url = FALSE) {
   # Handle img -----------------------------------------------------------
   if (!is.null(img)) {
     if (is.list(img)) {
