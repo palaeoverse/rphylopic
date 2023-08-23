@@ -5,7 +5,7 @@
 * added browse_phylopic function (#60)
 * added preview argument to get_phylopic (#59)
 * switched to {maps} package in base R advanced vignette
-* added filter (license) argument to get_uuid and pick_phylo (#72)
+* added filter (license) argument to get_uuid, pick_phylo, add_phylopic_base (#72)
 * added img argument to get_uuid and get_attribution
 
 # rphylopic 1.1.1
