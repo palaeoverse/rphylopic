@@ -6,6 +6,7 @@
 * added preview argument to get_phylopic (#59)
 * switched to {maps} package in base R advanced vignette
 * added img argument to get_uuid and get_attribution
+* added verbose argument (calls get_attribution) to geom_phylopic, add_phylopic, and add_phylopic_base (#71)
 
 # rphylopic 1.1.1
 
