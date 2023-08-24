@@ -213,7 +213,7 @@ phylopicGrob <- function(img, x, y, height, color, fill, alpha,
   # recolor if necessary
   color <- if (is.na(color) || color == "original") NULL else color
   if (is.na(fill)) fill <- color
-  fill <- if (fill == "original") NULL else fill
+  fill <- if (!is.null(fill) && fill == "original") NULL else fill
   img <- recolor_phylopic(img, alpha, color, fill, remove_background)
 
   # grobify
