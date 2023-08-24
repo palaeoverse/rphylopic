@@ -8,7 +8,7 @@ test_that("geom_phylopic works", {
                             "c8f71c27-71db-4b34-ac2d-e97fea8762cf",
                             "0a8ab4f9-04c9-4485-b21a-df683d506055"))
   gg <- ggplot(df) +
-    geom_phylopic(aes(x = x, y = y, uuid = uuid), fill = "purple", size = 10,
+    geom_phylopic(aes(x = x, y = y, uuid = uuid), color = "purple", size = 10,
                   horizontal = TRUE, angle = 45) +
     facet_wrap(~uuid) +
     coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +

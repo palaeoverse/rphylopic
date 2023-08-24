@@ -32,7 +32,7 @@ test_that("add_phylopic_base works", {
     plot(posx, posy, type = "n", main = "A cat herd")
     add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
                       x = posx, y = posy, ysize = sizey,
-                      fill = cols, alpha = alpha,
+                      color = cols, alpha = alpha,
                       angle = angle,
                       horizontal = hor, vertical = ver)
   })

@@ -181,8 +181,7 @@ recolor_phylopic <- function(img, alpha = 1, color = NULL, fill = NULL,
 recolor_phylopic.array <- function(img, alpha = 1, color = NULL, fill = NULL,
                                    remove_background = TRUE) {
   if (!is.null(color)) {
-    warning("Outline color does not currently work with png image objects.",
-            call. = FALSE)
+    message("Outline color does not currently work with png image objects.")
   }
   dims <- dim(img)
   if (length(dim(img)) != 3) {

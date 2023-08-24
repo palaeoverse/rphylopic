@@ -94,7 +94,6 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
   ysize <- rep_len(ysize, max_len)
   alpha <- rep_len(alpha, max_len)
   color <- rep_len(color, max_len)
-  if (is.na(fill)) fill <- color
   fill <- rep_len(fill, max_len)
   horizontal <- rep_len(horizontal, max_len)
   vertical <- rep_len(vertical, max_len)
