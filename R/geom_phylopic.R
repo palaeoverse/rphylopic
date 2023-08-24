@@ -38,7 +38,7 @@
 #' - vertical
 #' - angle
 #'
-#' Learn more about setting these aesthetics in [add_phylopic()].
+#'   Learn more about setting these aesthetics in [add_phylopic()].
 #'
 #' @param show.legend logical. Should this layer be included in the legends?
 #'   `FALSE`, the default, never includes, `NA` includes if any aesthetics are
@@ -46,8 +46,14 @@
 #'   to finely select the aesthetics to display.
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
+#' @param filter \code{character}. Filter by usage license if using the `name`
+#'   aesthetic. Use "by" to limit results to images which do not require
+#'   attribution, "nc" for images which allows commercial usage, and "sa" for
+#'   images without a StandAlone clause. The user can also combine these
+#'   filters as a vector.
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_point
+#' @inheritParams pick_phylopic
 #' @importFrom ggplot2 layer
 #' @export
 #' @examples
@@ -64,7 +70,8 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
                           na.rm = FALSE,
                           show.legend = FALSE,
                           inherit.aes = TRUE,
-                          remove_background = TRUE) {
+                          remove_background = TRUE,
+                          filter = NULL) {
   if (!is.logical(remove_background)) {
     stop("`remove_background` should be a logical value.")
   }
@@ -79,6 +86,7 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
     params = list(
       na.rm = na.rm,
       remove_background = remove_background,
+      filter = filter,
       ...
     )
   )
@@ -94,7 +102,8 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   default_aes = aes(size = 1.5, alpha = 1, color = "black",
                     horizontal = FALSE, vertical = FALSE, angle = 0),
   draw_panel = function(self, data, panel_params, coord, na.rm = FALSE,
-                        remove_background = TRUE) {
+                        remove_background = TRUE, filter = NULL) {
+    if (is.list(filter)) filter <- filter[[1]]
     # Clean and transform data
     data <- remove_missing(data, na.rm = na.rm, c("img", "name", "uuid"))
     data <- coord$transform(data, panel_params)
@@ -119,11 +128,15 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       # Get PhyloPic for each unique name
       name_unique <- unique(data$name)
       imgs <- sapply(name_unique, function(name) {
-        url <- tryCatch(get_uuid(name = name, url = TRUE),
+        url <- tryCatch(get_uuid(name = name, url = TRUE, filter = filter),
                         error = function(cond) NA)
         if (is.na(url)) {
-          warning(paste0("`name` ", '"', name, '"',
-                         " returned no PhyloPic results."))
+          text <- paste0("`name` ", '"', name, '"')
+          if (!is.null(filter)) {
+            text <- paste0(text, " with `filter` ", '"',
+                           paste0(filter, collapse = "/"), '"')
+          }
+          warning(paste0(text, " returned no PhyloPic results."))
           return(NULL)
         }
         get_svg(url)
