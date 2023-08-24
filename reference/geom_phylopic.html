@@ -74,7 +74,8 @@ silhouettes are used as points. Silhouettes can be specified by their <code>name
 <span>  na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  show.legend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  inherit.aes <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  remove_background <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  remove_background <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  filter <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -145,6 +146,14 @@ the default plot specification, e.g. <code><a href="https://ggplot2.tidyverse.or
 <dd><p><code>logical</code>. Should any white background be
 removed from the silhouette(s)? See <code><a href="recolor_phylopic.html">recolor_phylopic()</a></code> for details.</p></dd>
 
+
+<dt>filter</dt>
+<dd><p><code>character</code>. Filter by usage license if using the <code>name</code>
+aesthetic. Use "by" to limit results to images which do not require
+attribution, "nc" for images which allows commercial usage, and "sa" for
+images without a StandAlone clause. The user can also combine these
+filters as a vector.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -177,9 +186,9 @@ using <code><a href="flip_phylopic.html">flip_phylopic()</a></code> and <code><a
 <li><p>alpha</p></li>
 <li><p>horizontal</p></li>
 <li><p>vertical</p></li>
-<li><p>angle</p></li>
-</ul><p>Learn more about setting these aesthetics in <code><a href="add_phylopic.html">add_phylopic()</a></code>.</p>
-    </div>
+<li><p>angle</p>
+<p>Learn more about setting these aesthetics in <code><a href="add_phylopic.html">add_phylopic()</a></code>.</p></li>
+</ul></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>

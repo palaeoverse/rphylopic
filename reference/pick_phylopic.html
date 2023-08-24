@@ -68,7 +68,7 @@ image/uuid for the user.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pick_phylopic</span><span class="op">(</span>name <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="fl">5</span>, view <span class="op">=</span> <span class="fl">1</span>, auto <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pick_phylopic</span><span class="op">(</span>name <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="fl">5</span>, view <span class="op">=</span> <span class="fl">1</span>, filter <span class="op">=</span> <span class="cn">NULL</span>, auto <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -87,6 +87,13 @@ of available images, all available uuids will be returned. Defaults to 5.</p></d
 <dt>view</dt>
 <dd><p><code>numeric</code>. Number of silhouettes that should be plotted at
 the same time. Defaults to 1.</p></dd>
+
+
+<dt>filter</dt>
+<dd><p><code>character</code>. Filter uuid(s) by usage license. Use "by"
+to limit results to image uuids which do not require attribution, "nc"
+for image uuids which allow commercial usage, and "sa" for image uuids
+without a StandAlone clause. The user can also combine these filters.</p></dd>
 
 
 <dt>auto</dt>

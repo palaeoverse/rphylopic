@@ -66,6 +66,7 @@ silhouettes as a separate layer to an existing ggplot plot.</p>
 <span>  img <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uuid <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  filter <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">y</span>,</span>
 <span>  ysize <span class="op">=</span> <span class="cn">Inf</span>,</span>
@@ -92,6 +93,13 @@ from using <code><a href="get_phylopic.html">get_phylopic()</a></code>.</p></dd>
 <dt>uuid</dt>
 <dd><p><code>character</code>. A valid uuid for a PhyloPic silhouette (such as
 that returned by <code><a href="get_uuid.html">get_uuid()</a></code> or <code><a href="pick_phylopic.html">pick_phylopic()</a></code>).</p></dd>
+
+
+<dt>filter</dt>
+<dd><p><code>character</code>. Filter by usage license if <code>name</code> is defined.
+Use "by" to limit results to images which do not require attribution, "nc"
+for images which allows commercial usage, and "sa" for images without a
+StandAlone clause. The user can also combine these filters as a vector.</p></dd>
 
 
 <dt>x</dt>

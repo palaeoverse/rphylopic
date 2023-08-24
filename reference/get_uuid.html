@@ -65,7 +65,7 @@ species in PhyloPic, this function extracts the primary image.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_uuid</span><span class="op">(</span>name <span class="op">=</span> <span class="cn">NULL</span>, img <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="fl">1</span>, url <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_uuid</span><span class="op">(</span>name <span class="op">=</span> <span class="cn">NULL</span>, img <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="fl">1</span>, filter <span class="op">=</span> <span class="cn">NULL</span>, url <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -87,6 +87,13 @@ is supplied, <code>name</code> and <code>n</code> are ignored. Defaults to NULL.
 the requested <code>name</code>, multiple silhouettes might exist. If <code>n</code> exceeds
 the number of available images, all available uuids will be returned.
 This argument defaults to 1.</p></dd>
+
+
+<dt>filter</dt>
+<dd><p><code>character</code>. Filter uuid(s) by usage license. Use "by" to
+limit results to image uuids which do not require attribution, "nc" for
+image uuids which allow commercial usage, and "sa" for image uuids without
+a StandAlone clause. The user can also combine these filters as a vector.</p></dd>
 
 
 <dt>url</dt>
