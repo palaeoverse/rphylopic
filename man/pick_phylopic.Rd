@@ -4,7 +4,7 @@
 \alias{pick_phylopic}
 \title{Pick a PhyloPic image from available options}
 \usage{
-pick_phylopic(name = NULL, n = 5, view = 1, auto = NULL)
+pick_phylopic(name = NULL, n = 5, view = 1, filter = NULL, auto = NULL)
 }
 \arguments{
 \item{name}{\code{character}. A taxonomic name. Different taxonomic levels
@@ -16,6 +16,11 @@ of available images, all available uuids will be returned. Defaults to 5.}
 
 \item{view}{\code{numeric}. Number of silhouettes that should be plotted at
 the same time. Defaults to 1.}
+
+\item{filter}{\code{character}. Filter uuid(s) by usage license. Use "by"
+to limit results to image uuids which do not require attribution, "nc"
+for image uuids which allow commercial usage, and "sa" for image uuids
+without a StandAlone clause. The user can also combine these filters.}
 
 \item{auto}{\code{numeric}. This argument allows the user to automate input
 into the menu choice. If the input value is \code{1}, the first returned image

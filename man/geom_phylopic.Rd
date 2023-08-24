@@ -13,7 +13,8 @@ geom_phylopic(
   na.rm = FALSE,
   show.legend = FALSE,
   inherit.aes = TRUE,
-  remove_background = TRUE
+  remove_background = TRUE,
+  filter = NULL
 )
 }
 \arguments{
@@ -67,6 +68,12 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{remove_background}{\code{logical}. Should any white background be
 removed from the silhouette(s)? See \code{\link[=recolor_phylopic]{recolor_phylopic()}} for details.}
+
+\item{filter}{\code{character}. Filter by usage license if using the \code{name}
+aesthetic. Use "by" to limit results to images which do not require
+attribution, "nc" for images which allows commercial usage, and "sa" for
+images without a StandAlone clause. The user can also combine these
+filters as a vector.}
 }
 \description{
 This geom acts like \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}, except that the specified
@@ -117,9 +124,9 @@ Also, outline colors do not currently work for png array objects.
 \item horizontal
 \item vertical
 \item angle
-}
 
 Learn more about setting these aesthetics in \code{\link[=add_phylopic]{add_phylopic()}}.
+}
 }
 
 \examples{

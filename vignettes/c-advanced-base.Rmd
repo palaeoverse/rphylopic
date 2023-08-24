@@ -153,8 +153,7 @@ First, let's load our libraries and the tetrapod data:
 ```{r message = FALSE}
 # Load libraries
 library(rphylopic)
-library(raster)
-library(geodata)
+library(maps)
 library(palaeoverse)
 # Get occurrence data
 data(tetrapods)
@@ -170,10 +169,9 @@ tetrapods <- subset(tetrapods, genus == "Mesosaurus")
 Now, let's plot those occurrences on a world map. Here we use the `{geodata}` and `{raster}` packages to generate the map. Then we add colored points on top of this. Note that we use `alpha = 0.75` in case there are multiple occurrences in the same place. That way, the darker the color, the more occurrences in that geographic location.
 
 ```{r fig.height = 5, message = FALSE}
-# Get map data from geodata
-world <- world(path = tempdir())
-# Make map
-plot(world, col = "lightgrey", border = "darkgrey", lwd = 0.25, axes = FALSE)
+# Plot map
+map("world", col = "lightgrey", fill = TRUE)
+# Plot points
 points(x = tetrapods$lng, y = tetrapods$lat, cex = 2, pch = 16,
        col = rgb(red = 0, green = 0, blue = 1, alpha = 0.75))
 ```
@@ -181,7 +179,7 @@ points(x = tetrapods$lng, y = tetrapods$lat, cex = 2, pch = 16,
 Now, as with the penguin figure above, we can easily replace those points with silhouettes.
 
 ```{r fig.height = 5}
-plot(world, col = "lightgrey", border = "darkgrey", lwd = 0.25, axes = FALSE)
+map("world", col = "lightgrey", fill = TRUE)
 add_phylopic_base(name = "Mesosaurus", x = tetrapods$lng, y = tetrapods$lat,
                   ysize = 8, color = "blue", alpha = 0.75)
 ```
