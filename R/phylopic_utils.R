@@ -180,6 +180,10 @@ recolor_phylopic <- function(img, alpha = 1, color = NULL, fill = NULL,
 #' @export
 recolor_phylopic.array <- function(img, alpha = 1, color = NULL, fill = NULL,
                                    remove_background = TRUE) {
+  if (!is.null(color)) {
+    warning("Outline color does not currently work with png image objects.",
+            call. = FALSE)
+  }
   dims <- dim(img)
   if (length(dim(img)) != 3) {
     stop("`img` must be an array with three dimensions.")
@@ -208,7 +212,6 @@ recolor_phylopic.array <- function(img, alpha = 1, color = NULL, fill = NULL,
                        img[, , 4] * alpha), dim = dims)
   }
   return(new_img)
-  # TODO: outline color?
 }
 
 ga_to_rgba <- function(img) {

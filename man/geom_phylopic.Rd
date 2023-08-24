@@ -82,15 +82,17 @@ silhouettes at specified positions on the plot. The \code{size} aesthetic
 specifies the height of the silhouettes in the units of the y axis. The
 aspect ratio of the silhouettes will always be maintained.
 
-The \code{color} (default: "transparent"), \code{fill} (default: "black"), and
-\code{alpha} (default: 1) aesthetics can be used to change the outline color,
-fill color, and transparency (outline and fill) of the silhouettes,
-respectively. If only \code{color} is specified, the outline and fill color will
-be the same. If "original" is specified for the \code{color} aesthetic, the
+The \code{color} (default: "black"), \code{fill} (default: NA), and \code{alpha} (default:
+\enumerate{
+\item aesthetics can be used to change the outline color, fill color, and
+transparency (outline and fill) of the silhouettes, respectively. If
+\code{color} is specified and \code{fill} is NA the outline and fill color will be
+the same. If "original" is specified for the \code{color} aesthetic, the
 original color of the silhouette outline will be used (usually the same as
 "transparent"). If "original" is specified for the \code{fill} aesthetic, the
 original color of the silhouette body will be used (usually the same as
 "black").
+}
 
 The \code{horizontal} and \code{vertical} aesthetics can be used to flip the
 silhouettes. The \code{angle} aesthetic can be used to rotate the silhouettes.

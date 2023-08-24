@@ -12,8 +12,8 @@ add_phylopic(
   y,
   ysize = Inf,
   alpha = 1,
-  color = "transparent",
-  fill = "black",
+  color = "black",
+  fill = NA,
   horizontal = FALSE,
   vertical = FALSE,
   angle = 0,
@@ -40,13 +40,14 @@ default, the height will be as tall as will fit within the plot area.}
 \item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
 of the silhouette (0 is fully transparent, 1 is fully opaque).}
 
-\item{color}{\code{character}. Color to plot the silhouette outline in. If
-"original" is specified, the original color of the silhouette outline will
-be used (usually the same as "transparent").}
+\item{color}{\code{character}. Color of silhouette outline. If "original" or
+NA is specified, the original color of the silhouette outline will be used
+(usually the same as "transparent").}
 
-\item{fill}{\code{character}. Color to plot the silhouette body in. If
-"original" is specified, the original color of the silhouette will be used
-(usually the same as "black").}
+\item{fill}{\code{character}. Color of silhouette. If "original" is
+specified, the original color of the silhouette will be used (usually the
+same as "black"). If \code{color} is specified and \code{fill} is NA the outline and
+fill color will be the same.}
 
 \item{horizontal}{\code{logical}. Should the silhouette be flipped
 horizontally?}
@@ -73,9 +74,6 @@ maintained.
 should be plotted at once. In this case, any other arguments (except for
 \code{remove_background}) may also be vectors of values, which will be recycled
 as necessary.
-
-If only \code{color} is specified (and \code{fill} is NA), the outline and fill color
-will be the same.
 
 When specifying a horizontal and/or vertical flip \strong{and} a rotation, the
 flip(s) will always occur first. If you would like to customize this

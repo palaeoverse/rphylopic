@@ -12,11 +12,11 @@
 #'   specifies the height of the silhouettes in the units of the y axis. The
 #'   aspect ratio of the silhouettes will always be maintained.
 #'
-#'   The `color` (default: "transparent"), `fill` (default: "black"), and
-#'   `alpha` (default: 1) aesthetics can be used to change the outline color,
-#'   fill color, and transparency (outline and fill) of the silhouettes,
-#'   respectively. If only `color` is specified, the outline and fill color will
-#'   be the same. If "original" is specified for the `color` aesthetic, the
+#'   The `color` (default: "black"), `fill` (default: NA), and `alpha` (default:
+#'   1) aesthetics can be used to change the outline color, fill color, and
+#'   transparency (outline and fill) of the silhouettes, respectively. If
+#'   `color` is specified and `fill` is NA the outline and fill color will be
+#'   the same. If "original" is specified for the `color` aesthetic, the
 #'   original color of the silhouette outline will be used (usually the same as
 #'   "transparent"). If "original" is specified for the `fill` aesthetic, the
 #'   original color of the silhouette body will be used (usually the same as
@@ -99,9 +99,10 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
                       "horizontal", "vertical", "angle"),
   optional_aes = c("img", "name", "uuid"), # one and only one of these
   default_aes = aes(size = 1.5, alpha = 1,
-                    color = "transparent", fill = "black",
+                    color = "black", fill = NA,
                     horizontal = FALSE, vertical = FALSE, angle = 0),
   use_defaults = function(self, data, params = list(), modifiers = aes()) {
+    # if fill isn't specified in the original data, copy over the colour column
     col_fill <- c("colour", "fill") %in% colnames(data) |
       c("colour", "fill") %in% names(params)
     data <- ggproto_parent(Geom, self)$use_defaults(data, params, modifiers)
@@ -211,7 +212,8 @@ phylopicGrob <- function(img, x, y, height, color, fill, alpha,
 
   # recolor if necessary
   color <- if (is.na(color) || color == "original") NULL else color
-  fill <- if (is.na(fill) || fill == "original") NULL else fill
+  if (is.na(fill)) fill <- color
+  fill <- if (fill == "original") NULL else fill
   img <- recolor_phylopic(img, alpha, color, fill, remove_background)
 
   # grobify

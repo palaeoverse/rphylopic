@@ -15,12 +15,13 @@
 #'   default, the height will be as tall as will fit within the plot area.
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
-#' @param color \code{character}. Color of silhouette outline. If
-#'   "original" is specified, the original color of the silhouette outline will
-#'   be used (usually the same as "transparent").
-#' @param fill \code{character}. Color of silhouette. If
-#'   "original" is specified, the original color of the silhouette will be used
-#'   (usually the same as "black").
+#' @param color \code{character}. Color of silhouette outline. If "original" or
+#'   NA is specified, the original color of the silhouette outline will be used
+#'   (usually the same as "transparent").
+#' @param fill \code{character}. Color of silhouette. If "original" is
+#'   specified, the original color of the silhouette will be used (usually the
+#'   same as "black"). If `color` is specified and `fill` is NA the outline and
+#'   fill color will be the same.
 #' @param horizontal \code{logical}. Should the silhouette be flipped
 #'   horizontally?
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
@@ -37,9 +38,6 @@
 #'   should be plotted at once. In this case, any other arguments (except for
 #'   `remove_background`) may also be vectors of values, which will be recycled
 #'   as necessary.
-#'   
-#'   If only `color` is specified (and `fill` is NA), the outline and fill color
-#'   will be the same.
 #'
 #'   When specifying a horizontal and/or vertical flip **and** a rotation, the
 #'   flip(s) will always occur first. If you would like to customize this
@@ -77,7 +75,7 @@
 #' p + ggtitle("R Cat Herd!!")
 add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
                          x, y, ysize = Inf,
-                         alpha = 1, color = "transparent", fill = "black",
+                         alpha = 1, color = "black", fill = NA,
                          horizontal = FALSE, vertical = FALSE, angle = 0,
                          remove_background = TRUE) {
   if (all(sapply(list(img, name, uuid), is.null))) {
@@ -96,6 +94,7 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
   ysize <- rep_len(ysize, max_len)
   alpha <- rep_len(alpha, max_len)
   color <- rep_len(color, max_len)
+  if (is.na(fill)) fill <- color
   fill <- rep_len(fill, max_len)
   horizontal <- rep_len(horizontal, max_len)
   vertical <- rep_len(vertical, max_len)

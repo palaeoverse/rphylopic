@@ -17,12 +17,13 @@
 #'   `y` are not specified.
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
-#' @param color \code{character}. Color of silhouette outline. If
-#'   "original" is specified, the original color of the silhouette outline will
-#'   be used (usually the same as "transparent").
-#' @param fill \code{character}. Color of silhouette. If
-#'   "original" is specified, the original color of the silhouette body will be
-#'   used (usually the same as "black").
+#' @param color \code{character}. Color of silhouette outline. If "original" or
+#'   NA is specified, the original color of the silhouette outline will be used
+#'   (usually the same as "transparent").
+#' @param fill \code{character}. Color of silhouette. If "original" is
+#'   specified, the original color of the silhouette will be used (usually the
+#'   same as "black"). If `color` is specified and `fill` is NA the outline and
+#'   fill color will be the same.
 #' @param horizontal \code{logical}. Should the silhouette be flipped
 #'   horizontally?
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
@@ -88,7 +89,7 @@
 #' add_phylopic_base(img = cat, x = posx, y = posy, ysize = size, alpha = 0.8)
 add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
                               x = NULL, y = NULL, ysize = NULL,
-                              alpha = 1, color = "transparent", fill = "black",
+                              alpha = 1, color = "black", fill = NA,
                               horizontal = FALSE, vertical = FALSE, angle = 0,
                               remove_background = TRUE) {
   if (all(sapply(list(img, name, uuid), is.null))) {
@@ -168,7 +169,8 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
 
     # recolor if necessary
     color <- if (is.na(color) || color == "original") NULL else color
-    fill <- if (is.na(fill) || fill == "original") NULL else fill
+    if (is.na(fill)) fill <- color
+    fill <- if (fill == "original") NULL else fill
     img <- recolor_phylopic(img, alpha, color, fill, remove_background)
 
     # grobify and plot
