@@ -140,7 +140,7 @@ Finally, the `recolor_phylopic()` function can be used to modify the color and/o
 
 ```{r}
 # Change color to blue and transparency to 50%
-img_col <- recolor_phylopic(img = img, alpha = 0.5, color = "blue")
+img_col <- recolor_phylopic(img = img, alpha = 0.5, color = "blue", fill = "blue")
 ```
 
 Let's see what those look like in the same plot:
