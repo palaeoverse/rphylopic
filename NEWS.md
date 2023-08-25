@@ -9,6 +9,7 @@
 * added img argument to get_uuid and get_attribution
 * split out the functionality of the color argument/aesthetic to color (silhouette outline) and fill (silhouette) arguments/aesthetics in add_phylopic, geom_phylopic, and add_phylopic_base (#58)
   * when only the color argument/aesthetic is specified, it is copied to the fill argument/aesthetic (maintaining mostly backwards compatibility with old code)
+* added plot and print methods for silhouette objects (#73)
 
 # rphylopic 1.1.1
 

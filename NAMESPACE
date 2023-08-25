@@ -2,6 +2,10 @@
 
 S3method(flip_phylopic,Picture)
 S3method(flip_phylopic,array)
+S3method(plot,Picture)
+S3method(plot,phylopic)
+S3method(print,Picture)
+S3method(print,phylopic)
 S3method(recolor_phylopic,Picture)
 S3method(recolor_phylopic,array)
 S3method(rotate_phylopic,Picture)
