@@ -26,7 +26,7 @@
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
 #' @param verbose \code{logical}. Should the attribution information for the
-#'   used silhouettes be printed to the console (see [get_attribution()])?
+#'   used silhouette(s) be printed to the console (see [get_attribution()])?
 #' @details One (and only one) of `img`, `name`, or `uuid` must be specified.
 #'   Use parameters `x`, `y`, and `ysize` to place the silhouette at a specified
 #'   position on the plot. The aspect ratio of the silhouette will always be

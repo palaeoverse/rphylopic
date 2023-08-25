@@ -47,7 +47,7 @@
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
 #' @param verbose \code{logical}. Should the attribution information for the
-#'   used silhouettes be printed to the console (see [get_attribution()])?
+#'   used silhouette(s) be printed to the console (see [get_attribution()])?
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_point
 #' @importFrom ggplot2 layer
@@ -123,7 +123,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       if (!verbose) {
         warning(paste("You've used the `name` aesthetic/argument. You may want",
                       "to use `verbose = TRUE` to get attribution information",
-                      "for the silhouettes."), call. = FALSE)
+                      "for the silhouette(s)."), call. = FALSE)
       }
       if (!is.character(data$name)) {
         stop("The `name` aesthetic should be of class character.")
