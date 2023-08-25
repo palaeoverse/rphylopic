@@ -81,7 +81,25 @@ for (i in seq_along(species_split)) {
 }
 ```
 
-That's a nice basic plot! But you know what would make it nicer? If we used little penguins instead of points! To do that, we can use the `add_phylopic_base()` function. In this case, we'll specify `img = penguin_rot` since we want to use the same image for each x-y pair:
+That's a nice basic plot! But you know what would make it nicer? If we added a penguin silhouette to the plot. Sadly, we don't have a different silhouette for each species (although we could make one...), so let's just go with putting a single silhouette in the top panel. To do that, we can use the `add_phylopic_base()` function. Note that the `x` and `y` arguments specify the center of the silhouette, and the `ysize` argument specifies how tall the silhouette is in the units of the y-axis.
+
+```{r}
+# Set up the plot area
+par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
+
+# Loop over the species and create a plot for each one
+for (i in seq_along(species_split)) {
+  species_data <- species_split[[i]]
+  plot(x = species_data$bill_length_mm, y = species_data$flipper_length_mm,
+       xlab = "Bill length (mm)", ylab = "Flipper length (mm)",
+       main = names(species_split)[i],
+       xlim = range(penguins_subset$bill_length_mm, na.rm = TRUE),
+       ylim = range(penguins_subset$flipper_length_mm, na.rm = TRUE))
+  if (i == 1) add_phylopic_base(img = penguin_rot, x = 59, y = 215, ysize = 30)
+}
+```
+
+Isn't that nifty! We can go a step further, though. What if we used little penguins instead of points?! To do that, we can once again use the `add_phylopic_base()` function. In this case, we can again specify `img = penguin_rot` since we want to use the same image for each x-y pair:
 
 ```{r}
 # Set up the plot area
