@@ -34,7 +34,7 @@ test_that("add_phylopic works", {
     geom_blank() +
     add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
                  x = posx, y = posy, ysize = sizey,
-                 color = cols, alpha = alpha,
+                 fill = cols, alpha = alpha,
                  angle = angle, horizontal = hor, vertical = ver)
   p <- p + ggtitle("R Cat Herd!!")
   expect_doppelganger("phylopics on top of plot", p)

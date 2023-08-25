@@ -43,15 +43,17 @@ test_that("rotate_phylopic works", {
 test_that("recolor_phylopic works", {
   skip_if_offline(host = "api.phylopic.org")
   cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
-  cat_recolor <- recolor_phylopic(cat, .5, "red")
+  cat_recolor <- recolor_phylopic(cat, .5, color = "green", fill = "red")
   expect_true(is(cat_recolor, "Picture"))
+  expect_equal(cat_recolor@content[[1]]@content[[1]]@gp$col, "green")
   expect_equal(cat_recolor@content[[1]]@content[[1]]@gp$fill, "red")
   expect_equal(cat_recolor@content[[1]]@content[[1]]@gp$alpha, .5)
 
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
                           format = "raster")
-  cat_recolor <- recolor_phylopic(cat_png, .9, "purple")
-  expect_equal(dim(recolor_phylopic(cat_png[, , 1, drop = FALSE], .5, "red")),
+  cat_recolor <- recolor_phylopic(cat_png, .9, fill = "purple")
+  expect_equal(dim(recolor_phylopic(cat_png[, , 1, drop = FALSE], .5,
+                                    fill = "red")),
                dim(cat_recolor))
   expect_equal(dim(recolor_phylopic(cat_recolor[, , 1:3, drop = FALSE], .2)),
                dim(cat_recolor))

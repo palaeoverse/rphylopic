@@ -8,11 +8,13 @@ add_phylopic_base(
   img = NULL,
   name = NULL,
   uuid = NULL,
+  filter = NULL,
   x = NULL,
   y = NULL,
   ysize = NULL,
   alpha = 1,
   color = "black",
+  fill = NA,
   horizontal = FALSE,
   vertical = FALSE,
   angle = 0,
@@ -29,6 +31,11 @@ from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 \item{uuid}{\code{character}. A valid uuid for a PhyloPic silhouette (such as
 that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
+\item{filter}{\code{character}. Filter by usage license if \code{name} is defined.
+Use "by" to limit results to images which do not require attribution, "nc"
+for images which allows commercial usage, and "sa" for images without a
+StandAlone clause. The user can also combine these filters as a vector.}
+
 \item{x}{\code{numeric}. x value of the silhouette center. Ignored if \code{y} and
 \code{ysize} are not specified.}
 
@@ -42,9 +49,14 @@ determined by the aspect ratio of the original image. Ignored if \code{x} and
 \item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
 of the silhouette (0 is fully transparent, 1 is fully opaque).}
 
-\item{color}{\code{character}. Color to plot the silhouette in. If "original"
-is specified, the original color of the silhouette will be used (usually
-the same as "black").}
+\item{color}{\code{character}. Color of silhouette outline. If "original" or
+NA is specified, the original color of the silhouette outline will be used
+(usually the same as "transparent").}
+
+\item{fill}{\code{character}. Color of silhouette. If "original" is
+specified, the original color of the silhouette will be used (usually the
+same as "black"). If \code{color} is specified and \code{fill} is NA the outline and
+fill color will be the same.}
 
 \item{horizontal}{\code{logical}. Should the silhouette be flipped
 horizontally?}
@@ -84,6 +96,7 @@ behavior, you can flip and/or rotate the image within your own workflow
 using \code{\link[=flip_phylopic]{flip_phylopic()}} and \code{\link[=rotate_phylopic]{rotate_phylopic()}}.
 
 Note that png array objects can only be rotated by multiples of 90 degrees.
+Also, outline colors do not currently work for png array objects.
 }
 \examples{
 # single image

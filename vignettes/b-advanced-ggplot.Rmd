@@ -67,7 +67,20 @@ ggplot(penguins_subset) +
   theme_bw(base_size = 15)
 ```
 
-That's a nice basic plot! But you know what would make it nicer? If we used little penguins instead of points! To do that, we can use the `geom_phylopic()` function instead of the `geom_point()` function. Note that we need to wrap the penguin image in a `list()` call to make it a repeatable object (in this case, we want to use the same image for each x-y pair):
+That's a nice basic plot! But you know what would make it nicer? If we added a penguin silhouette to the plot. Sadly, we don't have a different silhouette for each species (although we could make one...), so let's just go with putting a single silhouette in the top panel. We'll use the `geom_phylopic()` function, which will require us to make a `data.frame`. Note that the `x` and `y` aesthetics specify the center of the silhouette, and the `size` argument specifies how tall the silhouette is in the units of the y-axis. Also note that we need to wrap the penguin image in a `list()` call to make it a repeatable object
+
+```{r}
+silhouette_df <- data.frame(x = 59, y = 215, species = "Adelie")
+ggplot(penguins_subset) +
+  geom_point(aes(x = bill_length_mm, y = flipper_length_mm)) +
+  geom_phylopic(data = silhouette_df, aes(x = x, y = y), size = 30,
+                img = list(penguin_rot)) +
+  labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
+  facet_wrap(~species, ncol = 1) +
+  theme_bw(base_size = 15)
+```
+
+Isn't that nifty! We can go a step further, though. What if we used little penguins instead of points?! To do that, we can use the `geom_phylopic()` function instead of the `geom_point()` function (in this case, we want to use the same image for each x-y pair):
 
 ```{r}
 ggplot(penguins_subset) +
@@ -96,11 +109,11 @@ Finally, let's color the female and male penguins with different colors. Note th
 ggplot(penguins_subset) +
   geom_phylopic(img = list(penguin_rot),
                 aes(x = bill_length_mm, y = flipper_length_mm,
-                    size = body_mass_g, colour = sex),
+                    size = body_mass_g, color = sex),
                 show.legend = TRUE) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
   scale_size_continuous(guide = "none") +
-  scale_colour_manual("Sex", values = c("orange", "blue"),
+  scale_color_manual("Sex", values = c("orange", "blue"),
                       labels = c("Female", "Male")) +
   facet_wrap(~species, ncol = 1) +
   theme_bw(base_size = 15) +
@@ -138,9 +151,9 @@ world <- map_data(map = "world")
 # Make map
 ggplot() +
   geom_polygon(data = world, aes(x = long, y = lat, group = group),
-               fill = "lightgray", colour = "darkgrey", linewidth = 0.1) +
+               fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
   geom_point(data = tetrapods, aes(x = lng, y = lat),
-             size = 4, alpha = 0.75, colour = "blue") +
+             size = 4, alpha = 0.75, color = "blue") +
   theme_void() +
   coord_quickmap()
 ```
@@ -150,9 +163,9 @@ Now, as with the penguin figure above, we can easily replace those points with s
 ```{r fig.height = 3.5}
 ggplot() +
   geom_polygon(data = world, aes(x = long, y = lat, group = group),
-               fill = "lightgray", colour = "darkgrey", linewidth = 0.1) +
+               fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
   geom_phylopic(data = tetrapods, aes(x = lng, y = lat, name = genus),
-                size = 4, alpha = 0.75, colour = "blue") +
+                size = 4, alpha = 0.75, color = "blue") +
   theme_void() +
   coord_quickmap()
 ```

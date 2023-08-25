@@ -21,7 +21,7 @@ test_that("geom_phylopic works", {
                           format = "raster")
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y), img = list(cat_png),
-                  color = "purple", size = 10) +
+                  fill = "purple", size = 10) +
     coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
     theme_classic(base_size = 16)
   expect_doppelganger("geom_phylopic with png", gg)

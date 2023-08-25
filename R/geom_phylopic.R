@@ -12,10 +12,15 @@
 #'   specifies the height of the silhouettes in the units of the y axis. The
 #'   aspect ratio of the silhouettes will always be maintained.
 #'
-#'   The `alpha` and `color` aesthetics can be used to change the transparency
-#'   and color of the silhouettes, respectively. If "original" is specified for
-#'   the `color` aesthetic, the original color of the silhouette will be used
-#'   (usually the same as "black").
+#'   The `color` (default: "black"), `fill` (default: NA), and `alpha` (default:
+#'   1) aesthetics can be used to change the outline color, fill color, and
+#'   transparency (outline and fill) of the silhouettes, respectively. If
+#'   `color` is specified and `fill` is NA the outline and fill color will be
+#'   the same. If "original" is specified for the `color` aesthetic, the
+#'   original color of the silhouette outline will be used (usually the same as
+#'   "transparent"). If "original" is specified for the `fill` aesthetic, the
+#'   original color of the silhouette body will be used (usually the same as
+#'   "black").
 #'
 #'   The `horizontal` and `vertical` aesthetics can be used to flip the
 #'   silhouettes. The `angle` aesthetic can be used to rotate the silhouettes.
@@ -25,6 +30,7 @@
 #'   using [flip_phylopic()] and [rotate_phylopic()].
 #'
 #'   Note that png array objects can only be rotated by multiples of 90 degrees.
+#'   Also, outline colors do not currently work for png array objects.
 #'
 #' @section Aesthetics: geom_phylopic understands the following aesthetics:
 #'
@@ -32,7 +38,8 @@
 #' - **y** (required)
 #' - **img/uuid/name** (one, and only one, required)
 #' - size
-#' - color
+#' - color/colour
+#' - fill
 #' - alpha
 #' - horizontal
 #' - vertical
@@ -48,8 +55,14 @@
 #'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
 #' @param verbose \code{logical}. Should the attribution information for the
 #'   used silhouette(s) be printed to the console (see [get_attribution()])?
+#' @param filter \code{character}. Filter by usage license if using the `name`
+#'   aesthetic. Use "by" to limit results to images which do not require
+#'   attribution, "nc" for images which allows commercial usage, and "sa" for
+#'   images without a StandAlone clause. The user can also combine these
+#'   filters as a vector.
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_point
+#' @inheritParams pick_phylopic
 #' @importFrom ggplot2 layer
 #' @export
 #' @examples
@@ -67,7 +80,8 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
                           show.legend = FALSE,
                           inherit.aes = TRUE,
                           remove_background = TRUE,
-                          verbose = FALSE) {
+                          verbose = FALSE,
+                          filter = NULL) {
   if (!is.logical(remove_background)) {
     stop("`remove_background` should be a logical value.")
   }
@@ -86,26 +100,25 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
       na.rm = na.rm,
       remove_background = remove_background,
       verbose = verbose,
+      filter = filter,
       ...
     )
   )
 }
 
-#' @importFrom ggplot2 ggproto Geom aes remove_missing
+#' @importFrom ggplot2 ggproto ggproto_parent Geom aes remove_missing
 #' @importFrom grid gTree gList nullGrob
 GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   required_aes = c("x", "y"),
   non_missing_aes = c("size", "alpha", "color",
                       "horizontal", "vertical", "angle"),
   optional_aes = c("img", "name", "uuid"), # one and only one of these
-  default_aes = aes(size = 1.5, alpha = 1, color = "black",
+  default_aes = aes(size = 1.5, alpha = 1,
+                    color = "black", fill = NA,
                     horizontal = FALSE, vertical = FALSE, angle = 0),
   extra_params = c("na.rm", "remove_background", "verbose", "filter"),
   setup_data = function(data, params) {
-    # Check that aesthetics are valid
-    if (any(data$alpha > 1 | data$alpha < 0)) {
-      stop("`alpha` must be between 0 and 1.")
-    }
+    if (is.list(params$filter)) params$filter <- params$filter[[1]]
     # Check that only one silhouette aesthetic exists
     data_cols <- sapply(c("img", "name", "uuid"),
                         function(col) col %in% colnames(data))
@@ -131,11 +144,15 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       # Get PhyloPic for each unique name
       name_unique <- unique(names)
       imgs <- sapply(name_unique, function(name) {
-        uuid <- tryCatch(get_uuid(name = name),
-                         error = function(cond) NA)
+        uuid <- tryCatch(get_uuid(name = name, filter = params$filter),
+                        error = function(cond) NA)
         if (is.na(uuid)) {
-          warning(paste0("`name` ", '"', name, '"',
-                         " returned no PhyloPic results."), call. = FALSE)
+          text <- paste0("`name` ", '"', name, '"')
+          if (!is.null(params$filter)) {
+            text <- paste0(text, " with `filter` ", '"',
+                           paste0(filter, collapse = "/"), '"')
+          }
+          warning(paste0(text, " returned no PhyloPic results."))
           return(NULL)
         }
         get_phylopic(uuid)
@@ -175,8 +192,22 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     data$img <- imgs
     data
   },
+  use_defaults = function(self, data, params = list(), modifiers = aes()) {
+    # if fill isn't specified in the original data, copy over the colour column
+    col_fill <- c("colour", "fill") %in% colnames(data) |
+      c("colour", "fill") %in% names(params)
+    data <- ggproto_parent(Geom, self)$use_defaults(data, params, modifiers)
+    if (col_fill[1] && !col_fill[2]) {
+      data$fill <- data$colour
+    }
+    data
+  },
   draw_panel = function(self, data, panel_params, coord, na.rm = FALSE,
-                        remove_background = TRUE, verbose = FALSE) {
+                        remove_background = TRUE, filter = NULL) {
+    # Check that aesthetics are valid
+    if (any(data$alpha > 1 | data$alpha < 0)) {
+      stop("`alpha` must be between 0 and 1.")
+    }
     # Clean and transform data
     data <- remove_missing(data, na.rm = na.rm, c("img", "name", "uuid"))
     data <- coord$transform(data, panel_params)
@@ -199,7 +230,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
         nullGrob()
       } else {
         phylopicGrob(data$img[[i]], data$x[i], data$y[i], heights[i],
-                     data$colour[i], data$alpha[i],
+                     data$colour[i], data$fill[i], data$alpha[i],
                      data$horizontal[i], data$vertical[i], data$angle[i],
                      remove_background)
       }
@@ -212,7 +243,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
 #' @importFrom grImport2 pictureGrob
 #' @importFrom grid rasterGrob gList gTree nullGrob
 #' @importFrom methods slotNames
-phylopicGrob <- function(img, x, y, height, color, alpha,
+phylopicGrob <- function(img, x, y, height, color, fill, alpha,
                          horizontal, vertical, angle,
                          remove_background) {
   # modified from add_phylopic for now
@@ -220,8 +251,10 @@ phylopicGrob <- function(img, x, y, height, color, alpha,
   if (!is.na(angle) && angle != 0) img <- rotate_phylopic(img, angle)
 
   # recolor if necessary
-  color <- if (color == "original") NULL else color
-  img <- recolor_phylopic(img, alpha, color, remove_background)
+  color <- if (is.na(color) || color == "original") NULL else color
+  if (is.na(fill)) fill <- color
+  fill <- if (!is.null(fill) && fill == "original") NULL else fill
+  img <- recolor_phylopic(img, alpha, color, fill, remove_background)
 
   # grobify
   if (is(img, "Picture")) { # svg
