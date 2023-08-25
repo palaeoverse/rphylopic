@@ -72,6 +72,7 @@ silhouettes as a separate layer to an existing ggplot plot.</p>
 <span>  ysize <span class="op">=</span> <span class="cn">Inf</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  color <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>  fill <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  horizontal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  vertical <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  angle <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -122,9 +123,16 @@ of the silhouette (0 is fully transparent, 1 is fully opaque).</p></dd>
 
 
 <dt>color</dt>
-<dd><p><code>character</code>. Color to plot the silhouette in. If "original"
-is specified, the original color of the silhouette will be used (usually
-the same as "black").</p></dd>
+<dd><p><code>character</code>. Color of silhouette outline. If "original" or
+NA is specified, the original color of the silhouette outline will be used
+(usually the same as "transparent").</p></dd>
+
+
+<dt>fill</dt>
+<dd><p><code>character</code>. Color of silhouette. If "original" is
+specified, the original color of the silhouette will be used (usually the
+same as "black"). If <code>color</code> is specified and <code>fill</code> is NA the outline and
+fill color will be the same.</p></dd>
 
 
 <dt>horizontal</dt>
@@ -160,7 +168,8 @@ as necessary.</p>
 flip(s) will always occur first. If you would like to customize this
 behavior, you can flip and/or rotate the image within your own workflow
 using <code><a href="flip_phylopic.html">flip_phylopic()</a></code> and <code><a href="rotate_phylopic.html">rotate_phylopic()</a></code>.</p>
-<p>Note that png array objects can only be rotated by multiples of 90 degrees.</p>
+<p>Note that png array objects can only be rotated by multiples of 90 degrees.
+Also, outline colors do not currently work for png array objects.</p>
     </div>
 
     <div class="section level2">

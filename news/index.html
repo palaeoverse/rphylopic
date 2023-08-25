@@ -61,6 +61,9 @@
 <li>switched to {maps} package in base R advanced vignette</li>
 <li>added filter (license) argument to get_uuid, pick_phylo, add_phylopic_base, add_phylopic, and geom_phylopic (<a href="https://github.com/palaeoverse-community/rphylopic/issues/72" class="external-link">#72</a>)</li>
 <li>added img argument to get_uuid and get_attribution</li>
+<li>split out the functionality of the color argument/aesthetic to color (silhouette outline) and fill (silhouette) arguments/aesthetics in add_phylopic, geom_phylopic, and add_phylopic_base (<a href="https://github.com/palaeoverse-community/rphylopic/issues/58" class="external-link">#58</a>)
+<ul><li>when only the color argument/aesthetic is specified, it is copied to the fill argument/aesthetic (maintaining mostly backwards compatibility with old code)</li>
+</ul></li>
 <li>added plot and print methods for silhouette objects (<a href="https://github.com/palaeoverse-community/rphylopic/issues/73" class="external-link">#73</a>)</li>
 </ul></div>
     <div class="section level2">

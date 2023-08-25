@@ -59,7 +59,13 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">recolor_phylopic</span><span class="op">(</span><span class="va">img</span>, alpha <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="cn">NULL</span>, remove_background <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">recolor_phylopic</span><span class="op">(</span></span>
+<span>  <span class="va">img</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  remove_background <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -75,8 +81,13 @@ of the silhouette.</p></dd>
 
 
 <dt>color</dt>
-<dd><p><code>character</code>. Color to plot the silhouette in. If NULL, the
-color is not changed.</p></dd>
+<dd><p><code>character</code>. Color to make the outline of the silhouette.
+If NULL, the outline color is not changed.</p></dd>
+
+
+<dt>fill</dt>
+<dd><p><code>character</code>. Color to make the body of the silhouette. If
+NULL, the body color is not changed.</p></dd>
 
 
 <dt>remove_background</dt>

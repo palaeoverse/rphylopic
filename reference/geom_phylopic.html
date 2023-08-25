@@ -164,17 +164,22 @@ from using <code><a href="get_phylopic.html">get_phylopic()</a></code>. Use the 
 silhouettes at specified positions on the plot. The <code>size</code> aesthetic
 specifies the height of the silhouettes in the units of the y axis. The
 aspect ratio of the silhouettes will always be maintained.</p>
-<p>The <code>alpha</code> and <code>color</code> aesthetics can be used to change the transparency
-and color of the silhouettes, respectively. If "original" is specified for
-the <code>color</code> aesthetic, the original color of the silhouette will be used
-(usually the same as "black").</p>
-<p>The <code>horizontal</code> and <code>vertical</code> aesthetics can be used to flip the
+<p>The <code>color</code> (default: "black"), <code>fill</code> (default: NA), and <code>alpha</code> (default:</p><ol><li><p>aesthetics can be used to change the outline color, fill color, and
+transparency (outline and fill) of the silhouettes, respectively. If
+<code>color</code> is specified and <code>fill</code> is NA the outline and fill color will be
+the same. If "original" is specified for the <code>color</code> aesthetic, the
+original color of the silhouette outline will be used (usually the same as
+"transparent"). If "original" is specified for the <code>fill</code> aesthetic, the
+original color of the silhouette body will be used (usually the same as
+"black").</p></li>
+</ol><p>The <code>horizontal</code> and <code>vertical</code> aesthetics can be used to flip the
 silhouettes. The <code>angle</code> aesthetic can be used to rotate the silhouettes.
 When specifying a horizontal and/or vertical flip <strong>and</strong> a rotation, the
 flip(s) will always occur first. If you would like to customize this
 behavior, you can flip and/or rotate the image within your own workflow
 using <code><a href="flip_phylopic.html">flip_phylopic()</a></code> and <code><a href="rotate_phylopic.html">rotate_phylopic()</a></code>.</p>
-<p>Note that png array objects can only be rotated by multiples of 90 degrees.</p>
+<p>Note that png array objects can only be rotated by multiples of 90 degrees.
+Also, outline colors do not currently work for png array objects.</p>
     </div>
     <div class="section level2">
     <h2 id="aesthetics">Aesthetics<a class="anchor" aria-label="anchor" href="#aesthetics"></a></h2>
@@ -182,7 +187,8 @@ using <code><a href="flip_phylopic.html">flip_phylopic()</a></code> and <code><a
 <li><p><strong>y</strong> (required)</p></li>
 <li><p><strong>img/uuid/name</strong> (one, and only one, required)</p></li>
 <li><p>size</p></li>
-<li><p>color</p></li>
+<li><p>color/colour</p></li>
+<li><p>fill</p></li>
 <li><p>alpha</p></li>
 <li><p>horizontal</p></li>
 <li><p>vertical</p></li>
