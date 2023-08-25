@@ -5,6 +5,9 @@
 #'
 #' @param uuid \code{character}. A vector of valid uuid(s) for PhyloPic 
 #'   silhouette(s) such as that returned by [get_uuid()] or [pick_phylopic()].
+#' @param img A [Picture][grImport2::Picture-class] or png array object from 
+#'   [get_phylopic()]. A list of these objects can also be supplied. If `img`
+#'   is supplied, `uuid` is ignored. Defaults to NULL.
 #' @param text \code{logical}. Should attribution information be returned as 
 #' a text paragraph? Defaults to `FALSE`.
 #'
@@ -27,10 +30,21 @@
 #' uuids <- get_uuid(name = "Scleractinia", n = 5)
 #' # Get attribution data for uuids
 #' get_attribution(uuid = uuids, text = TRUE)
-get_attribution <- function(uuid = NULL, text = FALSE) {
+get_attribution <- function(uuid = NULL, img = NULL, text = FALSE) {
+  # Handle img -----------------------------------------------------------
+  if (!is.null(img)) {
+    if (is.list(img)) {
+      uuid <- sapply(img, function(x) attr(x, "uuid"))
+    } else {
+      uuid <- attr(img, "uuid")
+    }
+    if (any(is.null(uuid))) {
+      stop("uuid not available. Check `img` is from get_phylopic.")
+    }
+  }
   # Error handling -------------------------------------------------------
   if (is.null(uuid)) {
-    stop("A `uuid` is required.")
+    stop("A `uuid` or `img` is required.")
   }
   if (!is.character(uuid)) {
     stop("`uuid` should be of class character.")
@@ -38,7 +52,6 @@ get_attribution <- function(uuid = NULL, text = FALSE) {
   if (!is.logical(text)) {
     stop("`text` should be of class logical.")
   }
-
   # Get licenses ---------------------------------------------------------
   links <- c("https://creativecommons.org/publicdomain/zero/1.0/",
              "https://creativecommons.org/publicdomain/mark/1.0/",

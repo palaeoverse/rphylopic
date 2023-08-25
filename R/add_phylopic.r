@@ -8,6 +8,10 @@
 #' @param name \code{character}. A taxonomic name to be passed to [get_uuid()].
 #' @param uuid \code{character}. A valid uuid for a PhyloPic silhouette (such as
 #'   that returned by [get_uuid()] or [pick_phylopic()]).
+#' @param filter \code{character}. Filter by usage license if `name` is defined.
+#'   Use "by" to limit results to images which do not require attribution, "nc" 
+#'   for images which allows commercial usage, and "sa" for images without a 
+#'   StandAlone clause. The user can also combine these filters as a vector.
 #' @param x \code{numeric}. x value of the silhouette center.
 #' @param y \code{numeric}. y value of the silhouette center.
 #' @param ysize \code{numeric}. Height of the silhouette. The width is
@@ -68,7 +72,7 @@
 #'                color = cols, alpha = alpha, angle = angle,
 #'                horizontal = hor, vertical = ver)
 #' p + ggtitle("R Cat Herd!!")
-add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
+add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
                          x, y, ysize = Inf,
                          alpha = 1, color = "black",
                          horizontal = FALSE, vertical = FALSE, angle = 0,
@@ -94,10 +98,12 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL,
   angle <- rep_len(angle, max_len)
 
   # Put together all of the variables
-  args <- list(geom = GeomPhylopic, x = x, y = y, size = ysize,
+  args <- list(geom = GeomPhylopic,
+               x = x, y = y, size = ysize,
                alpha = alpha, color = color,
                horizontal = horizontal, vertical = vertical, angle = angle,
-               remove_background = remove_background)
+               remove_background = remove_background,
+               filter = list(filter))
   # Only include the one silhouette argument
   if (!is.null(img)) {
     if (is.list(img)) {

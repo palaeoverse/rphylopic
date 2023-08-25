@@ -6,6 +6,8 @@
 * added preview argument to get_phylopic (#59)
 * switched to {maps} package in base R advanced vignette
 * geom_phylopic now properly handles a single unlisted image object passed to the "img" parameter (#75)
+* added filter (license) argument to get_uuid, pick_phylo, add_phylopic_base, add_phylopic, and geom_phylopic (#72)
+* added img argument to get_uuid and get_attribution
 
 # rphylopic 1.1.1
 
