@@ -74,6 +74,7 @@ get_phylopic <- function(uuid = NULL, format = "vector", height = 512,
       # use the svg to make a png with the desired height
       img <- readPNG(rsvg_png(image_info$vectorFile$href, height = height))
     }
+    class(img) <- c("phylopic", class(img))
   } else if (format == "vector") { # get vector
     url <- image_info$vectorFile$href
     img <- get_svg(url)

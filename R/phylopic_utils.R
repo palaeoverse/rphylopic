@@ -259,3 +259,63 @@ recolor_content <- function(x, alpha, color, remove_background) {
   x@content <- Filter(function(element) !is.null(element), tmp)
   return(x)
 }
+
+#' Preview a PhyloPic silhouette
+#'
+#' Preview a raster or vector representation of a PhyloPic silhouette. This will
+#' plot the silhouette on a new page in your default plotting device.
+#' @rdname plot_phylopic
+#' @aliases plot_phylopic
+#' @param x A [Picture][grImport2::Picture-class] or png array object, e.g.,
+#'   from using [get_phylopic()].
+#' @param ... Other arguments passed on to [grImport2::grid.picture()] or
+#'   [grid::grid.raster()].
+#' @importFrom grid grid.newpage
+#' @importFrom grImport2 grid.picture
+#' @export
+plot.Picture <- function(x, ...) {
+  grid.newpage()
+  grid.picture(x, ...)
+}
+
+#' @rdname plot_phylopic
+#' @importFrom grid grid.newpage grid.raster
+#' @export
+plot.phylopic <- function(x, ...) {
+  grid.newpage()
+  grid.raster(x, ...)
+}
+
+#' @rdname get_phylopic
+#' @param x A [Picture][grImport2::Picture-class] or png array object, e.g.,
+#'   from using [get_phylopic()].
+#' @param ... Ignored
+#' @export
+print.Picture <- function(x, ...) {
+  dims <- c(abs(diff(x@summary@xscale)), abs(diff(x@summary@yscale)))
+  cat(paste0("PhyloPic silhouette object (vector format)",
+             "\nDimensions: ", dims[1], " pixels wide and ",
+             dims[2], " pixels tall",
+             "\nuuid: ", attr(x, "uuid"),
+             "\nURL: ", attr(x, "url")))
+  invisible(x)
+}
+
+# runs print() when you just type the object name (S4-specific)
+setMethod(f = "show",
+          signature = "Picture",
+          definition = function(object){
+            print(object)
+          })
+
+#' @rdname get_phylopic
+#' @export
+print.phylopic <- function(x, ...) {
+  dims <- dim(x)
+  cat(paste0("PhyloPic silhouette object (raster format)",
+             "\nDimensions: ", dims[2], " pixels wide and ",
+             dims[1], " pixels tall",
+             "\nuuid: ", attr(x, "uuid"),
+             "\nURL: ", attr(x, "url")))
+  invisible(x)
+}
