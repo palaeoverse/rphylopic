@@ -67,7 +67,7 @@ ggplot(penguins_subset) +
   theme_bw(base_size = 15)
 ```
 
-That's a nice basic plot! But you know what would make it nicer? If we added a penguin silhouette to the plot. Sadly, we don't have a different silhouette for each species (although we could make one...), so let's just go with putting a single silhouette in the top panel. We'll use the `geom_phylopic()` function, which will require us to make a data frame. Note that the `x` and `y` aesthetics specify the center of the silhouette, and the `size` argument specifies how tall the silhouette is in the units of the y-axis. Also note that we need to wrap the penguin image in a `list()` call to make it a repeatable object
+That's a nice basic plot! But you know what would make it nicer? If we added a penguin silhouette to the plot. Sadly, we don't have a different silhouette for each species (although we could make one...), so let's just go with putting a single silhouette in the top panel. We'll use the `geom_phylopic()` function, which will require us to make a `data.frame`. Note that the `x` and `y` aesthetics specify the center of the silhouette, and the `size` argument specifies how tall the silhouette is in the units of the y-axis. Also note that we need to wrap the penguin image in a `list()` call to make it a repeatable object
 
 ```{r}
 silhouette_df <- data.frame(x = 59, y = 215, species = "Adelie")
