@@ -5,7 +5,7 @@ test_that("add_phylopic works", {
 
   # phylopic in background, with name
   p <- ggplot(iris) +
-    add_phylopic(x = 6.1, y = 3.2, name = "Iris", alpha = 0.2) +
+    add_phylopic(x = 6.1, y = 3.2, name = "Iris", alpha = 0.2, verbose = TRUE) +
     geom_point(aes(x = Sepal.Length, y = Sepal.Width))
   expect_doppelganger("phylopic in background", p)
 

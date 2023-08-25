@@ -58,7 +58,7 @@ clockwise. The default is no rotation.}
 removed from the silhouette(s)? See \code{\link[=recolor_phylopic]{recolor_phylopic()}} for details.}
 
 \item{verbose}{\code{logical}. Should the attribution information for the
-used silhouettes be printed to the console (see \code{\link[=get_attribution]{get_attribution()}})?}
+used silhouette(s) be printed to the console (see \code{\link[=get_attribution]{get_attribution()}})?}
 }
 \description{
 Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic

@@ -4,7 +4,7 @@ test_that("add_phylopic_base works", {
   # phylopic in background, with name
   expect_doppelganger("phylopic in background", function() {
     plot(1, 1, type = "n", main = "A cat")
-    add_phylopic_base(name = "Felis silvestris")
+    add_phylopic_base(name = "Felis silvestris", verbose = TRUE)
   })
 
   # png phylopic in background

@@ -70,7 +70,7 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 removed from the silhouette(s)? See \code{\link[=recolor_phylopic]{recolor_phylopic()}} for details.}
 
 \item{verbose}{\code{logical}. Should the attribution information for the
-used silhouettes be printed to the console (see \code{\link[=get_attribution]{get_attribution()}})?}
+used silhouette(s) be printed to the console (see \code{\link[=get_attribution]{get_attribution()}})?}
 }
 \description{
 This geom acts like \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}, except that the specified
