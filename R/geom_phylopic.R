@@ -77,7 +77,7 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
   }
   # We need to do this before passing to the layer
   dots <- list(...)
-  if ("img" %in% names(dots) && (is(dots$img, 'Picture') || is.array(dots$img))) {
+  if ("img" %in% names(dots) && !is.list(dots$img)) {
     dots$img <- list(dots$img)
   }
   layer(
