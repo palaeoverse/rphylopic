@@ -293,9 +293,9 @@ plot.phylopic <- function(x, ...) {
 #' @export
 print.Picture <- function(x, ...) {
   dims <- c(abs(diff(x@summary@xscale)), abs(diff(x@summary@yscale)))
-  cat(paste0("Vector representation of a PhyloPic silhouette.",
+  cat(paste0("PhyloPic silhouette object (vector format)",
              "\nDimensions: ", dims[1], " pixels wide and ",
-             dims[2], " pixels tall.",
+             dims[2], " pixels tall",
              "\nuuid: ", attr(x, "uuid"),
              "\nURL: ", attr(x, "url")))
   invisible(x)
@@ -312,9 +312,9 @@ setMethod(f = "show",
 #' @export
 print.phylopic <- function(x, ...) {
   dims <- dim(x)
-  cat(paste0("Raster representation of a PhyloPic silhouette.",
+  cat(paste0("PhyloPic silhouette object (raster format)",
              "\nDimensions: ", dims[2], " pixels wide and ",
-             dims[1], " pixels tall.",
+             dims[1], " pixels tall",
              "\nuuid: ", attr(x, "uuid"),
              "\nURL: ", attr(x, "url")))
   invisible(x)
