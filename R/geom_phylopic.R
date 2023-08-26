@@ -118,6 +118,9 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
                     horizontal = FALSE, vertical = FALSE, angle = 0),
   extra_params = c("na.rm", "remove_background", "verbose", "filter"),
   setup_data = function(data, params) {
+    # Clean data
+    data <- remove_missing(data, na.rm = params$na.rm, c("img", "name", "uuid"))
+    
     if (is.list(params$filter)) params$filter <- params$filter[[1]]
     # Check that only one silhouette aesthetic exists
     data_cols <- sapply(c("img", "name", "uuid"),
@@ -208,8 +211,8 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     if (any(data$alpha > 1 | data$alpha < 0)) {
       stop("`alpha` must be between 0 and 1.")
     }
-    # Clean and transform data
-    data <- remove_missing(data, na.rm = na.rm, c("img", "name", "uuid"))
+
+    # Transform data
     data <- coord$transform(data, panel_params)
 
     # Calculate height as percentage of y limits
