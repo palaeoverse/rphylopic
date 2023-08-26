@@ -12,10 +12,15 @@
 #'   specifies the height of the silhouettes in the units of the y axis. The
 #'   aspect ratio of the silhouettes will always be maintained.
 #'
-#'   The `alpha` and `color` aesthetics can be used to change the transparency
-#'   and color of the silhouettes, respectively. If "original" is specified for
-#'   the `color` aesthetic, the original color of the silhouette will be used
-#'   (usually the same as "black").
+#'   The `color` (default: "black"), `fill` (default: NA), and `alpha` (default:
+#'   1) aesthetics can be used to change the outline color, fill color, and
+#'   transparency (outline and fill) of the silhouettes, respectively. If
+#'   `color` is specified and `fill` is NA the outline and fill color will be
+#'   the same. If "original" is specified for the `color` aesthetic, the
+#'   original color of the silhouette outline will be used (usually the same as
+#'   "transparent"). If "original" is specified for the `fill` aesthetic, the
+#'   original color of the silhouette body will be used (usually the same as
+#'   "black").
 #'
 #'   The `horizontal` and `vertical` aesthetics can be used to flip the
 #'   silhouettes. The `angle` aesthetic can be used to rotate the silhouettes.
@@ -25,6 +30,7 @@
 #'   using [flip_phylopic()] and [rotate_phylopic()].
 #'
 #'   Note that png array objects can only be rotated by multiples of 90 degrees.
+#'   Also, outline colors do not currently work for png array objects.
 #'
 #' @section Aesthetics: geom_phylopic understands the following aesthetics:
 #'
@@ -32,7 +38,8 @@
 #' - **y** (required)
 #' - **img/uuid/name** (one, and only one, required)
 #' - size
-#' - color
+#' - color/colour
+#' - fill
 #' - alpha
 #' - horizontal
 #' - vertical
@@ -97,15 +104,26 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
   )
 }
 
-#' @importFrom ggplot2 ggproto Geom aes remove_missing
+#' @importFrom ggplot2 ggproto ggproto_parent Geom aes remove_missing
 #' @importFrom grid gTree gList nullGrob
 GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   required_aes = c("x", "y"),
   non_missing_aes = c("size", "alpha", "color",
                       "horizontal", "vertical", "angle"),
   optional_aes = c("img", "name", "uuid"), # one and only one of these
-  default_aes = aes(size = 1.5, alpha = 1, color = "black",
+  default_aes = aes(size = 1.5, alpha = 1,
+                    color = "black", fill = NA,
                     horizontal = FALSE, vertical = FALSE, angle = 0),
+  use_defaults = function(self, data, params = list(), modifiers = aes()) {
+    # if fill isn't specified in the original data, copy over the colour column
+    col_fill <- c("colour", "fill") %in% colnames(data) |
+      c("colour", "fill") %in% names(params)
+    data <- ggproto_parent(Geom, self)$use_defaults(data, params, modifiers)
+    if (col_fill[1] && !col_fill[2]) {
+      data$fill <- data$colour
+    }
+    data
+  },
   draw_panel = function(self, data, panel_params, coord, na.rm = FALSE,
                         remove_background = TRUE, filter = NULL) {
     if (is.list(filter)) filter <- filter[[1]]
@@ -190,7 +208,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
         nullGrob()
       } else {
         phylopicGrob(imgs[[i]], data$x[i], data$y[i], heights[i],
-                     data$colour[i], data$alpha[i],
+                     data$colour[i], data$fill[i], data$alpha[i],
                      data$horizontal[i], data$vertical[i], data$angle[i],
                      remove_background)
       }
@@ -203,7 +221,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
 #' @importFrom grImport2 pictureGrob
 #' @importFrom grid rasterGrob gList gTree nullGrob
 #' @importFrom methods slotNames
-phylopicGrob <- function(img, x, y, height, color, alpha,
+phylopicGrob <- function(img, x, y, height, color, fill, alpha,
                          horizontal, vertical, angle,
                          remove_background) {
   # modified from add_phylopic for now
@@ -211,8 +229,10 @@ phylopicGrob <- function(img, x, y, height, color, alpha,
   if (!is.na(angle) && angle != 0) img <- rotate_phylopic(img, angle)
 
   # recolor if necessary
-  color <- if (color == "original") NULL else color
-  img <- recolor_phylopic(img, alpha, color, remove_background)
+  color <- if (is.na(color) || color == "original") NULL else color
+  if (is.na(fill)) fill <- color
+  fill <- if (!is.null(fill) && fill == "original") NULL else fill
+  img <- recolor_phylopic(img, alpha, color, fill, remove_background)
 
   # grobify
   if (is(img, "Picture")) { # svg

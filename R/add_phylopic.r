@@ -19,9 +19,13 @@
 #'   default, the height will be as tall as will fit within the plot area.
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
-#' @param color \code{character}. Color to plot the silhouette in. If "original"
-#'   is specified, the original color of the silhouette will be used (usually
-#'   the same as "black").
+#' @param color \code{character}. Color of silhouette outline. If "original" or
+#'   NA is specified, the original color of the silhouette outline will be used
+#'   (usually the same as "transparent").
+#' @param fill \code{character}. Color of silhouette. If "original" is
+#'   specified, the original color of the silhouette will be used (usually the
+#'   same as "black"). If `color` is specified and `fill` is NA the outline and
+#'   fill color will be the same.
 #' @param horizontal \code{logical}. Should the silhouette be flipped
 #'   horizontally?
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
@@ -45,6 +49,7 @@
 #'   using [flip_phylopic()] and [rotate_phylopic()].
 #'
 #'   Note that png array objects can only be rotated by multiples of 90 degrees.
+#'   Also, outline colors do not currently work for png array objects.
 #' @importFrom ggplot2 annotate
 #' @export
 #' @examples
@@ -74,7 +79,7 @@
 #' p + ggtitle("R Cat Herd!!")
 add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
                          x, y, ysize = Inf,
-                         alpha = 1, color = "black",
+                         alpha = 1, color = "black", fill = NA,
                          horizontal = FALSE, vertical = FALSE, angle = 0,
                          remove_background = TRUE) {
   if (all(sapply(list(img, name, uuid), is.null))) {
@@ -93,6 +98,7 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
   ysize <- rep_len(ysize, max_len)
   alpha <- rep_len(alpha, max_len)
   color <- rep_len(color, max_len)
+  fill <- rep_len(fill, max_len)
   horizontal <- rep_len(horizontal, max_len)
   vertical <- rep_len(vertical, max_len)
   angle <- rep_len(angle, max_len)
@@ -100,7 +106,7 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
   # Put together all of the variables
   args <- list(geom = GeomPhylopic,
                x = x, y = y, size = ysize,
-               alpha = alpha, color = color,
+               alpha = alpha, color = color, fill = fill,
                horizontal = horizontal, vertical = vertical, angle = angle,
                remove_background = remove_background,
                filter = list(filter))

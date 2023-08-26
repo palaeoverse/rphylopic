@@ -89,10 +89,17 @@ silhouettes at specified positions on the plot. The \code{size} aesthetic
 specifies the height of the silhouettes in the units of the y axis. The
 aspect ratio of the silhouettes will always be maintained.
 
-The \code{alpha} and \code{color} aesthetics can be used to change the transparency
-and color of the silhouettes, respectively. If "original" is specified for
-the \code{color} aesthetic, the original color of the silhouette will be used
-(usually the same as "black").
+The \code{color} (default: "black"), \code{fill} (default: NA), and \code{alpha} (default:
+\enumerate{
+\item aesthetics can be used to change the outline color, fill color, and
+transparency (outline and fill) of the silhouettes, respectively. If
+\code{color} is specified and \code{fill} is NA the outline and fill color will be
+the same. If "original" is specified for the \code{color} aesthetic, the
+original color of the silhouette outline will be used (usually the same as
+"transparent"). If "original" is specified for the \code{fill} aesthetic, the
+original color of the silhouette body will be used (usually the same as
+"black").
+}
 
 The \code{horizontal} and \code{vertical} aesthetics can be used to flip the
 silhouettes. The \code{angle} aesthetic can be used to rotate the silhouettes.
@@ -102,6 +109,7 @@ behavior, you can flip and/or rotate the image within your own workflow
 using \code{\link[=flip_phylopic]{flip_phylopic()}} and \code{\link[=rotate_phylopic]{rotate_phylopic()}}.
 
 Note that png array objects can only be rotated by multiples of 90 degrees.
+Also, outline colors do not currently work for png array objects.
 }
 \section{Aesthetics}{
  geom_phylopic understands the following aesthetics:
@@ -110,7 +118,8 @@ Note that png array objects can only be rotated by multiples of 90 degrees.
 \item \strong{y} (required)
 \item \strong{img/uuid/name} (one, and only one, required)
 \item size
-\item color
+\item color/colour
+\item fill
 \item alpha
 \item horizontal
 \item vertical
