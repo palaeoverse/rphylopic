@@ -108,6 +108,9 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   if (any(alpha > 1 | alpha < 0)) {
     stop("`alpha` must be between 0 and 1.")
   }
+  if (!is.logical(verbose)) {
+    stop("`verbose` should be a logical value.")
+  }
 
   if (!is.null(name)) {
     if (!is.character(name)) {
