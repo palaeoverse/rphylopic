@@ -3,12 +3,12 @@
 #' This function provides a convenient way to obtain attribution data
 #' for PhyloPic images via an image uuid returned by [get_uuid()].
 #'
-#' @param uuid \code{character}. A vector of valid uuid(s) for PhyloPic 
+#' @param uuid \code{character}. A vector of valid uuid(s) for PhyloPic
 #'   silhouette(s) such as that returned by [get_uuid()] or [pick_phylopic()].
-#' @param img A [Picture][grImport2::Picture-class] or png array object from 
+#' @param img A [Picture][grImport2::Picture-class] or png array object from
 #'   [get_phylopic()]. A list of these objects can also be supplied. If `img`
 #'   is supplied, `uuid` is ignored. Defaults to NULL.
-#' @param text \code{logical}. Should attribution information be returned as 
+#' @param text \code{logical}. Should attribution information be returned as
 #' a text paragraph? Defaults to `FALSE`.
 #'
 #' @return A \code{list} of PhyloPic attribution data for an image `uuid` or
@@ -68,7 +68,7 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE) {
             "CC BY-NC-SA 3.0",
             "CC BY-NC 3.0")
   licenses <- data.frame(links, abbr)
-  
+
   # API call -------------------------------------------------------------
   if (length(uuid) > 1) {
     att <- lapply(uuid, get_attribution)
@@ -77,16 +77,22 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE) {
     api_return <- phy_GET(file.path("images", uuid),
                           list(embed_contributor = "true"))
     # Process output -------------------------------------------------------
-    att <- list(contributor = api_return$`_embedded`$contributor$name,
-                contributor_uuid = api_return$`_embedded`$contributor$uuid,
-                created = substr(x = api_return$`_embedded`$contributor$created,
-                                 start = 1,
-                                 stop = 10),
-                contact = gsub(
-                  "mailto:", "",
-                  api_return$`_embedded`$contributor$`_links`$contact),
-                image_uuid = uuid,
-                license = api_return$`_links`$license$href)
+    att <- list(
+      contributor = api_return$`_embedded`$contributor$name,
+      contributor_uuid = api_return$`_embedded`$contributor$uuid,
+      created = substr(
+        x = api_return$`_embedded`$contributor$created,
+        start = 1,
+        stop = 10
+      ),
+      contact = gsub(
+        "mailto:",
+        "",
+        api_return$`_embedded`$contributor$`_links`$contact
+      ),
+      image_uuid = uuid,
+      license = api_return$`_links`$license$href
+    )
     # Add license title
     att$license_abbr <- licenses$abbr[which(licenses$links == att$license)]
   }
@@ -100,7 +106,7 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE) {
                     "(", att$license_abbr, ").")
     }
   } else if (length(uuid) > 1 && text) {
-    att <- lapply(att, function (x) {
+    att <- lapply(att, function(x) {
       paste0(x$contributor, ", ",
              substr(x$created, start = 1, stop = 4), " ",
              "(", x$license_abbr, ")")

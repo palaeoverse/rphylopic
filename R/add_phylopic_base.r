@@ -9,8 +9,8 @@
 #' @param uuid \code{character}. A valid uuid for a PhyloPic silhouette (such as
 #'   that returned by [get_uuid()] or [pick_phylopic()]).
 #' @param filter \code{character}. Filter by usage license if `name` is defined.
-#'   Use "by" to limit results to images which do not require attribution, "nc" 
-#'   for images which allows commercial usage, and "sa" for images without a 
+#'   Use "by" to limit results to images which do not require attribution, "nc"
+#'   for images which allows commercial usage, and "sa" for images without a
 #'   StandAlone clause. The user can also combine these filters as a vector.
 #' @param x \code{numeric}. x value of the silhouette center. Ignored if `y` and
 #'   `ysize` are not specified.
@@ -125,7 +125,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     name_unique <- unique(name)
     imgs <- sapply(name_unique, function(x) {
       id <- tryCatch(get_uuid(name = x, filter = filter),
-                      error = function(cond) NA)
+                     error = function(cond) NA)
       if (is.na(id)) {
         text <- paste0("`name` ", '"', name, '"')
         if (!is.null(filter)) {
@@ -210,6 +210,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     } else { # png
       grid.raster(img, x = x, y = y, height = ysize)
     }
-  }, img = imgs, x = x, y = y, ysize = ysize, alpha = alpha, color = color,
-     fill = fill, horizontal = horizontal, vertical = vertical, angle = angle))
+  },
+  img = imgs, x = x, y = y, ysize = ysize, alpha = alpha, color = color,
+  fill = fill, horizontal = horizontal, vertical = vertical, angle = angle))
 }

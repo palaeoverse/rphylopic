@@ -42,10 +42,14 @@ test_that("geom_phylopic works", {
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y), img = -5)
   expect_error(plot(gg))
-  suppressWarnings(expect_warning(ggplot_build(ggplot(df) +
-    geom_phylopic(aes(x = x, y = y), name = "asdfghjkl"))))
-  suppressWarnings(expect_warning(ggplot_build(ggplot(df) +
-    geom_phylopic(aes(x = x, y = y), uuid = "asdfghjkl"))))
+  suppressWarnings(expect_warning(ggplot_build(
+    ggplot(df) +
+      geom_phylopic(aes(x = x, y = y), name = "asdfghjkl")
+  )))
+  suppressWarnings(expect_warning(ggplot_build(
+    ggplot(df) +
+      geom_phylopic(aes(x = x, y = y), uuid = "asdfghjkl")
+  )))
 })
 
 test_that("phylopic_key_glyph works", {
@@ -58,11 +62,11 @@ test_that("phylopic_key_glyph works", {
                   key_glyph = phylopic_key_glyph(name =
                                                    c("Felis silvestris catus",
                                                      "Odobenus rosmarus"))) +
-    coord_cartesian(xlim = c(1,6), ylim = c(5, 30)) +
+    coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
     theme_classic(base_size = 16)
   expect_true(is.ggplot(gg))
   expect_doppelganger("phylopic_key_glyph", gg)
-  
+
   gg <- gg + theme(legend.key.size = grid::unit(5, "lines"))
   expect_doppelganger("phylopic_key_glyph with larger glyphs", gg)
 })

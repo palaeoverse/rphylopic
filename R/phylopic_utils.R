@@ -110,7 +110,7 @@ rotate_phylopic.array <- function(img, angle = 90) {
     img_new <- simplify2array(
       lapply(seq_len(dim(img_new)[3]),
              function(i) rotate(img_new[, , i]))
-      )
+    )
   }
   img_new
 }
@@ -312,7 +312,7 @@ print.Picture <- function(x, ...) {
 # runs print() when you just type the object name (S4-specific)
 setMethod(f = "show",
           signature = "Picture",
-          definition = function(object){
+          definition = function(object) {
             print(object)
           })
 

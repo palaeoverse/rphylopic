@@ -17,8 +17,8 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #' @param view \code{numeric}. Number of silhouettes that should be plotted at
 #'   the same time. Defaults to 1.
 #' @param filter \code{character}. Filter uuid(s) by usage license. Use "by"
-#'   to limit results to image uuids which do not require attribution, "nc" 
-#'   for image uuids which allow commercial usage, and "sa" for image uuids 
+#'   to limit results to image uuids which do not require attribution, "nc"
+#'   for image uuids which allow commercial usage, and "sa" for image uuids
 #'   without a StandAlone clause. The user can also combine these filters.
 #' @param auto \code{numeric}. This argument allows the user to automate input
 #'   into the menu choice. If the input value is `1`, the first returned image
@@ -52,7 +52,7 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #' # 3 x 3 pane layout
 #' img <- pick_phylopic(name = "Scleractinia", n = 9, view = 9)
 #' }
-pick_phylopic <- function(name = NULL, n = 5, view = 1, 
+pick_phylopic <- function(name = NULL, n = 5, view = 1,
                           filter = NULL, auto = NULL) {
   # Error handling
   if (!is.null(auto) && !auto %in% c(1, 2)) {
@@ -100,8 +100,8 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1,
 
   # Suppress warnings when there is an uneven split
   if ((length(uuids) %% view) != 0) {
-    uuids <- suppressWarnings(
-      split(x = uuids, f = ceiling(seq_along(uuids) / view)))
+    uuids <- suppressWarnings(split(x = uuids,
+                                    f = ceiling(seq_along(uuids) / view)))
   } else {
     uuids <- split(x = uuids, f = ceiling(seq_along(uuids) / view))
   }
@@ -151,8 +151,9 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1,
                                         size = 11,
                                         color = "purple"))
       print(p)
-      m <- menu(choices = c(att_string, "Next"), title = paste0(
-        "Choose an option (", i, "/", ceiling(n_uuids / view), " pages):"))
+      m <- menu(choices = c(att_string, "Next"),
+                title = paste0("Choose an option (", i, "/",
+                               ceiling(n_uuids / view), " pages):"))
       if (m == 0) return()
     } else {
       # Select final uuid

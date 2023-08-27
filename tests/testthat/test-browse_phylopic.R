@@ -4,8 +4,7 @@ test_that("browse_phylopic works", {
   # Expect true
   expect_true(is.character(browse_phylopic()))
   expect_true(is.character(browse_phylopic(name = "Acropora cervicornis")))
-  expect_true(is.character(browse_phylopic(
-    uuid = uuid)))
+  expect_true(is.character(browse_phylopic(uuid = uuid)))
   # Expect errors
   expect_error(browse_phylopic(name = 1))
   expect_error(browse_phylopic(uuid = 1))

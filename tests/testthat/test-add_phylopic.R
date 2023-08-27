@@ -27,7 +27,7 @@ test_that("add_phylopic works", {
   hor <- sample(c(TRUE, FALSE), 50, TRUE)
   ver <- sample(c(TRUE, FALSE), 50, TRUE)
   cols <- sample(c("black", "darkorange", "grey42", "white"), 50,
-    replace = TRUE)
+                 replace = TRUE)
   alpha <- runif(50, 0, 1)
 
   p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +

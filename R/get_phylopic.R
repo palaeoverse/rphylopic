@@ -88,7 +88,7 @@ get_phylopic <- function(uuid = NULL, format = "vector", height = 512,
       grid.raster(img)
     }
   }
-  
+
   attr(img, "uuid") <- uuid
   attr(img, "url") <- url
   img

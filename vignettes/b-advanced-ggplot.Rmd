@@ -114,7 +114,7 @@ ggplot(penguins_subset) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
   scale_size_continuous(guide = "none") +
   scale_color_manual("Sex", values = c("orange", "blue"),
-                      labels = c("Female", "Male")) +
+                     labels = c("Female", "Male")) +
   facet_wrap(~species, ncol = 1) +
   theme_bw(base_size = 15) +
   theme(legend.position = c(0.9, 0.9))
@@ -195,7 +195,7 @@ vertebrate_data <- data.frame(species = vertebrate.tree$tip.label, uuid = NA)
 vertebrate_data$uuid <- sapply(vertebrate.tree$tip.label,
                                function(x) {
                                  tryCatch(get_uuid(x), error = function(e) NA)
-                                 })
+                               })
 vertebrate_data
 ```
 

@@ -227,7 +227,7 @@ vertebrate_data <- data.frame(species = vertebrate.tree$tip.label, uuid = NA)
 vertebrate_data$uuid <- sapply(vertebrate.tree$tip.label,
                                function(x) {
                                  tryCatch(get_uuid(x), error = function(e) NA)
-                                 })
+                               })
 vertebrate_data
 ```
 

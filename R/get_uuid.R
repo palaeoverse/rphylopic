@@ -7,7 +7,7 @@
 #' @param name \code{character}. A taxonomic name. Various taxonomic levels
 #'   are supported (e.g. species, genus, family). NULL can also be supplied
 #'   which will skip the taxonomic filtering of the PhyloPic database.
-#' @param img A [Picture][grImport2::Picture-class] or png array object from 
+#' @param img A [Picture][grImport2::Picture-class] or png array object from
 #'   [get_phylopic()]. A list of these objects can also be supplied. If `img`
 #'   is supplied, `name` and `n` are ignored. Defaults to NULL.
 #' @param n \code{numeric}. How many uuids should be returned? Depending on
@@ -94,7 +94,7 @@ get_uuid <- function(name = NULL, img = NULL, n = 1, filter = NULL,
                   "try a species/genus resolution name."))
     } else {
       stop(paste0("Image resource not available for '", name, "'. ",
-                     "Did you mean one of the following? \n", toString(mch)))
+                  "Did you mean one of the following? \n", toString(mch)))
     }
   }
   # Reset options

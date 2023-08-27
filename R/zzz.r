@@ -20,13 +20,12 @@ pbase <- function() "https://api.phylopic.org"
 #' @importFrom curl nslookup
 phy_GET <- function(path, query = list(), ...) {
   # Check PhyloPic (or user) is online
-  tryCatch(
-    {
-      nslookup("api.phylopic.org")
-    },
-    error = function(e) {
-      stop("PhyloPic is not available or you have no internet connection.")
-    })
+  tryCatch({
+    nslookup("api.phylopic.org")
+  },
+  error = function(e) {
+    stop("PhyloPic is not available or you have no internet connection.")
+  })
   query <- as_null(pc(query))
   tt <- GET(url = pbase(), path = path, query = query)
   tmp <- content(tt, as = "text", encoding = "UTF-8")

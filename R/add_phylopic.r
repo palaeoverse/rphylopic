@@ -9,8 +9,8 @@
 #' @param uuid \code{character}. A valid uuid for a PhyloPic silhouette (such as
 #'   that returned by [get_uuid()] or [pick_phylopic()]).
 #' @param filter \code{character}. Filter by usage license if `name` is defined.
-#'   Use "by" to limit results to images which do not require attribution, "nc" 
-#'   for images which allows commercial usage, and "sa" for images without a 
+#'   Use "by" to limit results to images which do not require attribution, "nc"
+#'   for images which allows commercial usage, and "sa" for images without a
 #'   StandAlone clause. The user can also combine these filters as a vector.
 #' @param x \code{numeric}. x value of the silhouette center.
 #' @param y \code{numeric}. y value of the silhouette center.

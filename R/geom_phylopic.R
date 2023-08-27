@@ -128,7 +128,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   setup_data = function(data, params) {
     # Clean data
     data <- remove_missing(data, na.rm = params$na.rm, c("img", "name", "uuid"))
-    
+
     if (is.list(params$filter)) params$filter <- params$filter[[1]]
     # Check that only one silhouette aesthetic exists
     data_cols <- sapply(c("img", "name", "uuid"),
@@ -140,7 +140,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       stop(paste("Must specify one (and only one) of the `img`, `name`, or",
                  "`uuid` aesthetics."))
     }
-    
+
     # Check supplied data types and retrieve silhouettes if need be
     if (cols["name"]) {
       if (!params$verbose) {
@@ -156,7 +156,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       name_unique <- unique(names)
       imgs <- sapply(name_unique, function(name) {
         uuid <- tryCatch(get_uuid(name = name, filter = params$filter),
-                        error = function(cond) NA)
+                         error = function(cond) NA)
         if (is.na(uuid)) {
           text <- paste0("`name` ", '"', name, '"')
           if (!is.null(params$filter)) {
@@ -409,7 +409,7 @@ ggname <- function(prefix, grob) {
 }
 
 aspect_ratio <- function(img) {
-  if(is(img, 'Picture')) {
+  if (is(img, "Picture")) {
     return(abs(diff(img@summary@xscale)) / abs(diff(img@summary@yscale)))
   } else {
     dims <- dim(img)
