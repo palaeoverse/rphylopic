@@ -14,6 +14,7 @@ geom_phylopic(
   show.legend = FALSE,
   inherit.aes = TRUE,
   remove_background = TRUE,
+  verbose = FALSE,
   filter = NULL
 )
 }
@@ -68,6 +69,9 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{remove_background}{\code{logical}. Should any white background be
 removed from the silhouette(s)? See \code{\link[=recolor_phylopic]{recolor_phylopic()}} for details.}
+
+\item{verbose}{\code{logical}. Should the attribution information for the
+used silhouette(s) be printed to the console (see \code{\link[=get_attribution]{get_attribution()}})?}
 
 \item{filter}{\code{character}. Filter by usage license if using the \code{name}
 aesthetic. Use "by" to limit results to images which do not require

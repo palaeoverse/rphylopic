@@ -53,6 +53,8 @@
 #'   to finely select the aesthetics to display.
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
+#' @param verbose \code{logical}. Should the attribution information for the
+#'   used silhouette(s) be printed to the console (see [get_attribution()])?
 #' @param filter \code{character}. Filter by usage license if using the `name`
 #'   aesthetic. Use "by" to limit results to images which do not require
 #'   attribution, "nc" for images which allows commercial usage, and "sa" for
@@ -78,9 +80,13 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
                           show.legend = FALSE,
                           inherit.aes = TRUE,
                           remove_background = TRUE,
+                          verbose = FALSE,
                           filter = NULL) {
   if (!is.logical(remove_background)) {
     stop("`remove_background` should be a logical value.")
+  }
+  if (!is.logical(verbose)) {
+    stop("`verbose` should be a logical value.")
   }
   # We need to do this before passing to the layer
   dots <- list(...)
@@ -98,6 +104,7 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
     params = c(
       na.rm = na.rm,
       remove_background = remove_background,
+      verbose = verbose,
       filter = filter,
       dots
     )
@@ -114,6 +121,85 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   default_aes = aes(size = 1.5, alpha = 1,
                     color = "black", fill = NA,
                     horizontal = FALSE, vertical = FALSE, angle = 0),
+  extra_params = c("na.rm", "remove_background", "verbose", "filter"),
+  setup_data = function(data, params) {
+    # Clean data
+    data <- remove_missing(data, na.rm = params$na.rm, c("img", "name", "uuid"))
+    
+    if (is.list(params$filter)) params$filter <- params$filter[[1]]
+    # Check that only one silhouette aesthetic exists
+    data_cols <- sapply(c("img", "name", "uuid"),
+                        function(col) col %in% colnames(data))
+    param_cols <- sapply(c("img", "name", "uuid"),
+                         function(col) col %in% names(params))
+    cols <- data_cols | param_cols
+    if (sum(cols) != 1) {
+      stop(paste("Must specify one (and only one) of the `img`, `name`, or",
+                 "`uuid` aesthetics."))
+    }
+    
+    # Check supplied data types and retrieve silhouettes if need be
+    if (cols["name"]) {
+      if (!params$verbose) {
+        warning(paste("You've used the `name` aesthetic/argument. You may want",
+                      "to use `verbose = TRUE` to get attribution information",
+                      "for the silhouette(s)."), call. = FALSE)
+      }
+      names <- if (data_cols["name"]) data$name else params$name
+      if (!is.character(names)) {
+        stop("The `name` aesthetic should be of class character.")
+      }
+      # Get PhyloPic for each unique name
+      name_unique <- unique(names)
+      imgs <- sapply(name_unique, function(name) {
+        uuid <- tryCatch(get_uuid(name = name, filter = params$filter),
+                        error = function(cond) NA)
+        if (is.na(uuid)) {
+          text <- paste0("`name` ", '"', name, '"')
+          if (!is.null(params$filter)) {
+            text <- paste0(text, " with `filter` ", '"',
+                           paste0(filter, collapse = "/"), '"')
+          }
+          warning(paste0(text, " returned no PhyloPic results."))
+          return(NULL)
+        }
+        get_phylopic(uuid)
+      })
+      imgs <- imgs[names]
+    } else if (cols["uuid"]) {
+      uuids <- if (data_cols["uuid"]) data$uuid else params$uuid
+      if (!is.character(uuids)) {
+        stop("The `uuid` aesthetic should be of class character.")
+      }
+      # Get PhyloPic for each unique uuid
+      uuid_unique <- unique(uuids)
+      imgs <- sapply(uuid_unique, function(uuid) {
+        img <- tryCatch(get_phylopic(uuid),
+                        error = function(cond) NULL)
+        if (is.null(img)) {
+          warning(paste0('"', uuid, '"', " is not a valid PhyloPic `uuid`."),
+                  call. = FALSE)
+        }
+        img
+      })
+      imgs <- imgs[uuids]
+    } else {
+      imgs <- if (data_cols["img"]) data$img else params$img
+      if (any(sapply(imgs, function(img) {
+        !is(img, "Picture") && !is.array(img)
+      }))) {
+        stop(paste("The `img` aesthetic should be of class Picture (for a",
+                   "vector image) or class array (for a raster image)."))
+      }
+    }
+    if (params$verbose) {
+      get_attribution(img = imgs, text = TRUE)
+    }
+    data$name <- NULL
+    data$uuid <- NULL
+    data$img <- imgs
+    data
+  },
   use_defaults = function(self, data, params = list(), modifiers = aes()) {
     # if fill isn't specified in the original data, copy over the colour column
     col_fill <- c("colour", "fill") %in% colnames(data) |
@@ -126,69 +212,13 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   },
   draw_panel = function(self, data, panel_params, coord, na.rm = FALSE,
                         remove_background = TRUE, filter = NULL) {
-    if (is.list(filter)) filter <- filter[[1]]
-    # Clean and transform data
-    data <- remove_missing(data, na.rm = na.rm, c("img", "name", "uuid"))
-    data <- coord$transform(data, panel_params)
-
     # Check that aesthetics are valid
     if (any(data$alpha > 1 | data$alpha < 0)) {
       stop("`alpha` must be between 0 and 1.")
     }
-    # Check that only one silhouette aesthetic exists
-    cols <- sapply(c("img", "name", "uuid"),
-                   function(col) col %in% colnames(data))
-    if (sum(cols) != 1) {
-      stop(paste("Must specify one (and only one) of the `img`, `name`, or",
-                 "`uuid` aesthetics."))
-    }
 
-    # Check supplied data types and retrieve silhouettes if need be
-    if (cols["name"]) {
-      if (!is.character(data$name)) {
-        stop("The `name` aesthetic should be of class character.")
-      }
-      # Get PhyloPic for each unique name
-      name_unique <- unique(data$name)
-      imgs <- sapply(name_unique, function(name) {
-        url <- tryCatch(get_uuid(name = name, url = TRUE, filter = filter),
-                        error = function(cond) NA)
-        if (is.na(url)) {
-          text <- paste0("`name` ", '"', name, '"')
-          if (!is.null(filter)) {
-            text <- paste0(text, " with `filter` ", '"',
-                           paste0(filter, collapse = "/"), '"')
-          }
-          warning(paste0(text, " returned no PhyloPic results."))
-          return(NULL)
-        }
-        get_svg(url)
-      })
-      imgs <- imgs[data$name]
-    } else if (cols["uuid"]) {
-      if (!is.character(data$uuid)) {
-        stop("The `uuid` aesthetic should be of class character.")
-      }
-      # Get PhyloPic for each unique uuid
-      uuid_unique <- unique(data$uuid)
-      imgs <- sapply(uuid_unique, function(uuid) {
-        img <- tryCatch(get_phylopic(uuid),
-                        error = function(cond) NULL)
-        if (is.null(img)) {
-          warning(paste0('"', uuid, '"', " is not a valid PhyloPic `uuid`."))
-        }
-        img
-      })
-      imgs <- imgs[data$uuid]
-    } else {
-      if (any(sapply(data$img, function(img) {
-        !is(img, "Picture") && !is.array(img)
-      }))) {
-        stop(paste("The `img` aesthetic should be of class Picture (for a",
-                   "vector image) or class array (for a raster image)."))
-      }
-      imgs <- data$img
-    }
+    # Transform data
+    data <- coord$transform(data, panel_params)
 
     # Calculate height as percentage of y limits
     # (or r limits for polar coordinates)
@@ -204,10 +234,10 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
 
     # Make a grob for each silhouette
     grobs <- lapply(seq_len(nrow(data)), function(i) {
-      if (is.null(imgs[[i]])) {
+      if (is.null(data$img[[i]])) {
         nullGrob()
       } else {
-        phylopicGrob(imgs[[i]], data$x[i], data$y[i], heights[i],
+        phylopicGrob(data$img[[i]], data$x[i], data$y[i], heights[i],
                      data$colour[i], data$fill[i], data$alpha[i],
                      data$horizontal[i], data$vertical[i], data$angle[i],
                      remove_background)
