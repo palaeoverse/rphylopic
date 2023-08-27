@@ -311,7 +311,7 @@ phylopic_key_glyph <- function(img = NULL, name = NULL, uuid = NULL) {
       asp_rat <- aspect_ratio(imgs[[i]])
       height <- unit(ifelse(asp_rat >= 1, .95 / asp_rat, .95), "npc")
       grob <- phylopicGrob(imgs[[i]], 0.5, 0.5,
-                           height, data$colour[1], data$alpha[1],
+                           height, data$colour[1], data$fill[1], data$alpha[1],
                            data$horizontal[1], data$vertical[1], data$angle[1],
                            phylopic_env$remove_background)
     }
