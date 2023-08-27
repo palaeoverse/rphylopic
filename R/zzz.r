@@ -1,3 +1,14 @@
+.onAttach <- function(libname, pkgname) {
+  packageStartupMessage(paste("Thank you for using rphylopic! Don't forget to",
+                              "attribute the silhouettes that you use to their",
+                              "contributors using the `get_attribution()`",
+                              "function and/or the `verbose` argument in the",
+                              "`geom_phylopic()`, `add_phylopic()`, and",
+                              "`add_phylopic_base()` functions. We would also",
+                              "appreciate it if you cite this package in your",
+                              'work (use `citation("rphylopic")`).'))
+}
+
 pc <- function(l) Filter(Negate(is.null), l)
 
 as_null <- function(x) if (length(x) == 0) NULL else x
