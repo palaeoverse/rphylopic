@@ -35,6 +35,8 @@
 #'   clockwise. The default is no rotation.
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
+#' @param verbose \code{logical}. Should the attribution information for the
+#'   used silhouette(s) be printed to the console (see [get_attribution()])?
 #' @details One (and only one) of `img`, `name`, or `uuid` must be specified.
 #'   Use parameters `x`, `y`, and `ysize` to place the silhouette at a specified
 #'   position on the plot. If all three of these parameters are unspecified,
@@ -96,7 +98,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
                               x = NULL, y = NULL, ysize = NULL,
                               alpha = 1, color = "black", fill = NA,
                               horizontal = FALSE, vertical = FALSE, angle = 0,
-                              remove_background = TRUE) {
+                              remove_background = TRUE, verbose = FALSE) {
   if (all(sapply(list(img, name, uuid), is.null))) {
     stop("One of `img`, `name`, or `uuid` is required.")
   }
@@ -106,17 +108,25 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   if (any(alpha > 1 | alpha < 0)) {
     stop("`alpha` must be between 0 and 1.")
   }
+  if (!is.logical(verbose)) {
+    stop("`verbose` should be a logical value.")
+  }
 
   if (!is.null(name)) {
     if (!is.character(name)) {
       stop("`name` should be of class character.")
     }
+    if (!verbose) {
+      warning(paste("You've used the `name` argument. You may want to use",
+                    "`verbose = TRUE` to get attribution information",
+                    "for the silhouette(s)."), call. = FALSE)
+    }
     # Get PhyloPic for each unique name
     name_unique <- unique(name)
     imgs <- sapply(name_unique, function(x) {
-      url <- tryCatch(get_uuid(name = x, filter = filter, url = TRUE),
+      id <- tryCatch(get_uuid(name = x, filter = filter),
                       error = function(cond) NA)
-      if (is.na(url)) {
+      if (is.na(id)) {
         text <- paste0("`name` ", '"', name, '"')
         if (!is.null(filter)) {
           text <- paste0(text, " with `filter` ", '"',
@@ -125,7 +135,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
         warning(paste0(text, " returned no PhyloPic results."))
         return(NULL)
       }
-      get_svg(url)
+      get_phylopic(id)
     })
     imgs <- imgs[name]
   } else if (!is.null(uuid)) {
@@ -152,6 +162,9 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
                  "or class array (for a raster image)."))
     }
     imgs <- img
+  }
+  if (verbose) {
+    get_attribution(img = imgs, text = TRUE)
   }
 
   # get plot limits

@@ -18,7 +18,8 @@ add_phylopic_base(
   horizontal = FALSE,
   vertical = FALSE,
   angle = 0,
-  remove_background = TRUE
+  remove_background = TRUE,
+  verbose = FALSE
 )
 }
 \arguments{
@@ -67,6 +68,9 @@ clockwise. The default is no rotation.}
 
 \item{remove_background}{\code{logical}. Should any white background be
 removed from the silhouette(s)? See \code{\link[=recolor_phylopic]{recolor_phylopic()}} for details.}
+
+\item{verbose}{\code{logical}. Should the attribution information for the
+used silhouette(s) be printed to the console (see \code{\link[=get_attribution]{get_attribution()}})?}
 }
 \description{
 Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
