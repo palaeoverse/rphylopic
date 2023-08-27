@@ -240,8 +240,11 @@ phylopic_env$glyph_ind <- 1
 #'   silhouettes will be used as ordered as key glyphs one by one, with
 #'   recycling as necessary.
 #'
-#'   Note that the relative sizes of the silhouettes are fixed. Therefore, this
-#'   function should not be used for size legends.
+#'   Note that the sizes of the silhouettes in the legend are currently
+#'   maximized based on the size of the key. This size can be modified using the
+#'   `legend.key.size` argument in [ggplot2::theme()]. Therefore, the
+#'   silhouettes will not reflect the size aesthetic, and this function should
+#'   not be used for size legends.
 #' @importFrom grid nullGrob unit
 #' @export
 #' @examples
