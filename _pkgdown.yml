@@ -26,6 +26,7 @@ reference:
   - get_uuid
   - pick_phylopic
   - get_phylopic
+  - plot_phylopic
   - get_attribution
   - browse_phylopic
   - save_phylopic

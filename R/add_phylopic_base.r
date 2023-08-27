@@ -8,6 +8,10 @@
 #' @param name \code{character}. A taxonomic name to be passed to [get_uuid()].
 #' @param uuid \code{character}. A valid uuid for a PhyloPic silhouette (such as
 #'   that returned by [get_uuid()] or [pick_phylopic()]).
+#' @param filter \code{character}. Filter by usage license if `name` is defined.
+#'   Use "by" to limit results to images which do not require attribution, "nc" 
+#'   for images which allows commercial usage, and "sa" for images without a 
+#'   StandAlone clause. The user can also combine these filters as a vector.
 #' @param x \code{numeric}. x value of the silhouette center. Ignored if `y` and
 #'   `ysize` are not specified.
 #' @param y \code{numeric}. y value of the silhouette center. Ignored if `x` and
@@ -17,9 +21,13 @@
 #'   `y` are not specified.
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
-#' @param color \code{character}. Color to plot the silhouette in. If "original"
-#'   is specified, the original color of the silhouette will be used (usually
-#'   the same as "black").
+#' @param color \code{character}. Color of silhouette outline. If "original" or
+#'   NA is specified, the original color of the silhouette outline will be used
+#'   (usually the same as "transparent").
+#' @param fill \code{character}. Color of silhouette. If "original" is
+#'   specified, the original color of the silhouette will be used (usually the
+#'   same as "black"). If `color` is specified and `fill` is NA the outline and
+#'   fill color will be the same.
 #' @param horizontal \code{logical}. Should the silhouette be flipped
 #'   horizontally?
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
@@ -46,6 +54,7 @@
 #'   using [flip_phylopic()] and [rotate_phylopic()].
 #'
 #'   Note that png array objects can only be rotated by multiples of 90 degrees.
+#'   Also, outline colors do not currently work for png array objects.
 #' @importFrom graphics par grconvertX grconvertY
 #' @importFrom grid grid.raster
 #' @importFrom grImport2 grid.picture
@@ -83,8 +92,9 @@
 #' # overlay smaller cats
 #' add_phylopic_base(img = cat, x = posx, y = posy, ysize = size, alpha = 0.8)
 add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
+                              filter = NULL,
                               x = NULL, y = NULL, ysize = NULL,
-                              alpha = 1, color = "black",
+                              alpha = 1, color = "black", fill = NA,
                               horizontal = FALSE, vertical = FALSE, angle = 0,
                               remove_background = TRUE) {
   if (all(sapply(list(img, name, uuid), is.null))) {
@@ -104,11 +114,15 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     # Get PhyloPic for each unique name
     name_unique <- unique(name)
     imgs <- sapply(name_unique, function(x) {
-      url <- tryCatch(get_uuid(name = x, url = TRUE),
+      url <- tryCatch(get_uuid(name = x, filter = filter, url = TRUE),
                       error = function(cond) NA)
       if (is.na(url)) {
-        warning(paste0("`name` ", '"', x, '"',
-                       " returned no PhyloPic results."))
+        text <- paste0("`name` ", '"', name, '"')
+        if (!is.null(filter)) {
+          text <- paste0(text, " with `filter` ", '"',
+                         paste0(filter, collapse = "/"), '"')
+        }
+        warning(paste0(text, " returned no PhyloPic results."))
         return(NULL)
       }
       get_svg(url)
@@ -155,7 +169,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   y <- grconvertY(y, to = "ndc")
   ysize <- grconvertY(ysize, to = "ndc") - grconvertY(0, to = "ndc")
 
-  invisible(mapply(function(img, x, y, ysize, alpha, color,
+  invisible(mapply(function(img, x, y, ysize, alpha, color, fill,
                             horizontal, vertical, angle) {
     if (is.null(img)) return(NULL)
 
@@ -163,8 +177,10 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     if (angle != 0) img <- rotate_phylopic(img, angle)
 
     # recolor if necessary
-    color <- if (color == "original") NULL else color
-    img <- recolor_phylopic(img, alpha, color, remove_background)
+    color <- if (is.na(color) || color == "original") NULL else color
+    if (is.na(fill)) fill <- color
+    fill <- if (fill == "original") NULL else fill
+    img <- recolor_phylopic(img, alpha, color, fill, remove_background)
 
     # grobify and plot
     if (is(img, "Picture")) { # svg
@@ -182,5 +198,5 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
       grid.raster(img, x = x, y = y, height = ysize)
     }
   }, img = imgs, x = x, y = y, ysize = ysize, alpha = alpha, color = color,
-     horizontal = horizontal, vertical = vertical, angle = angle))
+     fill = fill, horizontal = horizontal, vertical = vertical, angle = angle))
 }
