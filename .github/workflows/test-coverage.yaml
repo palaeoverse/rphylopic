@@ -40,6 +40,8 @@ jobs:
         shell: bash
 
       - name: Test coverage
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         run: |
           covr::codecov(
             quiet = FALSE,
