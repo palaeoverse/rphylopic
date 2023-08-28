@@ -207,8 +207,6 @@ right image for you. Let’s go with option 1!</p>
 <span></span>
 <span><span class="co"># What about just using the first image linked to the name? Definitely!</span></span>
 <span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Canis lupus"</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">0.75</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning: You've used the `name` argument. You may want to use `verbose = TRUE`</span></span>
-<span><span class="co">## to get attribution information for the silhouette(s).</span></span></code></pre>
 <p><img src="a-getting-started_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
 <p>Ah, you’ve found out our little secret! You can actually skip the
 steps of getting the UUID altogether by just searching for the desired
@@ -223,7 +221,7 @@ all the other options! It’s always worth checking out your options with
 <p>You can also accomplish the same plot with the <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a>
 package. Here, we’ll use the <code><a href="../reference/add_phylopic.html">add_phylopic()</a></code> function, but
 the functionality and all of the arguments are the same:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6</span>, <span class="fl">1.4</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6</span>, <span class="fl">1.4</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -235,8 +233,6 @@ the functionality and all of the arguments are the same:</p>
 <span></span>
 <span><span class="co"># What about just using the first image linked to the name? Definitely!</span></span>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Canis lupus"</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">0.75</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning: You've used the `name` aesthetic/argument. You may want to use</span></span>
-<span><span class="co">## `verbose = TRUE` to get attribution information for the silhouette(s).</span></span></code></pre>
 <p><img src="a-getting-started_files/figure-html/unnamed-chunk-8-1.png" width="100%"></p>
 </div>
 </div>
@@ -251,14 +247,14 @@ flipping, rotating, and recoloring.</p>
 <p>The <code><a href="../reference/flip_phylopic.html">flip_phylopic()</a></code> function can be used to flip a
 silhouette horizontally and/or vertically. This may be useful if, for
 example, you want all of the silhouettes to face the same direction.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Flip silhouette horizontally</span></span>
 <span><span class="va">img_flip</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/flip_phylopic.html">flip_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img</span>, horizontal <span class="op">=</span> <span class="cn">TRUE</span>, vertical <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>The <code><a href="../reference/rotate_phylopic.html">rotate_phylopic()</a></code> function can be used to rotate a
 silhouette an arbitrary number of degrees. This may be useful when
 trying to align a silhouette with text or other objects within a
 figure.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Rotate silhouette by 45 degrees</span></span>
 <span><span class="va">img_rot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rotate_phylopic.html">rotate_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img</span>, angle <span class="op">=</span> <span class="fl">45</span><span class="op">)</span></span></code></pre></div>
 <p>Finally, the <code><a href="../reference/recolor_phylopic.html">recolor_phylopic()</a></code> function can be used to
@@ -267,12 +263,12 @@ of PhyloPic silhouettes are black and fully opaque by default. However,
 it may be useful to change this when the you are trying to either match
 an existing visualization color palette or trying to convey extra
 information, such as categorical data, through color.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Change color to blue and transparency to 50%</span></span>
 <span><span class="va">img_col</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recolor_phylopic.html">recolor_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img</span>, alpha <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>                            color <span class="op">=</span> <span class="st">"blue"</span>, fill <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s see what those look like in the same plot:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6</span>, <span class="fl">1.4</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6</span>, <span class="fl">1.4</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img_flip</span>, x <span class="op">=</span> <span class="fl">1.25</span>, y <span class="op">=</span> <span class="fl">1.25</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span></span>
@@ -301,7 +297,7 @@ purposes.</p>
 acknowledge the contributors that made those silhouettes. Fortunately,
 <strong>rphylopic</strong> includes the <code><a href="../reference/get_attribution.html">get_attribution()</a></code>
 function to get contributor data about specific images:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get valid uuid</span></span>
 <span><span class="va">uuid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_uuid.html">get_uuid</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Nycticebus"</span><span class="op">)</span></span>
 <span><span class="co"># Get attribution data for uuid</span></span>
@@ -326,6 +322,14 @@ function to get contributor data about specific images:</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## $license_abbr</span></span>
 <span><span class="co">## [1] "Public Domain Mark 1.0"</span></span></code></pre>
+<p>This function can even write a little blurb for you to include in
+your publications:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Get valid uuid</span></span>
+<span><span class="va">uuid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_uuid.html">get_uuid</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Nycticebus"</span><span class="op">)</span></span>
+<span><span class="co"># Get attribution data for uuid</span></span>
+<span><span class="fu"><a href="../reference/get_attribution.html">get_attribution</a></span><span class="op">(</span>uuid <span class="op">=</span> <span class="va">uuid</span>, text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023). Silhouette was contributed by Mareike Janiak, 2020 (Public Domain Mark 1.0).</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="save-an-image">Save an image<a class="anchor" aria-label="anchor" href="#save-an-image"></a>

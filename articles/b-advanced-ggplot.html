@@ -167,11 +167,12 @@ same image for each x-y pair):</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">species</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
 <p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
-<p>Oh no, the silhouettes are so small! The default silhouette size for
-<code><a href="../reference/geom_phylopic.html">geom_phylopic()</a></code> is 1.5, which is way too small given the
-range of the y-axis here. Let’s make the size of the silhouettes
-relative to the penguins’ body masses. <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> should
-work its magic and make them reasonable sizes for the plot:</p>
+<p>The default silhouette size for <code><a href="../reference/geom_phylopic.html">geom_phylopic()</a></code> is 1.5
+which appears to work well given the range of the y-axis here. However,
+we can also vary the size based on some other aspect of data. In this
+case, let’s try making the size of the silhouettes relative to the
+penguins’ body masses. <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> should work its magic and
+make them reasonable sizes for the plot:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">penguins_subset</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/geom_phylopic.html">geom_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">penguin_rot</span>,</span>
@@ -200,6 +201,29 @@ However, we only want a legend for the colors, so we use
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.9</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-9-1.png" width="100%"></p>
+<p>Hmm…the colored dots in the legend are great, but lucky for us, the
+package also supplies a convenient way to include silhouettes in the
+legend. Due to technical constraints, you’ll need to specify the
+images/uuids/names again within <code><a href="../reference/phylopic_key_glyph.html">phylopic_key_glyph()</a></code>. If
+you supply more than one silhouette to this function, it will cycle
+through them as it generates legend keys (recycling as needed). Note
+that <code><a href="../reference/phylopic_key_glyph.html">phylopic_key_glyph()</a></code> does not currently support the
+size aesthetic.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">penguins_subset</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/geom_phylopic.html">geom_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">penguin_rot</span>,</span>
+<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bill_length_mm</span>, y <span class="op">=</span> <span class="va">flipper_length_mm</span>,</span>
+<span>                    size <span class="op">=</span> <span class="va">body_mass_g</span>, color <span class="op">=</span> <span class="va">sex</span><span class="op">)</span>,</span>
+<span>                show.legend <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                key_glyph <span class="op">=</span> <span class="fu"><a href="../reference/phylopic_key_glyph.html">phylopic_key_glyph</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">penguin_rot</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Bill length (mm)"</span>, y <span class="op">=</span> <span class="st">"Flipper length (mm)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html" class="external-link">scale_size_continuous</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span><span class="st">"Sex"</span>, values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">species</span>, ncol <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.9</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-10-1.png" width="100%"></p>
 <p>Now that’s a nice figure!</p>
 </div>
 <div class="section level2">
@@ -215,7 +239,7 @@ application, we use the example occurrence dataset of early
 <a href="https://palaeoverse.palaeoverse.org" class="external-link">palaeoverse</a> R package to visualize the geographic
 distribution of <em>Mesosaurus</em> fossils.</p>
 <p>First, let’s load our libraries and the tetrapod data:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load libraries</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rphylopic.palaeoverse.org">rphylopic</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -224,7 +248,7 @@ distribution of <em>Mesosaurus</em> fossils.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">tetrapods</span><span class="op">)</span></span></code></pre></div>
 <p>Then we’ll subset our occurrences to only those for
 <em>Mesosaurus</em>:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Subset to desired group</span></span>
 <span><span class="va">tetrapods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">tetrapods</span>, <span class="va">genus</span> <span class="op">==</span> <span class="st">"Mesosaurus"</span><span class="op">)</span></span></code></pre></div>
 <p>Now, let’s plot those occurrences on a world map.
@@ -233,7 +257,7 @@ distribution of <em>Mesosaurus</em> fossils.</p>
 <code>alpha = 0.75</code> in case there are multiple occurrences in the
 same place. That way, the darker the color, the more occurrences in that
 geographic location.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get map data</span></span>
 <span><span class="va">world</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/map_data.html" class="external-link">map_data</a></span><span class="op">(</span>map <span class="op">=</span> <span class="st">"world"</span><span class="op">)</span></span>
 <span><span class="co"># Make map</span></span>
@@ -243,21 +267,19 @@ geographic location.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">tetrapods</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lng</span>, y <span class="op">=</span> <span class="va">lat</span><span class="op">)</span>,</span>
 <span>             size <span class="op">=</span> <span class="fl">4</span>, alpha <span class="op">=</span> <span class="fl">0.75</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-12-1.png" width="100%"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">coord_sf</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-13-1.png" width="100%"></p>
 <p>Now, as with the penguin figure above, we can easily replace those
 points with silhouettes.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html" class="external-link">geom_polygon</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">world</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">long</span>, y <span class="op">=</span> <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span>,</span>
 <span>               fill <span class="op">=</span> <span class="st">"lightgray"</span>, color <span class="op">=</span> <span class="st">"darkgrey"</span>, linewidth <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/geom_phylopic.html">geom_phylopic</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">tetrapods</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">lng</span>, y <span class="op">=</span> <span class="va">lat</span>, name <span class="op">=</span> <span class="va">genus</span><span class="op">)</span>,</span>
 <span>                size <span class="op">=</span> <span class="fl">4</span>, alpha <span class="op">=</span> <span class="fl">0.75</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html" class="external-link">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning: You've used the `name` aesthetic/argument. You may want to use</span></span>
-<span><span class="co">## `verbose = TRUE` to get attribution information for the silhouette(s).</span></span></code></pre>
-<p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-13-1.png" width="100%"></p>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">coord_sf</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-14-1.png" width="100%"></p>
 <p>Snazzy!</p>
 <p>Note that while we used the genus name as the <code>name</code>
 aesthetic here, we easily could have done
@@ -265,6 +287,14 @@ aesthetic here, we easily could have done
 instead. However, if we were plotting occurrences of multiple genera,
 we’d definitely want to plot them as different silhouettes using
 <code>name = genus</code> within the <code><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes()</a></code> call.</p>
+<p>Also, note that we could change the projection of the map and data
+using the <code>crs</code> and <code>default_crs</code> arguments in
+<code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">coord_sf()</a></code>. When projecting data, note that the y-axis
+limits will change to projected limits. For example, in the Robinson
+projection, the y-axis limits are roughly -8,600,000 and 8,600,000 in
+projected coordinates. Therefore, you may need to adjust the
+<code>size</code> argument/aesthetic accordingly when projecting maps
+and data.</p>
 </div>
 <div class="section level2">
 <h2 id="phylogenetics">Phylogenetics<a class="anchor" aria-label="anchor" href="#phylogenetics"></a>
@@ -351,7 +381,7 @@ package:</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.amazon.com/Integration-Manipulation-Visualization-Phylogenetic-Computational-ebook/dp/B0B5NLZR1Z/" class="external-link">ggtree</a></span><span class="op">)</span></span>
 <span><span class="co"># Plot the tree</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/ggtree/man/ggtree.html" class="external-link">ggtree</a></span><span class="op">(</span><span class="va">vertebrate.tree</span>, size <span class="op">=</span> <span class="fl">1</span>, layout <span class="op">=</span> <span class="st">"circular"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-20-1.png" width="100%"></p>
+<p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-21-1.png" width="100%"></p>
 <p>Hmm…that’s a bit boring. Let’s add a geological timescale to the
 background using <code><a href="https://williamgearty.com/deeptime/reference/coord_geo_polar.html" class="external-link">coord_geo_polar()</a></code> from the
 <a href="https://github.com/willgearty/deeptime" class="external-link">deeptime</a> package. Note that we need to use the
@@ -367,7 +397,7 @@ background using <code><a href="https://williamgearty.com/deeptime/reference/coo
 <span>  <span class="fu"><a href="https://williamgearty.com/deeptime/reference/coord_geo_polar.html" class="external-link">coord_geo_polar</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="st">"periods"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>        axis.text.r <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span>, hjust <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-21-1.png" width="100%"></p>
+<p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-22-1.png" width="100%"></p>
 <p>That’s looking a lot prettier! Let’s go ahead and add our silhouettes
 now. Note that we need to attach the <code>vertebrate_data</code> object
 with the <code>%&lt;+%</code> operator from <a href="https://www.amazon.com/Integration-Manipulation-Visualization-Phylogenetic-Computational-ebook/dp/B0B5NLZR1Z/" class="external-link">ggtree</a>.</p>
@@ -380,7 +410,7 @@ with the <code>%&lt;+%</code> operator from <a href="https://www.amazon.com/Inte
 <span>  <span class="fu"><a href="https://williamgearty.com/deeptime/reference/coord_geo_polar.html" class="external-link">coord_geo_polar</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="st">"periods"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>        axis.text.r <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span>, hjust <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-22-1.png" width="100%"></p>
+<p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-23-1.png" width="100%"></p>
 <p>Note that only a single size is specified and aspect ratio is always
 maintained, hence why the silhouettes all have the same height but
 different widths. Let’s fix some of the silhouettes by rotating them 90
@@ -398,7 +428,7 @@ degrees:</p>
 <span>  <span class="fu"><a href="https://williamgearty.com/deeptime/reference/coord_geo_polar.html" class="external-link">coord_geo_polar</a></span><span class="op">(</span>dat <span class="op">=</span> <span class="st">"periods"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>        axis.text.r <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span>, hjust <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-24-1.png" width="100%"></p>
+<p><img src="b-advanced-ggplot_files/figure-html/unnamed-chunk-25-1.png" width="100%"></p>
 <p>Beautiful!</p>
 </div>
 </div>
