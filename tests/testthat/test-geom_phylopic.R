@@ -2,6 +2,8 @@ suppressPackageStartupMessages(library(ggplot2, quietly = TRUE))
 
 test_that("geom_phylopic works", {
   skip_if_offline(host = "api.phylopic.org")
+  dev.off() # clean up any stray plots
+
   df <- data.frame(x = 2:5, y = seq(10, 25, 5),
                    uuid = c("e25f1863-331b-4891-8084-fe8602e4cf8d",
                             "d2575005-1fcb-4a86-8c83-e3bda619adf2",
@@ -50,4 +52,42 @@ test_that("geom_phylopic works", {
     ggplot(df) +
       geom_phylopic(aes(x = x, y = y), uuid = "asdfghjkl")
   )))
+})
+
+test_that("phylopic_key_glyph works", {
+  skip_if_offline(host = "api.phylopic.org")
+  dev.off() # clean up any stray plots
+
+  df <- data.frame(x = c(2, 4), y = c(10, 20),
+                   name = c("Felis silvestris catus", "Odobenus rosmarus"))
+  gg <- ggplot(df) +
+    geom_phylopic(aes(x = x, y = y, name = name, color = name), size = 10,
+                  show.legend = TRUE, verbose = TRUE,
+                  key_glyph = phylopic_key_glyph(name = df$name)) +
+    coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
+    theme_classic(base_size = 16)
+  expect_doppelganger("phylopic_key_glyph", gg)
+  
+  gg <- gg + theme(legend.key.size = grid::unit(5, "lines"))
+  expect_doppelganger("phylopic_key_glyph with larger glyphs", gg)
+
+  gg <- ggplot(df) +
+    geom_phylopic(
+      aes(x = x, y = y, name = name, color = name), size = 10,
+      show.legend = TRUE, verbose = TRUE,
+      key_glyph =
+        phylopic_key_glyph(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9")
+    ) +
+    coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
+    theme_classic(base_size = 16)
+  expect_doppelganger("phylopic_key_glyph with uuid", gg)
+
+  cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
+  gg <- ggplot(df) +
+    geom_phylopic(aes(x = x, y = y, name = name, color = name), size = 10,
+                  show.legend = TRUE, verbose = TRUE,
+                  key_glyph = phylopic_key_glyph(img = cat)) +
+    coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
+    theme_classic(base_size = 16)
+  expect_doppelganger("phylopic_key_glyph with img", gg)
 })

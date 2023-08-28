@@ -37,6 +37,12 @@ test_that("add_phylopic_base works", {
                       horizontal = hor, vertical = ver)
   })
 
+  # Expect warning
+  expect_warning(add_phylopic_base(name = "cat", verbose = FALSE))
+  expect_error(expect_warning(add_phylopic_base(name = "jkl;daf",
+                                                verbose = TRUE)))
+  expect_warning(add_phylopic_base(uuid = "jkl;daf"))
+  
   # Expect error
   expect_error(add_phylopic_base(img = "cat"))
   expect_error(add_phylopic_base(cat, name = "cat"))
