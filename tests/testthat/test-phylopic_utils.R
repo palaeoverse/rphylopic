@@ -72,3 +72,24 @@ test_that("recolor_phylopic works", {
   expect_error(recolor_phylopic(array(1, dim = c(5, 5))))
   expect_error(recolor_phylopic(array(1, dim = c(5, 5, 5))))
 })
+
+test_that("Picture methods work", {
+  skip_if_offline(host = "api.phylopic.org")
+  cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
+  expect_doppelganger("plot Picture", plot(cat))
+  expect_output(print(cat), "PhyloPic silhouette object (vector format)",
+                fixed = TRUE)
+  expect_output(show(cat), "PhyloPic silhouette object (vector format)",
+                fixed = TRUE)
+})
+
+test_that("array methods work", {
+  skip_if_offline(host = "api.phylopic.org")
+  cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
+                      format = "raster")
+  expect_doppelganger("plot array", plot(cat))
+  expect_output(print(cat), "PhyloPic silhouette object (raster format)",
+                fixed = TRUE)
+  expect_output(show(cat), "PhyloPic silhouette object (raster format)",
+                fixed = TRUE)
+})
