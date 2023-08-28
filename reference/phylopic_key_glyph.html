@@ -88,8 +88,11 @@ that returned by <code><a href="get_uuid.html">get_uuid()</a></code> or <code><a
 silhouettes should be used as key glyphs. In this case, the specified
 silhouettes will be used as ordered as key glyphs one by one, with
 recycling as necessary.</p>
-<p>Note that the relative sizes of the silhouettes are fixed. Therefore, this
-function should not be used for size legends.</p>
+<p>Note that the sizes of the silhouettes in the legend are currently
+maximized based on the size of the key. This size can be modified using the
+<code>legend.key.size</code> argument in <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code>. Therefore, the
+silhouettes will not reflect the size aesthetic, and this function should
+not be used for size legends.</p>
     </div>
 
     <div class="section level2">
