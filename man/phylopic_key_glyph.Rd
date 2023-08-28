@@ -27,8 +27,11 @@ silhouettes should be used as key glyphs. In this case, the specified
 silhouettes will be used as ordered as key glyphs one by one, with
 recycling as necessary.
 
-Note that the relative sizes of the silhouettes are fixed. Therefore, this
-function should not be used for size legends.
+Note that the sizes of the silhouettes in the legend are currently
+maximized based on the size of the key. This size can be modified using the
+\code{legend.key.size} argument in \code{\link[ggplot2:theme]{ggplot2::theme()}}. Therefore, the
+silhouettes will not reflect the size aesthetic, and this function should
+not be used for size legends.
 }
 \examples{
 library(ggplot2)
