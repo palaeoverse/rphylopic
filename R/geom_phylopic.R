@@ -231,7 +231,9 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     # (or r limits for polar coordinates)
     if ("y.range" %in% names(panel_params)) {
       heights <- data$size / diff(panel_params$y.range)
-    } else if ("r.range" %in% names(panel_params)) {
+    } else if ("y_range" %in% names(panel_params)) { # exclusive to coord_sf
+      heights <- data$size / diff(panel_params$y_range)
+    } else if ("r.range" %in% names(panel_params)) { # exclusive to coord_polar
       heights <- data$size / diff(panel_params$r.range)
     } else {
       heights <- data$size
