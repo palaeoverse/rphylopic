@@ -81,12 +81,7 @@ get_phylopic <- function(uuid = NULL, format = "vector", height = 512,
   }
   # Should the image be previewed?
   if (preview) {
-    grid.newpage()
-    if (format == "vector") {
-      grid.picture(img)
-    } else {
-      grid.raster(img)
-    }
+    plot(img)
   }
 
   attr(img, "uuid") <- uuid
