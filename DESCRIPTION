@@ -48,7 +48,8 @@ Suggests:
     ape,
     deeptime,
     palmerpenguins,
-    maps
+    maps,
+    sf
 Config/testthat/edition: 3
 URL: https://rphylopic.palaeoverse.org,
      https://github.com/palaeoverse-community/rphylopic,

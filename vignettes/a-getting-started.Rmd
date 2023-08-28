@@ -86,7 +86,7 @@ Now we have selected our silhouette, we can make some plots!
 ### Base R
 Let's start with base R by using `add_phylopic_base()`:
 
-```{r}
+```{r warning = FALSE}
 # OK, now we've got the image we want... let's add it to a plot!
 plot(x = 1, y = 1, type = "n", ann = FALSE)
 add_phylopic_base(img = img, x = 1.25, y = 1.25, ysize = 0.25)
@@ -104,7 +104,7 @@ Ah, you've found out our little secret! You can actually skip the steps of getti
 ### ggplot2
 You can also accomplish the same plot with the `{ggplot2}` package. Here, we'll use the `add_phylopic()` function, but the functionality and all of the arguments are the same:
 
-```{r}
+```{r warning = FALSE}
 library(ggplot2)
 p <- ggplot() +
   coord_cartesian(xlim = c(0.6, 1.4), ylim = c(0.6, 1.4)) +
@@ -116,7 +116,6 @@ p <- p + add_phylopic(uuid = uuid, x = 1, y = 1, ysize = 0.25)
 
 # What about just using the first image linked to the name? Definitely!
 p + add_phylopic(name = "Canis lupus", x = 0.75, y = 0.75, ysize = 0.25)
-
 ```
 
 ## Transforming silhouettes
@@ -167,6 +166,15 @@ Now that you've made a plot and used some silhouettes, you should acknowledge th
 uuid <- get_uuid(name = "Nycticebus")
 # Get attribution data for uuid
 get_attribution(uuid = uuid)
+```
+
+This function can even write a little blurb for you to include in your publications:
+
+```{r}
+# Get valid uuid
+uuid <- get_uuid(name = "Nycticebus")
+# Get attribution data for uuid
+get_attribution(uuid = uuid, text = TRUE)
 ```
 
 ## Save an image

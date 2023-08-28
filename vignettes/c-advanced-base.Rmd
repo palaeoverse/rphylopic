@@ -153,7 +153,7 @@ for (i in seq_along(species_split)) {
                     y = species_data$flipper_length_mm,
                     ysize = species_data$body_mass_g /
                       max(penguins_subset$body_mass_g, na.rm = TRUE) * 8,
-                    fill = ifelse(species_data$sex == "male", "blue", "orange"))
+                    color = ifelse(species_data$sex == "male", "blue", "orange"))
 }
 
 # Add a legend to the last plot
@@ -168,7 +168,7 @@ In much the same way as generic x-y plotting, the **rphylopic** package can be u
 
 First, let's load our libraries and the tetrapod data:
 
-```{r message = FALSE}
+```{r message = FALSE, warning = FALSE}
 # Load libraries
 library(rphylopic)
 library(maps)
@@ -196,7 +196,7 @@ points(x = tetrapods$lng, y = tetrapods$lat, cex = 2, pch = 16,
 
 Now, as with the penguin figure above, we can easily replace those points with silhouettes.
 
-```{r fig.height = 5}
+```{r fig.height = 5, warning = FALSE}
 map("world", col = "lightgrey", fill = TRUE)
 add_phylopic_base(name = "Mesosaurus", x = tetrapods$lng, y = tetrapods$lat,
                   ysize = 8, color = "blue", alpha = 0.75)
