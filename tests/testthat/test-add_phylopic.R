@@ -2,7 +2,7 @@ suppressPackageStartupMessages(library(ggplot2, quietly = TRUE))
 
 test_that("add_phylopic works", {
   skip_if_offline(host = "api.phylopic.org")
-  dev.off() # clean up any stray plots
+  try(dev.off(), silent = TRUE) # clean up any stray plots
 
   # phylopic in background, with name
   p <- ggplot(iris) +
