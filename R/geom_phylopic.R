@@ -60,7 +60,7 @@ phylopic_env <- new.env()
 #' @param filter \code{character}. Filter by usage license if using the `name`
 #'   aesthetic. Use "by" to limit results to images which do not require
 #'   attribution, "nc" for images which allows commercial usage, and "sa" for
-#'   images without a StandAlone clause. The user can also combine these
+#'   images without a ShareAlike clause. The user can also combine these
 #'   filters as a vector.
 #' @inheritParams ggplot2::layer
 #' @inheritParams ggplot2::geom_point

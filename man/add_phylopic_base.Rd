@@ -34,7 +34,7 @@ that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylop
 \item{filter}{\code{character}. Filter by usage license if \code{name} is defined.
 Use "by" to limit results to images which do not require attribution, "nc"
 for images which allows commercial usage, and "sa" for images without a
-StandAlone clause. The user can also combine these filters as a vector.}
+ShareAlike clause. The user can also combine these filters as a vector.}
 
 \item{x}{\code{numeric}. x value of the silhouette center. Ignored if \code{y} and
 \code{ysize} are not specified.}
