@@ -13,6 +13,7 @@
   * when only the color argument/aesthetic is specified, it is copied to the fill argument/aesthetic (maintaining mostly backwards compatibility with old code)
 * added plot and print methods for silhouette objects (#73)
 * fixed the behavior of geom_phylopic when used with coord_sf
+* added phylopic_key_glyph for using silhouettes inside ggplot legends (#57)
 
 # rphylopic 1.1.1
 
