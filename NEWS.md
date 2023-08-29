@@ -1,4 +1,4 @@
-# rphylopic (development version)
+# rphylopic 1.2.0
 
 * added text argument to get_attribution (#56)
 * get_attribution now handles multiple uuids
