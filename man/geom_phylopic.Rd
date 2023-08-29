@@ -134,6 +134,7 @@ Learn more about setting these aesthetics in \code{\link[=add_phylopic]{add_phyl
 }
 
 \examples{
+\dontrun{
 library(ggplot2)
 df <- data.frame(x = c(2, 4), y = c(10, 20),
                  name = c("Felis silvestris catus", "Odobenus rosmarus"))
@@ -142,4 +143,5 @@ ggplot(df) +
                 color = "purple", size = 10) +
   facet_wrap(~name) +
   coord_cartesian(xlim = c(1,6), ylim = c(5, 30))
+}
 }

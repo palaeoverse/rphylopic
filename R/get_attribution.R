@@ -26,10 +26,12 @@
 #' uuid <- get_uuid(name = "Acropora cervicornis")
 #' # Get attribution data for uuid
 #' attri <- get_attribution(uuid = uuid)
+#' \dontrun{
 #' # Get list of valid uuids
 #' uuids <- get_uuid(name = "Scleractinia", n = 5)
 #' # Get attribution data for uuids
 #' get_attribution(uuid = uuids, text = TRUE)
+#' }
 get_attribution <- function(uuid = NULL, img = NULL, text = FALSE) {
   # Handle img -----------------------------------------------------------
   if (!is.null(img)) {

@@ -68,6 +68,7 @@ phylopic_env <- new.env()
 #' @importFrom ggplot2 layer
 #' @export
 #' @examples
+#' \dontrun{
 #' library(ggplot2)
 #' df <- data.frame(x = c(2, 4), y = c(10, 20),
 #'                  name = c("Felis silvestris catus", "Odobenus rosmarus"))
@@ -76,6 +77,7 @@ phylopic_env <- new.env()
 #'                 color = "purple", size = 10) +
 #'   facet_wrap(~name) +
 #'   coord_cartesian(xlim = c(1,6), ylim = c(5, 30))
+#' }
 geom_phylopic <- function(mapping = NULL, data = NULL,
                           stat = "identity", position = "identity",
                           ...,
@@ -284,6 +286,7 @@ phylopic_env$glyph_ind <- 1
 #' @importFrom grid nullGrob unit
 #' @export
 #' @examples
+#' \dontrun{
 #' library(ggplot2)
 #' df <- data.frame(x = c(2, 4), y = c(10, 20),
 #'                  name = c("Felis silvestris catus", "Odobenus rosmarus"))
@@ -294,6 +297,7 @@ phylopic_env$glyph_ind <- 1
 #'                                                c("Felis silvestris catus",
 #'                                                  "Odobenus rosmarus"))) +
 #'   coord_cartesian(xlim = c(1,6), ylim = c(5, 30))
+#' }
 phylopic_key_glyph <- function(img = NULL, name = NULL, uuid = NULL) {
   if (sum(sapply(list(img, name, uuid), Negate(is.null))) != 1) {
     stop(paste("Must specify one (and only one) of the `img`, `name`, or",

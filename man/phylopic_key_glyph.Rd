@@ -34,6 +34,7 @@ silhouettes will not reflect the size aesthetic, and this function should
 not be used for size legends.
 }
 \examples{
+\dontrun{
 library(ggplot2)
 df <- data.frame(x = c(2, 4), y = c(10, 20),
                  name = c("Felis silvestris catus", "Odobenus rosmarus"))
@@ -44,4 +45,5 @@ ggplot(df) +
                                                c("Felis silvestris catus",
                                                  "Odobenus rosmarus"))) +
   coord_cartesian(xlim = c(1,6), ylim = c(5, 30))
+}
 }
