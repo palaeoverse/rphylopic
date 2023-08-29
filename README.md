@@ -25,8 +25,8 @@ install.packages("rphylopic")
 The development version of `rphylopic` can be installed via GitHub using:
 
 ```r
-# install.packages("devtools")
-devtools::install_github("palaeoverse-community/rphylopic")
+install.packages("remotes")
+remotes::install_github("palaeoverse-community/rphylopic")
 ```
 
 # How does it work?
@@ -76,28 +76,20 @@ add_phylopic_base(name = "Canis lupus", x = 0.75, y = 1.25, ysize = 0.25, color 
 
 ```r
 # All of this functionality is available for ggplot2 as well...
-# But we use add_phylopic instead!
+# But we use add_phylopic and geom_phylopic instead!
 library(ggplot2)
 # Get image
 uuid <- get_uuid(name = "Iris", n = 1)
 img <- get_phylopic(uuid = uuid)
 # Put a silhouette behind a plot
 ggplot(iris) +
-  add_phylopic(img = img, color = "purple", alpha = .5) +
+  add_phylopic(x = 6.1, y = 3.2, img = img, alpha = 0.2) +
   geom_point(aes(x = Sepal.Length, y = Sepal.Width))
   
 # Plot silhouettes as points!
-p <- ggplot(iris) + 
-  geom_point(aes(x = Sepal.Length, y = Sepal.Width), size = 0.1)
-for (i in 1:nrow(iris)) {
-  p <- p + add_phylopic(img = img,
-                        x = iris$Sepal.Length[i],
-                        y = iris$Sepal.Width[i],
-                        ysize = 0.25,
-                        color = "purple")
-}
-# Plot
-p
+ggplot(iris) + 
+  geom_phylopic(aes(x = Sepal.Length, y = Sepal.Width), img = img,
+                color = "purple", size = 0.25)
 ```
 
 ## Get attribution
