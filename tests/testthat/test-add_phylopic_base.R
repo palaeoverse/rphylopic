@@ -41,10 +41,11 @@ test_that("add_phylopic_base works", {
   expect_warning(add_phylopic_base(name = "cat", verbose = FALSE))
   expect_error(expect_warning(add_phylopic_base(name = "jkl;daf",
                                                 verbose = TRUE)))
-  expect_warning(add_phylopic_base(uuid = "jkl;daf"))
+  expect_warning(add_phylopic_base(uuid = "jkl;daf", filter = "by"))
   
   # Expect error
   expect_error(add_phylopic_base(img = "cat"))
+  expect_error(add_phylopic_base(img = cat, verbose = "yes"))
   expect_error(add_phylopic_base(cat, name = "cat"))
   expect_error(add_phylopic_base())
   expect_error(add_phylopic_base(cat, alpha = 3))
