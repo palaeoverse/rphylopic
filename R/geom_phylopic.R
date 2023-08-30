@@ -163,9 +163,9 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
           text <- paste0("`name` ", '"', name, '"')
           if (!is.null(params$filter)) {
             text <- paste0(text, " with `filter` ", '"',
-                           paste0(filter, collapse = "/"), '"')
+                           paste0(params$filter, collapse = "/"), '"')
           }
-          warning(paste0(text, " returned no PhyloPic results."))
+          warning(paste0(text, " returned no PhyloPic results."), call. = FALSE)
           return(NULL)
         }
         get_phylopic(uuid)
