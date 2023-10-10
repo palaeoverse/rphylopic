@@ -30,7 +30,7 @@ Imports:
     graphics,
     png,
     grImport2 (>= 0.3.0),
-    rsvg,
+    rsvg (>= 2.6.0),
     httr,
     curl,
     methods,
