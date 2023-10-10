@@ -197,7 +197,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
                    "vector image) or class array (for a raster image)."))
       }
     }
-    if (params$verbose) {
+    if (params$verbose&& length(Filter(Negate(is.null), imgs)) > 0) {
       get_attribution(img = imgs, text = TRUE)
     }
     data$name <- NULL

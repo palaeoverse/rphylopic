@@ -48,14 +48,12 @@ test_that("geom_phylopic works", {
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y), img = -5)
   expect_error(plot(gg))
-  suppressWarnings(expect_warning(ggplot_build(
-    ggplot(df) +
-      geom_phylopic(aes(x = x, y = y), name = "asdfghjkl")
-  )))
-  suppressWarnings(expect_warning(ggplot_build(
-    ggplot(df) +
-      geom_phylopic(aes(x = x, y = y), uuid = "asdfghjkl")
-  )))
+  gg <- ggplot(df) +
+    geom_phylopic(aes(x = x, y = y), name = "asdfghjkl", verbose = TRUE)
+  expect_warning(plot(gg))
+  gg <- ggplot(df) +
+    geom_phylopic(aes(x = x, y = y), uuid = "asdfghjkl")
+  expect_warning(plot(gg))
 })
 
 test_that("phylopic_key_glyph works", {

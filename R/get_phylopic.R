@@ -96,7 +96,7 @@ get_svg <- function(url) {
   res <- GET(url = url)
   filename <- file.path(tempdir(), "temp.svg")
   rsvg_svg(res$content, filename)
-  readPicture(filename)
+  readPicture(filename, warn = FALSE)
 }
 
 #' @importFrom httr GET

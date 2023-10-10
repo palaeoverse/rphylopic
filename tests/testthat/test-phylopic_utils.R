@@ -45,9 +45,15 @@ test_that("recolor_phylopic works", {
   cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
   cat_recolor <- recolor_phylopic(cat, .5, color = "green", fill = "red")
   expect_true(is(cat_recolor, "Picture"))
-  expect_equal(cat_recolor@content[[1]]@content[[1]]@gp$col, "green")
-  expect_equal(cat_recolor@content[[1]]@content[[1]]@gp$fill, "red")
-  expect_equal(cat_recolor@content[[1]]@content[[1]]@gp$alpha, .5)
+  if ("content" %in% slotNames(cat_recolor@content[[1]])) {
+    expect_equal(cat_recolor@content[[1]]@content[[1]]@gp$col, "green")
+    expect_equal(cat_recolor@content[[1]]@content[[1]]@gp$fill, "red")
+    expect_equal(cat_recolor@content[[1]]@content[[1]]@gp$alpha, .5)
+  } else {
+    expect_equal(cat_recolor@content[[1]]@gp$col, "green")
+    expect_equal(cat_recolor@content[[1]]@gp$fill, "red")
+    expect_equal(cat_recolor@content[[1]]@gp$alpha, .5)
+  }
 
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
                           format = "raster")
