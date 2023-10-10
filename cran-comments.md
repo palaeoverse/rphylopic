@@ -1,8 +1,8 @@
 ## Test environments (with Github Actions)
 
 * Windows 10.0.20348 (x86_64-w64-mingw32): R 4.3.1
-* Mac OS X 12.6.7 (x86_64-apple-darwin20): R 4.3.1
-* Ubuntu 20.04.6 (x86_64-pc-linux-gnu): R 4.2.3, 4.3.1, and devel (r85029)
+* Mac OS X 12.7 (x86_64-apple-darwin20): R 4.3.1
+* Ubuntu 22.04.3 (x86_64-pc-linux-gnu): R 4.2.3, 4.3.1, and devel (r85295)
 
 ## R CMD check results
 
