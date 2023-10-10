@@ -1,4 +1,4 @@
-# rphylopic (development version)
+# rphylopic 1.2.1
 
 * updated rphylopic to work with grImport2 version 0.3.0 and rsvg version 2.6.0
 * rphylopic now requires grImport2 >= 0.3.0 and rsvg >= 2.6.0
