@@ -54,6 +54,9 @@ test_that("geom_phylopic works", {
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y), uuid = "asdfghjkl")
   expect_warning(plot(gg))
+  gg <- ggplot(df) +
+    geom_phylopic(aes(x = x, y = y, uuid = uuid), size = 1E-6)
+  expect_warning(plot(gg))
 })
 
 test_that("phylopic_key_glyph works", {
