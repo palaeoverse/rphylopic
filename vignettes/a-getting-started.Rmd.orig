@@ -9,9 +9,13 @@ vignette: >
 
 **Authors:** Lewis A. Jones & William Gearty
 
-**Last updated:** 2023-10-27
+**Last updated:** `r Sys.Date()`
 
-
+```{r setup, include = FALSE, eval = TRUE}
+knitr::opts_chunk$set(echo = TRUE, include = TRUE, eval = TRUE,
+                      out.width = "100%", fig.width = 7.2, fig.height = 5,
+                      dpi = 200, fig.path = "")
+```
 
 <div style="text-align: justify">
 
@@ -23,48 +27,27 @@ vignette: >
 
 The **rphylopic** package can be installed via CRAN or its dedicated [GitHub repository](https://github.com/palaeoverse-community/rphylopic) if the development version is preferred. To install via CRAN, simply use:
 
-
-```r
+```{r eval = FALSE}
 install.packages("rphylopic")
 ```
 
 To install the development version, first install the `{remotes}` package, and then use `install_github()` to install **rphylopic** directly from GitHub.
 
-
-```r
+```{r eval = FALSE}
 install.packages("remotes")
 remotes::install_github("palaeoverse-community/rphylopic")
 ```
 
 You can now load **rphylopic** using the default `library()` function:
 
-
-```r
+```{r message = FALSE}
 library(rphylopic)
 ```
 
 **Before we get onto the good stuff, the development team has a small request**. If you use **rphylopic** in your research, please cite the associated publication. This will help us to continue our work in supporting you to do yours. You can access the appropriate citation via:
 
-
-```r
+```{r}
 citation("rphylopic")
-```
-
-```
-## To cite rphylopic in publications, use the following citation:
-## 
-##   Gearty, W. and Jones, L.A., 2023. rphylopic: An R package for fetching, transforming, and visualising PhyloPic
-##   silhouettes. bioRxiv. doi: 10.1101/2023.06.22.546191.
-## 
-## A BibTeX entry for LaTeX users is
-## 
-##   @Article{,
-##     title = {rphylopic: An R package for fetching, transforming, and visualising PhyloPic silhouettes},
-##     author = {William Gearty and Lewis A. Jones},
-##     year = {2023},
-##     journal = {bioRxiv},
-##     doi = {10.1101/2023.06.22.546191},
-##   }
 ```
 
 Also, don't forget to acknowledge the contributors of the silhouettes that you use (see [Get attribution]).
@@ -75,8 +58,7 @@ Every silhouette available via [PhyloPic](https://www.phylopic.org) has a univer
 
 ## Get an image uuid
 
-
-```r
+```{r}
 # Load rphylopic
 library(rphylopic)
 # Get a single image UUID for a species
@@ -91,8 +73,7 @@ uuid <- get_uuid(name = "Canis lupus", n = 5)
 
 As multiple silhouettes can exist for a searched name, it can be difficult to pick the correct UUID, especially without visualizing the images. The `pick_phylopic()` function plots all requested silhouettes and provides an interactive menu to allow you to select the right image for you. Let's go with option 1!
 
-
-```r
+```{r, eval = FALSE}
 # How do I pick?!
 # It's difficult without seeing the image itself, let's use:
 img <- pick_phylopic(name = "Canis lupus", n = 4, view = 4)
@@ -105,8 +86,7 @@ Now we have selected our silhouette, we can make some plots!
 ### Base R
 Let's start with base R by using `add_phylopic_base()`:
 
-
-```r
+```{r intro-base-plot, warning = FALSE}
 # OK, now we've got the image we want... let's add it to a plot!
 plot(x = 1, y = 1, type = "n", ann = FALSE)
 add_phylopic_base(img = img, x = 1.25, y = 1.25, ysize = 0.25)
@@ -119,18 +99,12 @@ add_phylopic_base(uuid = uuid, x = 1, y = 1, ysize = 0.25)
 add_phylopic_base(name = "Canis lupus", x = 0.75, y = 0.75, ysize = 0.25)
 ```
 
-<div class="figure">
-<img src="intro-base-plot-1.png" alt="plot of chunk intro-base-plot" width="100%" />
-<p class="caption">plot of chunk intro-base-plot</p>
-</div>
-
 Ah, you've found out our little secret! You can actually skip the steps of getting the UUID altogether by just searching for the desired taxon in `add_phylopic_base()`. However, this will always return the first matched silhouette meaning you might be missing out on all the other options! It's always worth checking out your options with `pick_phylopic()` first.
 
 ### ggplot2
 You can also accomplish the same plot with the `{ggplot2}` package. Here, we'll use the `add_phylopic()` function, but the functionality and all of the arguments are the same:
 
-
-```r
+```{r intro-ggplot-plot, warning = FALSE}
 library(ggplot2)
 p <- ggplot() +
   coord_cartesian(xlim = c(0.6, 1.4), ylim = c(0.6, 1.4)) +
@@ -144,34 +118,26 @@ p <- p + add_phylopic(uuid = uuid, x = 1, y = 1, ysize = 0.25)
 p + add_phylopic(name = "Canis lupus", x = 0.75, y = 0.75, ysize = 0.25)
 ```
 
-<div class="figure">
-<img src="intro-ggplot-plot-1.png" alt="plot of chunk intro-ggplot-plot" width="100%" />
-<p class="caption">plot of chunk intro-ggplot-plot</p>
-</div>
-
 ## Transforming silhouettes
 Once a silhouette is picked and saved in the your R environment, it may be useful to transform the image to better suit the particular visualization of interest. We have implemented three user-friendly functions to accommodate three transformations that might be desired: flipping, rotating, and recoloring.
 
 The `flip_phylopic()` function can be used to flip a silhouette horizontally and/or vertically. This may be useful if, for example, you want all of the silhouettes to face the same direction.
 
-
-```r
+```{r}
 # Flip silhouette horizontally
 img_flip <- flip_phylopic(img = img, horizontal = TRUE, vertical = FALSE)
 ```
 
 The `rotate_phylopic()` function can be used to rotate a silhouette an arbitrary number of degrees. This may be useful when trying to align a silhouette with text or other objects within a figure.
 
-
-```r
+```{r}
 # Rotate silhouette by 45 degrees
 img_rot <- rotate_phylopic(img = img, angle = 45)
 ```
 
 Finally, the `recolor_phylopic()` function can be used to modify the color and/or transparency of a silhouette. The vast majority of PhyloPic silhouettes are black and fully opaque by default. However, it may be useful to change this when the you are trying to either match an existing visualization color palette or trying to convey extra information, such as categorical data, through color.
 
-
-```r
+```{r}
 # Change color to blue and transparency to 50%
 img_col <- recolor_phylopic(img = img, alpha = 0.5,
                             color = "blue", fill = "blue")
@@ -179,8 +145,7 @@ img_col <- recolor_phylopic(img = img, alpha = 0.5,
 
 Let's see what those look like in the same plot:
 
-
-```r
+```{r intro-transform-plot}
 ggplot() +
   coord_cartesian(xlim = c(0.6, 1.4), ylim = c(0.6, 1.4)) +
   add_phylopic(img = img_flip, x = 1.25, y = 1.25, ysize = 0.25) +
@@ -189,11 +154,6 @@ ggplot() +
                color = "original")
 ```
 
-<div class="figure">
-<img src="intro-transform-plot-1.png" alt="plot of chunk intro-transform-plot" width="100%" />
-<p class="caption">plot of chunk intro-transform-plot</p>
-</div>
-
 You'll notice that the rotated silhouette is smaller than the other two silhouettes. This is because our functions have arguments to specify the height (`ysize`). The width is automatically set to maintain the original aspect ratio of the silhouette. In this case, the aspect ratio of the rotated silhouette has changed, so the same height results in a smaller silhouette overall.
 
 For convenience, we have also included these transformation options within all of the visualization functions. The default color is "black", hence why we needed to specify `color = "original"` above. However, when the same transformed silhouette will be used for multiple visualizations, we suggest transforming the silhouette first, saving it as a new object, then using this new object for visualization purposes.
@@ -201,56 +161,26 @@ For convenience, we have also included these transformation options within all o
 ## Get attribution
 Now that you've made a plot and used some silhouettes, you should acknowledge the contributors that made those silhouettes. Fortunately, **rphylopic** includes the `get_attribution()` function to get contributor data about specific images:
 
-
-```r
+```{r}
 # Get valid uuid
 uuid <- get_uuid(name = "Nycticebus")
 # Get attribution data for uuid
 get_attribution(uuid = uuid)
 ```
 
-```
-## $contributor
-## [1] "Mareike Janiak"
-## 
-## $contributor_uuid
-## [1] "7bed68fb-cf59-4e58-aed1-41e81269fb01"
-## 
-## $created
-## [1] "2020-05-19"
-## 
-## $contact
-## character(0)
-## 
-## $image_uuid
-## [1] "7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9"
-## 
-## $license
-## [1] "https://creativecommons.org/publicdomain/mark/1.0/"
-## 
-## $license_abbr
-## [1] "Public Domain Mark 1.0"
-```
-
 This function can even write a little blurb for you to include in your publications:
 
-
-```r
+```{r}
 # Get valid uuid
 uuid <- get_uuid(name = "Nycticebus")
 # Get attribution data for uuid
 get_attribution(uuid = uuid, text = TRUE)
 ```
 
-```
-## Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023). Silhouette was contributed by Mareike Janiak, 2020 (Public Domain Mark 1.0).
-```
-
 ## Save an image
 You should be able to accomplish all of your visualization needs within R (see our other vignettes for examples), but in the rare case that need to use a silhouette outside of R, we've also got you covered with the `save_phylopic()` function. You can save silhouettes in a range of formats, including: Portable Document Format (PDF), Portable Network Graphics (PNG), Scale Vector Graphics (SVG), Tag Image File Format (TIFF), Joint Photographic Experts Group (JPEG), and bitmap (BMP).
 
-
-```r
+```{r, eval = FALSE}
 # How do I save an image?
 # Get image
 img <- pick_phylopic(name = "Phascolarctos cinereus", n = 1)
