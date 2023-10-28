@@ -1,6 +1,8 @@
 ---
 title: "Getting started with rphylopic"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    css: vignettes.css
 vignette: >
   %\VignetteIndexEntry{Getting started with rphylopic}
   %\VignetteEngine{knitr::rmarkdown}

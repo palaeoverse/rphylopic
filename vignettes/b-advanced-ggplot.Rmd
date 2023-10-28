@@ -1,6 +1,8 @@
 ---
 title: "Advanced examples in ggplot"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    css: vignettes.css
 vignette: >
   %\VignetteIndexEntry{Advanced examples in ggplot}
   %\VignetteEngine{knitr::rmarkdown}
@@ -9,7 +11,7 @@ vignette: >
 
 **Authors:** William Gearty & Lewis A. Jones
 
-**Last updated:** 2023-10-27
+**Last updated:** 2023-10-28
 
 
 

@@ -1,6 +1,8 @@
 ---
 title: "Advanced examples in base R"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    css: vignettes.css
 vignette: >
   %\VignetteIndexEntry{Advanced examples in base R}
   %\VignetteEngine{knitr::rmarkdown}

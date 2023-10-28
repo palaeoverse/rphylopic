@@ -1,6 +1,8 @@
 ---
 title: "Getting started with rphylopic"
-output: rmarkdown::html_vignette
+output:
+  rmarkdown::html_vignette:
+    css: vignettes.css
 vignette: >
   %\VignetteIndexEntry{Getting started with rphylopic}
   %\VignetteEngine{knitr::rmarkdown}
@@ -9,7 +11,7 @@ vignette: >
 
 **Authors:** Lewis A. Jones & William Gearty
 
-**Last updated:** 2023-10-27
+**Last updated:** 2023-10-28
 
 
 
