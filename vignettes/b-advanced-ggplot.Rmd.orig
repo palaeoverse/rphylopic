@@ -1,8 +1,6 @@
 ---
 title: "Advanced examples in ggplot"
-output:
-  rmarkdown::html_vignette:
-    css: vignettes.css
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Advanced examples in ggplot}
   %\VignetteEngine{knitr::rmarkdown}
@@ -307,3 +305,9 @@ revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
 Beautiful!
 
 </div>
+
+```{css echo = FALSE}
+p.caption {
+  display: none;
+}
+```

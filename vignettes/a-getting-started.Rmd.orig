@@ -1,8 +1,6 @@
 ---
 title: "Getting started with rphylopic"
-output:
-  rmarkdown::html_vignette:
-    css: vignettes.css
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting started with rphylopic}
   %\VignetteEngine{knitr::rmarkdown}
@@ -197,3 +195,9 @@ Now that you've learned the ropes of **rphylopic**, how about you check out some
 - [Advanced examples in base R](c-advanced-base.html)
 
 </div>
+
+```{css echo = FALSE}
+p.caption {
+  display: none;
+}
+```

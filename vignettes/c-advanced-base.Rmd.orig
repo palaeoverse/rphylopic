@@ -1,8 +1,6 @@
 ---
 title: "Advanced examples in base R"
-output:
-  rmarkdown::html_vignette:
-    css: vignettes.css
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Advanced examples in base R}
   %\VignetteEngine{knitr::rmarkdown}
@@ -306,3 +304,9 @@ add_phylopic_base(img = vertebrate_data$svg,
 Beautiful!
 
 </div>
+
+```{css echo = FALSE}
+p.caption {
+  display: none;
+}
+```
