@@ -90,7 +90,7 @@
     
     
 <p><strong>Authors:</strong> William Gearty &amp; Lewis A. Jones</p>
-<p><strong>Last updated:</strong> 2023-10-11</p>
+<p><strong>Last updated:</strong> 2023-10-27</p>
 <div style="text-align: justify">
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -147,7 +147,11 @@ vs. their flipper lengths:</p>
 <span>       xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">penguins_subset</span><span class="op">$</span><span class="va">bill_length_mm</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>       ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">penguins_subset</span><span class="op">$</span><span class="va">flipper_length_mm</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><img src="c-advanced-base_files/figure-html/unnamed-chunk-6-1.png" width="100%"></p>
+<div class="figure">
+<img src="base-penguin-plot-1-1.png" alt="plot of chunk base-penguin-plot-1" width="100%"><p class="caption">
+plot of chunk base-penguin-plot-1
+</p>
+</div>
 <p>That’s a nice basic plot! But you know what would make it nicer? If
 we added a penguin silhouette to the plot. Sadly, we don’t have a
 different silhouette for each species (although we could make one…), so
@@ -170,7 +174,11 @@ tall the silhouette is in the units of the y-axis.</p>
 <span>       ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">penguins_subset</span><span class="op">$</span><span class="va">flipper_length_mm</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="va">i</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">penguin_rot</span>, x <span class="op">=</span> <span class="fl">59</span>, y <span class="op">=</span> <span class="fl">215</span>, ysize <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><img src="c-advanced-base_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
+<div class="figure">
+<img src="base-penguin-plot-2-1.png" alt="plot of chunk base-penguin-plot-2" width="100%"><p class="caption">
+plot of chunk base-penguin-plot-2
+</p>
+</div>
 <p>Isn’t that nifty! We can go a step further, though. What if we used
 little penguins instead of points?! To do that, we can once again use
 the <code><a href="../reference/add_phylopic_base.html">add_phylopic_base()</a></code> function. In this case, we can
@@ -191,7 +199,11 @@ same image for each x-y pair:</p>
 <span>                    x <span class="op">=</span> <span class="va">species_data</span><span class="op">$</span><span class="va">bill_length_mm</span>,</span>
 <span>                    y <span class="op">=</span> <span class="va">species_data</span><span class="op">$</span><span class="va">flipper_length_mm</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><img src="c-advanced-base_files/figure-html/unnamed-chunk-8-1.png" width="100%"></p>
+<div class="figure">
+<img src="base-penguin-plot-3-1.png" alt="plot of chunk base-penguin-plot-3" width="100%"><p class="caption">
+plot of chunk base-penguin-plot-3
+</p>
+</div>
 <p>Oh no, the silhouettes are way too big! The default for
 <code><a href="../reference/add_phylopic_base.html">add_phylopic_base()</a></code> is to make the silhouette the same
 height as the plot, which is way too big for our case here. Let’s make
@@ -212,7 +224,11 @@ scaling factor of 8 seems to work well for this size figure.</p>
 <span>                    ysize <span class="op">=</span> <span class="va">species_data</span><span class="op">$</span><span class="va">body_mass_g</span> <span class="op">/</span></span>
 <span>                      <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">penguins_subset</span><span class="op">$</span><span class="va">body_mass_g</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">*</span> <span class="fl">8</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p><img src="c-advanced-base_files/figure-html/unnamed-chunk-9-1.png" width="100%"></p>
+<div class="figure">
+<img src="base-penguin-plot-4-1.png" alt="plot of chunk base-penguin-plot-4" width="100%"><p class="caption">
+plot of chunk base-penguin-plot-4
+</p>
+</div>
 <p>Finally, let’s color the female and male penguins with different
 colors. We’ll also add a legend to the last panel.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -235,7 +251,11 @@ colors. We’ll also add a legend to the last panel.</p>
 <span><span class="co"># Add a legend to the last plot</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"bottomright"</span>, legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>       col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"blue"</span><span class="op">)</span>, bty <span class="op">=</span> <span class="st">"n"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="c-advanced-base_files/figure-html/unnamed-chunk-10-1.png" width="100%"></p>
+<div class="figure">
+<img src="base-penguin-plot-5-1.png" alt="plot of chunk base-penguin-plot-5" width="100%"><p class="caption">
+plot of chunk base-penguin-plot-5
+</p>
+</div>
 <p>Now that’s a nice figure!</p>
 </div>
 <div class="section level2">
@@ -274,14 +294,22 @@ geographic location.</p>
 <span><span class="co"># Plot points</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">tetrapods</span><span class="op">$</span><span class="va">lng</span>, y <span class="op">=</span> <span class="va">tetrapods</span><span class="op">$</span><span class="va">lat</span>, cex <span class="op">=</span> <span class="fl">2</span>, pch <span class="op">=</span> <span class="fl">16</span>,</span>
 <span>       col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span>red <span class="op">=</span> <span class="fl">0</span>, green <span class="op">=</span> <span class="fl">0</span>, blue <span class="op">=</span> <span class="fl">1</span>, alpha <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="c-advanced-base_files/figure-html/unnamed-chunk-13-1.png" width="100%"></p>
+<div class="figure">
+<img src="base-geog-plot-1-1.png" alt="plot of chunk base-geog-plot-1" width="100%"><p class="caption">
+plot of chunk base-geog-plot-1
+</p>
+</div>
 <p>Now, as with the penguin figure above, we can easily replace those
 points with silhouettes.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"world"</span>, col <span class="op">=</span> <span class="st">"lightgrey"</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Mesosaurus"</span>, x <span class="op">=</span> <span class="va">tetrapods</span><span class="op">$</span><span class="va">lng</span>, y <span class="op">=</span> <span class="va">tetrapods</span><span class="op">$</span><span class="va">lat</span>,</span>
 <span>                  ysize <span class="op">=</span> <span class="fl">8</span>, color <span class="op">=</span> <span class="st">"blue"</span>, alpha <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span></code></pre></div>
-<p><img src="c-advanced-base_files/figure-html/unnamed-chunk-14-1.png" width="100%"></p>
+<div class="figure">
+<img src="base-geog-plot-2-1.png" alt="plot of chunk base-geog-plot-2" width="100%"><p class="caption">
+plot of chunk base-geog-plot-2
+</p>
+</div>
 <p>Snazzy!</p>
 <p>Note that we used the genus name as the <code>name</code> argument
 here. However, if we were plotting occurrences of multiple genera, we’d
@@ -373,7 +401,11 @@ package:</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ape-package.ird.fr/" class="external-link">ape</a></span><span class="op">)</span></span>
 <span><span class="co"># Plot the tree</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vertebrate.tree</span><span class="op">)</span></span></code></pre></div>
-<p><img src="c-advanced-base_files/figure-html/unnamed-chunk-21-1.png" width="100%"></p>
+<div class="figure">
+<img src="base-phylo-plot-1-1.png" alt="plot of chunk base-phylo-plot-1" width="100%"><p class="caption">
+plot of chunk base-phylo-plot-1
+</p>
+</div>
 <p>Hmm…that’s a bit boring. Let’s add a geological timescale to the
 bottom using <code><a href="https://palaeoverse.palaeoverse.org/reference/axis_geo.html" class="external-link">axis_geo_phylo()</a></code> from the
 <a href="https://palaeoverse.palaeoverse.org" class="external-link">palaeoverse</a> package.</p>
@@ -382,7 +414,11 @@ bottom using <code><a href="https://palaeoverse.palaeoverse.org/reference/axis_g
 <span><span class="co"># Plot the tree with a geological timescale on the bottom</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vertebrate.tree</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/axis_geo.html" class="external-link">axis_geo_phylo</a></span><span class="op">(</span>intervals <span class="op">=</span> <span class="st">"periods"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="c-advanced-base_files/figure-html/unnamed-chunk-22-1.png" width="100%"></p>
+<div class="figure">
+<img src="base-phylo-plot-2-1.png" alt="plot of chunk base-phylo-plot-2" width="100%"><p class="caption">
+plot of chunk base-phylo-plot-2
+</p>
+</div>
 <p>That’s looking a lot prettier! Let’s go ahead and replace the tip
 labels with our silhouettes now using <code><a href="../reference/add_phylopic_base.html">add_phylopic_base()</a></code>.
 Note that while it may look like all of the tips have an x-axis value of
@@ -395,7 +431,11 @@ x-axis is the total height of the tree. We can calculate this using the
 <span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/axis_geo.html" class="external-link">axis_geo_phylo</a></span><span class="op">(</span>intervals <span class="op">=</span> <span class="st">"periods"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">vertebrate_data</span><span class="op">$</span><span class="va">svg</span>,</span>
 <span>                  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phytools/man/nodeHeights.html" class="external-link">nodeHeights</a></span><span class="op">(</span><span class="va">vertebrate.tree</span><span class="op">)</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">11</span>, ysize <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="c-advanced-base_files/figure-html/unnamed-chunk-23-1.png" width="100%"></p>
+<div class="figure">
+<img src="base-phylo-plot-3-1.png" alt="plot of chunk base-phylo-plot-3" width="100%"><p class="caption">
+plot of chunk base-phylo-plot-3
+</p>
+</div>
 <p>Note that only a single size is specified and aspect ratio is always
 maintained, hence why the silhouettes all have the same height but
 different widths. Let’s fix some of the silhouettes by rotating them 90
@@ -409,7 +449,11 @@ degrees:</p>
 <span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/axis_geo.html" class="external-link">axis_geo_phylo</a></span><span class="op">(</span>intervals <span class="op">=</span> <span class="st">"periods"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">vertebrate_data</span><span class="op">$</span><span class="va">svg</span>,</span>
 <span>                  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phytools/man/nodeHeights.html" class="external-link">nodeHeights</a></span><span class="op">(</span><span class="va">vertebrate.tree</span><span class="op">)</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">11</span>, ysize <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="c-advanced-base_files/figure-html/unnamed-chunk-25-1.png" width="100%"></p>
+<div class="figure">
+<img src="base-phylo-plot-4-1.png" alt="plot of chunk base-phylo-plot-4" width="100%"><p class="caption">
+plot of chunk base-phylo-plot-4
+</p>
+</div>
 <p>Beautiful!</p>
 </div>
 </div>

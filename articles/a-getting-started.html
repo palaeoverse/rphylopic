@@ -90,7 +90,7 @@
     
     
 <p><strong>Authors:</strong> Lewis A. Jones &amp; William Gearty</p>
-<p><strong>Last updated:</strong> 2023-10-11</p>
+<p><strong>Last updated:</strong> 2023-10-27</p>
 <div style="text-align: justify">
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -117,7 +117,7 @@ CRAN, simply use:</p>
 directly from GitHub.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"palaeoverse-community/rphylopic"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"palaeoverse-community/rphylopic"</span><span class="op">)</span></span></code></pre></div>
 <p>You can now load <strong>rphylopic</strong> using the default
 <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -131,9 +131,8 @@ appropriate citation via:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"rphylopic"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## To cite rphylopic in publications, use the following citation:</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##   Gearty, W. and Jones, L.A., 2023. rphylopic: An R package for</span></span>
-<span><span class="co">##   fetching, transforming, and visualising PhyloPic silhouettes.</span></span>
-<span><span class="co">##   bioRxiv. doi: 10.1101/2023.06.22.546191.</span></span>
+<span><span class="co">##   Gearty, W. and Jones, L.A., 2023. rphylopic: An R package for fetching, transforming, and visualising PhyloPic</span></span>
+<span><span class="co">##   silhouettes. bioRxiv. doi: 10.1101/2023.06.22.546191.</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## A BibTeX entry for LaTeX users is</span></span>
 <span><span class="co">## </span></span>
@@ -207,7 +206,11 @@ right image for you. Let’s go with option 1!</p>
 <span></span>
 <span><span class="co"># What about just using the first image linked to the name? Definitely!</span></span>
 <span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Canis lupus"</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">0.75</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></code></pre></div>
-<p><img src="a-getting-started_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
+<div class="figure">
+<img src="intro-base-plot-1.png" alt="plot of chunk intro-base-plot" width="100%"><p class="caption">
+plot of chunk intro-base-plot
+</p>
+</div>
 <p>Ah, you’ve found out our little secret! You can actually skip the
 steps of getting the UUID altogether by just searching for the desired
 taxon in <code><a href="../reference/add_phylopic_base.html">add_phylopic_base()</a></code>. However, this will always
@@ -233,7 +236,11 @@ the functionality and all of the arguments are the same:</p>
 <span></span>
 <span><span class="co"># What about just using the first image linked to the name? Definitely!</span></span>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Canis lupus"</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">0.75</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></code></pre></div>
-<p><img src="a-getting-started_files/figure-html/unnamed-chunk-8-1.png" width="100%"></p>
+<div class="figure">
+<img src="intro-ggplot-plot-1.png" alt="plot of chunk intro-ggplot-plot" width="100%"><p class="caption">
+plot of chunk intro-ggplot-plot
+</p>
+</div>
 </div>
 </div>
 <div class="section level3">
@@ -275,7 +282,11 @@ information, such as categorical data, through color.</p>
 <span>  <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img_rot</span>, x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">1</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img_col</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">0.75</span>, ysize <span class="op">=</span> <span class="fl">0.25</span>,</span>
 <span>               color <span class="op">=</span> <span class="st">"original"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="a-getting-started_files/figure-html/unnamed-chunk-12-1.png" width="100%"></p>
+<div class="figure">
+<img src="intro-transform-plot-1.png" alt="plot of chunk intro-transform-plot" width="100%"><p class="caption">
+plot of chunk intro-transform-plot
+</p>
+</div>
 <p>You’ll notice that the rotated silhouette is smaller than the other
 two silhouettes. This is because our functions have arguments to specify
 the height (<code>ysize</code>). The width is automatically set to
