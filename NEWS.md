@@ -1,4 +1,4 @@
-# rphylopic (development version)
+# rphylopic 1.2.2
 
 * vignettes are now precompiled
 
