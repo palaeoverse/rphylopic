@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/palaeoverse-community/rphylopic",
   "issueTracker": "https://github.com/palaeoverse-community/rphylopic/issues",
   "license": "https://spdx.org/licenses/GPL-3.0",
-  "version": "1.1.0",
+  "version": "1.2.2.9000",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.3 (2023-03-15 ucrt)",
+  "runtimePlatform": "R version 4.3.1 (2023-06-16 ucrt)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -90,18 +90,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "knitr",
-      "name": "knitr",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=knitr"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "rmarkdown",
       "name": "rmarkdown",
       "provider": {
@@ -162,18 +150,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "geodata",
-      "name": "geodata",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=geodata"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "ape",
       "name": "ape",
       "provider": {
@@ -210,15 +186,15 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "raster",
-      "name": "raster",
+      "identifier": "maps",
+      "name": "maps",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://CRAN.R-project.org/package=raster"
+      "sameAs": "https://CRAN.R-project.org/package=maps"
     }
   ],
   "softwareRequirements": {
@@ -278,6 +254,7 @@
       "@type": "SoftwareApplication",
       "identifier": "grImport2",
       "name": "grImport2",
+      "version": ">= 0.3.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -290,6 +267,7 @@
       "@type": "SoftwareApplication",
       "identifier": "rsvg",
       "name": "rsvg",
+      "version": ">= 2.6.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
@@ -351,9 +329,21 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=pbapply"
     },
+    "14": {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
     "SystemRequirements": null
   },
-  "fileSize": "11812.935KB",
+  "fileSize": "5462.059KB",
   "citation": [
     {
       "@type": "ScholarlyArticle",
@@ -371,15 +361,18 @@
         }
       ],
       "name": "rphylopic: An R package for fetching, transforming, and visualising PhyloPic silhouettes",
-      "identifier": "10.1101/2023.06.22.546191",
-      "@id": "https://doi.org/10.1101/2023.06.22.546191",
-      "sameAs": "https://doi.org/10.1101/2023.06.22.546191",
+      "identifier": "10.1111/2041-210X.14221",
+      "pagination": "2700-2708",
+      "@id": "https://doi.org/10.1111/2041-210X.14221",
+      "sameAs": "https://doi.org/10.1111/2041-210X.14221",
       "isPartOf": {
         "@type": "PublicationIssue",
+        "issueNumber": "11",
         "datePublished": "2023",
         "isPartOf": {
           "@type": ["PublicationVolume", "Periodical"],
-          "name": "bioRxiv"
+          "volumeNumber": "14",
+          "name": "Methods in Ecology and Evolution"
         }
       }
     }
