@@ -1,3 +1,4 @@
+#' @importFrom utils packageDescription
 .onAttach <- function(libname, pkgname) {
   pkgVersion <- packageDescription(pkgname, fields = "Version")
   packageStartupMessage(paste0('You are using rphylopic v.', pkgVersion, '. ',
