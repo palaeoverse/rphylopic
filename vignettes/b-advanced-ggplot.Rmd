@@ -174,7 +174,7 @@ ggplot(penguins_subset) +
 Now that's a nice figure!
 
 # Geographic distribution
-In much the same way as generic x-y plotting, the **rphylopic** package can be used in combination with `{ggplot2}` to plot organism silhouettes on a map. That is, to plot data points (e.g., species occurrences) as silhouettes. We provide an example here of how this might be achieved. For this application, we use the example occurrence dataset of early (Carboniferous to Early Triassic) tetrapods from the `{palaeoverse}` R package to visualize the geographic distribution of *Mesosaurus* fossils.
+In much the same way as generic x-y plotting, the **rphylopic** package can be used in combination with `{ggplot2}` to plot organism silhouettes on a map. That is, to plot data points (e.g., species occurrences) as silhouettes. We provide an example here of how this might be achieved. For this application, we use the example occurrence dataset of early (Carboniferous to Early Triassic) tetrapods from the `{palaeoverse}` R package to visualize the geographic distribution of *Diplocaulus* fossils.
 
 First, let's load our libraries and the tetrapod data:
 
@@ -184,16 +184,18 @@ First, let's load our libraries and the tetrapod data:
 library(rphylopic)
 library(ggplot2)
 library(palaeoverse)
+library(sf)
+library(maps)
 # Get occurrence data
 data(tetrapods)
 ```
 
-Then we'll subset our occurrences to only those for *Mesosaurus*:
+Then we'll subset our occurrences to only those for *Diplocaulus*:
 
 
 ```r
 # Subset to desired group
-tetrapods <- subset(tetrapods, genus == "Mesosaurus")
+tetrapods <- subset(tetrapods, genus == "Diplocaulus")
 ```
 
 Now, let's plot those occurrences on a world map. `{ggplot2}` and it's built-in function `map_data()` make this a breeze. Note that we use `alpha = 0.75` in case there are multiple occurrences in the same place. That way, the darker the color, the more occurrences in that geographic location.
@@ -201,11 +203,11 @@ Now, let's plot those occurrences on a world map. `{ggplot2}` and it's built-in 
 
 ```r
 # Get map data
-world <- map_data(map = "world")
+world <- st_as_sf(map("world", fill = TRUE, plot = FALSE))
+world <- st_wrap_dateline(world)
 # Make map
-ggplot() +
-  geom_polygon(data = world, aes(x = long, y = lat, group = group),
-               fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
+ggplot(world) +
+  geom_sf(fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
   geom_point(data = tetrapods, aes(x = lng, y = lat),
              size = 4, alpha = 0.75, color = "blue") +
   theme_void() +
@@ -221,9 +223,8 @@ Now, as with the penguin figure above, we can easily replace those points with s
 
 
 ```r
-ggplot() +
-  geom_polygon(data = world, aes(x = long, y = lat, group = group),
-               fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
+ggplot(world) +
+  geom_sf(fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
   geom_phylopic(data = tetrapods, aes(x = lng, y = lat, name = genus),
                 size = 4, alpha = 0.75, color = "blue") +
   theme_void() +
@@ -237,9 +238,28 @@ ggplot() +
 
 Snazzy!
 
-Note that while we used the genus name as the `name` aesthetic here, we easily could have done `name = "Mesosaurus"` outside of the `aes()` call instead. However, if we were plotting occurrences of multiple genera, we'd definitely want to plot them as different silhouettes using `name = genus` within the `aes()` call.
+Note that while we used the genus name as the `name` aesthetic here, we easily could have done `name = "Diplocaulus"` outside of the `aes()` call instead. However, if we were plotting occurrences of multiple genera, we'd definitely want to plot them as different silhouettes using `name = genus` within the `aes()` call.
 
 Also, note that we could change the projection of the map and data using the `crs` and `default_crs` arguments in `coord_sf()`. When projecting data, note that the y-axis limits will change to projected limits. For example, in the Robinson projection, the y-axis limits are roughly -8,600,000 and 8,600,000 in projected coordinates. Therefore, you may need to adjust the `size` argument/aesthetic accordingly when projecting maps and data.
+
+
+```r
+# Set up a bounding box
+bbox <- st_graticule(crs = st_crs("ESRI:54030"),
+                     lat = c(-89.9, 89.9), lon = c(-179.9, 179.9))
+ggplot(world) +
+  geom_sf(fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
+  geom_phylopic(data = tetrapods, aes(x = lng, y = lat, name = genus),
+                size = 4E5, alpha = 0.75, color = "blue") +
+  geom_sf(data = bbox) +
+  theme_void() +
+  coord_sf(default_crs = st_crs(4326), crs = st_crs("ESRI:54030"))
+```
+
+<div class="figure">
+<img src="ggplot-geog-plot-3-1.png" alt="plot of chunk ggplot-geog-plot-3" width="100%" />
+<p class="caption">plot of chunk ggplot-geog-plot-3</p>
+</div>
 
 # Phylogenetics
 Another common use case of PhyloPic silhouettes is to represent taxonomic information. In this example, we demonstrate how to use silhouettes within a phylogenetic framework. In this case, the phylogeny, taken from the `{phytools}` package, includes taxa across all vertebrates. Even many taxonomic experts are unlikely to know the scientific names of these 11 disparate taxa, so we'll replace the names with PhyloPic silhouettes. First, let's load our libraries and data:

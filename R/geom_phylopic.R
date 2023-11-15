@@ -232,14 +232,21 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     # Calculate height as percentage of y limits
     # (or r limits for polar coordinates)
     if ("y.range" %in% names(panel_params)) {
-      heights <- data$size / diff(panel_params$y.range)
+      y_diff <- diff(panel_params$y.range)
     } else if ("y_range" %in% names(panel_params)) { # exclusive to coord_sf
-      heights <- data$size / diff(panel_params$y_range)
+      y_diff <- diff(panel_params$y_range)
     } else if ("r.range" %in% names(panel_params)) { # exclusive to coord_polar
-      heights <- data$size / diff(panel_params$r.range)
+      y_diff <- diff(panel_params$r.range)
     } else {
-      heights <- data$size
+      y_diff <- 1
     }
+    if (any(data$size < (y_diff / 1000))) {
+      warning(paste("Your specified silhouette `size`(s) are more than 1000",
+                    "times smaller than your y-axis range. You probably want",
+                    "to use a larger `size`."), call. = FALSE)
+    }
+    heights <- data$size / y_diff
+
     # Hack to make silhouettes the full height of the plot
     heights[is.infinite(heights)] <- 1
 
