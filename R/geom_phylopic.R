@@ -241,7 +241,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       y_diff <- 1
     }
     if (any(data$size < (y_diff / 1000))) {
-      warning(paste("Your specified silhouette `size`s are more than 1000",
+      warning(paste("Your specified silhouette `size`(s) are more than 1000",
                     "times smaller than your y-axis range. You probably want",
                     "to use a larger `size`."), call. = FALSE)
     }
