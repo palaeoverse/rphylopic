@@ -9,7 +9,7 @@ vignette: >
 
 **Authors:** William Gearty & Lewis A. Jones
 
-**Last updated:** 2023-11-09
+**Last updated:** 2023-11-16
 
 
 
@@ -159,7 +159,7 @@ for (i in seq_along(species_split)) {
 <p class="caption">plot of chunk base-penguin-plot-4</p>
 </div>
 
-Finally, let's color the female and male penguins with different colors. We'll also add a legend to the last panel.
+Finally, let's give the female and male penguins different fill colors. We'll also add a legend to the last panel.
 
 
 ```r
@@ -176,7 +176,7 @@ for (i in seq_along(species_split)) {
                     y = species_data$flipper_length_mm,
                     ysize = species_data$body_mass_g /
                       max(penguins_subset$body_mass_g, na.rm = TRUE) * 8,
-                    color = ifelse(species_data$sex == "male", "blue", "orange"))
+                    fill = ifelse(species_data$sex == "male", "blue", "orange"))
 }
 
 # Add a legend to the last plot
@@ -192,7 +192,7 @@ legend("bottomright", legend = c("Female", "Male"), pch = 20,
 Now that's a nice figure!
 
 # Geographic distribution
-In much the same way as generic x-y plotting, the **rphylopic** package can be used in base R to plot organism silhouettes on a map. That is, to plot data points (e.g., species occurrences) as silhouettes. We provide an example here of how this might be achieved. For this application, we use the example occurrence dataset of early (Carboniferous to Early Triassic) tetrapods from the `{palaeoverse}` R package to visualize the geographic distribution of *Mesosaurus* fossils.
+In much the same way as generic x-y plotting, the **rphylopic** package can be used in base R to plot organism silhouettes on a map. That is, to plot data points (e.g., species occurrences) as silhouettes. We provide an example here of how this might be achieved. For this application, we use the example occurrence dataset of early (Carboniferous to Early Triassic) tetrapods from the `{palaeoverse}` R package to visualize the geographic distribution of *Diplocaulus* fossils.
 
 First, let's load our libraries and the tetrapod data:
 
@@ -206,12 +206,12 @@ library(palaeoverse)
 data(tetrapods)
 ```
 
-Then we'll subset our occurrences to only those for *Mesosaurus*:
+Then we'll subset our occurrences to only those for *Diplocaulus*:
 
 
 ```r
 # Subset to desired group
-tetrapods <- subset(tetrapods, genus == "Mesosaurus")
+tetrapods <- subset(tetrapods, genus == "Diplocaulus")
 ```
 
 Now, let's plot those occurrences on a world map. Here we use the `{geodata}` and `{raster}` packages to generate the map. Then we add colored points on top of this. Note that we use `alpha = 0.75` in case there are multiple occurrences in the same place. That way, the darker the color, the more occurrences in that geographic location.
@@ -235,8 +235,8 @@ Now, as with the penguin figure above, we can easily replace those points with s
 
 ```r
 map("world", col = "lightgrey", fill = TRUE)
-add_phylopic_base(name = "Mesosaurus", x = tetrapods$lng, y = tetrapods$lat,
-                  ysize = 8, color = "blue", alpha = 0.75)
+add_phylopic_base(name = "Diplocaulus", x = tetrapods$lng, y = tetrapods$lat,
+                  ysize = 8, fill = "blue", alpha = 0.75)
 ```
 
 <div class="figure">

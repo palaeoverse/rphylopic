@@ -26,8 +26,8 @@
 #'   (usually the same as "transparent").
 #' @param fill \code{character}. Color of silhouette. If "original" is
 #'   specified, the original color of the silhouette will be used (usually the
-#'   same as "black"). If `color` is specified and `fill` is NA the outline and
-#'   fill color will be the same.
+#'   same as "black"). If `color` is specified and `fill` is NA, `color` will be
+#'   used as the fill color (for backwards compatibility).
 #' @param horizontal \code{logical}. Should the silhouette be flipped
 #'   horizontally?
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
@@ -75,13 +75,13 @@
 #' angle <- runif(10, 0, 360)
 #' hor <- sample(c(TRUE, FALSE), 10, TRUE)
 #' ver <- sample(c(TRUE, FALSE), 10, TRUE)
-#' cols <- sample(c("black", "darkorange", "grey42", "white"), 10,
+#' fills <- sample(c("black", "darkorange", "grey42", "white"), 10,
 #'                replace = TRUE)
 #'
 #' plot(posx, posy, type = "n", main = "A cat herd")
 #' add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
 #'                   x = posx, y = posy, ysize = size,
-#'                   color = cols, angle = angle,
+#'                   fill = fills, angle = angle,
 #'                   horizontal = hor, vertical = ver)
 #'
 #' # Example using a cat background
@@ -190,9 +190,12 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     if (angle != 0) img <- rotate_phylopic(img, angle)
 
     # recolor if necessary
-    color <- if (is.na(color) || color == "original") NULL else color
-    if (is.na(fill)) fill <- color
-    fill <- if (fill == "original") NULL else fill
+    if (is.na(color) || color == "original") color <- NULL
+    if (is.na(fill)) {
+      fill <- color
+      color <- NULL
+    }
+    if (fill == "original") fill <- NULL
     img <- recolor_phylopic(img, alpha, color, fill, remove_background)
 
     # grobify and plot

@@ -24,8 +24,8 @@
 #'   (usually the same as "transparent").
 #' @param fill \code{character}. Color of silhouette. If "original" is
 #'   specified, the original color of the silhouette will be used (usually the
-#'   same as "black"). If `color` is specified and `fill` is NA the outline and
-#'   fill color will be the same.
+#'   same as "black"). If `color` is specified and `fill` is NA, `color` will be
+#'   used as the fill color (for backwards compatibility).
 #' @param horizontal \code{logical}. Should the silhouette be flipped
 #'   horizontally?
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
@@ -68,7 +68,7 @@
 #' angle <- runif(10, 0, 360)
 #' hor <- sample(c(TRUE, FALSE), 10, TRUE)
 #' ver <- sample(c(TRUE, FALSE), 10, TRUE)
-#' cols <- sample(c("black", "darkorange", "grey42", "white"), 10,
+#' fills <- sample(c("black", "darkorange", "grey42", "white"), 10,
 #'   replace = TRUE)
 #' alpha <- runif(10, 0.3, 1)
 #'
@@ -76,12 +76,12 @@
 #'   geom_blank() +
 #'   add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
 #'                x = posx, y = posy, ysize = sizey,
-#'                color = cols, alpha = alpha, angle = angle,
+#'                fill = fills, alpha = alpha, angle = angle,
 #'                horizontal = hor, vertical = ver)
 #' p + ggtitle("R Cat Herd!!")
 add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
                          x, y, ysize = Inf,
-                         alpha = 1, color = "black", fill = NA,
+                         alpha = 1, color = NA, fill = "black",
                          horizontal = FALSE, vertical = FALSE, angle = 0,
                          remove_background = TRUE, verbose = FALSE) {
   if (all(sapply(list(img, name, uuid), is.null))) {

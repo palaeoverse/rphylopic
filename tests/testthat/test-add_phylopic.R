@@ -27,15 +27,16 @@ test_that("add_phylopic works", {
   angle <- runif(50, 0, 360)
   hor <- sample(c(TRUE, FALSE), 50, TRUE)
   ver <- sample(c(TRUE, FALSE), 50, TRUE)
-  cols <- sample(c("black", "darkorange", "grey42", "white"), 50,
+  fills <- sample(c("black", "darkorange", "grey42", "white"), 50,
                  replace = TRUE)
+  cols <- ifelse(fills == "white", "black", NA)
   alpha <- runif(50, 0, 1)
 
   p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
     geom_blank() +
     add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
                  x = posx, y = posy, ysize = sizey,
-                 fill = cols, alpha = alpha,
+                 fill = fills, color = cols, alpha = alpha,
                  angle = angle, horizontal = hor, vertical = ver)
   p <- p + ggtitle("R Cat Herd!!")
   expect_doppelganger("phylopics on top of plot", p)

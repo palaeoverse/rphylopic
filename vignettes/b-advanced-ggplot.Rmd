@@ -9,7 +9,7 @@ vignette: >
 
 **Authors:** William Gearty & Lewis A. Jones
 
-**Last updated:** 2023-11-09
+**Last updated:** 2023-11-16
 
 
 
@@ -124,19 +124,20 @@ ggplot(penguins_subset) +
 <p class="caption">plot of chunk ggplot-penguin-plot-4</p>
 </div>
 
-Finally, let's color the female and male penguins with different colors. Note that the default for `geom_phylopic()` is to not display a legend, so we need to set `show.legend = TRUE`. However, we only want a legend for the colors, so we use `guide = "none"` for the size scale:
+Finally, let's give the female and male penguins different fill colors. Note that the default for `geom_phylopic()` is to not display a legend, so we need to set `show.legend = TRUE`. However, we only want a legend for the fill colors, so we use `guide = "none"` for the size scale. We also want to show the fill color in the legend, so we need to override the shape:
 
 
 ```r
 ggplot(penguins_subset) +
   geom_phylopic(img = penguin_rot,
                 aes(x = bill_length_mm, y = flipper_length_mm,
-                    size = body_mass_g, color = sex),
+                    size = body_mass_g, fill = sex),
                 show.legend = TRUE) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
   scale_size_continuous(guide = "none") +
-  scale_color_manual("Sex", values = c("orange", "blue"),
-                     labels = c("Female", "Male")) +
+  scale_fill_manual("Sex", values = c("orange", "blue"),
+                     labels = c("Female", "Male"),
+                     guide = guide_legend(override.aes = list(shape = 21))) +
   facet_wrap(~species, ncol = 1) +
   theme_bw(base_size = 15) +
   theme(legend.position = c(0.9, 0.9))
@@ -154,12 +155,12 @@ Hmm...the colored dots in the legend are great, but lucky for us, the package al
 ggplot(penguins_subset) +
   geom_phylopic(img = penguin_rot,
                 aes(x = bill_length_mm, y = flipper_length_mm,
-                    size = body_mass_g, color = sex),
+                    size = body_mass_g, fill = sex),
                 show.legend = TRUE,
                 key_glyph = phylopic_key_glyph(img = penguin_rot)) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
   scale_size_continuous(guide = "none") +
-  scale_color_manual("Sex", values = c("orange", "blue"),
+  scale_fill_manual("Sex", values = c("orange", "blue"),
                      labels = c("Female", "Male")) +
   facet_wrap(~species, ncol = 1) +
   theme_bw(base_size = 15) +
@@ -198,7 +199,7 @@ Then we'll subset our occurrences to only those for *Diplocaulus*:
 tetrapods <- subset(tetrapods, genus == "Diplocaulus")
 ```
 
-Now, let's plot those occurrences on a world map. `{ggplot2}` and it's built-in function `map_data()` make this a breeze. Note that we use `alpha = 0.75` in case there are multiple occurrences in the same place. That way, the darker the color, the more occurrences in that geographic location.
+Now, let's plot those occurrences on a world map. `{ggplot2}` and it's built-in function `map_data()` make this a breeze. Note that we use `alpha = 0.75` in case there are multiple occurrences in the same place. That way, the darker the fill color, the more occurrences in that geographic location.
 
 
 ```r
@@ -209,7 +210,7 @@ world <- st_wrap_dateline(world)
 ggplot(world) +
   geom_sf(fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
   geom_point(data = tetrapods, aes(x = lng, y = lat),
-             size = 4, alpha = 0.75, color = "blue") +
+             size = 4, alpha = 0.75, fill = "blue") +
   theme_void() +
   coord_sf()
 ```
@@ -226,7 +227,7 @@ Now, as with the penguin figure above, we can easily replace those points with s
 ggplot(world) +
   geom_sf(fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
   geom_phylopic(data = tetrapods, aes(x = lng, y = lat, name = genus),
-                size = 4, alpha = 0.75, color = "blue") +
+                size = 4, alpha = 0.75, fill = "blue") +
   theme_void() +
   coord_sf()
 ```
@@ -250,7 +251,7 @@ bbox <- st_graticule(crs = st_crs("ESRI:54030"),
 ggplot(world) +
   geom_sf(fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
   geom_phylopic(data = tetrapods, aes(x = lng, y = lat, name = genus),
-                size = 4E5, alpha = 0.75, color = "blue") +
+                size = 4E5, alpha = 0.75, fill = "blue") +
   geom_sf(data = bbox) +
   theme_void() +
   coord_sf(default_crs = st_crs(4326), crs = st_crs("ESRI:54030"))

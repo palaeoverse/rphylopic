@@ -14,11 +14,11 @@ phylopic_env <- new.env()
 #'   specifies the height of the silhouettes in the units of the y axis. The
 #'   aspect ratio of the silhouettes will always be maintained.
 #'
-#'   The `color` (default: "black"), `fill` (default: NA), and `alpha` (default:
-#'   1) aesthetics can be used to change the outline color, fill color, and
-#'   transparency (outline and fill) of the silhouettes, respectively. If
-#'   `color` is specified and `fill` is NA the outline and fill color will be
-#'   the same. If "original" is specified for the `color` aesthetic, the
+#'   The `color` (default: NA), `fill` (default: "black"), and `alpha` (
+#'   default: 1) aesthetics can be used to change the outline color, fill color,
+#'   and transparency (outline and fill) of the silhouettes, respectively. If
+#'   `color` is specified and `fill` is NA `color` will be used as the fill
+#'   color (for backwards compatibility). If "original" is specified for the `color` aesthetic, the
 #'   original color of the silhouette outline will be used (usually the same as
 #'   "transparent"). If "original" is specified for the `fill` aesthetic, the
 #'   original color of the silhouette body will be used (usually the same as
@@ -74,7 +74,7 @@ phylopic_env <- new.env()
 #'                  name = c("Felis silvestris catus", "Odobenus rosmarus"))
 #' ggplot(df) +
 #'   geom_phylopic(aes(x = x, y = y, name = name),
-#'                 color = "purple", size = 10) +
+#'                 fill = "purple", size = 10) +
 #'   facet_wrap(~name) +
 #'   coord_cartesian(xlim = c(1,6), ylim = c(5, 30))
 #' }
@@ -120,11 +120,10 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
 #' @importFrom grid gTree gList nullGrob
 GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   required_aes = c("x", "y"),
-  non_missing_aes = c("size", "alpha", "color",
+  non_missing_aes = c("size", "alpha", "color", "fill",
                       "horizontal", "vertical", "angle"),
   optional_aes = c("img", "name", "uuid"), # one and only one of these
-  default_aes = aes(size = 6, alpha = 1,
-                    color = "black", fill = NA,
+  default_aes = aes(size = 6, alpha = 1, color = NA, fill = "black",
                     horizontal = FALSE, vertical = FALSE, angle = 0),
   extra_params = c("na.rm", "remove_background", "verbose", "filter"),
   setup_data = function(data, params) {
@@ -212,6 +211,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     data <- ggproto_parent(Geom, self)$use_defaults(data, params, modifiers)
     if (col_fill[1] && !col_fill[2]) {
       data$fill <- data$colour
+      data$colour <- NA
     }
     data
   },
