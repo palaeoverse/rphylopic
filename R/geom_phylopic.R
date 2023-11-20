@@ -18,11 +18,12 @@ phylopic_env <- new.env()
 #'   default: 1) aesthetics can be used to change the outline color, fill color,
 #'   and transparency (outline and fill) of the silhouettes, respectively. If
 #'   `color` is specified and `fill` is NA `color` will be used as the fill
-#'   color (for backwards compatibility). If "original" is specified for the `color` aesthetic, the
-#'   original color of the silhouette outline will be used (usually the same as
-#'   "transparent"). If "original" is specified for the `fill` aesthetic, the
-#'   original color of the silhouette body will be used (usually the same as
-#'   "black").
+#'   color (for backwards compatibility). If "original" is specified for the
+#'   `color` aesthetic, the original color of the silhouette outline will be
+#'   used (usually the same as "transparent"). If "original" is specified for
+#'   the `fill` aesthetic, the original color of the silhouette body will be
+#'   used (usually the same as "black"). To remove the fill or outline, you can
+#'   set `fill` or `color` to "transparent", respectively.
 #'
 #'   The `horizontal` and `vertical` aesthetics can be used to flip the
 #'   silhouettes. The `angle` aesthetic can be used to rotate the silhouettes.

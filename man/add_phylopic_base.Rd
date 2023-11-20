@@ -51,12 +51,14 @@ of the silhouette (0 is fully transparent, 1 is fully opaque).}
 
 \item{color}{\code{character}. Color of silhouette outline. If "original" or
 NA is specified, the original color of the silhouette outline will be used
-(usually the same as "transparent").}
+(usually the same as "transparent"). To remove the outline, you can set
+this to "transparent".}
 
 \item{fill}{\code{character}. Color of silhouette. If "original" is
 specified, the original color of the silhouette will be used (usually the
 same as "black"). If \code{color} is specified and \code{fill} is NA, \code{color} will be
-used as the fill color (for backwards compatibility).}
+used as the fill color (for backwards compatibility). To remove the fill,
+you can set this to "transparent".}
 
 \item{horizontal}{\code{logical}. Should the silhouette be flipped
 horizontally?}

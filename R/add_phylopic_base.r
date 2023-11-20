@@ -23,11 +23,13 @@
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
 #' @param color \code{character}. Color of silhouette outline. If "original" or
 #'   NA is specified, the original color of the silhouette outline will be used
-#'   (usually the same as "transparent").
+#'   (usually the same as "transparent"). To remove the outline, you can set
+#'   this to "transparent".
 #' @param fill \code{character}. Color of silhouette. If "original" is
 #'   specified, the original color of the silhouette will be used (usually the
 #'   same as "black"). If `color` is specified and `fill` is NA, `color` will be
-#'   used as the fill color (for backwards compatibility).
+#'   used as the fill color (for backwards compatibility). To remove the fill,
+#'   you can set this to "transparent".
 #' @param horizontal \code{logical}. Should the silhouette be flipped
 #'   horizontally?
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?

@@ -101,7 +101,8 @@ color (for backwards compatibility). If "original" is specified for the
 \code{color} aesthetic, the original color of the silhouette outline will be
 used (usually the same as "transparent"). If "original" is specified for
 the \code{fill} aesthetic, the original color of the silhouette body will be
-used (usually the same as "black").
+used (usually the same as "black"). To remove the fill or outline, you can
+set \code{fill} or \code{color} to "transparent", respectively.
 
 The \code{horizontal} and \code{vertical} aesthetics can be used to flip the
 silhouettes. The \code{angle} aesthetic can be used to rotate the silhouettes.
