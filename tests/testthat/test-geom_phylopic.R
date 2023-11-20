@@ -81,7 +81,8 @@ test_that("phylopic_key_glyph works", {
       aes(x = x, y = y, name = name, color = name), size = 10,
       show.legend = TRUE, verbose = TRUE,
       key_glyph =
-        phylopic_key_glyph(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9")
+        phylopic_key_glyph(uuid = c("23cd6aa4-9587-4a2e-8e26-de42885004c9",
+                                    "16cfde1b-d577-4de8-82b9-62b760aacba5"))
     ) +
     coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
     theme_classic(base_size = 16)
@@ -102,8 +103,10 @@ test_that("phylopic_key_glyph works", {
                    aes(x = x, y = y, name = name, color = name), size = 10,
                    show.legend = TRUE, verbose = TRUE,
                    key_glyph =
-                     phylopic_key_glyph(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                                        img = cat)
+                     phylopic_key_glyph(
+                       uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+                       img = cat
+                     )
                  ) +
                  coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
                  theme_classic(base_size = 16))

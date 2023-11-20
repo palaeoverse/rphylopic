@@ -25,15 +25,16 @@ test_that("add_phylopic_base works", {
   angle <- runif(50, 0, 360)
   hor <- sample(c(TRUE, FALSE), 50, TRUE)
   ver <- sample(c(TRUE, FALSE), 50, TRUE)
-  cols <- sample(c("black", "darkorange", "grey42", "white"), 50,
-                 replace = TRUE)
+  fills <- sample(c("black", "darkorange", "grey42", "white"), 50,
+                  replace = TRUE)
+  cols <- ifelse(fills == "white", "black", NA)
   alpha <- runif(50, 0, 1)
 
   expect_doppelganger("phylopics on top of plot", function() {
     plot(posx, posy, type = "n", main = "A cat herd")
     add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
                       x = posx, y = posy, ysize = sizey,
-                      color = cols, alpha = alpha,
+                      fill = fills, color = cols, alpha = alpha,
                       angle = angle,
                       horizontal = hor, vertical = ver)
   })

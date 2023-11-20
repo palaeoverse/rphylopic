@@ -9,7 +9,7 @@ vignette: >
 
 **Authors:** Lewis A. Jones & William Gearty
 
-**Last updated:** 2023-11-09
+**Last updated:** 2023-11-16
 
 
 
@@ -171,13 +171,12 @@ The `rotate_phylopic()` function can be used to rotate a silhouette an arbitrary
 img_rot <- rotate_phylopic(img = img, angle = 45)
 ```
 
-Finally, the `recolor_phylopic()` function can be used to modify the color and/or transparency of a silhouette. The vast majority of PhyloPic silhouettes are black and fully opaque by default. However, it may be useful to change this when the you are trying to either match an existing visualization color palette or trying to convey extra information, such as categorical data, through color.
+Finally, the `recolor_phylopic()` function can be used to modify the fill color, outline color, and/or transparency of a silhouette. The vast majority of PhyloPic silhouettes are solid black, are fully opaque, and have a transparent outline by default. However, it may be useful to change this when the you are trying to either match an existing visualization color palette or trying to convey extra information, such as categorical data, through color.
 
 
 ```r
-# Change color to blue and transparency to 50%
-img_col <- recolor_phylopic(img = img, alpha = 0.5,
-                            color = "blue", fill = "blue")
+# Change fill color to blue and transparency to 50%
+img_col <- recolor_phylopic(img = img, alpha = 0.5, fill = "blue")
 ```
 
 Let's see what those look like in the same plot:
@@ -189,7 +188,7 @@ ggplot() +
   add_phylopic(img = img_flip, x = 1.25, y = 1.25, ysize = 0.25) +
   add_phylopic(img = img_rot, x = 1, y = 1, ysize = 0.25) +
   add_phylopic(img = img_col, x = 0.75, y = 0.75, ysize = 0.25,
-               color = "original")
+               fill = "original")
 ```
 
 <div class="figure">
@@ -199,7 +198,7 @@ ggplot() +
 
 You'll notice that the rotated silhouette is smaller than the other two silhouettes. This is because our functions have arguments to specify the height (`ysize`). The width is automatically set to maintain the original aspect ratio of the silhouette. In this case, the aspect ratio of the rotated silhouette has changed, so the same height results in a smaller silhouette overall.
 
-For convenience, we have also included these transformation options within all of the visualization functions. The default color is "black", hence why we needed to specify `color = "original"` above. However, when the same transformed silhouette will be used for multiple visualizations, we suggest transforming the silhouette first, saving it as a new object, then using this new object for visualization purposes.
+For convenience, we have also included these transformation options within all of the visualization functions. The default fill is "black", hence why we needed to specify `fill = "original"` above. However, when the same transformed silhouette will be used for multiple visualizations, we suggest transforming the silhouette first, saving it as a new object, then using this new object for visualization purposes.
 
 ## Get attribution
 Now that you've made a plot and used some silhouettes, you should acknowledge the contributors that made those silhouettes. Fortunately, **rphylopic** includes the `get_attribution()` function to get contributor data about specific images:

@@ -76,8 +76,8 @@ used silhouette(s) be printed to the console (see \code{\link[=get_attribution]{
 \item{filter}{\code{character}. Filter by usage license if using the \code{name}
 aesthetic. Use "by" to limit results to images which do not require
 attribution, "nc" for images which allows commercial usage, and "sa" for
-images without a ShareAlike clause. The user can also combine these
-filters as a vector.}
+images without a ShareAlike clause. The user can also combine these filters
+as a vector.}
 }
 \description{
 This geom acts like \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}, except that the specified
@@ -93,17 +93,16 @@ silhouettes at specified positions on the plot. The \code{size} aesthetic
 specifies the height of the silhouettes in the units of the y axis. The
 aspect ratio of the silhouettes will always be maintained.
 
-The \code{color} (default: "black"), \code{fill} (default: NA), and \code{alpha} (default:
-\enumerate{
-\item aesthetics can be used to change the outline color, fill color, and
-transparency (outline and fill) of the silhouettes, respectively. If
-\code{color} is specified and \code{fill} is NA the outline and fill color will be
-the same. If "original" is specified for the \code{color} aesthetic, the
-original color of the silhouette outline will be used (usually the same as
-"transparent"). If "original" is specified for the \code{fill} aesthetic, the
-original color of the silhouette body will be used (usually the same as
-"black").
-}
+The \code{color} (default: NA), \code{fill} (default: "black"), and \code{alpha} (
+default: 1) aesthetics can be used to change the outline color, fill color,
+and transparency (outline and fill) of the silhouettes, respectively. If
+\code{color} is specified and \code{fill} is NA \code{color} will be used as the fill
+color (for backwards compatibility). If "original" is specified for the
+\code{color} aesthetic, the original color of the silhouette outline will be
+used (usually the same as "transparent"). If "original" is specified for
+the \code{fill} aesthetic, the original color of the silhouette body will be
+used (usually the same as "black"). To remove the fill or outline, you can
+set \code{fill} or \code{color} to "transparent", respectively.
 
 The \code{horizontal} and \code{vertical} aesthetics can be used to flip the
 silhouettes. The \code{angle} aesthetic can be used to rotate the silhouettes.
@@ -140,7 +139,7 @@ df <- data.frame(x = c(2, 4), y = c(10, 20),
                  name = c("Felis silvestris catus", "Odobenus rosmarus"))
 ggplot(df) +
   geom_phylopic(aes(x = x, y = y, name = name),
-                color = "purple", size = 10) +
+                fill = "purple", size = 10) +
   facet_wrap(~name) +
   coord_cartesian(xlim = c(1,6), ylim = c(5, 30))
 }
