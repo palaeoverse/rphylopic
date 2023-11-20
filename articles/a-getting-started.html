@@ -90,7 +90,7 @@
     
     
 <p><strong>Authors:</strong> Lewis A. Jones &amp; William Gearty</p>
-<p><strong>Last updated:</strong> 2023-11-09</p>
+<p><strong>Last updated:</strong> 2023-11-16</p>
 <div style="text-align: justify">
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -268,15 +268,15 @@ figure.</p>
 <code class="sourceCode R"><span><span class="co"># Rotate silhouette by 45 degrees</span></span>
 <span><span class="va">img_rot</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rotate_phylopic.html">rotate_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img</span>, angle <span class="op">=</span> <span class="fl">45</span><span class="op">)</span></span></code></pre></div>
 <p>Finally, the <code><a href="../reference/recolor_phylopic.html">recolor_phylopic()</a></code> function can be used to
-modify the color and/or transparency of a silhouette. The vast majority
-of PhyloPic silhouettes are black and fully opaque by default. However,
-it may be useful to change this when the you are trying to either match
-an existing visualization color palette or trying to convey extra
+modify the fill color, outline color, and/or transparency of a
+silhouette. The vast majority of PhyloPic silhouettes are solid black,
+are fully opaque, and have a transparent outline by default. However, it
+may be useful to change this when the you are trying to either match an
+existing visualization color palette or trying to convey extra
 information, such as categorical data, through color.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Change color to blue and transparency to 50%</span></span>
-<span><span class="va">img_col</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recolor_phylopic.html">recolor_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img</span>, alpha <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>                            color <span class="op">=</span> <span class="st">"blue"</span>, fill <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Change fill color to blue and transparency to 50%</span></span>
+<span><span class="va">img_col</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recolor_phylopic.html">recolor_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img</span>, alpha <span class="op">=</span> <span class="fl">0.5</span>, fill <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s see what those look like in the same plot:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -284,7 +284,7 @@ information, such as categorical data, through color.</p>
 <span>  <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img_flip</span>, x <span class="op">=</span> <span class="fl">1.25</span>, y <span class="op">=</span> <span class="fl">1.25</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img_rot</span>, x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">1</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img_col</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">0.75</span>, ysize <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span>               color <span class="op">=</span> <span class="st">"original"</span><span class="op">)</span></span></code></pre></div>
+<span>               fill <span class="op">=</span> <span class="st">"original"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="intro-transform-plot-1.png" alt="plot of chunk intro-transform-plot" width="100%"><p class="caption">
 plot of chunk intro-transform-plot
@@ -297,8 +297,8 @@ maintain the original aspect ratio of the silhouette. In this case, the
 aspect ratio of the rotated silhouette has changed, so the same height
 results in a smaller silhouette overall.</p>
 <p>For convenience, we have also included these transformation options
-within all of the visualization functions. The default color is “black”,
-hence why we needed to specify <code>color = "original"</code> above.
+within all of the visualization functions. The default fill is “black”,
+hence why we needed to specify <code>fill = "original"</code> above.
 However, when the same transformed silhouette will be used for multiple
 visualizations, we suggest transforming the silhouette first, saving it
 as a new object, then using this new object for visualization

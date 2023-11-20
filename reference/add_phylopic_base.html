@@ -71,8 +71,8 @@ silhouettes on top of an existing base R plot (like <code><a href="https://rdrr.
 <span>  y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ysize <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  color <span class="op">=</span> <span class="st">"black"</span>,</span>
-<span>  fill <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  color <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  fill <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  horizontal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  vertical <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  angle <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -128,14 +128,16 @@ of the silhouette (0 is fully transparent, 1 is fully opaque).</p></dd>
 <dt>color</dt>
 <dd><p><code>character</code>. Color of silhouette outline. If "original" or
 NA is specified, the original color of the silhouette outline will be used
-(usually the same as "transparent").</p></dd>
+(usually the same as "transparent"). To remove the outline, you can set
+this to "transparent".</p></dd>
 
 
 <dt>fill</dt>
 <dd><p><code>character</code>. Color of silhouette. If "original" is
 specified, the original color of the silhouette will be used (usually the
-same as "black"). If <code>color</code> is specified and <code>fill</code> is NA the outline and
-fill color will be the same.</p></dd>
+same as "black"). If <code>color</code> is specified and <code>fill</code> is NA, <code>color</code> will be
+used as the fill color (for backwards compatibility). To remove the fill,
+you can set this to "transparent".</p></dd>
 
 
 <dt>horizontal</dt>
@@ -198,13 +200,13 @@ Also, outline colors do not currently work for png array objects.</p>
 <span class="r-in"><span><span class="va">angle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">hor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fl">10</span>, <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ver</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fl">10</span>, <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"darkorange"</span>, <span class="st">"grey42"</span>, <span class="st">"white"</span><span class="op">)</span>, <span class="fl">10</span>,</span></span>
+<span class="r-in"><span><span class="va">fills</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"darkorange"</span>, <span class="st">"grey42"</span>, <span class="st">"white"</span><span class="op">)</span>, <span class="fl">10</span>,</span></span>
 <span class="r-in"><span>               replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">posx</span>, <span class="va">posy</span>, type <span class="op">=</span> <span class="st">"n"</span>, main <span class="op">=</span> <span class="st">"A cat herd"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">add_phylopic_base</span><span class="op">(</span>uuid <span class="op">=</span> <span class="st">"23cd6aa4-9587-4a2e-8e26-de42885004c9"</span>,</span></span>
 <span class="r-in"><span>                  x <span class="op">=</span> <span class="va">posx</span>, y <span class="op">=</span> <span class="va">posy</span>, ysize <span class="op">=</span> <span class="va">size</span>,</span></span>
-<span class="r-in"><span>                  color <span class="op">=</span> <span class="va">cols</span>, angle <span class="op">=</span> <span class="va">angle</span>,</span></span>
+<span class="r-in"><span>                  fill <span class="op">=</span> <span class="va">fills</span>, angle <span class="op">=</span> <span class="va">angle</span>,</span></span>
 <span class="r-in"><span>                  horizontal <span class="op">=</span> <span class="va">hor</span>, vertical <span class="op">=</span> <span class="va">ver</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="add_phylopic_base-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
