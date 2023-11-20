@@ -96,7 +96,7 @@
 add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
                               filter = NULL,
                               x = NULL, y = NULL, ysize = NULL,
-                              alpha = 1, color = "black", fill = NA,
+                              alpha = 1, color = NA, fill = "black",
                               horizontal = FALSE, vertical = FALSE, angle = 0,
                               remove_background = TRUE, verbose = FALSE) {
   if (all(sapply(list(img, name, uuid), is.null))) {
