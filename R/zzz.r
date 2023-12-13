@@ -13,8 +13,7 @@ as_null <- function(x) if (length(x) == 0) NULL else x
 
 pbase <- function() "https://api.phylopic.org"
 
-#' @importFrom jsonlite fromJSON
-#' @importFrom httr GET content
+#' @importFrom httr GET
 #' @importFrom curl nslookup
 phy_GET <- function(path, query = list(), ...) {
   # Check PhyloPic (or user) is online
@@ -26,13 +25,18 @@ phy_GET <- function(path, query = list(), ...) {
   })
   query <- as_null(pc(query))
   tt <- GET(url = pbase(), path = path, query = query)
-  tmp <- content(tt, as = "text", encoding = "UTF-8")
-  jsn <- fromJSON(tmp)
+  jsn <- response_to_JSON(tt)
   if (tt$status == 400) { # need to supply the build argument
     query[["build"]] <- jsn$build
     tt <- GET(url = pbase(), path = path, query = query)
-    tmp <- content(tt, as = "text", encoding = "UTF-8")
-    jsn <- fromJSON(tmp)
+    jsn <- response_to_JSON(tt)
   }
   jsn
+}
+
+#' @importFrom httr content
+#' @importFrom jsonlite fromJSON
+response_to_JSON <- function(response) {
+  tmp <- content(response, as = "text", encoding = "UTF-8")
+  return(fromJSON(tmp))
 }
