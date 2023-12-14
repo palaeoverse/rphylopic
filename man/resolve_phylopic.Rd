@@ -8,6 +8,7 @@ resolve_phylopic(
   name,
   api = "paleobiodb.org",
   hierarchy = FALSE,
+  max_ranks = 5,
   n = 1,
   filter = NULL
 )
@@ -20,6 +21,9 @@ to the specified \code{api}.}
 
 \item{hierarchy}{\code{logical}.}
 
+\item{max_ranks}{\code{numeric}. The maximum number of taxonomic ranks that
+should be included if \code{hierarchy} is \code{TRUE}.}
+
 \item{n}{\code{numeric}. How many uuids should be returned? Depending on
 the requested \code{name}, multiple silhouettes might exist. If \code{n} exceeds
 the number of available images, all available uuids will be returned.
@@ -31,12 +35,12 @@ image uuids which allow commercial usage, and "sa" for image uuids without
 a ShareAlike clause. The user can also combine these filters as a vector.}
 }
 \value{
-If \code{hierarchy} is \code{FALSE}, \code{n} valid PhyloPic image uuids for the
-taxonomic node that most closely matches the supplied \code{name} as it relates
-to the specified \code{api}. If \code{hierarchy} is \code{TRUE}, a list where the names
-are the the taxonomic hierarchy for \code{name} as reported by the specified
-\code{api} and the values are \code{n} resolved PhyloPic uuids for each taxonomic
-entity (if they exist).
+If \code{hierarchy} is \code{FALSE}, a list of length 1 containing \code{n} valid
+PhyloPic image uuids for the taxonomic node that most closely matches the
+supplied \code{name} as it relates to the specified \code{api}. If \code{hierarchy} is
+\code{TRUE}, a list where the names are the the taxonomic hierarchy for \code{name}
+as reported by the specified \code{api} and the values are \code{n} resolved PhyloPic
+uuids for each taxonomic entity (if they exist).
 }
 \description{
 Resolve a name from another database to an image in the PhyloPic database
