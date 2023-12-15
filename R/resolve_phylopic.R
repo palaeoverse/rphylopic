@@ -42,6 +42,10 @@ resolve_phylopic <- function(name, api = "paleobiodb.org", hierarchy = FALSE,
     res <- GET(url = url)
     jsn <- response_to_JSON(res)
     ids <- jsn$results$id[1]
+    if (hierarchy) {
+      warning("`hierarchy = TRUE` is not currently available for eol.org.")
+      hierarchy <- FALSE
+    }
   } else if (api == "gbif.org") {
     # check api is online
     headers <- curlGetHeaders("https://api.gbif.org/v1/")
@@ -55,6 +59,15 @@ resolve_phylopic <- function(name, api = "paleobiodb.org", hierarchy = FALSE,
     res <- GET(url = url)
     jsn <- response_to_JSON(res)
     ids <- jsn$key
+    if (hierarchy) {
+      url <- paste0("https://api.gbif.org/v1/species/match?verbose=true&",
+                    "name=", URLencode(jsn$canonicalName[1]))
+      res <- GET(url = url)
+      jsn <- response_to_JSON(res)
+      ids <- c(jsn$speciesKey[1], jsn$genusKey[1], jsn$familyKey[1],
+               jsn$orderKey[1], jsn$classKey[1], jsn$phylumKey[1],
+               jsn$kingdomKey[1])
+    }
   } else if (api == "marinespecies.org") {
     # check api is online
     headers <- curlGetHeaders("https://www.marinespecies.org/rest/")
@@ -69,6 +82,19 @@ resolve_phylopic <- function(name, api = "paleobiodb.org", hierarchy = FALSE,
     res <- GET(url = url)
     jsn <- response_to_JSON(res)
     ids <- jsn[[1]]$AphiaID[1]
+    if (hierarchy) {
+      url <- paste0("https://www.marinespecies.org/rest/",
+                    "AphiaClassificationByAphiaID/", ids)
+      res <- GET(url = url)
+      jsn <- response_to_JSON(res)
+      lst_sub <- jsn
+      ids <- character()
+      while ("child" %in% names(lst_sub)) {
+        ids <- c(ids, lst_sub$AphiaID)
+        lst_sub <- lst_sub$child
+      }
+      ids <- rev(ids)
+    }
   } else if (api == "paleobiodb.org") {
     # check api is online
     headers <- curlGetHeaders("https://paleobiodb.org/data1.2/")
