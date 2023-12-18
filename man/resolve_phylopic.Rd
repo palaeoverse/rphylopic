@@ -2,24 +2,28 @@
 % Please edit documentation in R/resolve_phylopic.R
 \name{resolve_phylopic}
 \alias{resolve_phylopic}
-\title{Resolve a name from another database to an image in the PhyloPic database}
+\title{Use a name from another database to get images from the PhyloPic database}
 \usage{
 resolve_phylopic(
   name,
-  api = "paleobiodb.org",
+  api = "gbif.org",
   hierarchy = FALSE,
   max_ranks = 5,
   n = 1,
-  filter = NULL
+  filter = NULL,
+  url = FALSE
 )
 }
 \arguments{
 \item{name}{\code{character}. A full or partial taxonomic name to be matched
 to the specified \code{api}.}
 
-\item{api}{\code{character}. One of}
+\item{api}{\code{character}. An API in which to look up the \code{name}. See
+Details for the available options.}
 
-\item{hierarchy}{\code{logical}.}
+\item{hierarchy}{\code{logical}. Whether the taxonomic hierarchy of \code{name}
+should be retrieved from the API and used to get several sets of PhyloPic
+images.}
 
 \item{max_ranks}{\code{numeric}. The maximum number of taxonomic ranks that
 should be included if \code{hierarchy} is \code{TRUE}.}
@@ -33,15 +37,60 @@ This argument defaults to 1.}
 limit results to image uuids which do not require attribution, "nc" for
 image uuids which allow commercial usage, and "sa" for image uuids without
 a ShareAlike clause. The user can also combine these filters as a vector.}
+
+\item{url}{\code{logical}. If \code{FALSE} (default), only the uuid is
+returned. If \code{TRUE}, a valid PhyloPic image url of the uuid is
+returned.}
 }
 \value{
-If \code{hierarchy} is \code{FALSE}, a list of length 1 containing \code{n} valid
-PhyloPic image uuids for the taxonomic node that most closely matches the
-supplied \code{name} as it relates to the specified \code{api}. If \code{hierarchy} is
-\code{TRUE}, a list where the names are the the taxonomic hierarchy for \code{name}
-as reported by the specified \code{api} and the values are \code{n} resolved PhyloPic
-uuids for each taxonomic entity (if they exist).
+A \code{list} where each value is \code{n} (or fewer) PhyloPic image uuids (or
+urls if \code{url = TRUE}) and each name is the taxonomic name as matched and
+reported by the specified \code{api}. If \code{hierarchy} is \code{FALSE}, the list has
+length 1. If \code{hierarchy} is \code{TRUE}, the list has maximum length
+\code{max_ranks}.
 }
 \description{
-Resolve a name from another database to an image in the PhyloPic database
+This function takes a supplied taxonomic name, matches it to the specified
+external API, resolves the API's returned taxonomic ID to the PhyloPic
+taxonomic node database, then retrieves PhyloPic image uuids (or urls) for
+that node.
+}
+\details{
+If \code{hierarchy} is \code{FALSE}, the specified \code{name} is matched to the
+specified \code{api}. The matched id is then resolved to the matching taxonomic
+node in the PhyloPic database. If \code{hierarchy} is \code{TRUE}, the full taxonomic
+hierarchy for \code{name} is retrieved from the specified \code{api}, those taxonomic
+names are subset to \code{max_ranks} ranks (starting from the specified \code{name}
+and going up the hierarchy). Then each of those names is resolved to the
+matching taxonomic node in the PhyloPic database (as possible). In either
+case, \code{\link[=get_uuid]{get_uuid()}} is then used to retrieve \code{n} images for each taxonomic
+name.
+
+Note that while the labels of the returned list are the taxonomic
+names as reported by the specified \code{api}, the PhyloPic images that are
+returned are associated with whatever taxonomic node that taxonomic name
+resolves to in the PhyloPic database. This means that, if \code{hierarchy} is
+\code{TRUE}, the same images may be returned for multiple taxonomic names. Also,
+if a particular taxonomic name does not resolve to any node in the PhyloPic
+database, no images will be returned for that name.
+
+The following APIs are available for matching (\code{api}):
+\itemize{
+\item{"eol.org": the \href{https://eol.org/}{Encyclopedia of Life}} (note:
+\code{hierarchy = TRUE} is not currently available for this API)
+\item{"gbif.org": the \href{https://www.gbif.org/}{Global Biodiversity
+Information Facility}}
+\item{"marinespecies.org": the \href{https://marinespecies.org/}{World
+Registor of Marine Species}}
+\item{"opentreeoflife.org": the \href{https://tree.opentreeoflife.org/}{
+Open Tree of Life}}
+\item{"paleobiodb.org": the \href{https://paleobiodb.org/#/}{Paleobiology
+Database}}
+}
+}
+\examples{
+# get a uuid for a single name
+resolve_phylopic(name = "Canis lupus")
+# get uuids for the taxonomic hierarchy
+resolve_phylopic(name = "Canis lupus", hierarchy = TRUE)
 }

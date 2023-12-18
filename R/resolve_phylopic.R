@@ -1,35 +1,89 @@
-#' Resolve a name from another database to an image in the PhyloPic database
+#' Use a name from another database to get images from the PhyloPic database
+#'
+#' This function takes a supplied taxonomic name, matches it to the specified
+#' external API, resolves the API's returned taxonomic ID to the PhyloPic
+#' taxonomic node database, then retrieves PhyloPic image uuids (or urls) for
+#' that node.
 #'
 #' @param name \code{character}. A full or partial taxonomic name to be matched
 #'   to the specified `api`.
-#' @param api \code{character}. One of
-#' @param hierarchy \code{logical}.
+#' @param api \code{character}. An API in which to look up the `name`. See
+#'   Details for the available options.
+#' @param hierarchy \code{logical}. Whether the taxonomic hierarchy of `name`
+#'   should be retrieved from the API and used to get several sets of PhyloPic
+#'   images.
 #' @param max_ranks \code{numeric}. The maximum number of taxonomic ranks that
 #'   should be included if `hierarchy` is `TRUE`.
 #' @inheritParams get_uuid
 #'
-#' @return If `hierarchy` is `FALSE`, a list of length 1 containing `n` valid
-#'   PhyloPic image uuids for the taxonomic node that most closely matches the
-#'   supplied `name` as it relates to the specified `api`. If `hierarchy` is
-#'   `TRUE`, a list where the names are the the taxonomic hierarchy for `name`
-#'   as reported by the specified `api` and the values are `n` resolved PhyloPic
-#'   uuids for each taxonomic entity (if they exist).
+#' @return A `list` where each value is `n` (or fewer) PhyloPic image uuids (or
+#'   urls if `url = TRUE`) and each name is the taxonomic name as matched and
+#'   reported by the specified `api`. If `hierarchy` is `FALSE`, the list has
+#'   length 1. If `hierarchy` is `TRUE`, the list has maximum length
+#'   `max_ranks`.
 #'
-#' @details
+#' @details If `hierarchy` is `FALSE`, the specified `name` is matched to the
+#'   specified `api`. The matched id is then resolved to the matching taxonomic
+#'   node in the PhyloPic database. If `hierarchy` is `TRUE`, the full taxonomic
+#'   hierarchy for `name` is retrieved from the specified `api`, those taxonomic
+#'   names are subset to `max_ranks` ranks (starting from the specified `name`
+#'   and going up the hierarchy). Then each of those names is resolved to the
+#'   matching taxonomic node in the PhyloPic database (as possible). In either
+#'   case, [get_uuid()] is then used to retrieve `n` images for each taxonomic
+#'   name.
+#'   
+#'   Note that while the labels of the returned list are the taxonomic
+#'   names as reported by the specified `api`, the PhyloPic images that are
+#'   returned are associated with whatever taxonomic node that taxonomic name
+#'   resolves to in the PhyloPic database. This means that, if `hierarchy` is
+#'   `TRUE`, the same images may be returned for multiple taxonomic names. Also,
+#'   if a particular taxonomic name does not resolve to any node in the PhyloPic
+#'   database, no images will be returned for that name.
 #'
-#' @importFrom httr GET POST
-#' @importFrom utils URLencode
+#'   The following APIs are available for matching (`api`):
+#'   \itemize{
+#'     \item{"eol.org": the \href{https://eol.org/}{Encyclopedia of Life}} (note:
+#'     `hierarchy = TRUE` is not currently available for this API)
+#'     \item{"gbif.org": the \href{https://www.gbif.org/}{Global Biodiversity
+#'     Information Facility}}
+#'     \item{"marinespecies.org": the \href{https://marinespecies.org/}{World
+#'     Registor of Marine Species}}
+#'     \item{"opentreeoflife.org": the \href{https://tree.opentreeoflife.org/}{
+#'     Open Tree of Life}}
+#'     \item{"paleobiodb.org": the \href{https://paleobiodb.org/#/}{Paleobiology
+#'     Database}}
+#'   }
+#'
+#' @importFrom httr GET POST content
+#' @importFrom utils URLencode URLdecode
 #' @importFrom stats setNames
 #' @export
 #' @examples
-resolve_phylopic <- function(name, api = "paleobiodb.org", hierarchy = FALSE,
-                             max_ranks = 5, n = 1, filter = NULL) {
+#' # get a uuid for a single name
+#' resolve_phylopic(name = "Canis lupus")
+#' # get uuids for the taxonomic hierarchy
+#' resolve_phylopic(name = "Canis lupus", hierarchy = TRUE)
+resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
+                             max_ranks = 5, n = 1, filter = NULL, url = FALSE) {
+  url_arg <- url
+  # Check arguments ------------------------------------------------------
+  if (!is.character(name)) {
+    stop("`name` should be of class character.")
+  }
+  if (!is.character(api)) {
+    stop("`api` should be of class character.")
+  }
+  if (!is.logical(hierarchy)) {
+    stop("`hierarchy` should be of class logical.")
+  }
+  if (!is.numeric(max_ranks)) {
+    stop("`max_ranks` should be of class numeric")
+  }
   # Normalise name -------------------------------------------------------
   name <- tolower(name)
   name <- gsub("_", " ", name)
   name <- URLencode(name)
-  # Query specified API for the name
-  # TODO: get taxonomic hierarchy if requested
+  # Query specified API for the name -------------------------------------
   if (api == "eol.org") {
     # check api is online
     headers <- curlGetHeaders("https://eol.org/api/search/1.0.json")
@@ -41,7 +95,12 @@ resolve_phylopic <- function(name, api = "paleobiodb.org", hierarchy = FALSE,
     url <- paste0("https://eol.org/api/search/1.0.json?page=1&q=", name)
     res <- GET(url = url)
     jsn <- response_to_JSON(res)
-    ids <- jsn$results$id[1]
+    # EOL appears to return lots of subspecies, so just grab a bunch and combine
+    # them for resolving with phylopic
+    # Not clear how to efficiently pick a name though
+    if (jsn$totalResults == 0) stop("No results returned from the API.")
+    ids <- URLencode(paste0(jsn$results$id, collapse= ","))
+    name_vec <- jsn$results$title
     if (hierarchy) {
       warning("`hierarchy = TRUE` is not currently available for eol.org.")
       hierarchy <- FALSE
@@ -58,7 +117,9 @@ resolve_phylopic <- function(name, api = "paleobiodb.org", hierarchy = FALSE,
                   "limit=1&q=", name)
     res <- GET(url = url)
     jsn <- response_to_JSON(res)
+    if (length(jsn) == 0) stop("No results returned from the API.")
     ids <- jsn$key
+    name_vec <- jsn$canonicalName
     if (hierarchy) {
       url <- paste0("https://api.gbif.org/v1/species/match?verbose=true&",
                     "name=", URLencode(jsn$canonicalName[1]))
@@ -67,6 +128,9 @@ resolve_phylopic <- function(name, api = "paleobiodb.org", hierarchy = FALSE,
       ids <- c(jsn$speciesKey[1], jsn$genusKey[1], jsn$familyKey[1],
                jsn$orderKey[1], jsn$classKey[1], jsn$phylumKey[1],
                jsn$kingdomKey[1])
+      name_vec <- c(jsn$species[1], jsn$genus[1], jsn$family[1],
+                    jsn$order[1], jsn$class[1], jsn$phylum[1],
+                    jsn$kingdom[1])
     }
   } else if (api == "marinespecies.org") {
     # check api is online
@@ -80,8 +144,10 @@ resolve_phylopic <- function(name, api = "paleobiodb.org", hierarchy = FALSE,
                   "AphiaRecordsByMatchNames?marine_only=false&",
                   "scientificnames%5B%5D=", name)
     res <- GET(url = url)
+    if (length(content(res)) == 0) stop("No results returned from the API.")
     jsn <- response_to_JSON(res)
     ids <- jsn[[1]]$AphiaID[1]
+    name_vec <- jsn[[1]]$scientificname[1]
     if (hierarchy) {
       url <- paste0("https://www.marinespecies.org/rest/",
                     "AphiaClassificationByAphiaID/", ids)
@@ -89,11 +155,14 @@ resolve_phylopic <- function(name, api = "paleobiodb.org", hierarchy = FALSE,
       jsn <- response_to_JSON(res)
       lst_sub <- jsn
       ids <- character()
+      name_vec <- character()
       while ("child" %in% names(lst_sub)) {
         ids <- c(ids, lst_sub$AphiaID)
+        name_vec <- c(name_vec, lst_sub$scientificname)
         lst_sub <- lst_sub$child
       }
       ids <- rev(ids)
+      name_vec <- rev(name_vec)
     }
   } else if (api == "paleobiodb.org") {
     # check api is online
@@ -107,13 +176,17 @@ resolve_phylopic <- function(name, api = "paleobiodb.org", hierarchy = FALSE,
                   "limit=1&name=", name)
     res <- GET(url = url)
     jsn <- response_to_JSON(res)
+    if ("errors" %in% jsn ||
+        length(jsn$records) == 0) stop("No results returned from the API.")
     ids <- jsn$records$oid[1]
+    name_vec <- jsn$records$nam[1]
     if (hierarchy) {
       url <- paste0("https://paleobiodb.org/data1.2/taxa/list.json?",
                     "rel=all_parents&", "id=txn:", ids)
       res <- GET(url = url)
       jsn <- response_to_JSON(res)
       ids <- rev(gsub("txn:", "", jsn$records$oid))
+      name_vec <- rev(jsn$records$nam)
     }
   } else if (api == "opentreeoflife.org") {
     # check api is online
@@ -124,33 +197,37 @@ resolve_phylopic <- function(name, api = "paleobiodb.org", hierarchy = FALSE,
     }
     namespace <- "taxonomy"
     url <- "https://api.opentreeoflife.org/v3/tnrs/autocomplete_name"
-    res <- POST(url = url, encode = "json", body = list("name" = name))
+    res <- POST(url = url, encode = "json",
+                body = list("name" = URLdecode(name)))
     jsn <- response_to_JSON(res)
+    if (length(jsn) == 0) stop("No results returned from the API.")
     ids <- jsn$ott_id[1]
+    name_vec <- jsn$unique_name[1]
     if (hierarchy) {
       url <- "https://api.opentreeoflife.org/v3/taxonomy/taxon_info"
       res <- POST(url = url, encode = "json",
                   body = list("include_lineage" = TRUE, "ott_id" = ids))
       jsn <- response_to_JSON(res)
       ids <- c(ids, jsn$lineage$ott_id)
+      name_vec <- c(name_vec, jsn$lineage$unique_name)
     }
   } else {
     stop("Invalid value for `api`. See the documentation for valid options.")
   }
-  # iterate over taxonomic hierarchy, if requested
+  # subset ids if more than max_ranks
   ids <- ids[seq_len(min(length(ids), max_ranks))]
+  # Resolve to PhyloPic and get images -----------------------------------
   lst <- list()
   for (i in seq_along(ids)) {
-    # Resolve to taxonomic name in PhyloPic database
-    api_return <- phy_GET(path = paste0("resolve/", api, "/", namespace,
-                                        "/", ids[i]))
+    api_return <- phy_GET(path = paste0("resolve/", api, "/", namespace),
+                                        query = list("objectIDs" = ids[i]))
     # catch any errors here
     if ("errors" %in% names(api_return)) {
-      lst[[i]] <- NULL
+      lst[[name_vec[i]]] <- character()
     } else {
       tax <- api_return$names[[1]]$text[1]
-      lst[[tax]] <- get_uuid(tax, n = n, filter = filter)
+      lst[[name_vec[i]]] <- get_uuid(tax, n = n, filter = filter, url = url_arg)
     }
   }
-  if (!hierarchy) return(lst[1]) else return(lst)
+  return(lst)
 }
