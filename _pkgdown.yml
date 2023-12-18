@@ -24,6 +24,7 @@ reference:
     Functions for identifying and retrieving PhyloPic silhouettes.
   contents:
   - get_uuid
+  - resolve_phylopic
   - pick_phylopic
   - get_phylopic
   - plot_phylopic
