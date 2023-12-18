@@ -4,7 +4,14 @@
 \alias{pick_phylopic}
 \title{Pick a PhyloPic image from available options}
 \usage{
-pick_phylopic(name = NULL, n = 5, view = 1, filter = NULL, auto = NULL)
+pick_phylopic(
+  name = NULL,
+  n = 5,
+  uuid = NULL,
+  view = 1,
+  filter = NULL,
+  auto = NULL
+)
 }
 \arguments{
 \item{name}{\code{character}. A taxonomic name. Different taxonomic levels
@@ -12,7 +19,11 @@ are supported (e.g. species, genus, family).}
 
 \item{n}{\code{numeric}. How many uuids should be viewed? Depending on the
 requested \code{name}, multiple silhouettes may exist. If \code{n} exceeds the number
-of available images, all available uuids will be returned. Defaults to 5.}
+of available images, all available uuids will be returned. Defaults to 5.
+Only relevant if \code{name} supplied.}
+
+\item{uuid}{\code{character}. A vector (or list) of valid PhyloPic
+silhouette uuids, such as that returned by \code{\link[=get_uuid]{get_uuid()}}.}
 
 \item{view}{\code{numeric}. Number of silhouettes that should be plotted at
 the same time. Defaults to 1.}
