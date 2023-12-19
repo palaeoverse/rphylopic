@@ -103,12 +103,13 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     url <- paste0("https://eol.org/api/search/1.0.json?page=1&q=", name_encode)
     res <- GET(url = url)
     jsn <- response_to_JSON(res)
-    # EOL appears to return lots of subspecies, so just grab a bunch and combine
-    # them for resolving with phylopic
-    # Not clear how to efficiently pick a name though
+    # EOL appears to return lots of subspecies, so check if any match `name`
+    # first, otherwise, return the first result
     if (jsn$totalResults == 0) stop("No results returned from the API.")
-    ids <- URLencode(paste0(jsn$results$id, collapse = ","))
-    name_vec <- jsn$results$title
+    matches <- which(tolower(jsn$results$title) == name)
+    ind <- ifelse(any(matches), matches[1], 1)
+    ids <- jsn$results$id[ind]
+    name_vec <- jsn$results$title[ind]
     if (hierarchy) {
       warning("`hierarchy = TRUE` is not currently available for eol.org.")
       hierarchy <- FALSE
@@ -187,7 +188,8 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     if ("errors" %in% jsn || length(jsn$records) == 0)
       stop("No results returned from the API.")
     # sometimes returns higher taxonomic ranks first even when there is a
-    # perfect match
+    # perfect match, so check if any match `name`, otherwise, return the first
+    # result
     matches <- which(tolower(jsn$records$nam) == name)
     ind <- ifelse(any(matches), matches[1], 1)
     ids <- jsn$records$oid[ind]
@@ -229,8 +231,8 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
   # Resolve to PhyloPic and get images -----------------------------------
   lst <- list()
   for (i in seq_along(ids)) {
-    api_return <- phy_GET(path = paste0("resolve/", api, "/", namespace),
-                          query = list("objectIDs" = ids[i]))
+    api_return <- phy_GET(path = paste0("resolve/", api, "/", namespace, "/",
+                                        ids[i]))
     # catch any errors here
     if ("errors" %in% names(api_return)) {
       lst[[name_vec[i]]] <- character()
