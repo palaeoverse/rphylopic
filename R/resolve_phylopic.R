@@ -7,11 +7,11 @@
 #'
 #' @param name \code{character}. A full or partial taxonomic name to be queried
 #'   via the specified `api`.
-#' @param api \code{character}. The API in which to query `name`. See
-#'   Details for the available options.
+#' @param api \code{character}. The API in which to query `name`. See Details
+#'   for the available options.
 #' @param hierarchy \code{logical}. Whether the taxonomic hierarchy of `name`
 #'   should be retrieved from the API and used to get several sets of PhyloPic
-#'   images.
+#'   image uuids (or urls).
 #' @param max_ranks \code{numeric}. The maximum number of taxonomic ranks that
 #'   should be included if `hierarchy` is `TRUE`.
 #' @inheritParams get_uuid
@@ -22,15 +22,15 @@
 #'   length 1. If `hierarchy` is `TRUE`, the list has maximum length
 #'   `max_ranks`.
 #'
-#' @details If `hierarchy` is `FALSE`, the specified `name` is matched to the
+#' @details If `hierarchy` is `FALSE`, the specified `name` is queried via the
 #'   specified `api`. The matched id is then resolved to the matching taxonomic
 #'   node in the PhyloPic database. If `hierarchy` is `TRUE`, the full taxonomic
 #'   hierarchy for `name` is retrieved from the specified `api`, those taxonomic
 #'   names are subset to `max_ranks` ranks (starting from the specified `name`
 #'   and ascending the hierarchy). Then each of those names is resolved to the
-#'   matching taxonomic node in the PhyloPic database (where possible). In either
-#'   case, [get_uuid()] is then used to retrieve `n` image UUID(s) for each taxonomic
-#'   name.
+#'   matching taxonomic node in the PhyloPic database (where possible). In
+#'   either case, [get_uuid()] is then used to retrieve `n` image UUID(s) for
+#'   each taxonomic name.
 #'
 #'   Note that while the names of the returned list are the taxonomic names as
 #'   reported by the specified `api`, the PhyloPic images that are returned are
@@ -43,15 +43,16 @@
 #'   The following APIs are available for matching (`api`):
 #'   \itemize{
 #'     \item{"eol.org": the \href{https://eol.org/}{Encyclopedia of Life}}
-#'     (note: `hierarchy = TRUE` is not currently available for this API)
+#'     (note: `hierarchy = TRUE` is not currently available for this API) ("eol"
+#'     is also allowed)
 #'     \item{"gbif.org": the \href{https://www.gbif.org/}{Global Biodiversity
-#'     Information Facility}}
+#'     Information Facility}} ("gbif" is also allowed)
 #'     \item{"marinespecies.org": the \href{https://marinespecies.org/}{World
-#'     Registor of Marine Species}}
+#'     Registor of Marine Species}} ("worms" is also allowed)
 #'     \item{"opentreeoflife.org": the \href{https://tree.opentreeoflife.org/}{
-#'     Open Tree of Life}}
+#'     Open Tree of Life}} ("otol" is also allowed)
 #'     \item{"paleobiodb.org": the \href{https://paleobiodb.org/#/}{Paleobiology
-#'     Database}}
+#'     Database}} ("pbdb" is also allowed)
 #'   }
 #'
 #' @importFrom httr GET POST content
@@ -62,7 +63,8 @@
 #' # get a uuid for a single name
 #' resolve_phylopic(name = "Canis lupus")
 #' # get uuids for the taxonomic hierarchy
-#' resolve_phylopic(name = "Canis lupus", hierarchy = TRUE, max_ranks = 3)
+#' resolve_phylopic(name = "Velociraptor mongoliensis", api = "paleobiodb.org",
+#'                  hierarchy = TRUE, max_ranks = 3)
 resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
                              max_ranks = 5, n = 1, filter = NULL, url = FALSE) {
   url_arg <- url
@@ -79,12 +81,12 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
   if (!is.numeric(max_ranks)) {
     stop("`max_ranks` should be of class numeric.")
   }
-  # Normalise name -------------------------------------------------------
+  # Normalize name -------------------------------------------------------
   name <- tolower(name)
   name <- gsub("_", " ", name)
   name <- URLencode(name)
   # Query specified API for the name -------------------------------------
-  if (api == "eol.org") {
+  if (api %in% c("eol", "eol.org")) {
     # check api is online
     headers <- curlGetHeaders("https://eol.org/api/search/1.0.json")
     if (attr(headers, "status") != 200) {
@@ -105,7 +107,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
       warning("`hierarchy = TRUE` is not currently available for eol.org.")
       hierarchy <- FALSE
     }
-  } else if (api == "gbif.org") {
+  } else if (api %in% c("gbif", "gbif.org")) {
     # check api is online
     headers <- curlGetHeaders("https://api.gbif.org/v1/")
     if (attr(headers, "status") != 200) {
@@ -132,7 +134,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
                     jsn$order[1], jsn$class[1], jsn$phylum[1],
                     jsn$kingdom[1])
     }
-  } else if (api == "marinespecies.org") {
+  } else if (api %in% c("worms", "marinespecies.org")) {
     # check api is online
     headers <- curlGetHeaders("https://www.marinespecies.org/rest/")
     if (attr(headers, "status") != 200) {
@@ -164,7 +166,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
       ids <- rev(ids)
       name_vec <- rev(name_vec)
     }
-  } else if (api == "paleobiodb.org") {
+  } else if (api %in% c("pbdb", "paleobiodb.org")) {
     # check api is online
     headers <- curlGetHeaders("https://paleobiodb.org/data1.2/")
     if (attr(headers, "status") != 200) {
@@ -173,7 +175,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     }
     namespace <- "txn"
     url <- paste0("https://paleobiodb.org/data1.2/taxa/auto.json?",
-                  "limit=1&name=", name)
+                  "limit=10&name=", name)
     res <- GET(url = url)
     jsn <- response_to_JSON(res)
     if ("errors" %in% jsn || length(jsn$records) == 0)
@@ -188,7 +190,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
       ids <- rev(gsub("txn:", "", jsn$records$oid))
       name_vec <- rev(jsn$records$nam)
     }
-  } else if (api == "opentreeoflife.org") {
+  } else if (api %in% c("otol", "opentreeoflife.org")) {
     # check api is online
     headers <- curlGetHeaders("https://api.opentreeoflife.org/")
     if (attr(headers, "status") != 200) {

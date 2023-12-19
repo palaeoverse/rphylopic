@@ -2,7 +2,7 @@
 % Please edit documentation in R/resolve_phylopic.R
 \name{resolve_phylopic}
 \alias{resolve_phylopic}
-\title{Use a name from another database to get images from the PhyloPic database}
+\title{Use a taxonomic name from another database to get a PhyloPic image UUID}
 \usage{
 resolve_phylopic(
   name,
@@ -15,15 +15,15 @@ resolve_phylopic(
 )
 }
 \arguments{
-\item{name}{\code{character}. A full or partial taxonomic name to be matched
-to the specified \code{api}.}
+\item{name}{\code{character}. A full or partial taxonomic name to be queried
+via the specified \code{api}.}
 
-\item{api}{\code{character}. An API in which to look up the \code{name}. See
-Details for the available options.}
+\item{api}{\code{character}. The API in which to query \code{name}. See Details
+for the available options.}
 
 \item{hierarchy}{\code{logical}. Whether the taxonomic hierarchy of \code{name}
 should be retrieved from the API and used to get several sets of PhyloPic
-images.}
+image uuids (or urls).}
 
 \item{max_ranks}{\code{numeric}. The maximum number of taxonomic ranks that
 should be included if \code{hierarchy} is \code{TRUE}.}
@@ -56,17 +56,17 @@ taxonomic node database, then retrieves PhyloPic image uuids (or urls) for
 that node.
 }
 \details{
-If \code{hierarchy} is \code{FALSE}, the specified \code{name} is matched to the
+If \code{hierarchy} is \code{FALSE}, the specified \code{name} is queried via the
 specified \code{api}. The matched id is then resolved to the matching taxonomic
 node in the PhyloPic database. If \code{hierarchy} is \code{TRUE}, the full taxonomic
 hierarchy for \code{name} is retrieved from the specified \code{api}, those taxonomic
 names are subset to \code{max_ranks} ranks (starting from the specified \code{name}
-and going up the hierarchy). Then each of those names is resolved to the
-matching taxonomic node in the PhyloPic database (as possible). In either
-case, \code{\link[=get_uuid]{get_uuid()}} is then used to retrieve \code{n} images for each taxonomic
-name.
+and ascending the hierarchy). Then each of those names is resolved to the
+matching taxonomic node in the PhyloPic database (where possible). In
+either case, \code{\link[=get_uuid]{get_uuid()}} is then used to retrieve \code{n} image UUID(s) for
+each taxonomic name.
 
-Note that while the labels of the returned list are the taxonomic names as
+Note that while the names of the returned list are the taxonomic names as
 reported by the specified \code{api}, the PhyloPic images that are returned are
 associated with whatever taxonomic node that taxonomic name resolves to in
 the PhyloPic database. This means that, if \code{hierarchy} is \code{TRUE}, the same
@@ -77,20 +77,22 @@ images will be returned for that name.
 The following APIs are available for matching (\code{api}):
 \itemize{
 \item{"eol.org": the \href{https://eol.org/}{Encyclopedia of Life}}
-(note: \code{hierarchy = TRUE} is not currently available for this API)
+(note: \code{hierarchy = TRUE} is not currently available for this API) ("eol"
+is also allowed)
 \item{"gbif.org": the \href{https://www.gbif.org/}{Global Biodiversity
-Information Facility}}
+Information Facility}} ("gbif" is also allowed)
 \item{"marinespecies.org": the \href{https://marinespecies.org/}{World
-Registor of Marine Species}}
+Registor of Marine Species}} ("worms" is also allowed)
 \item{"opentreeoflife.org": the \href{https://tree.opentreeoflife.org/}{
-Open Tree of Life}}
+Open Tree of Life}} ("otol" is also allowed)
 \item{"paleobiodb.org": the \href{https://paleobiodb.org/#/}{Paleobiology
-Database}}
+Database}} ("pbdb" is also allowed)
 }
 }
 \examples{
 # get a uuid for a single name
 resolve_phylopic(name = "Canis lupus")
 # get uuids for the taxonomic hierarchy
-resolve_phylopic(name = "Canis lupus", hierarchy = TRUE, max_ranks = 3)
+resolve_phylopic(name = "Velociraptor mongoliensis", api = "paleobiodb.org",
+                 hierarchy = TRUE, max_ranks = 3)
 }
