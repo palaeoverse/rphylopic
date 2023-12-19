@@ -59,12 +59,13 @@
 #' @importFrom utils URLencode URLdecode
 #' @importFrom stats setNames
 #' @export
-#' @examples
+#' @examples \dontrun{
 #' # get a uuid for a single name
 #' resolve_phylopic(name = "Canis lupus")
 #' # get uuids for the taxonomic hierarchy
 #' resolve_phylopic(name = "Velociraptor mongoliensis", api = "paleobiodb.org",
 #'                  hierarchy = TRUE, max_ranks = 3)
+#' }
 resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
                              max_ranks = 5, n = 1, filter = NULL, url = FALSE) {
   url_arg <- url
@@ -93,12 +94,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
   name_encode <- URLencode(name)
   # Query specified API for the name -------------------------------------
   if (api == "eol.org") {
-    # check api is online
-    headers <- curlGetHeaders("https://eol.org/api/search/1.0.json")
-    if (attr(headers, "status") != 200) {
-      stop("Encyclopedia of Life is not available or you have no internet
-           connection.")
-    }
+    check_url("https://eol.org/api/search/1.0.json")
     namespace <- "pages"
     url <- paste0("https://eol.org/api/search/1.0.json?page=1&q=", name_encode)
     res <- GET(url = url)
@@ -115,12 +111,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
       hierarchy <- FALSE
     }
   } else if (api == "gbif.org") {
-    # check api is online
-    headers <- curlGetHeaders("https://api.gbif.org/v1/")
-    if (attr(headers, "status") != 200) {
-      stop("Global Biodiversity Information Facility is not available or you
-           have no internet connection.")
-    }
+    check_url("https://api.gbif.org/v1/")
     namespace <- "species"
     url <- paste0("https://api.gbif.org/v1/species/suggest?",
                   "limit=1&q=", name_encode)
@@ -142,12 +133,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
                     jsn$kingdom[1])
     }
   } else if (api == "marinespecies.org") {
-    # check api is online
-    headers <- curlGetHeaders("https://www.marinespecies.org/rest/")
-    if (attr(headers, "status") != 200) {
-      stop("World Register of Marine Species is not available or you have no
-           internet connection.")
-    }
+    check_url("https://www.marinespecies.org/rest/")
     namespace <- "taxname"
     url <- paste0("https://www.marinespecies.org/rest/",
                   "AphiaRecordsByMatchNames?marine_only=false&",
@@ -174,12 +160,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
       name_vec <- rev(name_vec)
     }
   } else if (api == "paleobiodb.org") {
-    # check api is online
-    headers <- curlGetHeaders("https://paleobiodb.org/data1.2/")
-    if (attr(headers, "status") != 200) {
-      stop("Paleobiology Database is not available or you have no internet
-           connection.")
-    }
+    check_url("https://paleobiodb.org/data1.2/")
     namespace <- "txn"
     url <- paste0("https://paleobiodb.org/data1.2/taxa/auto.json?",
                   "limit=10&name=", name_encode)
@@ -203,12 +184,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
       name_vec <- rev(jsn$records$nam)
     }
   } else if (api == "opentreeoflife.org") {
-    # check api is online
-    headers <- curlGetHeaders("https://api.opentreeoflife.org/")
-    if (attr(headers, "status") != 200) {
-      stop("Open Tree of Life is not available or you have no internet
-           connection.")
-    }
+    check_url("https://api.opentreeoflife.org/")
     namespace <- "taxonomy"
     url <- "https://api.opentreeoflife.org/v3/tnrs/autocomplete_name"
     res <- POST(url = url, encode = "json",
@@ -242,4 +218,12 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     }
   }
   return(lst)
+}
+
+# check that a particular URL (e.g., for an API) is online
+check_url <- function(url) {
+  headers <- curlGetHeaders(url)
+  if (attr(headers, "status") != 200) {
+    stop("API is not available or you have no internet connection.")
+  }
 }
