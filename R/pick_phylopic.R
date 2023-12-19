@@ -14,12 +14,16 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #' @param n \code{numeric}. How many uuids should be viewed? Depending on the
 #'   requested `name`, multiple silhouettes may exist. If `n` exceeds the number
 #'   of available images, all available uuids will be returned. Defaults to 5.
+#'   Only relevant if `name` supplied.
+#' @param uuid \code{character}. A vector (or list) of valid PhyloPic 
+#'   silhouette uuids, such as that returned by [get_uuid()].
 #' @param view \code{numeric}. Number of silhouettes that should be plotted at
 #'   the same time. Defaults to 1.
 #' @param filter \code{character}. Filter uuid(s) by usage license. Use "by"
 #'   to limit results to image uuids which do not require attribution, "nc"
 #'   for image uuids which allow commercial usage, and "sa" for image uuids
-#'   without a ShareAlike clause. The user can also combine these filters.
+#'   without a ShareAlike clause. The user can also combine these filters. Only
+#'   relevant if `name` supplied.
 #' @param auto \code{numeric}. This argument allows the user to automate input
 #'   into the menu choice. If the input value is `1`, the first returned image
 #'   will be selected. If the input value is `2`, requested images will be
@@ -52,7 +56,7 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #' # 3 x 3 pane layout
 #' img <- pick_phylopic(name = "Scleractinia", n = 9, view = 9)
 #' }
-pick_phylopic <- function(name = NULL, n = 5, view = 1,
+pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
                           filter = NULL, auto = NULL) {
   # Error handling
   if (!is.null(auto) && !auto %in% c(1, 2)) {
@@ -79,9 +83,13 @@ pick_phylopic <- function(name = NULL, n = 5, view = 1,
               gp = gpar(fontsize = 8, col = "purple", fontface = "bold"))
     return(img)
   }
-
-  # Get uuids
-  uuids <- get_uuid(name = name, n = n, filter = filter, url = FALSE)
+  
+  if (is.null(uuid)) {
+    # Get uuids
+    uuids <- get_uuid(name = name, n = n, filter = filter, url = FALSE)
+  } else {
+    uuids <- unlist(uuid)
+  }
   # Record length
   n_uuids <- length(uuids)
 
