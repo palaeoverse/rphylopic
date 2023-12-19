@@ -74,7 +74,7 @@ images may be returned for multiple taxonomic names. Also, if a particular
 taxonomic name does not resolve to any node in the PhyloPic database, no
 images will be returned for that name.
 
-The following APIs are available for matching (\code{api}):
+The following APIs are available for querying (\code{api}):
 \itemize{
 \item{"eol.org": the \href{https://eol.org/}{Encyclopedia of Life}}
 (note: \code{hierarchy = TRUE} is not currently available for this API) ("eol"

@@ -40,7 +40,7 @@
 #'   taxonomic name does not resolve to any node in the PhyloPic database, no
 #'   images will be returned for that name.
 #'
-#'   The following APIs are available for matching (`api`):
+#'   The following APIs are available for querying (`api`):
 #'   \itemize{
 #'     \item{"eol.org": the \href{https://eol.org/}{Encyclopedia of Life}}
 #'     (note: `hierarchy = TRUE` is not currently available for this API) ("eol"
@@ -68,7 +68,13 @@
 resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
                              max_ranks = 5, n = 1, filter = NULL, url = FALSE) {
   url_arg <- url
+  # replace api abbreviations
+  abbrvs <- setNames(c("eol.org", "gbif.org", "marinespecies.org",
+                       "opentreeoflife.org", "paleobiodb.org"),
+                     c("eol", "gbif", "worms", "otol", "pbdb"))
+  if (api %in% names(abbrvs)) api <- abbrvs[[api]]
   # Check arguments ------------------------------------------------------
+  api <- match.arg(api, unname(abbrvs))
   if (!is.character(name)) {
     stop("`name` should be of class character.")
   }
@@ -86,7 +92,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
   name <- gsub("_", " ", name)
   name_encode <- URLencode(name)
   # Query specified API for the name -------------------------------------
-  if (api %in% c("eol", "eol.org")) {
+  if (api == "eol.org") {
     # check api is online
     headers <- curlGetHeaders("https://eol.org/api/search/1.0.json")
     if (attr(headers, "status") != 200) {
@@ -107,7 +113,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
       warning("`hierarchy = TRUE` is not currently available for eol.org.")
       hierarchy <- FALSE
     }
-  } else if (api %in% c("gbif", "gbif.org")) {
+  } else if (api == "gbif.org") {
     # check api is online
     headers <- curlGetHeaders("https://api.gbif.org/v1/")
     if (attr(headers, "status") != 200) {
@@ -134,7 +140,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
                     jsn$order[1], jsn$class[1], jsn$phylum[1],
                     jsn$kingdom[1])
     }
-  } else if (api %in% c("worms", "marinespecies.org")) {
+  } else if (api == "marinespecies.org") {
     # check api is online
     headers <- curlGetHeaders("https://www.marinespecies.org/rest/")
     if (attr(headers, "status") != 200) {
@@ -166,7 +172,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
       ids <- rev(ids)
       name_vec <- rev(name_vec)
     }
-  } else if (api %in% c("pbdb", "paleobiodb.org")) {
+  } else if (api == "paleobiodb.org") {
     # check api is online
     headers <- curlGetHeaders("https://paleobiodb.org/data1.2/")
     if (attr(headers, "status") != 200) {
@@ -194,7 +200,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
       ids <- rev(gsub("txn:", "", jsn$records$oid))
       name_vec <- rev(jsn$records$nam)
     }
-  } else if (api %in% c("otol", "opentreeoflife.org")) {
+  } else if (api == "opentreeoflife.org") {
     # check api is online
     headers <- curlGetHeaders("https://api.opentreeoflife.org/")
     if (attr(headers, "status") != 200) {
@@ -217,9 +223,6 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
       ids <- c(ids, jsn$lineage$ott_id)
       name_vec <- c(name_vec, jsn$lineage$unique_name)
     }
-  } else {
-    stop("`api` must be one of 'eol.org', 'gbif.org', 'marinespecies.org',
-         'opentreeoflife.org', or 'paleobiodb.org'")
   }
   # subset ids if more than max_ranks
   ids <- ids[seq_len(min(length(ids), max_ranks))]
