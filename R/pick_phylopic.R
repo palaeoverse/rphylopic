@@ -22,7 +22,8 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #' @param filter \code{character}. Filter uuid(s) by usage license. Use "by"
 #'   to limit results to image uuids which do not require attribution, "nc"
 #'   for image uuids which allow commercial usage, and "sa" for image uuids
-#'   without a ShareAlike clause. The user can also combine these filters.
+#'   without a ShareAlike clause. The user can also combine these filters. Only
+#'   relevant if `name` supplied.
 #' @param auto \code{numeric}. This argument allows the user to automate input
 #'   into the menu choice. If the input value is `1`, the first returned image
 #'   will be selected. If the input value is `2`, requested images will be

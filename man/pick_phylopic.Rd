@@ -31,7 +31,8 @@ the same time. Defaults to 1.}
 \item{filter}{\code{character}. Filter uuid(s) by usage license. Use "by"
 to limit results to image uuids which do not require attribution, "nc"
 for image uuids which allow commercial usage, and "sa" for image uuids
-without a ShareAlike clause. The user can also combine these filters.}
+without a ShareAlike clause. The user can also combine these filters. Only
+relevant if \code{name} supplied.}
 
 \item{auto}{\code{numeric}. This argument allows the user to automate input
 into the menu choice. If the input value is \code{1}, the first returned image
