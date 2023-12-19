@@ -4,6 +4,10 @@ test_that("resolve_phylopic works with GBIF", {
   expect_equal(length(res), 1)
   expect_true(is.character(names(res)))
   expect_true(all(sapply(res, is.character)))
+  res2 <- resolve_phylopic(name = "Acropora cervicornis", api = "gbif")
+  expect_equal(res, res2)
+  res3 <- resolve_phylopic(name = "Acropora cervicornis", api = "g")
+  expect_equal(res, res3)
 
   suppressWarnings(
     res <- resolve_phylopic(name = "Acropora cervicornis", api = "gbif.org",
