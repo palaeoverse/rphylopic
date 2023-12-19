@@ -68,7 +68,14 @@ image/uuid for the user.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pick_phylopic</span><span class="op">(</span>name <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="fl">5</span>, view <span class="op">=</span> <span class="fl">1</span>, filter <span class="op">=</span> <span class="cn">NULL</span>, auto <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pick_phylopic</span><span class="op">(</span></span>
+<span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  uuid <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  view <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  filter <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  auto <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -81,7 +88,13 @@ are supported (e.g. species, genus, family).</p></dd>
 <dt>n</dt>
 <dd><p><code>numeric</code>. How many uuids should be viewed? Depending on the
 requested <code>name</code>, multiple silhouettes may exist. If <code>n</code> exceeds the number
-of available images, all available uuids will be returned. Defaults to 5.</p></dd>
+of available images, all available uuids will be returned. Defaults to 5.
+Only relevant if <code>name</code> supplied.</p></dd>
+
+
+<dt>uuid</dt>
+<dd><p><code>character</code>. A vector (or list) of valid PhyloPic
+silhouette uuids, such as that returned by <code><a href="get_uuid.html">get_uuid()</a></code>.</p></dd>
 
 
 <dt>view</dt>
@@ -93,7 +106,8 @@ the same time. Defaults to 1.</p></dd>
 <dd><p><code>character</code>. Filter uuid(s) by usage license. Use "by"
 to limit results to image uuids which do not require attribution, "nc"
 for image uuids which allow commercial usage, and "sa" for image uuids
-without a ShareAlike clause. The user can also combine these filters.</p></dd>
+without a ShareAlike clause. The user can also combine these filters. Only
+relevant if <code>name</code> supplied.</p></dd>
 
 
 <dt>auto</dt>
