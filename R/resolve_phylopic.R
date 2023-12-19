@@ -84,7 +84,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
   # Normalize name -------------------------------------------------------
   name <- tolower(name)
   name <- gsub("_", " ", name)
-  name <- URLencode(name)
+  name_encode <- URLencode(name)
   # Query specified API for the name -------------------------------------
   if (api %in% c("eol", "eol.org")) {
     # check api is online
@@ -94,7 +94,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
            connection.")
     }
     namespace <- "pages"
-    url <- paste0("https://eol.org/api/search/1.0.json?page=1&q=", name)
+    url <- paste0("https://eol.org/api/search/1.0.json?page=1&q=", name_encode)
     res <- GET(url = url)
     jsn <- response_to_JSON(res)
     # EOL appears to return lots of subspecies, so just grab a bunch and combine
@@ -116,7 +116,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     }
     namespace <- "species"
     url <- paste0("https://api.gbif.org/v1/species/suggest?",
-                  "limit=1&q=", name)
+                  "limit=1&q=", name_encode)
     res <- GET(url = url)
     jsn <- response_to_JSON(res)
     if (length(jsn) == 0) stop("No results returned from the API.")
@@ -144,7 +144,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     namespace <- "taxname"
     url <- paste0("https://www.marinespecies.org/rest/",
                   "AphiaRecordsByMatchNames?marine_only=false&",
-                  "scientificnames%5B%5D=", name)
+                  "scientificnames%5B%5D=", name_encode)
     res <- GET(url = url)
     if (length(content(res)) == 0) stop("No results returned from the API.")
     jsn <- response_to_JSON(res)
@@ -175,13 +175,17 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     }
     namespace <- "txn"
     url <- paste0("https://paleobiodb.org/data1.2/taxa/auto.json?",
-                  "limit=10&name=", name)
+                  "limit=10&name=", name_encode)
     res <- GET(url = url)
     jsn <- response_to_JSON(res)
     if ("errors" %in% jsn || length(jsn$records) == 0)
       stop("No results returned from the API.")
-    ids <- jsn$records$oid[1]
-    name_vec <- jsn$records$nam[1]
+    # sometimes returns higher taxonomic ranks first even when there is a
+    # perfect match
+    matches <- which(tolower(jsn$records$nam) == name)
+    ind <- ifelse(any(matches), matches[1], 1)
+    ids <- jsn$records$oid[ind]
+    name_vec <- jsn$records$nam[ind]
     if (hierarchy) {
       url <- paste0("https://paleobiodb.org/data1.2/taxa/list.json?",
                     "rel=all_parents&", "id=txn:", ids)
@@ -200,7 +204,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     namespace <- "taxonomy"
     url <- "https://api.opentreeoflife.org/v3/tnrs/autocomplete_name"
     res <- POST(url = url, encode = "json",
-                body = list("name" = URLdecode(name)))
+                body = list("name" = name))
     jsn <- response_to_JSON(res)
     if (length(jsn) == 0) stop("No results returned from the API.")
     ids <- jsn$ott_id[1]
