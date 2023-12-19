@@ -1,13 +1,13 @@
-#' Use a name from another database to get images from the PhyloPic database
+#' Use a taxonomic name from another database to get a PhyloPic image UUID
 #'
 #' This function takes a supplied taxonomic name, matches it to the specified
 #' external API, resolves the API's returned taxonomic ID to the PhyloPic
 #' taxonomic node database, then retrieves PhyloPic image uuids (or urls) for
 #' that node.
 #'
-#' @param name \code{character}. A full or partial taxonomic name to be matched
-#'   to the specified `api`.
-#' @param api \code{character}. An API in which to look up the `name`. See
+#' @param name \code{character}. A full or partial taxonomic name to be queried
+#'   via the specified `api`.
+#' @param api \code{character}. The API in which to query `name`. See
 #'   Details for the available options.
 #' @param hierarchy \code{logical}. Whether the taxonomic hierarchy of `name`
 #'   should be retrieved from the API and used to get several sets of PhyloPic
@@ -27,12 +27,12 @@
 #'   node in the PhyloPic database. If `hierarchy` is `TRUE`, the full taxonomic
 #'   hierarchy for `name` is retrieved from the specified `api`, those taxonomic
 #'   names are subset to `max_ranks` ranks (starting from the specified `name`
-#'   and going up the hierarchy). Then each of those names is resolved to the
-#'   matching taxonomic node in the PhyloPic database (as possible). In either
-#'   case, [get_uuid()] is then used to retrieve `n` images for each taxonomic
+#'   and ascending the hierarchy). Then each of those names is resolved to the
+#'   matching taxonomic node in the PhyloPic database (where possible). In either
+#'   case, [get_uuid()] is then used to retrieve `n` image UUID(s) for each taxonomic
 #'   name.
 #'
-#'   Note that while the labels of the returned list are the taxonomic names as
+#'   Note that while the names of the returned list are the taxonomic names as
 #'   reported by the specified `api`, the PhyloPic images that are returned are
 #'   associated with whatever taxonomic node that taxonomic name resolves to in
 #'   the PhyloPic database. This means that, if `hierarchy` is `TRUE`, the same
@@ -77,7 +77,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     stop("`hierarchy` should be of class logical.")
   }
   if (!is.numeric(max_ranks)) {
-    stop("`max_ranks` should be of class numeric")
+    stop("`max_ranks` should be of class numeric.")
   }
   # Normalise name -------------------------------------------------------
   name <- tolower(name)
