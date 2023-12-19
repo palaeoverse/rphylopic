@@ -55,7 +55,7 @@
 #'     Database}} ("pbdb" is also allowed)
 #'   }
 #'
-#' @importFrom httr GET POST content
+#' @importFrom httr POST
 #' @importFrom utils URLencode URLdecode
 #' @importFrom stats setNames
 #' @export
@@ -97,8 +97,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     check_url("https://eol.org/api/search/1.0.json")
     namespace <- "pages"
     url <- paste0("https://eol.org/api/search/1.0.json?page=1&q=", name_encode)
-    res <- GET(url = url)
-    jsn <- response_to_JSON(res)
+    jsn <- json_GET(url)
     # EOL appears to return lots of subspecies, so check if any match `name`
     # first, otherwise, return the first result
     if (jsn$totalResults == 0) stop("No results returned from the API.")
@@ -115,16 +114,14 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     namespace <- "species"
     url <- paste0("https://api.gbif.org/v1/species/suggest?",
                   "limit=1&q=", name_encode)
-    res <- GET(url = url)
-    jsn <- response_to_JSON(res)
+    jsn <- json_GET(url)
     if (length(jsn) == 0) stop("No results returned from the API.")
     ids <- jsn$key
     name_vec <- jsn$canonicalName
     if (hierarchy) {
       url <- paste0("https://api.gbif.org/v1/species/match?verbose=true&",
                     "name=", URLencode(jsn$canonicalName[1]))
-      res <- GET(url = url)
-      jsn <- response_to_JSON(res)
+      jsn <- json_GET(url)
       ids <- c(jsn$speciesKey[1], jsn$genusKey[1], jsn$familyKey[1],
                jsn$orderKey[1], jsn$classKey[1], jsn$phylumKey[1],
                jsn$kingdomKey[1])
@@ -138,16 +135,13 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     url <- paste0("https://www.marinespecies.org/rest/",
                   "AphiaRecordsByMatchNames?marine_only=false&",
                   "scientificnames%5B%5D=", name_encode)
-    res <- GET(url = url)
-    if (length(content(res)) == 0) stop("No results returned from the API.")
-    jsn <- response_to_JSON(res)
+    jsn <- json_GET(url)
     ids <- jsn[[1]]$AphiaID[1]
     name_vec <- jsn[[1]]$scientificname[1]
     if (hierarchy) {
       url <- paste0("https://www.marinespecies.org/rest/",
                     "AphiaClassificationByAphiaID/", ids)
-      res <- GET(url = url)
-      jsn <- response_to_JSON(res)
+      jsn <- json_GET(url)
       lst_sub <- jsn
       ids <- character()
       name_vec <- character()
@@ -164,8 +158,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     namespace <- "txn"
     url <- paste0("https://paleobiodb.org/data1.2/taxa/auto.json?",
                   "limit=10&name=", name_encode)
-    res <- GET(url = url)
-    jsn <- response_to_JSON(res)
+    jsn <- json_GET(url)
     if ("errors" %in% jsn || length(jsn$records) == 0)
       stop("No results returned from the API.")
     # sometimes returns higher taxonomic ranks first even when there is a
@@ -178,8 +171,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     if (hierarchy) {
       url <- paste0("https://paleobiodb.org/data1.2/taxa/list.json?",
                     "rel=all_parents&", "id=txn:", ids)
-      res <- GET(url = url)
-      jsn <- response_to_JSON(res)
+      jsn <- json_GET(url)
       ids <- rev(gsub("txn:", "", jsn$records$oid))
       name_vec <- rev(jsn$records$nam)
     }
@@ -187,8 +179,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     check_url("https://api.opentreeoflife.org/")
     namespace <- "taxonomy"
     url <- "https://api.opentreeoflife.org/v3/tnrs/autocomplete_name"
-    res <- POST(url = url, encode = "json",
-                body = list("name" = name))
+    res <- POST(url = url, encode = "json", body = list("name" = name))
     jsn <- response_to_JSON(res)
     if (length(jsn) == 0) stop("No results returned from the API.")
     ids <- jsn$ott_id[1]
@@ -226,4 +217,11 @@ check_url <- function(url) {
   if (attr(headers, "status") != 200) {
     stop("API is not available or you have no internet connection.")
   }
+}
+
+#' @importFrom httr GET
+json_GET <- function(url) {
+  res <- GET(url = url)
+  if (length(res$content) == 0) stop("No results returned from the API.")
+  response_to_JSON(res)
 }

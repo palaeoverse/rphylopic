@@ -90,9 +90,11 @@ Database}} ("pbdb" is also allowed)
 }
 }
 \examples{
+\dontrun{
 # get a uuid for a single name
 resolve_phylopic(name = "Canis lupus")
 # get uuids for the taxonomic hierarchy
 resolve_phylopic(name = "Velociraptor mongoliensis", api = "paleobiodb.org",
                  hierarchy = TRUE, max_ranks = 3)
+}
 }
