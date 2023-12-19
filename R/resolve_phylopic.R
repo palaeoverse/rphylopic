@@ -212,7 +212,8 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
       name_vec <- c(name_vec, jsn$lineage$unique_name)
     }
   } else {
-    stop("Invalid value for `api`. See the documentation for valid options.")
+    stop("`api` must be one of 'eol.org', 'gbif.org', 'marinespecies.org',
+         'opentreeoflife.org', or 'paleobiodb.org'")
   }
   # subset ids if more than max_ranks
   ids <- ids[seq_len(min(length(ids), max_ranks))]

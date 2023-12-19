@@ -28,6 +28,7 @@ test_that("resolve_phylopic works with GBIF", {
   expect_error(resolve_phylopic(name = "Acropora cervicornis",
                                 api = "gbif.org", max_ranks = "hi"))
   expect_error(resolve_phylopic(name = 15, api = "gbif.org"))
+  expect_error(resolve_phylopic(name = "Acropora cervicornis", api = "hi"))
 })
 
 test_that("resolve_phylopic works with EOL", {
