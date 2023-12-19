@@ -66,18 +66,18 @@ matching taxonomic node in the PhyloPic database (as possible). In either
 case, \code{\link[=get_uuid]{get_uuid()}} is then used to retrieve \code{n} images for each taxonomic
 name.
 
-Note that while the labels of the returned list are the taxonomic
-names as reported by the specified \code{api}, the PhyloPic images that are
-returned are associated with whatever taxonomic node that taxonomic name
-resolves to in the PhyloPic database. This means that, if \code{hierarchy} is
-\code{TRUE}, the same images may be returned for multiple taxonomic names. Also,
-if a particular taxonomic name does not resolve to any node in the PhyloPic
-database, no images will be returned for that name.
+Note that while the labels of the returned list are the taxonomic names as
+reported by the specified \code{api}, the PhyloPic images that are returned are
+associated with whatever taxonomic node that taxonomic name resolves to in
+the PhyloPic database. This means that, if \code{hierarchy} is \code{TRUE}, the same
+images may be returned for multiple taxonomic names. Also, if a particular
+taxonomic name does not resolve to any node in the PhyloPic database, no
+images will be returned for that name.
 
 The following APIs are available for matching (\code{api}):
 \itemize{
-\item{"eol.org": the \href{https://eol.org/}{Encyclopedia of Life}} (note:
-\code{hierarchy = TRUE} is not currently available for this API)
+\item{"eol.org": the \href{https://eol.org/}{Encyclopedia of Life}}
+(note: \code{hierarchy = TRUE} is not currently available for this API)
 \item{"gbif.org": the \href{https://www.gbif.org/}{Global Biodiversity
 Information Facility}}
 \item{"marinespecies.org": the \href{https://marinespecies.org/}{World

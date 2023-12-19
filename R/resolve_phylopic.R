@@ -31,19 +31,19 @@
 #'   matching taxonomic node in the PhyloPic database (as possible). In either
 #'   case, [get_uuid()] is then used to retrieve `n` images for each taxonomic
 #'   name.
-#'   
-#'   Note that while the labels of the returned list are the taxonomic
-#'   names as reported by the specified `api`, the PhyloPic images that are
-#'   returned are associated with whatever taxonomic node that taxonomic name
-#'   resolves to in the PhyloPic database. This means that, if `hierarchy` is
-#'   `TRUE`, the same images may be returned for multiple taxonomic names. Also,
-#'   if a particular taxonomic name does not resolve to any node in the PhyloPic
-#'   database, no images will be returned for that name.
+#'
+#'   Note that while the labels of the returned list are the taxonomic names as
+#'   reported by the specified `api`, the PhyloPic images that are returned are
+#'   associated with whatever taxonomic node that taxonomic name resolves to in
+#'   the PhyloPic database. This means that, if `hierarchy` is `TRUE`, the same
+#'   images may be returned for multiple taxonomic names. Also, if a particular
+#'   taxonomic name does not resolve to any node in the PhyloPic database, no
+#'   images will be returned for that name.
 #'
 #'   The following APIs are available for matching (`api`):
 #'   \itemize{
-#'     \item{"eol.org": the \href{https://eol.org/}{Encyclopedia of Life}} (note:
-#'     `hierarchy = TRUE` is not currently available for this API)
+#'     \item{"eol.org": the \href{https://eol.org/}{Encyclopedia of Life}}
+#'     (note: `hierarchy = TRUE` is not currently available for this API)
 #'     \item{"gbif.org": the \href{https://www.gbif.org/}{Global Biodiversity
 #'     Information Facility}}
 #'     \item{"marinespecies.org": the \href{https://marinespecies.org/}{World
@@ -99,7 +99,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     # them for resolving with phylopic
     # Not clear how to efficiently pick a name though
     if (jsn$totalResults == 0) stop("No results returned from the API.")
-    ids <- URLencode(paste0(jsn$results$id, collapse= ","))
+    ids <- URLencode(paste0(jsn$results$id, collapse = ","))
     name_vec <- jsn$results$title
     if (hierarchy) {
       warning("`hierarchy = TRUE` is not currently available for eol.org.")
@@ -176,8 +176,8 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
                   "limit=1&name=", name)
     res <- GET(url = url)
     jsn <- response_to_JSON(res)
-    if ("errors" %in% jsn ||
-        length(jsn$records) == 0) stop("No results returned from the API.")
+    if ("errors" %in% jsn || length(jsn$records) == 0)
+      stop("No results returned from the API.")
     ids <- jsn$records$oid[1]
     name_vec <- jsn$records$nam[1]
     if (hierarchy) {
@@ -221,7 +221,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
   lst <- list()
   for (i in seq_along(ids)) {
     api_return <- phy_GET(path = paste0("resolve/", api, "/", namespace),
-                                        query = list("objectIDs" = ids[i]))
+                          query = list("objectIDs" = ids[i]))
     # catch any errors here
     if ("errors" %in% names(api_return)) {
       lst[[name_vec[i]]] <- character()
