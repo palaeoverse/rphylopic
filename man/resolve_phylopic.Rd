@@ -50,7 +50,7 @@ length 1. If \code{hierarchy} is \code{TRUE}, the list has maximum length
 \code{max_ranks}.
 }
 \description{
-This function takes a supplied taxonomic name, matches it to the specified
+This function takes a supplied taxonomic name, queries it via the specified
 external API, resolves the API's returned taxonomic ID to the PhyloPic
 taxonomic node database, then retrieves PhyloPic image uuids (or urls) for
 that node.

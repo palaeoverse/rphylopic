@@ -1,6 +1,6 @@
 #' Use a taxonomic name from another database to get a PhyloPic image UUID
 #'
-#' This function takes a supplied taxonomic name, matches it to the specified
+#' This function takes a supplied taxonomic name, queries it via the specified
 #' external API, resolves the API's returned taxonomic ID to the PhyloPic
 #' taxonomic node database, then retrieves PhyloPic image uuids (or urls) for
 #' that node.
