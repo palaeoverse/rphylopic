@@ -62,7 +62,7 @@
 #' # get a uuid for a single name
 #' resolve_phylopic(name = "Canis lupus")
 #' # get uuids for the taxonomic hierarchy
-#' resolve_phylopic(name = "Canis lupus", hierarchy = TRUE)
+#' resolve_phylopic(name = "Canis lupus", hierarchy = TRUE, max_ranks = 3)
 resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
                              max_ranks = 5, n = 1, filter = NULL, url = FALSE) {
   url_arg <- url

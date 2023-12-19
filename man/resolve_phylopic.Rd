@@ -92,5 +92,5 @@ Database}}
 # get a uuid for a single name
 resolve_phylopic(name = "Canis lupus")
 # get uuids for the taxonomic hierarchy
-resolve_phylopic(name = "Canis lupus", hierarchy = TRUE)
+resolve_phylopic(name = "Canis lupus", hierarchy = TRUE, max_ranks = 3)
 }

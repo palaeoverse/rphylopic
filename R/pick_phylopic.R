@@ -16,7 +16,8 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #'   of available images, all available uuids will be returned. Defaults to 5.
 #'   Only relevant if `name` supplied.
 #' @param uuid \code{character}. A vector (or list) of valid PhyloPic 
-#'   silhouette uuids, such as that returned by [get_uuid()].
+#'   silhouette uuids, such as that returned by [get_uuid()] or
+#'   [resolve_phylopic()].
 #' @param view \code{numeric}. Number of silhouettes that should be plotted at
 #'   the same time. Defaults to 1.
 #' @param filter \code{character}. Filter uuid(s) by usage license. Use "by"
