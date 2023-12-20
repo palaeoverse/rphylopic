@@ -9,7 +9,7 @@ vignette: >
 
 **Authors:** Lewis A. Jones & William Gearty
 
-**Last updated:** 2023-11-16
+**Last updated:** 2023-12-20
 
 
 
@@ -21,7 +21,7 @@ vignette: >
 
 ## Installation
 
-The **rphylopic** package can be installed via CRAN or its dedicated [GitHub repository](https://github.com/palaeoverse-community/rphylopic) if the development version is preferred. To install via CRAN, simply use:
+The **rphylopic** package can be installed via CRAN or its dedicated [GitHub repository](https://github.com/palaeoverse/rphylopic) if the development version is preferred. To install via CRAN, simply use:
 
 
 ```r
@@ -33,7 +33,7 @@ To install the development version, first install the `{remotes}` package, and t
 
 ```r
 install.packages("remotes")
-remotes::install_github("palaeoverse-community/rphylopic")
+remotes::install_github("palaeoverse/rphylopic")
 ```
 
 You can now load **rphylopic** using the default `library()` function:
@@ -53,8 +53,8 @@ citation("rphylopic")
 ```
 ## To cite rphylopic in publications, use the following citation:
 ## 
-##   Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising PhyloPic silhouettes. Methods in
-##   Ecology and Evolution, 14(11), 2700-2708. doi: 10.1111/2041-210X.14221.
+##   Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising
+##   PhyloPic silhouettes. Methods in Ecology and Evolution, 14(11), 2700-2708. doi: 10.1111/2041-210X.14221.
 ## 
 ## A BibTeX entry for LaTeX users is
 ## 
@@ -245,7 +245,7 @@ get_attribution(uuid = uuid, text = TRUE)
 ```
 
 ```
-## Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023). Silhouette was contributed by Mareike Janiak, 2020 (Public Domain Mark 1.0).
+## Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023) and were added using the rphylopic R package ver. 1.2.2.9000 (Gearty & Jones, 2023). Silhouette was contributed by Mareike Janiak, 2020 (Public Domain Mark 1.0).
 ```
 
 ## Save an image

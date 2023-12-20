@@ -1,7 +1,7 @@
 # rphylopic <img src="man/figures/logo.png" align="right" alt="" width="120">
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/palaeoverse/rphylopic/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/palaeoverse-community/rphylopic/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/palaeoverse/rphylopic/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/palaeoverse/rphylopic/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/palaeoverse/rphylopic/branch/main/graph/badge.svg?token=HQQO2CRIKT)](https://app.codecov.io/gh/palaeoverse-community/rphylopic)
 [![CRAN status](https://www.r-pkg.org/badges/version/rphylopic)](https://CRAN.R-project.org/package=rphylopic)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/rphylopic)](https://cran.r-project.org/package=rphylopic)
@@ -26,7 +26,7 @@ The development version of `rphylopic` can be installed via GitHub using:
 
 ```r
 install.packages("remotes")
-remotes::install_github("palaeoverse-community/rphylopic")
+remotes::install_github("palaeoverse/rphylopic")
 ```
 
 # How does it work?

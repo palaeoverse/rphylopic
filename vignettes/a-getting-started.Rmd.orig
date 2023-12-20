@@ -25,7 +25,7 @@ knitr::opts_chunk$set(echo = TRUE, include = TRUE, eval = TRUE,
 
 ## Installation
 
-The **rphylopic** package can be installed via CRAN or its dedicated [GitHub repository](https://github.com/palaeoverse-community/rphylopic) if the development version is preferred. To install via CRAN, simply use:
+The **rphylopic** package can be installed via CRAN or its dedicated [GitHub repository](https://github.com/palaeoverse/rphylopic) if the development version is preferred. To install via CRAN, simply use:
 
 ```{r eval = FALSE}
 install.packages("rphylopic")
@@ -35,7 +35,7 @@ To install the development version, first install the `{remotes}` package, and t
 
 ```{r eval = FALSE}
 install.packages("remotes")
-remotes::install_github("palaeoverse-community/rphylopic")
+remotes::install_github("palaeoverse/rphylopic")
 ```
 
 You can now load **rphylopic** using the default `library()` function:

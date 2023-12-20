@@ -14,9 +14,9 @@ Work with the PhyloPic Web Service (\url{http://api-docs.phylopic.org/v2/}) to f
 Useful links:
 \itemize{
   \item \url{https://rphylopic.palaeoverse.org}
-  \item \url{https://github.com/palaeoverse-community/rphylopic}
+  \item \url{https://github.com/palaeoverse/rphylopic}
   \item \url{https://palaeoverse.org}
-  \item Report bugs at \url{https://github.com/palaeoverse-community/rphylopic/issues}
+  \item Report bugs at \url{https://github.com/palaeoverse/rphylopic/issues}
 }
 
 }
