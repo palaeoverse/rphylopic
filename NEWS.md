@@ -1,4 +1,4 @@
-# rphylopic (development version)
+# rphylopic 1.3.0
 
 * updated citation
 * added warning when specified size is more than 1000 times smaller than the y-axis range (mostly useful for when making maps with coord_sf) (#86)
