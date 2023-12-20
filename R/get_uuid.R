@@ -67,7 +67,7 @@ get_uuid <- function(name = NULL, img = NULL, n = 1, filter = NULL,
   if (!is.logical(url)) {
     stop("`url` should be of class logical.")
   }
-  # Normalise name -------------------------------------------------------
+  # Normalize name -------------------------------------------------------
   name <- tolower(name)
   name <- gsub("_", " ", name)
   # API call -------------------------------------------------------------

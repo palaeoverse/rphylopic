@@ -23,7 +23,8 @@ of available images, all available uuids will be returned. Defaults to 5.
 Only relevant if \code{name} supplied.}
 
 \item{uuid}{\code{character}. A vector (or list) of valid PhyloPic
-silhouette uuids, such as that returned by \code{\link[=get_uuid]{get_uuid()}}.}
+silhouette uuids, such as that returned by \code{\link[=get_uuid]{get_uuid()}} or
+\code{\link[=resolve_phylopic]{resolve_phylopic()}}.}
 
 \item{view}{\code{numeric}. Number of silhouettes that should be plotted at
 the same time. Defaults to 1.}
