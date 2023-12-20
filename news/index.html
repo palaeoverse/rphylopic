@@ -36,7 +36,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/palaeoverse-community/rphylopic/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/palaeoverse/rphylopic/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -49,16 +49,16 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/palaeoverse-community/rphylopic/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/palaeoverse/rphylopic/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="rphylopic-development-version">rphylopic (development version)<a class="anchor" aria-label="anchor" href="#rphylopic-development-version"></a></h2>
 <ul><li>updated citation</li>
-<li>added warning when specified size is more than 1000 times smaller than the y-axis range (mostly useful for when making maps with coord_sf) (<a href="https://github.com/palaeoverse-community/rphylopic/issues/86" class="external-link">#86</a>)</li>
-<li>changed the defaults and behavior of the color and fill argument/aesthetics to better maintain backwards compatibility but also prevent unnecessary outlines (<a href="https://github.com/palaeoverse-community/rphylopic/issues/87" class="external-link">#87</a>)</li>
-<li>added resolve_phylopic (<a href="https://github.com/palaeoverse-community/rphylopic/issues/66" class="external-link">#66</a>)</li>
-<li>pick_phylopic now accepts a list of uuids via the uuid argument (<a href="https://github.com/palaeoverse-community/rphylopic/issues/95" class="external-link">#95</a>)</li>
+<li>added warning when specified size is more than 1000 times smaller than the y-axis range (mostly useful for when making maps with coord_sf) (<a href="https://github.com/palaeoverse/rphylopic/issues/86" class="external-link">#86</a>)</li>
+<li>changed the defaults and behavior of the color and fill argument/aesthetics to better maintain backwards compatibility but also prevent unnecessary outlines (<a href="https://github.com/palaeoverse/rphylopic/issues/87" class="external-link">#87</a>)</li>
+<li>added resolve_phylopic (<a href="https://github.com/palaeoverse/rphylopic/issues/66" class="external-link">#66</a>)</li>
+<li>pick_phylopic now accepts a list of uuids via the uuid argument (<a href="https://github.com/palaeoverse/rphylopic/issues/95" class="external-link">#95</a>)</li>
 <li>fixed check behavior on CRAN (all tests and examples are now skipped)</li>
 <li>caught a rare error when nothing matched <code>filter</code>
 </li>
@@ -74,21 +74,21 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.2.0" id="rphylopic-120">rphylopic 1.2.0<a class="anchor" aria-label="anchor" href="#rphylopic-120"></a></h2><p class="text-muted">CRAN release: 2023-08-29</p>
-<ul><li>added text argument to get_attribution (<a href="https://github.com/palaeoverse-community/rphylopic/issues/56" class="external-link">#56</a>)</li>
+<ul><li>added text argument to get_attribution (<a href="https://github.com/palaeoverse/rphylopic/issues/56" class="external-link">#56</a>)</li>
 <li>get_attribution now handles multiple uuids</li>
-<li>added browse_phylopic function (<a href="https://github.com/palaeoverse-community/rphylopic/issues/60" class="external-link">#60</a>)</li>
-<li>added preview argument to get_phylopic (<a href="https://github.com/palaeoverse-community/rphylopic/issues/59" class="external-link">#59</a>)</li>
+<li>added browse_phylopic function (<a href="https://github.com/palaeoverse/rphylopic/issues/60" class="external-link">#60</a>)</li>
+<li>added preview argument to get_phylopic (<a href="https://github.com/palaeoverse/rphylopic/issues/59" class="external-link">#59</a>)</li>
 <li>switched to {maps} package in base R advanced vignette</li>
-<li>geom_phylopic now properly handles a single unlisted image object passed to the “img” parameter (<a href="https://github.com/palaeoverse-community/rphylopic/issues/75" class="external-link">#75</a>)</li>
-<li>added filter (license) argument to get_uuid, pick_phylo, add_phylopic_base, add_phylopic, and geom_phylopic (<a href="https://github.com/palaeoverse-community/rphylopic/issues/72" class="external-link">#72</a>)</li>
+<li>geom_phylopic now properly handles a single unlisted image object passed to the “img” parameter (<a href="https://github.com/palaeoverse/rphylopic/issues/75" class="external-link">#75</a>)</li>
+<li>added filter (license) argument to get_uuid, pick_phylo, add_phylopic_base, add_phylopic, and geom_phylopic (<a href="https://github.com/palaeoverse/rphylopic/issues/72" class="external-link">#72</a>)</li>
 <li>added img argument to get_uuid and get_attribution</li>
-<li>added verbose argument (calls get_attribution) to geom_phylopic, add_phylopic, and add_phylopic_base (<a href="https://github.com/palaeoverse-community/rphylopic/issues/71" class="external-link">#71</a>)</li>
-<li>split out the functionality of the color argument/aesthetic to color (silhouette outline) and fill (silhouette) arguments/aesthetics in add_phylopic, geom_phylopic, and add_phylopic_base (<a href="https://github.com/palaeoverse-community/rphylopic/issues/58" class="external-link">#58</a>)
+<li>added verbose argument (calls get_attribution) to geom_phylopic, add_phylopic, and add_phylopic_base (<a href="https://github.com/palaeoverse/rphylopic/issues/71" class="external-link">#71</a>)</li>
+<li>split out the functionality of the color argument/aesthetic to color (silhouette outline) and fill (silhouette) arguments/aesthetics in add_phylopic, geom_phylopic, and add_phylopic_base (<a href="https://github.com/palaeoverse/rphylopic/issues/58" class="external-link">#58</a>)
 <ul><li>when only the color argument/aesthetic is specified, it is copied to the fill argument/aesthetic (maintaining mostly backwards compatibility with old code)</li>
 </ul></li>
-<li>added plot and print methods for silhouette objects (<a href="https://github.com/palaeoverse-community/rphylopic/issues/73" class="external-link">#73</a>)</li>
+<li>added plot and print methods for silhouette objects (<a href="https://github.com/palaeoverse/rphylopic/issues/73" class="external-link">#73</a>)</li>
 <li>fixed the behavior of geom_phylopic when used with coord_sf</li>
-<li>added phylopic_key_glyph for using silhouettes inside ggplot legends (<a href="https://github.com/palaeoverse-community/rphylopic/issues/57" class="external-link">#57</a>)</li>
+<li>added phylopic_key_glyph for using silhouettes inside ggplot legends (<a href="https://github.com/palaeoverse/rphylopic/issues/57" class="external-link">#57</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.1" id="rphylopic-111">rphylopic 1.1.1<a class="anchor" aria-label="anchor" href="#rphylopic-111"></a></h2><p class="text-muted">CRAN release: 2023-07-08</p>
@@ -99,16 +99,16 @@
 <h2 class="pkg-version" data-toc-text="1.1.0" id="rphylopic-110">rphylopic 1.1.0<a class="anchor" aria-label="anchor" href="#rphylopic-110"></a></h2><p class="text-muted">CRAN release: 2023-06-30</p>
 <ul><li>added functions for transforming PhyloPic silhouettes (flipping and rotating)</li>
 <li>save_phylopic bg argument updated to be “transparent” by default</li>
-<li>added geom_phylopic (<a href="https://github.com/palaeoverse-community/rphylopic/issues/25" class="external-link">#25</a>)</li>
-<li>vectorized add_phylopic and add_phylopic_base (<a href="https://github.com/palaeoverse-community/rphylopic/issues/42" class="external-link">#42</a>)</li>
+<li>added geom_phylopic (<a href="https://github.com/palaeoverse/rphylopic/issues/25" class="external-link">#25</a>)</li>
+<li>vectorized add_phylopic and add_phylopic_base (<a href="https://github.com/palaeoverse/rphylopic/issues/42" class="external-link">#42</a>)</li>
 <li>recolor_phylopic now removes white backgrounds by default</li>
 <li>fixed the handling of alpha values</li>
-<li>get_phylopic can now return any size raster image (<a href="https://github.com/palaeoverse-community/rphylopic/issues/50" class="external-link">#50</a>)</li>
+<li>get_phylopic can now return any size raster image (<a href="https://github.com/palaeoverse/rphylopic/issues/50" class="external-link">#50</a>)</li>
 <li>removed the “thumbnail” and “twitter” format options for get_phylopic</li>
-<li>fixed how silhouettes are gathered from PhyloPic (<a href="https://github.com/palaeoverse-community/rphylopic/issues/51" class="external-link">#51</a>)</li>
-<li>pick_phylopic updated to allow visualization of multiple silhouettes at once (<a href="https://github.com/palaeoverse-community/rphylopic/issues/43" class="external-link">#43</a>)</li>
+<li>fixed how silhouettes are gathered from PhyloPic (<a href="https://github.com/palaeoverse/rphylopic/issues/51" class="external-link">#51</a>)</li>
+<li>pick_phylopic updated to allow visualization of multiple silhouettes at once (<a href="https://github.com/palaeoverse/rphylopic/issues/43" class="external-link">#43</a>)</li>
 <li>fixed add_phylopic_base for multi-panel figures</li>
-<li>added three vignettes (<a href="https://github.com/palaeoverse-community/rphylopic/issues/49" class="external-link">#49</a>, <a href="https://github.com/palaeoverse-community/rphylopic/issues/55" class="external-link">#55</a>)</li>
+<li>added three vignettes (<a href="https://github.com/palaeoverse/rphylopic/issues/49" class="external-link">#49</a>, <a href="https://github.com/palaeoverse/rphylopic/issues/55" class="external-link">#55</a>)</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="rphylopic-100">rphylopic 1.0.0<a class="anchor" aria-label="anchor" href="#rphylopic-100"></a></h2><p class="text-muted">CRAN release: 2023-03-20</p>
@@ -141,16 +141,16 @@
 <h2 class="pkg-version" data-toc-text="0.3.0" id="rphylopic-030">rphylopic 0.3.0<a class="anchor" aria-label="anchor" href="#rphylopic-030"></a></h2><p class="text-muted">CRAN release: 2020-06-04</p>
 <div class="section level4">
 <h4 id="new-features-0-3-0">NEW FEATURES<a class="anchor" aria-label="anchor" href="#new-features-0-3-0"></a></h4>
-<ul><li>PDF cheatsheet and hex sticker added, from <a href="https://github.com/GabsPalomo" class="external-link">@GabsPalomo</a> (<a href="https://github.com/palaeoverse-community/rphylopic/issues/24" class="external-link">#24</a>)</li>
+<ul><li>PDF cheatsheet and hex sticker added, from <a href="https://github.com/GabsPalomo" class="external-link">@GabsPalomo</a> (<a href="https://github.com/palaeoverse/rphylopic/issues/24" class="external-link">#24</a>)</li>
 </ul></div>
 <div class="section level4">
 <h4 id="minor-improvements-0-3-0">MINOR IMPROVEMENTS<a class="anchor" aria-label="anchor" href="#minor-improvements-0-3-0"></a></h4>
-<ul><li>fix to <code><a href="../reference/add_phylopic_base.html">add_phylopic_base()</a></code>: remove use of <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> internally, better behavior (<a href="https://github.com/palaeoverse-community/rphylopic/issues/26" class="external-link">#26</a>) (<a href="https://github.com/palaeoverse-community/rphylopic/issues/28" class="external-link">#28</a>)</li>
+<ul><li>fix to <code><a href="../reference/add_phylopic_base.html">add_phylopic_base()</a></code>: remove use of <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> internally, better behavior (<a href="https://github.com/palaeoverse/rphylopic/issues/26" class="external-link">#26</a>) (<a href="https://github.com/palaeoverse/rphylopic/issues/28" class="external-link">#28</a>)</li>
 </ul></div>
 <div class="section level4">
 <h4 id="defunct-0-3-0">DEFUNCT<a class="anchor" aria-label="anchor" href="#defunct-0-3-0"></a></h4>
 <ul><li>
-<code>plot_phylopic_base()</code> was removed, see <code><a href="../reference/add_phylopic_base.html">?add_phylopic_base</a></code> (<a href="https://github.com/palaeoverse-community/rphylopic/issues/27" class="external-link">#27</a>) (<a href="https://github.com/palaeoverse-community/rphylopic/issues/28" class="external-link">#28</a>)</li>
+<code>plot_phylopic_base()</code> was removed, see <code><a href="../reference/add_phylopic_base.html">?add_phylopic_base</a></code> (<a href="https://github.com/palaeoverse/rphylopic/issues/27" class="external-link">#27</a>) (<a href="https://github.com/palaeoverse/rphylopic/issues/28" class="external-link">#28</a>)</li>
 </ul></div>
 </div>
     <div class="section level2">
