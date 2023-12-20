@@ -32,8 +32,7 @@
 #' @importFrom grImport2 grid.picture
 #' @importFrom methods is
 #' @export
-#' @examples
-#' \dontrun{
+#' @examples \dontrun{
 #' # Get image data
 #' img <- get_phylopic("27356f15-3cf8-47e8-ab41-71c6260b2724")
 #' # Save file

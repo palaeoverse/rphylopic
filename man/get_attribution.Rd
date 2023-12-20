@@ -33,11 +33,12 @@ image uuid, license, and license abbreviation. If \code{text} is set to
 and license type is returned.
 }
 \examples{
+\dontrun{
 # Get valid uuid
 uuid <- get_uuid(name = "Acropora cervicornis")
 # Get attribution data for uuid
 attri <- get_attribution(uuid = uuid)
-\dontrun{
+
 # Get list of valid uuids
 uuids <- get_uuid(name = "Scleractinia", n = 5)
 # Get attribution data for uuids

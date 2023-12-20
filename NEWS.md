@@ -5,6 +5,7 @@
 * changed the defaults and behavior of the color and fill argument/aesthetics to better maintain backwards compatibility but also prevent unnecessary outlines (#87)
 * added resolve_phylopic (#66)
 * pick_phylopic now accepts a list of uuids via the uuid argument (#95)
+* fixed check behavior on CRAN (all tests and examples are now skipped)
 
 # rphylopic 1.2.2
 

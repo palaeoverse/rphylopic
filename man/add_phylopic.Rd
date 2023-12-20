@@ -96,6 +96,7 @@ Note that png array objects can only be rotated by multiples of 90 degrees.
 Also, outline colors do not currently work for png array objects.
 }
 \examples{
+\dontrun{
 # Put a silhouette behind a plot based on a taxonomic name
 library(ggplot2)
 ggplot(iris) +
@@ -120,4 +121,5 @@ p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
                fill = fills, alpha = alpha, angle = angle,
                horizontal = hor, vertical = ver)
 p + ggtitle("R Cat Herd!!")
+}
 }

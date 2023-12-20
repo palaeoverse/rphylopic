@@ -64,7 +64,7 @@
 #' @importFrom grImport2 grid.picture
 #' @importFrom methods is slotNames
 #' @export
-#' @examples
+#' @examples \dontrun{
 #' # single image
 #' plot(1, 1, type = "n", main = "A cat")
 #' add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
@@ -95,6 +95,7 @@
 #' add_phylopic_base(img = cat, alpha = 0.2)
 #' # overlay smaller cats
 #' add_phylopic_base(img = cat, x = posx, y = posy, ysize = size, alpha = 0.8)
+#' }
 add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
                               filter = NULL,
                               x = NULL, y = NULL, ysize = NULL,

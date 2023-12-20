@@ -23,18 +23,17 @@
 #'   is returned. If `format` is "raster", a png array representing the
 #'   rasterized image is returned. Either way, the uuid and download url are
 #'   included as the "uuid" and "url" attributes, respectively.
-#' @importFrom rsvg rsvg_png
-#' @importFrom png readPNG
 #' @importFrom grid grid.newpage grid.raster
 #' @importFrom grImport2 grid.picture
 #' @export
-#' @examples
+#' @examples \dontrun{
 #' # uuid
 #' uuid <- "9fae30cd-fb59-4a81-a39c-e1826a35f612"
 #'
 #' # Get data for an image
 #' img_svg <- get_phylopic(uuid, format = "vector") # vector format
 #' img_png <- get_phylopic(uuid, format = "raster") # raster format
+#' }
 get_phylopic <- function(uuid = NULL, format = "vector", height = 512,
                          preview = FALSE) {
   # Error handling -------------------------------------------------------
@@ -123,6 +122,8 @@ get_png <- function(x) {
   img_new
 }
 
+#' @importFrom rsvg rsvg_png
+#' @importFrom png readPNG
 make_png <- function(url, height) {
   tryCatch({
     img_new <- readPNG(rsvg_png(url, height = height))

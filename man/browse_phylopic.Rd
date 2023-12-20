@@ -29,5 +29,7 @@ This function returns a PhyloPic url for an input \code{name} or
 is returned and opened instead.
 }
 \examples{
+\dontrun{
 url <- browse_phylopic(name = "Acropora cervicornis")
+}
 }

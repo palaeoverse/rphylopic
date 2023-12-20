@@ -44,6 +44,8 @@ This function returns uuid(s) or image url (svg) for an input
 \link{pick_phylopic} to visually select the desired uuid/url.
 }
 \examples{
+\dontrun{
 uuid <- get_uuid(name = "Acropora cervicornis")
 uuid <- get_uuid(name = "Dinosauria", n = 5, url = TRUE)
+}
 }

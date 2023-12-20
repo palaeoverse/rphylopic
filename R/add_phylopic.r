@@ -56,7 +56,7 @@
 #'   Also, outline colors do not currently work for png array objects.
 #' @importFrom ggplot2 annotate
 #' @export
-#' @examples
+#' @examples \dontrun{
 #' # Put a silhouette behind a plot based on a taxonomic name
 #' library(ggplot2)
 #' ggplot(iris) +
@@ -81,6 +81,7 @@
 #'                fill = fills, alpha = alpha, angle = angle,
 #'                horizontal = hor, vertical = ver)
 #' p + ggtitle("R Cat Herd!!")
+#' }
 add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
                          x, y, ysize = Inf,
                          alpha = 1, color = NA, fill = "black",

@@ -68,8 +68,7 @@ phylopic_env <- new.env()
 #' @inheritParams pick_phylopic
 #' @importFrom ggplot2 layer
 #' @export
-#' @examples
-#' \dontrun{
+#' @examples \dontrun{
 #' library(ggplot2)
 #' df <- data.frame(x = c(2, 4), y = c(10, 20),
 #'                  name = c("Felis silvestris catus", "Odobenus rosmarus"))

@@ -19,8 +19,9 @@
 #'
 #' @importFrom utils browseURL
 #' @export
-#' @examples
+#' @examples \dontrun{
 #' url <- browse_phylopic(name = "Acropora cervicornis")
+#' }
 browse_phylopic <- function(name = NULL, uuid = NULL) {
   # Error handling -------------------------------------------------------
   if (!is.null(name) && !is.character(name)) {

@@ -50,10 +50,12 @@ downloaded from PhyloPic. If not, the vector image from PhyloPic will be
 used to render a raster object of the desired size.
 }
 \examples{
+\dontrun{
 # uuid
 uuid <- "9fae30cd-fb59-4a81-a39c-e1826a35f612"
 
 # Get data for an image
 img_svg <- get_phylopic(uuid, format = "vector") # vector format
 img_png <- get_phylopic(uuid, format = "raster") # raster format
+}
 }
