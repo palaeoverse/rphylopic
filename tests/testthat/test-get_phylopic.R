@@ -1,4 +1,5 @@
 test_that("get_phylopic works", {
+  skip_if_offline(host = "api.phylopic.org")
   # uuid
   uuid <- "9fae30cd-fb59-4a81-a39c-e1826a35f612"
 
