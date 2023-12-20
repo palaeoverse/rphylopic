@@ -90,7 +90,7 @@
     
     
 <p><strong>Authors:</strong> Lewis A. Jones &amp; William Gearty</p>
-<p><strong>Last updated:</strong> 2023-11-16</p>
+<p><strong>Last updated:</strong> 2023-12-20</p>
 <div style="text-align: justify">
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -106,7 +106,7 @@ of the package and provide example usage.</p>
 <h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h3>
 <p>The <strong>rphylopic</strong> package can be installed via CRAN or
-its dedicated <a href="https://github.com/palaeoverse-community/rphylopic" class="external-link">GitHub
+its dedicated <a href="https://github.com/palaeoverse/rphylopic" class="external-link">GitHub
 repository</a> if the development version is preferred. To install via
 CRAN, simply use:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -117,7 +117,7 @@ CRAN, simply use:</p>
 directly from GitHub.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"palaeoverse-community/rphylopic"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"palaeoverse/rphylopic"</span><span class="op">)</span></span></code></pre></div>
 <p>You can now load <strong>rphylopic</strong> using the default
 <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -131,8 +131,8 @@ appropriate citation via:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"rphylopic"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## To cite rphylopic in publications, use the following citation:</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##   Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising PhyloPic silhouettes. Methods in</span></span>
-<span><span class="co">##   Ecology and Evolution, 14(11), 2700-2708. doi: 10.1111/2041-210X.14221.</span></span>
+<span><span class="co">##   Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising</span></span>
+<span><span class="co">##   PhyloPic silhouettes. Methods in Ecology and Evolution, 14(11), 2700-2708. doi: 10.1111/2041-210X.14221.</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## A BibTeX entry for LaTeX users is</span></span>
 <span><span class="co">## </span></span>
@@ -343,7 +343,7 @@ your publications:</p>
 <span><span class="va">uuid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_uuid.html">get_uuid</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Nycticebus"</span><span class="op">)</span></span>
 <span><span class="co"># Get attribution data for uuid</span></span>
 <span><span class="fu"><a href="../reference/get_attribution.html">get_attribution</a></span><span class="op">(</span>uuid <span class="op">=</span> <span class="va">uuid</span>, text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023). Silhouette was contributed by Mareike Janiak, 2020 (Public Domain Mark 1.0).</span></span></code></pre>
+<pre><code><span><span class="co">## Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023) and were added using the rphylopic R package ver. 1.2.2.9000 (Gearty &amp; Jones, 2023). Silhouette was contributed by Mareike Janiak, 2020 (Public Domain Mark 1.0).</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="save-an-image">Save an image<a class="anchor" aria-label="anchor" href="#save-an-image"></a>
