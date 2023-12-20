@@ -52,7 +52,7 @@ Suggests:
     sf
 Config/testthat/edition: 3
 URL: https://rphylopic.palaeoverse.org,
-     https://github.com/palaeoverse-community/rphylopic,
+     https://github.com/palaeoverse/rphylopic,
      https://palaeoverse.org
-BugReports: https://github.com/palaeoverse-community/rphylopic/issues
+BugReports: https://github.com/palaeoverse/rphylopic/issues
 VignetteBuilder: knitr

@@ -1,8 +1,8 @@
 # rphylopic <img src="man/figures/logo.png" align="right" alt="" width="120">
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/palaeoverse-community/rphylopic/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/palaeoverse-community/rphylopic/actions/workflows/R-CMD-check.yaml)
-[![codecov](https://codecov.io/gh/palaeoverse-community/rphylopic/branch/main/graph/badge.svg?token=HQQO2CRIKT)](https://app.codecov.io/gh/palaeoverse-community/rphylopic)
+[![R-CMD-check](https://github.com/palaeoverse/rphylopic/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/palaeoverse-community/rphylopic/actions/workflows/R-CMD-check.yaml)
+[![codecov](https://codecov.io/gh/palaeoverse/rphylopic/branch/main/graph/badge.svg?token=HQQO2CRIKT)](https://app.codecov.io/gh/palaeoverse-community/rphylopic)
 [![CRAN status](https://www.r-pkg.org/badges/version/rphylopic)](https://CRAN.R-project.org/package=rphylopic)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/rphylopic)](https://cran.r-project.org/package=rphylopic)
 [![Twitter URL](https://img.shields.io/twitter/follow/:ThePalaeoverse)](https://twitter.com/intent/follow?screen_name=ThePalaeoverse)
