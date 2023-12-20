@@ -107,7 +107,11 @@ get_uuid <- function(name = NULL, img = NULL, n = 1, filter = NULL,
   if ("nc" %in% filter) opts$filter_license_nc <- "false"
   if ("sa" %in% filter) opts$filter_license_sa <- "false"
   api_return <- phy_GET("images", opts)
-  total_items <- api_return$totalItems
+  if ("totalItems" %in% names(api_return)) {
+    total_items <- api_return$totalItems
+  } else {
+    stop("No images matching the specified `filter`.")
+  }
   if (total_items < n) {
     warning(paste0("Only ", total_items, " item(s) are available."))
     n <- total_items
