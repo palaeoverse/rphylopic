@@ -11,9 +11,9 @@
 #' @details This function can be used to add PhyloPic silhouettes as a
 #' legend to a base R plot. Arguments available in [legend()] can be used and 
 #' passed via `...`. Note that not all arguments in [legend()] are compatible
-#' with [add_phylopic_legend()], such as `pch`. However, in general,
-#' arguments for adjusting the legend appearance (not silhouettes) such as
-#' text, legend box, etc. are.
+#' with [add_phylopic_legend()], such as `pch` and `lwd`. However, in general,
+#' arguments for adjusting the legend appearance such as text (e.g. `cex`), 
+#' legend box (e.g. `bg`), and color (e.g. `border`) are.
 #' @importFrom graphics legend
 #' @export
 #' @examples
@@ -33,13 +33,21 @@
 add_phylopic_legend <- function(img = NULL, name = NULL, uuid = NULL, 
                                 ysize = NULL, color = NA, fill = "black", 
                                 ...) {
-  # inherit
-  leg_pos <- legend(...)
-  # Extract arguments if provided via legend
+  # Get supplied arguments
   args <- list(...)
+  # Filter unrequired arguments 
+  dump <- c("lty", "lwd", "pch", "angle", "density", "pt.lwd", "merge")
+  if (any(names(args) %in% dump)) {
+    args <- args[-which(names(args) %in% dump)]
+  }
+  # Do call
+  leg_pos <- do.call(legend, args)
+  # Extract arguments if provided via legend for plotting
   # color values
   col <- args[["col"]]
   if (!is.null(col)) color <- col
+  border <- args[["border"]]
+  if (!is.null(border)) color <- border
   # fill value
   bg <- args[["pt.bg"]]
   if (!is.null(bg)) fill <- bg

@@ -47,9 +47,9 @@ silhouettes as a legend to an existing base R plot (like \code{\link[=legend]{le
 This function can be used to add PhyloPic silhouettes as a
 legend to a base R plot. Arguments available in \code{\link[=legend]{legend()}} can be used and
 passed via \code{...}. Note that not all arguments in \code{\link[=legend]{legend()}} are compatible
-with \code{\link[=add_phylopic_legend]{add_phylopic_legend()}}, such as \code{pch}. However, in general,
-arguments for adjusting the legend appearance (not silhouettes) such as
-text, legend box, etc. are.
+with \code{\link[=add_phylopic_legend]{add_phylopic_legend()}}, such as \code{pch} and \code{lwd}. However, in general,
+arguments for adjusting the legend appearance such as text (e.g. \code{cex}),
+legend box (e.g. \code{bg}), and color (e.g. \code{border}) are.
 }
 \examples{
 # Get UUIDs
