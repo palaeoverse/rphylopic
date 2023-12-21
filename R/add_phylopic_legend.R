@@ -3,67 +3,60 @@
 #' Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
 #' silhouettes as a legend to an existing base R plot (like [legend()]).
 #'
-#' @param img A [Picture][grImport2::Picture-class] or png array object, e.g.,
-#'   from using [get_phylopic()].
-#' @param name \code{character}. A taxonomic name to be passed to [get_uuid()].
-#' @param uuid \code{character}. A valid uuid for a PhyloPic silhouette (such as
-#'   that returned by [get_uuid()] or [pick_phylopic()]).
-#' @param ysize \code{numeric}. Height of the silhouette(s). The width is
+#' @param ysize \code{numeric}. Height of the silhouette. The width is
 #'   determined by the aspect ratio of the original image.
+#' @inheritParams add_phylopic_base
 #' @param ... Additional arguments passed to [legend()].
 #'   
-#' @details
-#' Additional details...
+#' @details This function can be used to add PhyloPic silhouettes as a
+#' legend to a base R plot. Arguments available in [legend()] can be used and 
+#' passed via `...`. Note that not all arguments in [legend()] are compatible
+#' with [add_phylopic_legend()], such as `pch`. However, in general,
+#' arguments for adjusting the legend appearance (not silhouettes) such as
+#' text, legend box, etc. are.
+#' @importFrom graphics legend
 #' @export
 #' @examples
-#' 
+#' # Get UUIDs
+#' uuids <- get_uuid(name = "Canis lupus", n = 2)
+#' # Generate empty plot
+#' plot(0:10, 0:10, type = "n", main = "Wolfs")
+#' # Add data points
+#' add_phylopic_base(uuid = uuids,
+#'   color = "black", fill = c("blue", "green"),
+#'   x = c(2.5, 7.5), y = c(2.5, 7.5), ysize = 2)
+#' # Add legend
+#' add_phylopic_legend(uuid = uuids, 
+#'   ysize = 0.5, color = "black", fill = c("blue", "green"), 
+#'   x = "bottomright", legend = c("Wolf 1", "Wolf 2"),
+#'   bg = "lightgrey")
 add_phylopic_legend <- function(img = NULL, name = NULL, uuid = NULL, 
-                                ysize = NULL, ...) {
+                                ysize = NULL, color = NA, fill = "black", 
+                                ...) {
+  # inherit
   leg_pos <- legend(...)
+  # Extract arguments if provided via legend
+  args <- list(...)
+  # color values
+  col <- args[["col"]]
+  if (!is.null(col)) color <- col
+  # fill value
+  bg <- args[["pt.bg"]]
+  if (!is.null(bg)) fill <- bg
+  # size values
+  size <- args[["pt.cex"]]
+  if (!is.null(size)) ysize <- size
+  # Set default ysize if required
+  if (is.null(ysize)) ysize <- (abs(diff(leg_pos$text$y)) * 0.5)
+  # Extract positions
+  # Adjust x position slightly to account for width
   x <- leg_pos$text$x * 0.95
   y <- leg_pos$text$y
-  # convert x, y, to normalized device coordinates
-  # x <- grconvertX(x, to = "ndc")
-  # y <- grconvertY(y, to = "ndc")
+  # Plot
   add_phylopic_base(uuid = uuid,
                     x = x, 
                     y = y, 
+                    color = color,
+                    fill = fill,
                     ysize = ysize)
 }
-
-uuids <- get_uuid(name = "Canis lupus", n = 2)
-
-plot(0:10, 0:10, type = "n", main = "Wolfs")
-add_phylopic_base(uuid = uuids,
-                  x = c(2.5, 7.5), y = c(2.5, 7.5), ysize = 2)
-add_phylopic_legend(uuid = uuids,
-                x = 8, y = 8, legend = c("Wolf 1", "Wolf 2"),
-                ysize = 0.5)
-
-
-
-
-
-
-
-# single image
-plot(1, 1, type = "n", main = "A cat")
-add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                  x = 1, y = 1, ysize = 0.4)
-
-test <- legend("topright", c("Cat"),
-               pch = NULL)
-
-add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                  x = test$text$x/1.025, y = test$text$y, ysize = 0.05)
-
-
-legend_phylopic <- function(img = NULL, name = NULL, uuid = NULL, size = 0.1, ...) {
-  leg_pos <- legend(...)
-  add_phylopic_base(uuid = uuid,
-                    x = leg_pos$text$x/1.05, 
-                    y = leg_pos$text$y, 
-                    ysize = size)
-}
-
-
