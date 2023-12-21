@@ -9,6 +9,7 @@
 * pick_phylopic now accepts a list of uuids via the uuid argument (#95)
 * fixed check behavior on CRAN (all tests and examples are now skipped)
 * caught a rare error when nothing matched `filter`
+* Added add_phylopic_legend (#83)
 
 # rphylopic 1.2.2
 
