@@ -58,7 +58,7 @@ add_phylopic_legend <- function(img = NULL, name = NULL, uuid = NULL,
   if (is.null(ysize)) ysize <- (abs(diff(leg_pos$text$y)) * 0.5)
   # Extract positions
   # Adjust x position slightly to account for width
-  x <- leg_pos$text$x * 0.95
+  x <- leg_pos$text$x * 0.98
   y <- leg_pos$text$y
   # Plot
   add_phylopic_base(uuid = uuid,

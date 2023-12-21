@@ -12,7 +12,8 @@ test_that("add_phylopic_legend works", {
                       color = "black", fill = c("blue", "green"),
                       x = c(2.5, 7.5), y = c(2.5, 7.5), ysize = 2)
     add_phylopic_legend(uuid = uuids, 
-                        ysize = 0.5, color = "black", fill = c("blue", "green"), 
+                        ysize = 0.25, color = "black", 
+                        fill = c("blue", "green"), 
                         x = "bottomright", legend = c("Wolf 1", "Wolf 2"),
                         bg = "lightgrey")
   })
@@ -26,7 +27,7 @@ test_that("add_phylopic_legend works", {
     add_phylopic_legend(uuid = uuids, 
                         x = "bottomright", legend = c("Wolf 1", "Wolf 2"),
                         col = "black", pt.bg = c("blue", "green"),
-                        pt.cex = 0.5)
+                        pt.cex = 0.25)
   })
   
   # PhyloPic base R legend with default ysize
