@@ -39,6 +39,7 @@ reference:
   - phylopic_key_glyph
   - add_phylopic
   - add_phylopic_base
+  - add_phylopic_legend
 - title: Modifying silhouettes
   desc: >
     Functions to modify silhouettes in various ways.
