@@ -7,7 +7,7 @@ test_that("add_phylopic_legend works", {
   
   # PhyloPic base R legend
   expect_doppelganger("PhyloPic base legend", function() {
-    plot(0:10, 0:10, type = "n", main = "Wolfs")
+    plot(0:10, 0:10, type = "n", main = "Wolves")
     add_phylopic_base(uuid = uuids,
                       color = "black", fill = c("blue", "green"),
                       x = c(2.5, 7.5), y = c(2.5, 7.5), ysize = 2)
@@ -20,7 +20,7 @@ test_that("add_phylopic_legend works", {
   
   # PhyloPic base R legend with legend arguments
   expect_doppelganger("PhyloPic base legend args", function() {
-    plot(0:10, 0:10, type = "n", main = "Wolfs")
+    plot(0:10, 0:10, type = "n", main = "Wolves")
     add_phylopic_base(uuid = uuids,
                       color = "black", fill = c("blue", "green"),
                       x = c(2.5, 7.5), y = c(2.5, 7.5), ysize = 2)
@@ -32,7 +32,7 @@ test_that("add_phylopic_legend works", {
   
   # PhyloPic base R legend with default ysize
   expect_doppelganger("PhyloPic base legend default size", function() {
-    plot(0:10, 0:10, type = "n", main = "Wolfs")
+    plot(0:10, 0:10, type = "n", main = "Wolves")
     add_phylopic_base(uuid = uuids,
                       color = "black", fill = c("blue", "green"),
                       x = c(2.5, 7.5), y = c(2.5, 7.5), ysize = 2)

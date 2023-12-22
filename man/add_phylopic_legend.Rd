@@ -5,6 +5,9 @@
 \title{Add a PhyloPic legend for a base R plot}
 \usage{
 add_phylopic_legend(
+  x,
+  y = NULL,
+  legend,
   img = NULL,
   name = NULL,
   uuid = NULL,
@@ -15,6 +18,16 @@ add_phylopic_legend(
 )
 }
 \arguments{
+\item{x}{\code{numeric or character}. Either the x coordinate to be used
+to position the legend or a keyword accepted by \code{\link[=legend]{legend()}} such as
+"topleft", "topright", "bottomleft", and "bottomright".}
+
+\item{y}{\code{numeric}. The y coordinate to be used to position the
+legend. Can be \code{NULL} (default) if using keywords in \code{x}.}
+
+\item{legend}{\code{character}. A character vector of the labels to appear
+in the legend.}
+
 \item{img}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
 from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 
@@ -23,8 +36,8 @@ from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 \item{uuid}{\code{character}. A valid uuid for a PhyloPic silhouette (such as
 that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
-\item{ysize}{\code{numeric}. Height of the silhouette. The width is
-determined by the aspect ratio of the original image.}
+\item{ysize}{\code{numeric}. Height of the legend silhouette(s). The width
+is determined by the aspect ratio of the original image.}
 
 \item{color}{\code{character}. Color of silhouette outline. If "original" or
 NA is specified, the original color of the silhouette outline will be used
@@ -44,18 +57,22 @@ Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
 silhouettes as a legend to an existing base R plot (like \code{\link[=legend]{legend()}}).
 }
 \details{
-This function can be used to add PhyloPic silhouettes as a
-legend to a base R plot. Arguments available in \code{\link[=legend]{legend()}} can be used and
-passed via \code{...}. Note that not all arguments in \code{\link[=legend]{legend()}} are compatible
-with \code{\link[=add_phylopic_legend]{add_phylopic_legend()}}, such as \code{pch} and \code{lwd}. However, in general,
-arguments for adjusting the legend appearance such as text (e.g. \code{cex}),
-legend box (e.g. \code{bg}), and color (e.g. \code{border}) are.
+This function can be used to add PhyloPic silhouettes as a legend
+to a base R plot. Arguments available in \code{\link[=legend]{legend()}} can be used and
+passed via \code{...}. Note that not all arguments in \code{\link[=legend]{legend()}} are
+compatible with \code{\link[=add_phylopic_legend]{add_phylopic_legend()}}. These include arguments for
+modifying lines (e.g. \code{lty}, \code{lwd}, \code{seg.len}), points (e.g. \code{pch},
+\code{pt.lwd}), and shading (e.g. \code{angle} and \code{density}). This is due to to
+\code{\link[=add_phylopic_legend]{add_phylopic_legend()}} using \code{\link[=add_phylopic_base]{add_phylopic_base()}} to generate the
+legend symbols. However, arguments for adjusting the legend appearance
+such as text (e.g. \code{cex}), legend box (e.g. \code{bg}), and color (e.g.
+\code{border}) are compatible.
 }
 \examples{
 # Get UUIDs
 uuids <- get_uuid(name = "Canis lupus", n = 2)
 # Generate empty plot
-plot(0:10, 0:10, type = "n", main = "Wolfs")
+plot(0:10, 0:10, type = "n", main = "Wolves")
 # Add data points
 add_phylopic_base(uuid = uuids,
   color = "black", fill = c("blue", "green"),
