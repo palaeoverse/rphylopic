@@ -1,5 +1,7 @@
 # rphylopic (development version)
 
+* Added add_phylopic_legend (#83)
+
 # rphylopic 1.3.0
 
 * updated citation
