@@ -20,7 +20,7 @@
 #'   passed via `...`. Note that not all arguments in [legend()] are
 #'   compatible with [add_phylopic_legend()]. These include arguments for
 #'   modifying lines (e.g. `lty`, `lwd`, `seg.len`), points (e.g. `pch`,
-#'   `pt.lwd`), and shading (e.g. `angle` and `density`). This is due to to
+#'   `pt.lwd`), and shading (e.g. `angle` and `density`). This is due to
 #'   [add_phylopic_legend()] using [add_phylopic_base()] to generate the
 #'   legend symbols. However, arguments for adjusting the legend appearance
 #'   such as text (e.g. `cex`), legend box (e.g. `bg`), and color (e.g.

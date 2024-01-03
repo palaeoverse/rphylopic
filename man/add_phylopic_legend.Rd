@@ -62,7 +62,7 @@ to a base R plot. Arguments available in \code{\link[=legend]{legend()}} can be 
 passed via \code{...}. Note that not all arguments in \code{\link[=legend]{legend()}} are
 compatible with \code{\link[=add_phylopic_legend]{add_phylopic_legend()}}. These include arguments for
 modifying lines (e.g. \code{lty}, \code{lwd}, \code{seg.len}), points (e.g. \code{pch},
-\code{pt.lwd}), and shading (e.g. \code{angle} and \code{density}). This is due to to
+\code{pt.lwd}), and shading (e.g. \code{angle} and \code{density}). This is due to
 \code{\link[=add_phylopic_legend]{add_phylopic_legend()}} using \code{\link[=add_phylopic_base]{add_phylopic_base()}} to generate the
 legend symbols. However, arguments for adjusting the legend appearance
 such as text (e.g. \code{cex}), legend box (e.g. \code{bg}), and color (e.g.
