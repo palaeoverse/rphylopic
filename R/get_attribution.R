@@ -20,7 +20,10 @@
 #'   including: contributor name, contributor uuid, contributor contact,
 #'   image uuid, license, and license abbreviation. If `text` is set to
 #'   `TRUE`, a text paragraph with the contributor name, year of contribution,
-#'    and license type is returned.
+#'    and license type is returned. If `permalink` is set to `TRUE`, a 
+#'    permanent link (hosted by [PhyloPic](https://www.phylopic.org)) will be
+#'    generated. This link can be used to view and share details about the 
+#'    image silhouettes, including contributors and licenses.
 #' @importFrom knitr combine_words
 #' @importFrom utils packageVersion
 #' @importFrom httr GET
@@ -35,6 +38,8 @@
 #' uuids <- get_uuid(name = "Scleractinia", n = 5)
 #' # Get attribution data for uuids
 #' get_attribution(uuid = uuids, text = TRUE)
+#' # Get attribution data for uuids and create permalink
+#' get_attribution(uuid = uuids, text = TRUE, permalink = TRUE)
 #' }
 get_attribution <- function(uuid = NULL, img = NULL, text = FALSE, 
                             permalink = FALSE) {
@@ -123,6 +128,7 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE,
       if (permalink) {
         att <- paste0(att, " Permalink: ", perm, ".")
       }
+      return(message(att))
     }
   } else if (length(uuid) > 1 && text) {
     att <- lapply(att, function(x) {

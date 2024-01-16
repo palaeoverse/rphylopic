@@ -12,6 +12,10 @@ test_that("get_attribution works", {
   # Check img arg
   img <- get_phylopic(uuid = uuid[1])
   expect_true(is.list(get_attribution(img = img)))
+  # Check permalink generation
+  perm <- get_attribution(uuid = uuid, permalink = TRUE)
+  expect_true("permalink" %in% names(perm))
+  expect_message(get_attribution(uuid = uuid, text = TRUE, permalink = TRUE))
 
   # Expect error
   expect_error(get_attribution(uuid = NULL))

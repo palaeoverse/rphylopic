@@ -34,7 +34,7 @@ phy_GET <- function(path, query = list(), ...) {
   jsn
 }
 
-#' @importFrom httr POST
+#' @importFrom httr POST add_headers
 #' @importFrom jsonlite toJSON
 #' @importFrom curl nslookup
 phy_POST <- function(path, body = list(), ...) {

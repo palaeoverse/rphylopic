@@ -33,7 +33,10 @@ This function returns image \code{uuid} specific attribution data,
 including: contributor name, contributor uuid, contributor contact,
 image uuid, license, and license abbreviation. If \code{text} is set to
 \code{TRUE}, a text paragraph with the contributor name, year of contribution,
-and license type is returned.
+and license type is returned. If \code{permalink} is set to \code{TRUE}, a
+permanent link (hosted by \href{https://www.phylopic.org}{PhyloPic}) will be
+generated. This link can be used to view and share details about the
+image silhouettes, including contributors and licenses.
 }
 \examples{
 \dontrun{
@@ -46,5 +49,7 @@ attri <- get_attribution(uuid = uuid)
 uuids <- get_uuid(name = "Scleractinia", n = 5)
 # Get attribution data for uuids
 get_attribution(uuid = uuids, text = TRUE)
+# Get attribution data for uuids and create permalink
+get_attribution(uuid = uuids, text = TRUE, permalink = TRUE)
 }
 }
