@@ -10,6 +10,8 @@
 #'   is supplied, `uuid` is ignored. Defaults to NULL.
 #' @param text \code{logical}. Should attribution information be returned as
 #' a text paragraph? Defaults to `FALSE`.
+#' @param permalink \code{logical}. Should a permalink be created for this 
+#' collection of `uuid`(s)? Defaults to `FALSE`.
 #'
 #' @return A \code{list} of PhyloPic attribution data for an image `uuid` or
 #' a text output of relevant attribution information.
@@ -21,6 +23,7 @@
 #'    and license type is returned.
 #' @importFrom knitr combine_words
 #' @importFrom utils packageVersion
+#' @importFrom httr GET
 #' @export
 #' @examples \dontrun{
 #' # Get valid uuid
@@ -33,7 +36,8 @@
 #' # Get attribution data for uuids
 #' get_attribution(uuid = uuids, text = TRUE)
 #' }
-get_attribution <- function(uuid = NULL, img = NULL, text = FALSE) {
+get_attribution <- function(uuid = NULL, img = NULL, text = FALSE, 
+                            permalink = FALSE) {
   # Handle img -----------------------------------------------------------
   if (!is.null(img)) {
     if (is.list(img)) {
@@ -71,7 +75,15 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE) {
             "CC BY-NC-SA 3.0",
             "CC BY-NC 3.0")
   licenses <- data.frame(links, abbr)
-
+  # Create permalink ------------------------------------------------------
+  if (permalink) {
+    coll <- phy_POST(path = "collections", body = uuid)$uuid
+    url <- paste0("https://www.phylopic.org/api/permalinks/collections/", 
+                  coll)
+    coll <- GET(url = url) 
+    hash <- response_to_JSON(coll)
+    perm <- paste0("https://www.phylopic.org/permalinks/", hash)
+  }
   # API call -------------------------------------------------------------
   if (length(uuid) > 1) {
     att <- lapply(uuid, get_attribution)
@@ -107,6 +119,10 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE) {
                     att$contributor, ", ",
                     substr(att$created, start = 1, stop = 4), " ",
                     "(", att$license_abbr, ").")
+      # Add permalink?
+      if (permalink) {
+        att <- paste0(att, " Permalink: ", perm, ".")
+      }
     }
   } else if (length(uuid) > 1 && text) {
     att <- lapply(att, function(x) {
@@ -130,8 +146,16 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE) {
                   "and were added using the rphylopic R package ver. ",
                   packageVersion("rphylopic"), " (Gearty & Jones, 2023). ",
                   att)
+    # Add permalink?
+    if (permalink) {
+      att <- paste0(att, " Permalink: ", perm, ".")
+    }
     return(message(att))
   }
   # Return data ----------------------------------------------------------
+  # Add permalink?
+  if (permalink) {
+    att$permalink <- perm
+  }
   return(att)
 }

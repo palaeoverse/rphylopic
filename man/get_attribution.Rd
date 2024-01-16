@@ -4,7 +4,7 @@
 \alias{get_attribution}
 \title{Get PhyloPic attribution data}
 \usage{
-get_attribution(uuid = NULL, img = NULL, text = FALSE)
+get_attribution(uuid = NULL, img = NULL, text = FALSE, permalink = FALSE)
 }
 \arguments{
 \item{uuid}{\code{character}. A vector of valid uuid(s) for PhyloPic
@@ -16,6 +16,9 @@ is supplied, \code{uuid} is ignored. Defaults to NULL.}
 
 \item{text}{\code{logical}. Should attribution information be returned as
 a text paragraph? Defaults to \code{FALSE}.}
+
+\item{permalink}{\code{logical}. Should a permalink be created for this
+collection of \code{uuid}(s)? Defaults to \code{FALSE}.}
 }
 \value{
 A \code{list} of PhyloPic attribution data for an image \code{uuid} or
