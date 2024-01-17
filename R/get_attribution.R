@@ -20,7 +20,8 @@
 #'   including: contributor name, contributor uuid, contributor contact,
 #'   image uuid, license, and license abbreviation. If `text` is set to
 #'   `TRUE`, a text paragraph with the contributor name, year of contribution,
-#'    and license type is returned. If `permalink` is set to `TRUE`, a 
+#'    and license type is printed and image attribution data is returned 
+#'    invisibly (i.e. using [invisible()]. If `permalink` is set to `TRUE`, a 
 #'    permanent link (hosted by [PhyloPic](https://www.phylopic.org)) will be
 #'    generated. This link can be used to view and share details about the 
 #'    image silhouettes, including contributors and licenses.
@@ -93,6 +94,45 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE,
   if (length(uuid) > 1) {
     att <- lapply(uuid, get_attribution)
     names(att) <- uuid
+    # Text output?
+    if (text) {
+      txt <- lapply(att, function(x) {
+        paste0(x$contributor, ", ",
+               substr(x$created, start = 1, stop = 4), " ",
+               "(", x$license_abbr, ")")
+      })
+      # Keep unique items
+      txt <- unique(unlist(txt))
+      # Convert to string
+      if (length(txt) > 1) {
+        txt <- combine_words(txt, oxford_comma = TRUE)
+        txt <- paste0("Silhouettes were contributed by ", toString(txt), ".")
+      } else {
+        txt <- paste0("Silhouette was contributed by ", toString(txt), ".")
+      }
+      txt <- paste0("Organism silhouettes are from PhyloPic ",
+                    "(https://www.phylopic.org/; T. Michael Keesey, 2023) ",
+                    "and were added using the rphylopic R package ver. ",
+                    packageVersion("rphylopic"), " (Gearty & Jones, 2023). ",
+                    txt)
+      # Add permalink?
+      if (permalink) {
+        txt <- paste0(txt, " Permalink: ", perm, ".")
+      }
+    }
+    # Additional lists needed?
+    if (text || permalink) {
+      att <- list(images = att)
+      if (permalink) {
+        att$permalink <- perm
+      }
+      if (text) {
+        att$text <- txt
+        message(txt)
+        return(invisible(att))
+      }
+    }
+    return(att)
   } else {
     api_return <- phy_GET(file.path("images", uuid),
                           list(embed_contributor = "true"))
@@ -115,53 +155,34 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE,
     )
     # Add license title
     att$license_abbr <- licenses$abbr[which(licenses$links == att$license)]
-  }
-  # Format data
-  if (length(uuid) == 1 && text) {
     # Text output desired?
     if (text) {
-      att <- paste0("Silhouette was contributed by ",
+      txt <- paste0("Silhouette was contributed by ",
                     att$contributor, ", ",
                     substr(att$created, start = 1, stop = 4), " ",
                     "(", att$license_abbr, ").")
-      # Add permalink?
-      if (permalink) {
-        att <- paste0(att, " Permalink: ", perm, ".")
-      }
-      return(message(att))
+      txt <- paste0("Organism silhouettes are from PhyloPic ",
+                    "(https://www.phylopic.org/; T. Michael Keesey, 2023) ",
+                    "and were added using the rphylopic R package ver. ",
+                    packageVersion("rphylopic"), " (Gearty & Jones, 2023). ",
+                    txt)
     }
-  } else if (length(uuid) > 1 && text) {
-    att <- lapply(att, function(x) {
-      paste0(x$contributor, ", ",
-             substr(x$created, start = 1, stop = 4), " ",
-             "(", x$license_abbr, ")")
-    })
-    # Keep unique items
-    att <- unique(unlist(att))
-    # Convert to string
-    if (length(att) > 1) {
-      att <- combine_words(att, oxford_comma = TRUE)
-      att <- paste0("Silhouettes were contributed by ", toString(att), ".")
-    } else {
-      att <- paste0("Silhouette was contributed by ", toString(att), ".")
-    }
-  }
-  if (text) {
-    att <- paste0("Organism silhouettes are from PhyloPic ",
-                  "(https://www.phylopic.org/; T. Michael Keesey, 2023) ",
-                  "and were added using the rphylopic R package ver. ",
-                  packageVersion("rphylopic"), " (Gearty & Jones, 2023). ",
-                  att)
     # Add permalink?
     if (permalink) {
-      att <- paste0(att, " Permalink: ", perm, ".")
+      txt <- paste0(txt, " Permalink: ", perm, ".")
     }
-    return(message(att))
   }
-  # Return data ----------------------------------------------------------
-  # Add permalink?
-  if (permalink) {
-    att$permalink <- perm
+  # Additional lists needed?
+  if (text || permalink) {
+    att <- list(images = att)
+    if (permalink) {
+      att$permalink <- perm
+    }
+    if (text) {
+      att$text <- txt
+      message(txt)
+      return(invisible(att))
+    }
   }
   return(att)
 }
