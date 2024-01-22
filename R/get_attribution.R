@@ -93,51 +93,17 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE,
   # API call -------------------------------------------------------------
   if (length(uuid) > 1) {
     att <- lapply(uuid, get_attribution)
-    names(att) <- uuid
-    # Text output?
-    if (text) {
-      txt <- lapply(att, function(x) {
-        paste0(x$contributor, ", ",
-               substr(x$created, start = 1, stop = 4), " ",
-               "(", x$license_abbr, ")")
-      })
-      # Keep unique items
-      txt <- unique(unlist(txt))
-      # Convert to string
-      if (length(txt) > 1) {
-        txt <- combine_words(txt, oxford_comma = TRUE)
-        txt <- paste0("Silhouettes were contributed by ", toString(txt), ".")
-      } else {
-        txt <- paste0("Silhouette was contributed by ", toString(txt), ".")
-      }
-      txt <- paste0("Organism silhouettes are from PhyloPic ",
-                    "(https://www.phylopic.org/; T. Michael Keesey, 2023) ",
-                    "and were added using the rphylopic R package ver. ",
-                    packageVersion("rphylopic"), " (Gearty & Jones, 2023). ",
-                    txt)
-      # Add permalink?
-      if (permalink) {
-        txt <- paste0(txt, " Permalink: ", perm, ".")
-      }
-    }
-    # Additional lists needed?
-    if (text || permalink) {
-      att <- list(images = att)
-      if (permalink) {
-        att$permalink <- perm
-      }
-      if (text) {
-        att$text <- txt
-        message(txt)
-        return(invisible(att))
-      }
-    }
-    return(att)
+    att <- unlist(att, recursive = FALSE)
+    att <- lapply(1:length(att), function(x) {
+      att[[x]]
+    })
+    att <- unlist(att, recursive = FALSE)
   } else {
     api_return <- phy_GET(file.path("images", uuid),
                           list(embed_contributor = "true"))
     # Process output -------------------------------------------------------
     att <- list(
+      attribution = api_return$attribution,
       contributor = api_return$`_embedded`$contributor$name,
       contributor_uuid = api_return$`_embedded`$contributor$uuid,
       created = substr(
@@ -155,34 +121,66 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE,
     )
     # Add license title
     att$license_abbr <- licenses$abbr[which(licenses$links == att$license)]
-    # Text output desired?
-    if (text) {
-      txt <- paste0("Silhouette was contributed by ",
-                    att$contributor, ", ",
-                    substr(att$created, start = 1, stop = 4), " ",
-                    "(", att$license_abbr, ").")
-      txt <- paste0("Organism silhouettes are from PhyloPic ",
-                    "(https://www.phylopic.org/; T. Michael Keesey, 2023) ",
-                    "and were added using the rphylopic R package ver. ",
-                    packageVersion("rphylopic"), " (Gearty & Jones, 2023). ",
-                    txt)
+    # Attributor unknown?
+    if (is.null(att$attribution)) {
+      att$attribution <- "Unknown"
     }
+    # Make sublist 
+    att <- list(images = att)
+    names(att) <- uuid
+  }
+  # Text output?
+  if (text) {
+    # Attributors
+    txt <- lapply(att, function(x) {
+      paste0(x$attribution, ", ",
+             substr(x$created, start = 1, stop = 4), " ",
+             "(", x$license_abbr, ")")
+    })
+    # Keep unique items
+    txt <- unique(unlist(txt))
+    # Contributors
+    cont <- lapply(att, function(x) {
+      paste0(x$contributor)
+    })
+    # Keep unique items
+    cont <- unique(unlist(cont))
+    # Convert to string
+    if (length(txt) > 1) {
+      txt <- combine_words(txt, oxford_comma = TRUE)
+      txt <- paste0("Silhouettes were made by ", toString(txt), ".")
+    } else {
+      txt <- paste0("Silhouette was made by ", toString(txt), ".")
+    }
+    if (length(cont) > 1) {
+      cont <- combine_words(cont, oxford_comma = TRUE)
+      cont <- paste0("Silhouettes were contributed by ", toString(cont), ".")
+    } else {
+      cont <- paste0("Silhouette was contributed by ", toString(cont), ".")
+    }
+    txt <- paste0("Organism silhouettes are from PhyloPic ",
+                  "(https://www.phylopic.org/; T. Michael Keesey, 2023) ",
+                  "and were added using the rphylopic R package ver. ",
+                  packageVersion("rphylopic"), " (Gearty & Jones, 2023). ",
+                  txt, " ", cont)
     # Add permalink?
     if (permalink) {
-      txt <- paste0(txt, " Permalink: ", perm, ".")
+      txt <- paste0(txt, " Full attribution details are available at: ", 
+                    perm, ".")
     }
   }
-  # Additional lists needed?
-  if (text || permalink) {
-    att <- list(images = att)
-    if (permalink) {
-      att$permalink <- perm
-    }
-    if (text) {
-      att$text <- txt
-      message(txt)
-      return(invisible(att))
-    }
+  # Assign to images
+  att <- list(images = att)
+  # Add permalink?
+  if (permalink) {
+    att$permalink <- perm
   }
+  # Add text?
+  if (text) {
+    att$text <- txt
+    message(txt)
+    return(invisible(att))
+  }
+  # Return data
   return(att)
 }
