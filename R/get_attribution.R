@@ -10,6 +10,8 @@
 #'   is supplied, `uuid` is ignored. Defaults to NULL.
 #' @param text \code{logical}. Should attribution information be returned as
 #' a text paragraph? Defaults to `FALSE`.
+#' @param permalink \code{logical}. Should a permalink be created for this 
+#' collection of `uuid`(s)? Defaults to `FALSE`.
 #'
 #' @return A \code{list} of PhyloPic attribution data for an image `uuid` or
 #' a text output of relevant attribution information.
@@ -18,9 +20,14 @@
 #'   including: contributor name, contributor uuid, contributor contact,
 #'   image uuid, license, and license abbreviation. If `text` is set to
 #'   `TRUE`, a text paragraph with the contributor name, year of contribution,
-#'    and license type is returned.
+#'    and license type is printed and image attribution data is returned 
+#'    invisibly (i.e. using [invisible()]. If `permalink` is set to `TRUE`, a 
+#'    permanent link (hosted by [PhyloPic](https://www.phylopic.org)) will be
+#'    generated. This link can be used to view and share details about the 
+#'    image silhouettes, including contributors and licenses.
 #' @importFrom knitr combine_words
 #' @importFrom utils packageVersion
+#' @importFrom httr GET
 #' @export
 #' @examples \dontrun{
 #' # Get valid uuid
@@ -32,8 +39,11 @@
 #' uuids <- get_uuid(name = "Scleractinia", n = 5)
 #' # Get attribution data for uuids
 #' get_attribution(uuid = uuids, text = TRUE)
+#' # Get attribution data for uuids and create permalink
+#' get_attribution(uuid = uuids, text = TRUE, permalink = TRUE)
 #' }
-get_attribution <- function(uuid = NULL, img = NULL, text = FALSE) {
+get_attribution <- function(uuid = NULL, img = NULL, text = FALSE, 
+                            permalink = FALSE) {
   # Handle img -----------------------------------------------------------
   if (!is.null(img)) {
     if (is.list(img)) {
@@ -71,16 +81,29 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE) {
             "CC BY-NC-SA 3.0",
             "CC BY-NC 3.0")
   licenses <- data.frame(links, abbr)
-
+  # Create permalink ------------------------------------------------------
+  if (permalink) {
+    coll <- phy_POST(path = "collections", body = uuid)$uuid
+    url <- paste0("https://www.phylopic.org/api/permalinks/collections/", 
+                  coll)
+    coll <- GET(url = url) 
+    hash <- response_to_JSON(coll)
+    perm <- paste0("https://www.phylopic.org/permalinks/", hash)
+  }
   # API call -------------------------------------------------------------
   if (length(uuid) > 1) {
     att <- lapply(uuid, get_attribution)
-    names(att) <- uuid
+    att <- unlist(att, recursive = FALSE)
+    att <- lapply(1:length(att), function(x) {
+      att[[x]]
+    })
+    att <- unlist(att, recursive = FALSE)
   } else {
     api_return <- phy_GET(file.path("images", uuid),
                           list(embed_contributor = "true"))
     # Process output -------------------------------------------------------
     att <- list(
+      attribution = api_return$attribution,
       contributor = api_return$`_embedded`$contributor$name,
       contributor_uuid = api_return$`_embedded`$contributor$uuid,
       created = substr(
@@ -98,40 +121,66 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE) {
     )
     # Add license title
     att$license_abbr <- licenses$abbr[which(licenses$links == att$license)]
-  }
-  # Format data
-  if (length(uuid) == 1 && text) {
-    # Text output desired?
-    if (text) {
-      att <- paste0("Silhouette was contributed by ",
-                    att$contributor, ", ",
-                    substr(att$created, start = 1, stop = 4), " ",
-                    "(", att$license_abbr, ").")
+    # Attributor unknown?
+    if (is.null(att$attribution)) {
+      att$attribution <- "Unknown"
     }
-  } else if (length(uuid) > 1 && text) {
-    att <- lapply(att, function(x) {
-      paste0(x$contributor, ", ",
+    # Make sublist 
+    att <- list(images = att)
+    names(att) <- uuid
+  }
+  # Text output?
+  if (text) {
+    # Attributors
+    txt <- lapply(att, function(x) {
+      paste0(x$attribution, ", ",
              substr(x$created, start = 1, stop = 4), " ",
              "(", x$license_abbr, ")")
     })
     # Keep unique items
-    att <- unique(unlist(att))
+    txt <- unique(unlist(txt))
+    # Contributors
+    cont <- lapply(att, function(x) {
+      paste0(x$contributor)
+    })
+    # Keep unique items
+    cont <- unique(unlist(cont))
     # Convert to string
-    if (length(att) > 1) {
-      att <- combine_words(att, oxford_comma = TRUE)
-      att <- paste0("Silhouettes were contributed by ", toString(att), ".")
+    if (length(txt) > 1) {
+      txt <- combine_words(txt, oxford_comma = TRUE)
+      txt <- paste0("Silhouettes were made by ", toString(txt), ".")
     } else {
-      att <- paste0("Silhouette was contributed by ", toString(att), ".")
+      txt <- paste0("Silhouette was made by ", toString(txt), ".")
     }
-  }
-  if (text) {
-    att <- paste0("Organism silhouettes are from PhyloPic ",
+    if (length(cont) > 1) {
+      cont <- combine_words(cont, oxford_comma = TRUE)
+      cont <- paste0("Silhouettes were contributed by ", toString(cont), ".")
+    } else {
+      cont <- paste0("Silhouette was contributed by ", toString(cont), ".")
+    }
+    txt <- paste0("Organism silhouettes are from PhyloPic ",
                   "(https://www.phylopic.org/; T. Michael Keesey, 2023) ",
                   "and were added using the rphylopic R package ver. ",
                   packageVersion("rphylopic"), " (Gearty & Jones, 2023). ",
-                  att)
-    return(message(att))
+                  txt, " ", cont)
+    # Add permalink?
+    if (permalink) {
+      txt <- paste0(txt, " Full attribution details are available at: ", 
+                    perm, ".")
+    }
   }
-  # Return data ----------------------------------------------------------
+  # Assign to images
+  att <- list(images = att)
+  # Add permalink?
+  if (permalink) {
+    att$permalink <- perm
+  }
+  # Add text?
+  if (text) {
+    att$text <- txt
+    message(txt)
+    return(invisible(att))
+  }
+  # Return data
   return(att)
 }

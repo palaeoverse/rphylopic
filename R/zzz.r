@@ -34,6 +34,26 @@ phy_GET <- function(path, query = list(), ...) {
   jsn
 }
 
+#' @importFrom httr POST add_headers
+#' @importFrom jsonlite toJSON
+#' @importFrom curl nslookup
+phy_POST <- function(path, body = list(), ...) {
+  # Check PhyloPic (or user) is online
+  tryCatch({
+    nslookup("api.phylopic.org")
+  },
+  error = function(e) {
+    stop("PhyloPic is not available or you have no internet connection.")
+  })
+  # Convert to JSON
+  body <- toJSON(body)
+  resp <- POST(url = pbase(), path = path, body = body,
+               add_headers("Content-type" = "application/vnd.phylopic.v2+json"),
+               encode = "raw")
+  resp <- response_to_JSON(resp)
+  resp
+}
+
 #' @importFrom httr content
 #' @importFrom jsonlite fromJSON
 response_to_JSON <- function(response) {

@@ -4,7 +4,7 @@
 \alias{get_attribution}
 \title{Get PhyloPic attribution data}
 \usage{
-get_attribution(uuid = NULL, img = NULL, text = FALSE)
+get_attribution(uuid = NULL, img = NULL, text = FALSE, permalink = FALSE)
 }
 \arguments{
 \item{uuid}{\code{character}. A vector of valid uuid(s) for PhyloPic
@@ -16,6 +16,9 @@ is supplied, \code{uuid} is ignored. Defaults to NULL.}
 
 \item{text}{\code{logical}. Should attribution information be returned as
 a text paragraph? Defaults to \code{FALSE}.}
+
+\item{permalink}{\code{logical}. Should a permalink be created for this
+collection of \code{uuid}(s)? Defaults to \code{FALSE}.}
 }
 \value{
 A \code{list} of PhyloPic attribution data for an image \code{uuid} or
@@ -30,7 +33,11 @@ This function returns image \code{uuid} specific attribution data,
 including: contributor name, contributor uuid, contributor contact,
 image uuid, license, and license abbreviation. If \code{text} is set to
 \code{TRUE}, a text paragraph with the contributor name, year of contribution,
-and license type is returned.
+and license type is printed and image attribution data is returned
+invisibly (i.e. using \code{\link[=invisible]{invisible()}}. If \code{permalink} is set to \code{TRUE}, a
+permanent link (hosted by \href{https://www.phylopic.org}{PhyloPic}) will be
+generated. This link can be used to view and share details about the
+image silhouettes, including contributors and licenses.
 }
 \examples{
 \dontrun{
@@ -43,5 +50,7 @@ attri <- get_attribution(uuid = uuid)
 uuids <- get_uuid(name = "Scleractinia", n = 5)
 # Get attribution data for uuids
 get_attribution(uuid = uuids, text = TRUE)
+# Get attribution data for uuids and create permalink
+get_attribution(uuid = uuids, text = TRUE, permalink = TRUE)
 }
 }
