@@ -9,7 +9,7 @@ vignette: >
 
 **Authors:** Lewis A. Jones & William Gearty
 
-**Last updated:** 2023-12-20
+**Last updated:** 2024-01-23
 
 
 
@@ -53,8 +53,8 @@ citation("rphylopic")
 ```
 ## To cite rphylopic in publications, use the following citation:
 ## 
-##   Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising
-##   PhyloPic silhouettes. Methods in Ecology and Evolution, 14(11), 2700-2708. doi: 10.1111/2041-210X.14221.
+##   Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising PhyloPic
+##   silhouettes. Methods in Ecology and Evolution, 14(11), 2700-2708. doi: 10.1111/2041-210X.14221.
 ## 
 ## A BibTeX entry for LaTeX users is
 ## 
@@ -212,25 +212,30 @@ get_attribution(uuid = uuid)
 ```
 
 ```
-## $contributor
+## $images
+## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`
+## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$attribution
+## [1] "Mareike C. Janiak"
+## 
+## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$contributor
 ## [1] "Mareike Janiak"
 ## 
-## $contributor_uuid
+## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$contributor_uuid
 ## [1] "7bed68fb-cf59-4e58-aed1-41e81269fb01"
 ## 
-## $created
+## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$created
 ## [1] "2020-05-19"
 ## 
-## $contact
+## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$contact
 ## character(0)
 ## 
-## $image_uuid
+## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$image_uuid
 ## [1] "7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9"
 ## 
-## $license
+## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license
 ## [1] "https://creativecommons.org/publicdomain/mark/1.0/"
 ## 
-## $license_abbr
+## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr
 ## [1] "Public Domain Mark 1.0"
 ```
 
@@ -245,7 +250,7 @@ get_attribution(uuid = uuid, text = TRUE)
 ```
 
 ```
-## Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023) and were added using the rphylopic R package ver. 1.2.2.9000 (Gearty & Jones, 2023). Silhouette was contributed by Mareike Janiak, 2020 (Public Domain Mark 1.0).
+## Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023) and were added using the rphylopic R package ver. 1.3.0.9000 (Gearty & Jones, 2023). Silhouette was made by Mareike C. Janiak, 2020 (Public Domain Mark 1.0). Silhouette was contributed by Mareike Janiak.
 ```
 
 ## Save an image
