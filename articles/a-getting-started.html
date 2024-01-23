@@ -90,7 +90,7 @@
     
     
 <p><strong>Authors:</strong> Lewis A. Jones &amp; William Gearty</p>
-<p><strong>Last updated:</strong> 2023-12-20</p>
+<p><strong>Last updated:</strong> 2024-01-23</p>
 <div style="text-align: justify">
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -131,8 +131,8 @@ appropriate citation via:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"rphylopic"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## To cite rphylopic in publications, use the following citation:</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##   Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising</span></span>
-<span><span class="co">##   PhyloPic silhouettes. Methods in Ecology and Evolution, 14(11), 2700-2708. doi: 10.1111/2041-210X.14221.</span></span>
+<span><span class="co">##   Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising PhyloPic</span></span>
+<span><span class="co">##   silhouettes. Methods in Ecology and Evolution, 14(11), 2700-2708. doi: 10.1111/2041-210X.14221.</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## A BibTeX entry for LaTeX users is</span></span>
 <span><span class="co">## </span></span>
@@ -316,25 +316,30 @@ function to get contributor data about specific images:</p>
 <span><span class="va">uuid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_uuid.html">get_uuid</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Nycticebus"</span><span class="op">)</span></span>
 <span><span class="co"># Get attribution data for uuid</span></span>
 <span><span class="fu"><a href="../reference/get_attribution.html">get_attribution</a></span><span class="op">(</span>uuid <span class="op">=</span> <span class="va">uuid</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## $contributor</span></span>
+<pre><code><span><span class="co">## $images</span></span>
+<span><span class="co">## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`</span></span>
+<span><span class="co">## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$attribution</span></span>
+<span><span class="co">## [1] "Mareike C. Janiak"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$contributor</span></span>
 <span><span class="co">## [1] "Mareike Janiak"</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## $contributor_uuid</span></span>
+<span><span class="co">## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$contributor_uuid</span></span>
 <span><span class="co">## [1] "7bed68fb-cf59-4e58-aed1-41e81269fb01"</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## $created</span></span>
+<span><span class="co">## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$created</span></span>
 <span><span class="co">## [1] "2020-05-19"</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## $contact</span></span>
+<span><span class="co">## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$contact</span></span>
 <span><span class="co">## character(0)</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## $image_uuid</span></span>
+<span><span class="co">## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$image_uuid</span></span>
 <span><span class="co">## [1] "7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9"</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## $license</span></span>
+<span><span class="co">## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license</span></span>
 <span><span class="co">## [1] "https://creativecommons.org/publicdomain/mark/1.0/"</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## $license_abbr</span></span>
+<span><span class="co">## $images$`7f877a9e-53d7-48d0-a422-d3fa0ff5e2f9`$license_abbr</span></span>
 <span><span class="co">## [1] "Public Domain Mark 1.0"</span></span></code></pre>
 <p>This function can even write a little blurb for you to include in
 your publications:</p>
@@ -343,7 +348,7 @@ your publications:</p>
 <span><span class="va">uuid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_uuid.html">get_uuid</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Nycticebus"</span><span class="op">)</span></span>
 <span><span class="co"># Get attribution data for uuid</span></span>
 <span><span class="fu"><a href="../reference/get_attribution.html">get_attribution</a></span><span class="op">(</span>uuid <span class="op">=</span> <span class="va">uuid</span>, text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023) and were added using the rphylopic R package ver. 1.2.2.9000 (Gearty &amp; Jones, 2023). Silhouette was contributed by Mareike Janiak, 2020 (Public Domain Mark 1.0).</span></span></code></pre>
+<pre><code><span><span class="co">## Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023) and were added using the rphylopic R package ver. 1.3.0.9000 (Gearty &amp; Jones, 2023). Silhouette was made by Mareike C. Janiak, 2020 (Public Domain Mark 1.0). Silhouette was contributed by Mareike Janiak.</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="save-an-image">Save an image<a class="anchor" aria-label="anchor" href="#save-an-image"></a>
