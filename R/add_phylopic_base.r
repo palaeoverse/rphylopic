@@ -36,15 +36,9 @@
 #' @param angle \code{numeric}. The number of degrees to rotate the silhouette
 #'   clockwise. The default is no rotation.
 #' @param hjust \code{numeric}. A numeric vector between 0 and 1 specifying
-#'   horizontal justification (left = 0, center = 0.5, right = 1). Note that,
-#'   due to the enforcement of the silhouette's aspect ratio, there may be
-#'   unexpected behavior due to interactions between the aspect ratio of the
-#'   plot and the aspect ratio of the silhouette.
+#'   horizontal justification (left = 0, center = 0.5, right = 1).
 #' @param vjust \code{numeric}. A numeric vector between 0 and 1 specifying
-#'   vertical justification (top = 1, middle = 0.5, bottom = 0). Note that, due
-#'   to the enforcement of the silhouette's aspect ratio, there may be
-#'   unexpected behavior due to interactions between the aspect ratio of the
-#'   plot and the aspect ratio of the silhouette.
+#'   vertical justification (top = 1, middle = 0.5, bottom = 0).
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
 #' @param verbose \code{logical}. Should the attribution information for the
@@ -122,10 +116,10 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   if (any(alpha > 1 | alpha < 0)) {
     stop("`alpha` must be between 0 and 1.")
   }
-  if (any(data$hjust > 1 | data$hjust < 0)) {
+  if (any(hjust > 1 | hjust < 0)) {
     stop("`hjust` must be between 0 and 1.")
   }
-  if (any(data$vjust > 1 | data$vjust < 0)) {
+  if (any(vjust > 1 | vjust < 0)) {
     stop("`vjust` must be between 0 and 1.")
   }
   if (!is.logical(verbose)) {
@@ -226,14 +220,16 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
           all(is.finite(img@summary@xscale)) && diff(img@summary@xscale) != 0 &&
           is.numeric(img@summary@yscale) && length(img@summary@yscale) == 2 &&
           all(is.finite(img@summary@yscale)) && diff(img@summary@yscale) != 0) {
-        grid.picture(img, x = x, y = y, height = ysize, expansion = 0,
-                     just = c(hjust, vjust))
+        xsize <- grconvertX(
+          grconvertY(ysize, from = "ndc", to = "inches") * aspect_ratio(img),
+          from = "inches", to = "ndc")
+        grid.picture(img, x = x, y = y, height = ysize, width = xsize,
+                     expansion = 0, just = c(hjust, vjust))
       } else {
         return(NULL)
       }
     } else { # png
-      grid.raster(img, x = x, y = y, height = ysize,
-                  just = c(hjust, vjust))
+      grid.raster(img, x = x, y = y, height = ysize, just = c(hjust, vjust))
     }
   },
   img = imgs, x = x, y = y, ysize = ysize, alpha = alpha, color = color,

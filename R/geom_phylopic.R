@@ -424,7 +424,6 @@ phylopicGrob <- function(img, x, y, height, color, fill, alpha,
     }
   } else { # png
     img_grob <- rasterGrob(img, x = x, y = y, height = height,
-                           width = height * aspect_ratio(img),
                            default.units = "native",
                            just = c(hjust, vjust))
   }
