@@ -18,6 +18,8 @@ add_phylopic(
   horizontal = FALSE,
   vertical = FALSE,
   angle = 0,
+  hjust = 0.5,
+  vjust = 0.5,
   remove_background = TRUE,
   verbose = FALSE
 )
@@ -65,6 +67,18 @@ horizontally?}
 
 \item{angle}{\code{numeric}. The number of degrees to rotate the silhouette
 clockwise. The default is no rotation.}
+
+\item{hjust}{\code{numeric}. A numeric vector between 0 and 1 specifying
+horizontal justification (left = 0, center = 0.5, right = 1). Note that,
+due to the enforcement of the silhouette's aspect ratio, there may be
+unexpected behavior due to interactions between the aspect ratio of the
+plot and the aspect ratio of the silhouette.}
+
+\item{vjust}{\code{numeric}. A numeric vector between 0 and 1 specifying
+vertical justification (top = 1, middle = 0.5, bottom = 0). Note that, due
+to the enforcement of the silhouette's aspect ratio, there may be
+unexpected behavior due to interactions between the aspect ratio of the
+plot and the aspect ratio of the silhouette.}
 
 \item{remove_background}{\code{logical}. Should any white background be
 removed from the silhouette(s)? See \code{\link[=recolor_phylopic]{recolor_phylopic()}} for details.}

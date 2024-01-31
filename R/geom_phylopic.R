@@ -47,6 +47,8 @@ phylopic_env <- new.env()
 #' - horizontal
 #' - vertical
 #' - angle
+#' - hjust
+#' - vjust
 #'
 #'   Learn more about setting these aesthetics in [add_phylopic()].
 #'
@@ -121,10 +123,12 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
 GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   required_aes = c("x", "y"),
   non_missing_aes = c("size", "alpha", "color", "fill",
-                      "horizontal", "vertical", "angle"),
+                      "horizontal", "vertical", "angle",
+                      "hjust", "vjust"),
   optional_aes = c("img", "name", "uuid"), # one and only one of these
   default_aes = aes(size = 6, alpha = 1, color = NA, fill = "black",
-                    horizontal = FALSE, vertical = FALSE, angle = 0),
+                    horizontal = FALSE, vertical = FALSE, angle = 0,
+                    hjust = 0.5, vjust = 0.5),
   extra_params = c("na.rm", "remove_background", "verbose", "filter"),
   setup_data = function(data, params) {
     # Clean data
@@ -225,6 +229,12 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     if (any(data$alpha > 1 | data$alpha < 0)) {
       stop("`alpha` must be between 0 and 1.")
     }
+    if (any(data$hjust > 1 | data$hjust < 0)) {
+      stop("`hjust` must be between 0 and 1.")
+    }
+    if (any(data$vjust > 1 | data$vjust < 0)) {
+      stop("`vjust` must be between 0 and 1.")
+    }
 
     # Transform data
     data <- coord$transform(data, panel_params)
@@ -258,6 +268,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
         phylopicGrob(data$img[[i]], data$x[i], data$y[i], heights[i],
                      data$colour[i], data$fill[i], data$alpha[i],
                      data$horizontal[i], data$vertical[i], data$angle[i],
+                     data$hjust[i], data$vjust[i],
                      remove_background)
       }
     })
@@ -360,9 +371,10 @@ phylopic_key_glyph <- function(img = NULL, name = NULL, uuid = NULL) {
     } else {
       asp_rat <- aspect_ratio(imgs[[i]])
       height <- unit(ifelse(asp_rat >= 1, .95 / asp_rat, .95), "npc")
-      grob <- phylopicGrob(imgs[[i]], 0.5, 0.5,
+      grob <- phylopicGrob(imgs[[i]], x = 0.5, y = 0.5,
                            height, data$colour[1], data$fill[1], data$alpha[1],
                            data$horizontal[1], data$vertical[1], data$angle[1],
+                           hjust = 0.5, vjust = 0.5,
                            phylopic_env$remove_background)
     }
     if (i == length(imgs)) {
@@ -379,6 +391,7 @@ phylopic_key_glyph <- function(img = NULL, name = NULL, uuid = NULL) {
 #' @importFrom methods slotNames
 phylopicGrob <- function(img, x, y, height, color, fill, alpha,
                          horizontal, vertical, angle,
+                         hjust, vjust,
                          remove_background) {
   # modified from add_phylopic for now
   if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
@@ -401,7 +414,9 @@ phylopicGrob <- function(img, x, y, height, color, fill, alpha,
       # modified from
       # https://github.com/k-hench/hypoimg/blob/master/R/hypoimg_recolor_svg.R
       img_grob <- pictureGrob(img, x = x, y = y, height = height,
-                              default.units = "native", expansion = 0)
+                              width = height * aspect_ratio(img),
+                              default.units = "native", expansion = 0,
+                              just = c(hjust, vjust))
       img_grob <- gList(img_grob)
       img_grob <- gTree(children = img_grob)
     } else {
@@ -409,7 +424,9 @@ phylopicGrob <- function(img, x, y, height, color, fill, alpha,
     }
   } else { # png
     img_grob <- rasterGrob(img, x = x, y = y, height = height,
-                           default.units = "native")
+                           width = height * aspect_ratio(img),
+                           default.units = "native",
+                           just = c(hjust, vjust))
   }
   return(img_grob)
 }

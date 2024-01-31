@@ -33,6 +33,16 @@
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
 #' @param angle \code{numeric}. The number of degrees to rotate the silhouette
 #'   clockwise. The default is no rotation.
+#' @param hjust \code{numeric}. A numeric vector between 0 and 1 specifying
+#'   horizontal justification (left = 0, center = 0.5, right = 1). Note that,
+#'   due to the enforcement of the silhouette's aspect ratio, there may be
+#'   unexpected behavior due to interactions between the aspect ratio of the
+#'   plot and the aspect ratio of the silhouette.
+#' @param vjust \code{numeric}. A numeric vector between 0 and 1 specifying
+#'   vertical justification (top = 1, middle = 0.5, bottom = 0). Note that, due
+#'   to the enforcement of the silhouette's aspect ratio, there may be
+#'   unexpected behavior due to interactions between the aspect ratio of the
+#'   plot and the aspect ratio of the silhouette.
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
 #' @param verbose \code{logical}. Should the attribution information for the
@@ -86,6 +96,7 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
                          x, y, ysize = Inf,
                          alpha = 1, color = NA, fill = "black",
                          horizontal = FALSE, vertical = FALSE, angle = 0,
+                         hjust = 0.5, vjust = 0.5,
                          remove_background = TRUE, verbose = FALSE) {
   if (all(sapply(list(img, name, uuid), is.null))) {
     stop("One of `img`, `name`, or `uuid` is required.")
@@ -110,12 +121,15 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
   horizontal <- rep_len(horizontal, max_len)
   vertical <- rep_len(vertical, max_len)
   angle <- rep_len(angle, max_len)
+  hjust <- rep_len(hjust, max_len)
+  vjust <- rep_len(vjust, max_len)
 
   # Put together all of the variables
   args <- list(geom = GeomPhylopic,
                x = x, y = y, size = ysize,
                alpha = alpha, color = color, fill = fill,
                horizontal = horizontal, vertical = vertical, angle = angle,
+               hjust = hjust, vjust = vjust,
                remove_background = remove_background, verbose = verbose,
                filter = list(filter))
   # Only include the one silhouette argument

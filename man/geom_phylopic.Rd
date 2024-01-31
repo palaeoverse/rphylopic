@@ -127,6 +127,8 @@ Also, outline colors do not currently work for png array objects.
 \item horizontal
 \item vertical
 \item angle
+\item hjust
+\item vjust
 
 Learn more about setting these aesthetics in \code{\link[=add_phylopic]{add_phylopic()}}.
 }

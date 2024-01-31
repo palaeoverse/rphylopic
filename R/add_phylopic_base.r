@@ -35,6 +35,16 @@
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
 #' @param angle \code{numeric}. The number of degrees to rotate the silhouette
 #'   clockwise. The default is no rotation.
+#' @param hjust \code{numeric}. A numeric vector between 0 and 1 specifying
+#'   horizontal justification (left = 0, center = 0.5, right = 1). Note that,
+#'   due to the enforcement of the silhouette's aspect ratio, there may be
+#'   unexpected behavior due to interactions between the aspect ratio of the
+#'   plot and the aspect ratio of the silhouette.
+#' @param vjust \code{numeric}. A numeric vector between 0 and 1 specifying
+#'   vertical justification (top = 1, middle = 0.5, bottom = 0). Note that, due
+#'   to the enforcement of the silhouette's aspect ratio, there may be
+#'   unexpected behavior due to interactions between the aspect ratio of the
+#'   plot and the aspect ratio of the silhouette.
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
 #' @param verbose \code{logical}. Should the attribution information for the
@@ -101,6 +111,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
                               x = NULL, y = NULL, ysize = NULL,
                               alpha = 1, color = NA, fill = "black",
                               horizontal = FALSE, vertical = FALSE, angle = 0,
+                              hjust = 0.5, vjust = 0.5,
                               remove_background = TRUE, verbose = FALSE) {
   if (all(sapply(list(img, name, uuid), is.null))) {
     stop("One of `img`, `name`, or `uuid` is required.")
@@ -110,6 +121,12 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   }
   if (any(alpha > 1 | alpha < 0)) {
     stop("`alpha` must be between 0 and 1.")
+  }
+  if (any(data$hjust > 1 | data$hjust < 0)) {
+    stop("`hjust` must be between 0 and 1.")
+  }
+  if (any(data$vjust > 1 | data$vjust < 0)) {
+    stop("`vjust` must be between 0 and 1.")
   }
   if (!is.logical(verbose)) {
     stop("`verbose` should be a logical value.")
@@ -186,7 +203,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   ysize <- grconvertY(ysize, to = "ndc") - grconvertY(0, to = "ndc")
 
   invisible(mapply(function(img, x, y, ysize, alpha, color, fill,
-                            horizontal, vertical, angle) {
+                            horizontal, vertical, angle, hjust, vjust) {
     if (is.null(img)) return(NULL)
 
     if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
@@ -209,14 +226,17 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
           all(is.finite(img@summary@xscale)) && diff(img@summary@xscale) != 0 &&
           is.numeric(img@summary@yscale) && length(img@summary@yscale) == 2 &&
           all(is.finite(img@summary@yscale)) && diff(img@summary@yscale) != 0) {
-        grid.picture(img, x = x, y = y, height = ysize, expansion = 0)
+        grid.picture(img, x = x, y = y, height = ysize, expansion = 0,
+                     just = c(hjust, vjust))
       } else {
         return(NULL)
       }
     } else { # png
-      grid.raster(img, x = x, y = y, height = ysize)
+      grid.raster(img, x = x, y = y, height = ysize,
+                  just = c(hjust, vjust))
     }
   },
   img = imgs, x = x, y = y, ysize = ysize, alpha = alpha, color = color,
-  fill = fill, horizontal = horizontal, vertical = vertical, angle = angle))
+  fill = fill, horizontal = horizontal, vertical = vertical, angle = angle,
+  hjust = hjust, vjust = vjust))
 }
