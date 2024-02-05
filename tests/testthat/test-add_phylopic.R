@@ -35,7 +35,7 @@ test_that("add_phylopic works", {
   p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
     geom_blank() +
     add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                 x = posx, y = posy, ysize = sizey,
+                 x = posx, y = posy, height = sizey,
                  fill = fills, color = cols, alpha = alpha,
                  angle = angle, horizontal = hor, vertical = ver)
   p <- p + ggtitle("R Cat Herd!!")

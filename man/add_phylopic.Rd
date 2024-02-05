@@ -11,7 +11,9 @@ add_phylopic(
   filter = NULL,
   x,
   y,
-  ysize = Inf,
+  ysize = deprecated(),
+  height = Inf,
+  width = NA,
   alpha = 1,
   color = NA,
   fill = "black",
@@ -42,9 +44,17 @@ ShareAlike clause. The user can also combine these filters as a vector.}
 
 \item{y}{\code{numeric}. y value of the silhouette center.}
 
-\item{ysize}{\code{numeric}. Height of the silhouette. The width is
-determined by the aspect ratio of the original image. If "Inf", the
-default, the height will be as tall as will fit within the plot area.}
+\item{ysize}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} use the \code{height} or \code{width}
+argument instead.}
+
+\item{height}{\code{numeric}. Height of the silhouette in coordinate space.
+If "NA" and \code{width} is specified, the \verb{height is determined by the aspect ratio of the original image. If "Inf", the default, and }width\verb{is "NA", the height will be as tall as will fit within the plot area. One or both of}height\code{and}width` must be "NA".}
+
+\item{width}{\code{numeric}. Width of the silhouette in coordinate space. If
+"NA", the default, and \code{height} is specified, the width is determined by
+the aspect ratio of the original image. If "Inf" and \code{height} is "NA",
+the width will be as wide as will fit within the plot area. One or both of
+\code{height} and \code{width} must be "NA".}
 
 \item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
 of the silhouette (0 is fully transparent, 1 is fully opaque).}
@@ -131,7 +141,7 @@ alpha <- runif(10, 0.3, 1)
 p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
   geom_blank() +
   add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-               x = posx, y = posy, ysize = sizey,
+               x = posx, y = posy, height = sizey,
                fill = fills, alpha = alpha, angle = angle,
                horizontal = hor, vertical = ver)
 p + ggtitle("R Cat Herd!!")

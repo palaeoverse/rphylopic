@@ -11,7 +11,9 @@ add_phylopic_base(
   filter = NULL,
   x = NULL,
   y = NULL,
-  ysize = NULL,
+  ysize = deprecated(),
+  height = NULL,
+  width = NULL,
   alpha = 1,
   color = NA,
   fill = "black",
@@ -44,9 +46,17 @@ ShareAlike clause. The user can also combine these filters as a vector.}
 \item{y}{\code{numeric}. y value of the silhouette center. Ignored if \code{x} and
 \code{ysize} are not specified.}
 
-\item{ysize}{\code{numeric}. Height of the silhouette. The width is
-determined by the aspect ratio of the original image. Ignored if \code{x} and
-\code{y} are not specified.}
+\item{ysize}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} use the \code{height} or \code{width}
+argument instead.}
+
+\item{height}{\code{numeric}. Height of the silhouette in coordinate space.
+If "NULL" and \code{width} is specified, the \verb{height is determined by the aspect ratio of the original image. If "Inf", the default, and }width\verb{is "NULL", the height will be as tall as will fit within the plot area. One or both of}height\code{and}width` must be "NULL".}
+
+\item{width}{\code{numeric}. Width of the silhouette in coordinate space. If
+"NULL", the default, and \code{height} is specified, the width is determined by
+the aspect ratio of the original image. If "Inf" and \code{height} is "NA", the
+width will be as wide as will fit within the plot area. One or both of
+\code{height} and \code{width} must be "NULL".}
 
 \item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
 of the silhouette (0 is fully transparent, 1 is fully opaque).}
@@ -88,9 +98,9 @@ silhouettes on top of an existing base R plot (like \code{\link[=points]{points(
 }
 \details{
 One (and only one) of \code{img}, \code{name}, or \code{uuid} must be specified.
-Use parameters \code{x}, \code{y}, and \code{ysize} to place the silhouette at a specified
-position on the plot. If all three of these parameters are unspecified,
-then the silhouette will be plotted to the full height and width of the
+Use parameters \code{x}, \code{y}, and \code{height}/\code{width} to place the silhouette at a
+specified position on the plot. If all of these parameters are unspecified,
+then the silhouette will be plotted to the full height and/or width of the
 plot. The aspect ratio of the silhouette will always be maintained (even
 when a plot is resized). However, if the plot is resized after plotting the
 silhouette, the absolute size and/or position of the silhouette may change.
@@ -127,7 +137,7 @@ fills <- sample(c("black", "darkorange", "grey42", "white"), 10,
 
 plot(posx, posy, type = "n", main = "A cat herd")
 add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                  x = posx, y = posy, ysize = size,
+                  x = posx, y = posy, height = size,
                   fill = fills, angle = angle,
                   horizontal = hor, vertical = ver)
 
@@ -139,6 +149,6 @@ plot(posx, posy, type = "n", main = "A cat herd, on top of a cat",
 # plot background cat
 add_phylopic_base(img = cat, alpha = 0.2)
 # overlay smaller cats
-add_phylopic_base(img = cat, x = posx, y = posy, ysize = size, alpha = 0.8)
+add_phylopic_base(img = cat, x = posx, y = posy, height = size, alpha = 0.8)
 }
 }

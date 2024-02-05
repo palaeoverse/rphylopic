@@ -2,6 +2,9 @@
 
 * Added add_phylopic_legend (#83)
 * Added permalink generation option to get_attribution (#81)
+* Added ability to specify horizontal and vertical justification of silhouettes (#101)
+* Added ability to specify width instead of height for silhouettes (#103)
+  * Note that all "ysize" and "size" arguments/aesthetics are now deprecated in favor of "height" and "width" arguments/aesthetics
 
 # rphylopic 1.3.0
 

@@ -11,7 +11,8 @@ add_phylopic_legend(
   img = NULL,
   name = NULL,
   uuid = NULL,
-  ysize = NULL,
+  ysize = deprecated(),
+  height = NULL,
   color = NA,
   fill = "black",
   ...
@@ -36,7 +37,10 @@ from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 \item{uuid}{\code{character}. A valid uuid for a PhyloPic silhouette (such as
 that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
-\item{ysize}{\code{numeric}. Height of the legend silhouette(s). The width
+\item{ysize}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} use the \code{height}
+argument instead.}
+
+\item{height}{\code{numeric}. Height of the legend silhouette(s). The width
 is determined by the aspect ratio of the original image.}
 
 \item{color}{\code{character}. Color of silhouette outline. If "original" or
@@ -76,10 +80,10 @@ plot(0:10, 0:10, type = "n", main = "Wolves")
 # Add data points
 add_phylopic_base(uuid = uuids,
   color = "black", fill = c("blue", "green"),
-  x = c(2.5, 7.5), y = c(2.5, 7.5), ysize = 2)
+  x = c(2.5, 7.5), y = c(2.5, 7.5), height = 2)
 # Add legend
 add_phylopic_legend(uuid = uuids, 
-  ysize = 0.5, color = "black", fill = c("blue", "green"), 
+  height = 0.5, color = "black", fill = c("blue", "green"), 
   x = "bottomright", legend = c("Wolf 1", "Wolf 2"),
   bg = "lightgrey")
 }

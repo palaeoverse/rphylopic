@@ -10,9 +10,12 @@ phylopic_env <- new.env()
 #'   be specified. The `img` aesthetic can be
 #'   [Picture][grImport2::Picture-class] objects or png array objects, e.g.,
 #'   from using [get_phylopic()]. Use the `x` and `y` aesthetics to place the
-#'   silhouettes at specified positions on the plot. The `size` aesthetic
-#'   specifies the height of the silhouettes in the units of the y axis. The
-#'   aspect ratio of the silhouettes will always be maintained.
+#'   silhouettes at specified positions on the plot. The `height` or `width`
+#'   aesthetic specifies the height or width, respectively, of the silhouettes
+#'   in the units of the y axis (only one is allowed). The aspect ratio of the
+#'   silhouettes will always be maintained. The `hjust` and `vjust` aesthetics
+#'   can be used to manage the justification of the silhouettes with respect the
+#'   `x` and `y` coordinates.
 #'
 #'   The `color` (default: NA), `fill` (default: "black"), and `alpha` (
 #'   default: 1) aesthetics can be used to change the outline color, fill color,
@@ -39,9 +42,11 @@ phylopic_env <- new.env()
 #'
 #' - **x** (required)
 #' - **y** (required)
-#' - **img/uuid/name** (one, and only one, required)
-#' - size
-#' - color/colour
+#' - **img** *or* **uuid** *or* **name** (one, and only one, required)
+#' - height *or* width (optional, maximum of only one allowed)
+#' - ysize `r lifecycle::badge("deprecated")` Deprecated in favor of height or
+#'   width
+#' - color *or* colour
 #' - fill
 #' - alpha
 #' - horizontal
@@ -76,7 +81,7 @@ phylopic_env <- new.env()
 #'                  name = c("Felis silvestris catus", "Odobenus rosmarus"))
 #' ggplot(df) +
 #'   geom_phylopic(aes(x = x, y = y, name = name),
-#'                 fill = "purple", size = 10) +
+#'                 fill = "purple", height = 10) +
 #'   facet_wrap(~name) +
 #'   coord_cartesian(xlim = c(1,6), ylim = c(5, 30))
 #' }
@@ -100,6 +105,16 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
   if ("img" %in% names(dots) && !is.list(dots$img)) {
     dots$img <- list(dots$img)
   }
+  if (!is.null(dots$size)) {
+    lifecycle::deprecate_warn("1.4.0",
+                              I("Using the `size` aesthetic in this geom"),
+                              I("the `height` and `width` aesthetics"),
+                              user_env = globalenv())
+    if (is.null(dots$height)) {
+      dots$height <- dots$size
+      dots$size <- NULL
+    }
+  }
   layer(
     data = data,
     mapping = mapping,
@@ -122,11 +137,14 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
 #' @importFrom grid gTree gList nullGrob
 GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   required_aes = c("x", "y"),
-  non_missing_aes = c("size", "alpha", "color", "fill",
+  non_missing_aes = c("alpha", "color", "fill",
                       "horizontal", "vertical", "angle",
                       "hjust", "vjust"),
-  optional_aes = c("img", "name", "uuid"), # one and only one of these
-  default_aes = aes(size = 6, alpha = 1, color = NA, fill = "black",
+  optional_aes = c("height", "width", "img", "name", "uuid"),
+                   # one and only one of img/name/uuid
+                   # size is deprecated
+  default_aes = aes(height = 6, width = NA,
+                    alpha = 1, color = NA, fill = "black",
                     horizontal = FALSE, vertical = FALSE, angle = 0,
                     hjust = 0.5, vjust = 0.5),
   extra_params = c("na.rm", "remove_background", "verbose", "filter"),
@@ -209,6 +227,18 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     data
   },
   use_defaults = function(self, data, params = list(), modifiers = aes()) {
+    default_aes <- self$default_aes
+    # Inherit size as height if no height aesthetic and param exist
+    if (!is.null(data$size)) {
+      lifecycle::deprecate_warn("1.4.0",
+                                I("Using the `size` aesthetic in this geom"),
+                                I("the `height` and `width` aesthetics"),
+                                user_env = globalenv())
+      if (is.null(data$height) && is.null(params$height)) {
+        data$height <- data$size
+        data$size <- NULL
+      }
+    }
     # if fill isn't specified in the original data, copy over the colour column
     col_fill <- c("colour", "fill") %in% colnames(data) |
       c("colour", "fill") %in% names(params)
@@ -235,37 +265,76 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     if (any(data$vjust > 1 | data$vjust < 0)) {
       stop("`vjust` must be between 0 and 1.")
     }
+    if (!is.null(data$size)) {
+      lifecycle::deprecate_warn("1.4.0",
+                                I("Using the `size` aesthetic in this geom"),
+                                I("the `height` and `width` aesthetics"),
+                                user_env = globalenv())
+      if (is.null(data$height) && is.null(params$height)) {
+        data$height <- data$size
+        data$size <- NULL
+      }
+    }
+    if (any(!is.na(data$height) & !is.na(data$width))) {
+      stop("At least one of `height` or `width` must be NA.")
+    }
 
     # Transform data
     data <- coord$transform(data, panel_params)
 
-    # Calculate height as percentage of y limits
-    # (or r limits for polar coordinates)
-    if ("y.range" %in% names(panel_params)) {
-      y_diff <- diff(panel_params$y.range)
-    } else if ("y_range" %in% names(panel_params)) { # exclusive to coord_sf
-      y_diff <- diff(panel_params$y_range)
-    } else if ("r.range" %in% names(panel_params)) { # exclusive to coord_polar
-      y_diff <- diff(panel_params$r.range)
+    if (all(is.na(data$width))) {
+      # Calculate height as percentage of y limits
+      # (or r limits for polar coordinates)
+      if ("y.range" %in% names(panel_params)) {
+        y_diff <- diff(panel_params$y.range)
+      } else if ("y_range" %in% names(panel_params)) { # exclusive to coord_sf
+        y_diff <- diff(panel_params$y_range)
+      } else if ("r.range" %in% names(panel_params)) { # exclusive to coord_polar
+        y_diff <- diff(panel_params$r.range)
+      } else {
+        y_diff <- 1
+      }
+      if (any(data$height < (y_diff / 1000))) {
+        warning(paste("Your specified silhouette `height`(s) are more than 1000",
+                      "times smaller than your y-axis range. You probably want",
+                      "to use a larger `height`."), call. = FALSE)
+      }
+      heights <- data$height / y_diff
+      
+      # Hack to make silhouettes the full height of the plot
+      heights[is.infinite(heights)] <- 1
+      widths <- data$width
     } else {
-      y_diff <- 1
+      # Calculate width as percentage of x limits
+      # (or r limits for polar coordinates)
+      if ("x.range" %in% names(panel_params)) {
+        x_diff <- diff(panel_params$x.range)
+      } else if ("x_range" %in% names(panel_params)) { # exclusive to coord_sf
+        x_diff <- diff(panel_params$x_range)
+      } else if ("r.range" %in% names(panel_params)) { # exclusive to coord_polar
+        x_diff <- diff(panel_params$r.range)
+      } else {
+        x_diff <- 1
+      }
+      if (any(data$width < (x_diff / 1000))) {
+        warning(paste("Your specified silhouette `width`(s) are more than 1000",
+                      "times smaller than your x-axis range. You probably want",
+                      "to use a larger `width`."), call. = FALSE)
+      }
+      widths <- data$width / x_diff
+      
+      # Hack to make silhouettes the full height of the plot
+      widths[is.infinite(widths)] <- 1
+      heights <- data$height
     }
-    if (any(data$size < (y_diff / 1000))) {
-      warning(paste("Your specified silhouette `size`(s) are more than 1000",
-                    "times smaller than your y-axis range. You probably want",
-                    "to use a larger `size`."), call. = FALSE)
-    }
-    heights <- data$size / y_diff
-
-    # Hack to make silhouettes the full height of the plot
-    heights[is.infinite(heights)] <- 1
+    
 
     # Make a grob for each silhouette
     grobs <- lapply(seq_len(nrow(data)), function(i) {
       if (is.null(data$img[[i]])) {
         nullGrob()
       } else {
-        phylopicGrob(data$img[[i]], data$x[i], data$y[i], heights[i],
+        phylopicGrob(data$img[[i]], data$x[i], data$y[i], heights[i], widths[i],
                      data$colour[i], data$fill[i], data$alpha[i],
                      data$horizontal[i], data$vertical[i], data$angle[i],
                      data$hjust[i], data$vjust[i],
@@ -372,7 +441,8 @@ phylopic_key_glyph <- function(img = NULL, name = NULL, uuid = NULL) {
       asp_rat <- aspect_ratio(imgs[[i]])
       height <- unit(ifelse(asp_rat >= 1, .95 / asp_rat, .95), "npc")
       grob <- phylopicGrob(imgs[[i]], x = 0.5, y = 0.5,
-                           height, data$colour[1], data$fill[1], data$alpha[1],
+                           height, width = unit(1, "npc"),
+                           data$colour[1], data$fill[1], data$alpha[1],
                            data$horizontal[1], data$vertical[1], data$angle[1],
                            hjust = 0.5, vjust = 0.5,
                            phylopic_env$remove_background)
@@ -389,7 +459,8 @@ phylopic_key_glyph <- function(img = NULL, name = NULL, uuid = NULL) {
 #' @importFrom grImport2 pictureGrob
 #' @importFrom grid rasterGrob gList gTree nullGrob
 #' @importFrom methods slotNames
-phylopicGrob <- function(img, x, y, height, color, fill, alpha,
+phylopicGrob <- function(img, x, y, height, width,
+                         color, fill, alpha,
                          horizontal, vertical, angle,
                          hjust, vjust,
                          remove_background) {
@@ -411,10 +482,13 @@ phylopicGrob <- function(img, x, y, height, color, fill, alpha,
         all(is.finite(img@summary@xscale)) && diff(img@summary@xscale) != 0 &&
         is.numeric(img@summary@yscale) && length(img@summary@yscale) == 2 &&
         all(is.finite(img@summary@yscale)) && diff(img@summary@yscale) != 0) {
+      # placeholder until pictureGrob supports a NULL height/width
+      if (is.na(height)) height <- width / aspect_ratio(img)
+      if (is.na(width)) width <- height * aspect_ratio(img)
       # modified from
       # https://github.com/k-hench/hypoimg/blob/master/R/hypoimg_recolor_svg.R
-      img_grob <- pictureGrob(img, x = x, y = y, height = height,
-                              width = height * aspect_ratio(img),
+      img_grob <- pictureGrob(img, x = x, y = y,
+                              height = height, width = width,
                               default.units = "native", expansion = 0,
                               just = c(hjust, vjust))
       img_grob <- gList(img_grob)
@@ -423,9 +497,18 @@ phylopicGrob <- function(img, x, y, height, color, fill, alpha,
       img_grob <- nullGrob()
     }
   } else { # png
-    img_grob <- rasterGrob(img, x = x, y = y, height = height,
-                           default.units = "native",
-                           just = c(hjust, vjust))
+    if (is.na(height)) {
+      img_grob <- rasterGrob(img, x = x, y = y,
+                             height = NULL, width = width,
+                             default.units = "native",
+                             just = c(hjust, vjust))
+    }
+    if (is.na(width)) {
+      img_grob <- rasterGrob(img, x = x, y = y,
+                             height = height, width = NULL,
+                             default.units = "native",
+                             just = c(hjust, vjust))
+    }
   }
   return(img_grob)
 }

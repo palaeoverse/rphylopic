@@ -14,9 +14,18 @@
 #'   ShareAlike clause. The user can also combine these filters as a vector.
 #' @param x \code{numeric}. x value of the silhouette center.
 #' @param y \code{numeric}. y value of the silhouette center.
-#' @param ysize \code{numeric}. Height of the silhouette. The width is
-#'   determined by the aspect ratio of the original image. If "Inf", the
-#'   default, the height will be as tall as will fit within the plot area.
+#' @param ysize `r lifecycle::badge("deprecated")` use the `height` or `width`
+#'   argument instead.
+#' @param height \code{numeric}. Height of the silhouette in coordinate space.
+#'   If "NA" and `width` is specified, the `height is determined by the aspect
+#'   ratio of the original image. If "Inf", the default, and `width` is "NA",
+#'   the height will be as tall as will fit within the plot area. One or both of
+#'   `height` and `width` must be "NA".
+#' @param width \code{numeric}. Width of the silhouette in coordinate space. If
+#'   "NA", the default, and `height` is specified, the width is determined by
+#'   the aspect ratio of the original image. If "Inf" and `height` is "NA",
+#'   the width will be as wide as will fit within the plot area. One or both of
+#'   `height` and `width` must be "NA".
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
 #' @param color \code{character}. Color of silhouette outline. If "original" or
@@ -65,6 +74,7 @@
 #'   Note that png array objects can only be rotated by multiples of 90 degrees.
 #'   Also, outline colors do not currently work for png array objects.
 #' @importFrom ggplot2 annotate
+#' @importFrom lifecycle deprecated
 #' @export
 #' @examples \dontrun{
 #' # Put a silhouette behind a plot based on a taxonomic name
@@ -87,13 +97,13 @@
 #' p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
 #'   geom_blank() +
 #'   add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-#'                x = posx, y = posy, ysize = sizey,
+#'                x = posx, y = posy, height = sizey,
 #'                fill = fills, alpha = alpha, angle = angle,
 #'                horizontal = hor, vertical = ver)
 #' p + ggtitle("R Cat Herd!!")
 #' }
 add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
-                         x, y, ysize = Inf,
+                         x, y, ysize = deprecated(), height = Inf, width = NA,
                          alpha = 1, color = NA, fill = "black",
                          horizontal = FALSE, vertical = FALSE, angle = 0,
                          hjust = 0.5, vjust = 0.5,
@@ -108,13 +118,20 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
     stop("`verbose` should be a logical value.")
   }
 
+  if (lifecycle::is_present(ysize)) {
+    lifecycle::deprecate_warn("1.4.0", "add_phylopic(ysize)",
+                              "add_phylopic(height)")
+    if (is.null(height)) height <- ysize
+  }
+
   # Make all variables the same length
   x_len <- length(x)
   y_len <- length(y)
   max_len <- max(x_len, y_len)
   x <- rep_len(x, max_len)
   y <- rep_len(y, max_len)
-  ysize <- rep_len(ysize, max_len)
+  height <- rep_len(height, max_len)
+  width <- rep_len(width, max_len)
   alpha <- rep_len(alpha, max_len)
   color <- rep_len(color, max_len)
   fill <- rep_len(fill, max_len)
@@ -126,7 +143,7 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
 
   # Put together all of the variables
   args <- list(geom = GeomPhylopic,
-               x = x, y = y, size = ysize,
+               x = x, y = y, height = height, width = width,
                alpha = alpha, color = color, fill = fill,
                horizontal = horizontal, vertical = vertical, angle = angle,
                hjust = hjust, vjust = vjust,

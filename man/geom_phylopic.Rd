@@ -89,9 +89,12 @@ One (and only one) of the \code{img}, \code{name}, or \code{uuid} aesthetics mus
 be specified. The \code{img} aesthetic can be
 \link[grImport2:Picture-class]{Picture} objects or png array objects, e.g.,
 from using \code{\link[=get_phylopic]{get_phylopic()}}. Use the \code{x} and \code{y} aesthetics to place the
-silhouettes at specified positions on the plot. The \code{size} aesthetic
-specifies the height of the silhouettes in the units of the y axis. The
-aspect ratio of the silhouettes will always be maintained.
+silhouettes at specified positions on the plot. The \code{height} or \code{width}
+aesthetic specifies the height or width, respectively, of the silhouettes
+in the units of the y axis (only one is allowed). The aspect ratio of the
+silhouettes will always be maintained. The \code{hjust} and \code{vjust} aesthetics
+can be used to manage the justification of the silhouettes with respect the
+\code{x} and \code{y} coordinates.
 
 The \code{color} (default: NA), \code{fill} (default: "black"), and \code{alpha} (
 default: 1) aesthetics can be used to change the outline color, fill color,
@@ -119,9 +122,11 @@ Also, outline colors do not currently work for png array objects.
 \itemize{
 \item \strong{x} (required)
 \item \strong{y} (required)
-\item \strong{img/uuid/name} (one, and only one, required)
-\item size
-\item color/colour
+\item \strong{img} \emph{or} \strong{uuid} \emph{or} \strong{name} (one, and only one, required)
+\item height \emph{or} width (optional, maximum of only one allowed)
+\item ysize \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated in favor of height or
+width
+\item color \emph{or} colour
 \item fill
 \item alpha
 \item horizontal
@@ -141,7 +146,7 @@ df <- data.frame(x = c(2, 4), y = c(10, 20),
                  name = c("Felis silvestris catus", "Odobenus rosmarus"))
 ggplot(df) +
   geom_phylopic(aes(x = x, y = y, name = name),
-                fill = "purple", size = 10) +
+                fill = "purple", height = 10) +
   facet_wrap(~name) +
   coord_cartesian(xlim = c(1,6), ylim = c(5, 30))
 }
