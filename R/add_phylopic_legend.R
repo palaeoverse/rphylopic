@@ -10,7 +10,9 @@
 #'   legend. Can be `NULL` (default) if using keywords in `x`.
 #' @param legend \code{character}. A character vector of the labels to appear
 #'   in the legend.
-#' @param ysize \code{numeric}. Height of the legend silhouette(s). The width 
+#' @param ysize `r lifecycle::badge("deprecated")` use the `height`
+#'   argument instead.
+#' @param height \code{numeric}. Height of the legend silhouette(s). The width 
 #'   is determined by the aspect ratio of the original image.
 #' @inheritParams add_phylopic_base
 #' @param ... Additional arguments passed to [legend()].
@@ -35,16 +37,22 @@
 #' # Add data points
 #' add_phylopic_base(uuid = uuids,
 #'   color = "black", fill = c("blue", "green"),
-#'   x = c(2.5, 7.5), y = c(2.5, 7.5), ysize = 2)
+#'   x = c(2.5, 7.5), y = c(2.5, 7.5), height = 2)
 #' # Add legend
 #' add_phylopic_legend(uuid = uuids, 
-#'   ysize = 0.5, color = "black", fill = c("blue", "green"), 
+#'   height = 0.5, color = "black", fill = c("blue", "green"), 
 #'   x = "bottomright", legend = c("Wolf 1", "Wolf 2"),
 #'   bg = "lightgrey")
 add_phylopic_legend <- function(x, y = NULL, legend,
                                 img = NULL, name = NULL, uuid = NULL, 
-                                ysize = NULL, color = NA, fill = "black", 
+                                ysize = deprecated(), height = NULL,
+                                color = NA, fill = "black", 
                                 ...) {
+  if (lifecycle::is_present(ysize)) {
+    lifecycle::deprecate_warn("1.4.0", "add_phylopic_legend(ysize)",
+                              "add_phylopic_legend(height)")
+    if (is.null(height)) height <- ysize
+  }
   # Get supplied arguments
   args <- list(x = x, y = y, legend = legend, ...)
   # Remove legend object to avoid issues with do.call
@@ -67,9 +75,9 @@ add_phylopic_legend <- function(x, y = NULL, legend,
   if (!is.null(bg)) fill <- bg
   # size values
   size <- args[["pt.cex"]]
-  if (!is.null(size)) ysize <- size
+  if (!is.null(size)) height <- size
   # Set default ysize if required
-  if (is.null(ysize)) ysize <- (abs(diff(leg_pos$text$y)) * 0.5)
+  if (is.null(height)) height <- (abs(diff(leg_pos$text$y)) * 0.5)
   # Extract positions
   # Adjust x position slightly to account for width
   x <- (leg_pos$text$x + leg_pos$rect$left) / 2
@@ -80,5 +88,5 @@ add_phylopic_legend <- function(x, y = NULL, legend,
                     y = y, 
                     color = color,
                     fill = fill,
-                    ysize = ysize)
+                    height = height)
 }

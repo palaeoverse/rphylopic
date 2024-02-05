@@ -59,17 +59,17 @@ img <- pick_phylopic(name = "Canis lupus", n = 5)
 ```r
 # OK, now we've got the image we want... let's add it to a plot!
 plot(x = 1, y = 1, type = "n")
-add_phylopic_base(img = img, x = 1.25, y = 1.25, ysize = 0.25)
+add_phylopic_base(img = img, x = 1.25, y = 1.25, height = 0.25)
 
 # But can't we just add an image straight away using the uuid? Sure!
 uuid <- get_uuid(name = "Canis lupus", n = 1)
-add_phylopic_base(uuid = uuid, x = 1, y = 1, ysize = 0.25)
+add_phylopic_base(uuid = uuid, x = 1, y = 1, height = 0.25)
 
 # What about just using the first image linked to the name? Definitely!
-add_phylopic_base(name = "Canis lupus", x = 0.75, y = 0.75, ysize = 0.25)
+add_phylopic_base(name = "Canis lupus", x = 0.75, y = 0.75, height = 0.25)
 
 # Black is a bit boring? OK...
-add_phylopic_base(name = "Canis lupus", x = 0.75, y = 1.25, ysize = 0.25, color = "orange")
+add_phylopic_base(name = "Canis lupus", x = 0.75, y = 1.25, height = 0.25, color = "orange")
 ```
 
 ### ggplot2
@@ -89,7 +89,7 @@ ggplot(iris) +
 # Plot silhouettes as points!
 ggplot(iris) + 
   geom_phylopic(aes(x = Sepal.Length, y = Sepal.Width), img = img,
-                color = "purple", size = 0.25)
+                color = "purple", height = 0.25)
 ```
 
 ## Get attribution

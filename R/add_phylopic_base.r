@@ -16,9 +16,18 @@
 #'   `ysize` are not specified.
 #' @param y \code{numeric}. y value of the silhouette center. Ignored if `x` and
 #'   `ysize` are not specified.
-#' @param ysize \code{numeric}. Height of the silhouette. The width is
-#'   determined by the aspect ratio of the original image. Ignored if `x` and
-#'   `y` are not specified.
+#' @param ysize `r lifecycle::badge("deprecated")` use the `height` or `width`
+#'   argument instead.
+#' @param height \code{numeric}. Height of the silhouette in coordinate space.
+#'   If "NULL" and `width` is specified, the `height is determined by the aspect
+#'   ratio of the original image. If "Inf", the default, and `width` is "NULL",
+#'   the height will be as tall as will fit within the plot area. One or both of
+#'   `height` and `width` must be "NULL".
+#' @param width \code{numeric}. Width of the silhouette in coordinate space. If
+#'   "NULL", the default, and `height` is specified, the width is determined by
+#'   the aspect ratio of the original image. If "Inf" and `height` is "NA", the
+#'   width will be as wide as will fit within the plot area. One or both of
+#'   `height` and `width` must be "NULL".
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
 #' @param color \code{character}. Color of silhouette outline. If "original" or
@@ -35,14 +44,18 @@
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
 #' @param angle \code{numeric}. The number of degrees to rotate the silhouette
 #'   clockwise. The default is no rotation.
+#' @param hjust \code{numeric}. A numeric vector between 0 and 1 specifying
+#'   horizontal justification (left = 0, center = 0.5, right = 1).
+#' @param vjust \code{numeric}. A numeric vector between 0 and 1 specifying
+#'   vertical justification (top = 1, middle = 0.5, bottom = 0).
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
 #' @param verbose \code{logical}. Should the attribution information for the
 #'   used silhouette(s) be printed to the console (see [get_attribution()])?
 #' @details One (and only one) of `img`, `name`, or `uuid` must be specified.
-#'   Use parameters `x`, `y`, and `ysize` to place the silhouette at a specified
-#'   position on the plot. If all three of these parameters are unspecified,
-#'   then the silhouette will be plotted to the full height and width of the
+#'   Use parameters `x`, `y`, and `height`/`width` to place the silhouette at a
+#'   specified position on the plot. If all of these parameters are unspecified,
+#'   then the silhouette will be plotted to the full height and/or width of the
 #'   plot. The aspect ratio of the silhouette will always be maintained (even
 #'   when a plot is resized). However, if the plot is resized after plotting the
 #'   silhouette, the absolute size and/or position of the silhouette may change.
@@ -63,6 +76,7 @@
 #' @importFrom grid grid.raster
 #' @importFrom grImport2 grid.picture
 #' @importFrom methods is slotNames
+#' @importFrom lifecycle deprecated
 #' @export
 #' @examples \dontrun{
 #' # single image
@@ -82,7 +96,7 @@
 #'
 #' plot(posx, posy, type = "n", main = "A cat herd")
 #' add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-#'                   x = posx, y = posy, ysize = size,
+#'                   x = posx, y = posy, height = size,
 #'                   fill = fills, angle = angle,
 #'                   horizontal = hor, vertical = ver)
 #'
@@ -94,13 +108,15 @@
 #' # plot background cat
 #' add_phylopic_base(img = cat, alpha = 0.2)
 #' # overlay smaller cats
-#' add_phylopic_base(img = cat, x = posx, y = posy, ysize = size, alpha = 0.8)
+#' add_phylopic_base(img = cat, x = posx, y = posy, height = size, alpha = 0.8)
 #' }
 add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
                               filter = NULL,
-                              x = NULL, y = NULL, ysize = NULL,
+                              x = NULL, y = NULL, ysize = deprecated(),
+                              height = NULL, width = NULL,
                               alpha = 1, color = NA, fill = "black",
                               horizontal = FALSE, vertical = FALSE, angle = 0,
+                              hjust = 0.5, vjust = 0.5,
                               remove_background = TRUE, verbose = FALSE) {
   if (all(sapply(list(img, name, uuid), is.null))) {
     stop("One of `img`, `name`, or `uuid` is required.")
@@ -111,8 +127,22 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   if (any(alpha > 1 | alpha < 0)) {
     stop("`alpha` must be between 0 and 1.")
   }
+  if (any(hjust > 1 | hjust < 0)) {
+    stop("`hjust` must be between 0 and 1.")
+  }
+  if (any(vjust > 1 | vjust < 0)) {
+    stop("`vjust` must be between 0 and 1.")
+  }
   if (!is.logical(verbose)) {
     stop("`verbose` should be a logical value.")
+  }
+  if (lifecycle::is_present(ysize)) {
+    lifecycle::deprecate_warn("1.4.0", "add_phylopic_base(ysize)",
+                              "add_phylopic_base(height)")
+    if (is.null(height)) height <- ysize
+  }
+  if (!is.null(height) & !is.null(width)) {
+    stop("At least one of `height` or `width` must be NULL.")
   }
 
   if (!is.null(name)) {
@@ -178,15 +208,20 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   # set default position and size if need be
   if (is.null(x)) x <- mean(usr_x)
   if (is.null(y)) y <- mean(usr_y)
-  if (is.null(ysize)) ysize <- abs(diff(usr_y))
+  if (is.null(height) & is.null(width)) height <- abs(diff(usr_y))
 
-  # convert x, y, and ysize to normalized device coordinates
+  # convert x, y, and height to normalized device coordinates
   x <- grconvertX(x, to = "ndc")
   y <- grconvertY(y, to = "ndc")
-  ysize <- grconvertY(ysize, to = "ndc") - grconvertY(0, to = "ndc")
-
-  invisible(mapply(function(img, x, y, ysize, alpha, color, fill,
-                            horizontal, vertical, angle) {
+  if (!is.null(height)) {
+    height <- grconvertY(height, to = "ndc") - grconvertY(0, to = "ndc")
+    width <- NA
+  } else {
+    width <- grconvertX(width, to = "ndc") - grconvertX(0, to = "ndc")
+    height <- NA
+  }
+  invisible(mapply(function(img, x, y, height, width, alpha, color, fill,
+                            horizontal, vertical, angle, hjust, vjust) {
     if (is.null(img)) return(NULL)
 
     if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
@@ -209,14 +244,34 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
           all(is.finite(img@summary@xscale)) && diff(img@summary@xscale) != 0 &&
           is.numeric(img@summary@yscale) && length(img@summary@yscale) == 2 &&
           all(is.finite(img@summary@yscale)) && diff(img@summary@yscale) != 0) {
-        grid.picture(img, x = x, y = y, height = ysize, expansion = 0)
+        # placeholder until pictureGrob supports a NULL height/width
+        if (is.na(width)) {
+          width <- grconvertX(
+            grconvertY(height, from = "ndc", to = "inches") * aspect_ratio(img),
+            from = "inches", to = "ndc")
+        }
+        if (is.na(height)) {
+          height <- grconvertY(
+            grconvertX(width, from = "ndc", to = "inches") / aspect_ratio(img),
+            from = "inches", to = "ndc")
+        }
+        grid.picture(img, x = x, y = y, height = height, width = width,
+                     expansion = 0, just = c(hjust, vjust))
       } else {
         return(NULL)
       }
     } else { # png
-      grid.raster(img, x = x, y = y, height = ysize)
+      if (is.na(width)) {
+        grid.raster(img, x = x, y = y, height = height, just = c(hjust, vjust))
+      }
+      if (is.na(height)) {
+        grid.raster(img, x = x, y = y, width = width, just = c(hjust, vjust))
+      }
+      
     }
   },
-  img = imgs, x = x, y = y, ysize = ysize, alpha = alpha, color = color,
-  fill = fill, horizontal = horizontal, vertical = vertical, angle = angle))
+  img = imgs, x = x, y = y,
+  height = height, width = width, alpha = alpha, color = color, fill = fill,
+  horizontal = horizontal, vertical = vertical, angle = angle,
+  hjust = hjust, vjust = vjust))
 }
