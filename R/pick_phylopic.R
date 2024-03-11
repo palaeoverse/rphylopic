@@ -75,8 +75,10 @@ pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
     grid.newpage()
     grid.picture(img)
     # Add text for attribution
+    att <- att[[1]][[1]]
     att_string <- paste0("Contributor: ", att$contributor, "\n",
                          "Created: ", att$created, "\n",
+                         "Attribution: ", att$attribution, "\n",
                          "License: ", att$license)
     grid.text(label = att_string,
               x = 0.96, y = 0.92,
@@ -126,6 +128,7 @@ pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
     }
     # Get attribution data
     att <- lapply(uuids[[i]], get_attribution)
+    att <- lapply(att, function(x) x[[1]][[1]])
     # Attribution text
     n_spaces <- 3 + floor(log10(length(att) + 1))
     att_string <- lapply(att, function(x) {
