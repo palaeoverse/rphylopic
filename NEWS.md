@@ -2,7 +2,6 @@
 
 * Added add_phylopic_legend (#83)
 * Added permalink generation option to get_attribution (#81)
-* Fix pick_phylopic attribution display bug (#104)
 
 # rphylopic 1.3.0
 
