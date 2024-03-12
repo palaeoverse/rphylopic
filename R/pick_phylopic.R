@@ -28,8 +28,10 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #' @param auto \code{numeric}. This argument allows the user to automate input
 #'   into the menu choice. If the input value is `1`, the first returned image
 #'   will be selected. If the input value is `2`, requested images will be
-#'   automatically cycled through with the final image returned. If `NULL`
-#'   (default), the user must interactively respond to the called menu.
+#'   automatically cycled through with the final image returned. If the input
+#'   value is `3`, a list of attribution information for each image is 
+#'   returned (this functionality is principally intended for testing). If 
+#'   `NULL` (default), the user must interactively respond to the called menu.
 #'
 #' @return A [Picture][grImport2::Picture-class] object is returned. The uuid of
 #'   the selected image is saved as the "uuid" attribute of the returned object
@@ -60,8 +62,8 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
                           filter = NULL, auto = NULL) {
   # Error handling
-  if (!is.null(auto) && !auto %in% c(1, 2)) {
-    stop("`auto` must be of value: NULL, 1, or 2")
+  if (!is.null(auto) && !auto %in% c(1, 2, 3)) {
+    stop("`auto` must be of value: NULL, 1, 2, or 3")
   }
   if (!is.numeric(view)) {
     stop("`view` must be of class numeric.")
@@ -75,8 +77,10 @@ pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
     grid.newpage()
     grid.picture(img)
     # Add text for attribution
+    att <- att[[1]][[1]]
     att_string <- paste0("Contributor: ", att$contributor, "\n",
                          "Created: ", att$created, "\n",
+                         "Attribution: ", att$attribution, "\n",
                          "License: ", att$license)
     grid.text(label = att_string,
               x = 0.96, y = 0.92,
@@ -126,6 +130,7 @@ pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
     }
     # Get attribution data
     att <- lapply(uuids[[i]], get_attribution)
+    att <- lapply(att, function(x) x[[1]][[1]])
     # Attribution text
     n_spaces <- 3 + floor(log10(length(att) + 1))
     att_string <- lapply(att, function(x) {
@@ -174,6 +179,9 @@ pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
         m <- n_plotted + 1
       } else if (auto == 1) {
         m <- 1
+      } else if (auto == 3) {
+        names(att) <- sapply(att, function(x) x$image_uuid)
+        return(att)
       }
     }
 
