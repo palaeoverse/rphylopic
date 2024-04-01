@@ -38,6 +38,8 @@ test_that("resolve_phylopic works with GBIF", {
 
 test_that("resolve_phylopic works with EOL", {
   skip_if_offline(host = "eol.org")
+  tryCatch(check_url("https://eol.org/api/search/1.0.json"),
+           error = function(e) skip())
   skip_if_offline(host = "api.phylopic.org")
   res <- resolve_phylopic(name = "Enhydra lutris", api = "eol.org")
   expect_equal(length(res), 1)
@@ -66,6 +68,8 @@ test_that("resolve_phylopic works with EOL", {
 
 test_that("resolve_phylopic works with WoRMS", {
   skip_if_offline(host = "marinespecies.org")
+  tryCatch(check_url("https://www.marinespecies.org/rest/"),
+           error = function(e) skip())
   skip_if_offline(host = "api.phylopic.org")
   res <- resolve_phylopic(name = "Enhydra lutris", api = "marinespecies.org")
   expect_equal(length(res), 1)
@@ -92,6 +96,8 @@ test_that("resolve_phylopic works with WoRMS", {
 
 test_that("resolve_phylopic works with PBDB", {
   skip_if_offline(host = "paleobiodb.org")
+  tryCatch(check_url("https://paleobiodb.org/data1.2/"),
+           error = function(e) skip())
   skip_if_offline(host = "api.phylopic.org")
   res <- resolve_phylopic(name = "Velociraptor mongoliensis",
                           api = "paleobiodb.org")
