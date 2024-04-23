@@ -1,3 +1,5 @@
+# rphylopic (development version)
+
 # rphylopic 1.4.0
 
 * Added add_phylopic_legend (#83)
