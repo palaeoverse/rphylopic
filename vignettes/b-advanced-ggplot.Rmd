@@ -9,7 +9,7 @@ vignette: >
 
 **Authors:** William Gearty & Lewis A. Jones
 
-**Last updated:** 2024-01-23
+**Last updated:** 2024-04-23
 
 
 
@@ -164,7 +164,7 @@ ggplot(penguins_subset) +
                      labels = c("Female", "Male")) +
   facet_wrap(~species, ncol = 1) +
   theme_bw(base_size = 15) +
-  theme(legend.position = c(0.9, 0.9))
+  theme(legend.position.inside = c(0.9, 0.9))
 ```
 
 <div class="figure">
@@ -402,7 +402,7 @@ revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
   scale_x_continuous(breaks = seq(-500, 0, 100),
                      labels = seq(500, 0, -100),
                      limits = c(-500, 0)) +
-  coord_geo_polar(dat = "periods") +
+  coord_geo_radial(dat = "periods") +
   theme(line = element_line(linewidth = 1),
         axis.text.r = element_text(size = 5, hjust = -0.5, vjust = -1.5))
 ```

@@ -136,7 +136,7 @@ ggplot(penguins_subset) +
                      labels = c("Female", "Male")) +
   facet_wrap(~species, ncol = 1) +
   theme_bw(base_size = 15) +
-  theme(legend.position = c(0.9, 0.9))
+  theme(legend.position.inside = c(0.9, 0.9))
 ```
 
 Now that's a nice figure!
@@ -166,7 +166,7 @@ tetrapods <- subset(tetrapods, genus == "Diplocaulus")
 
 Now, let's plot those occurrences on a world map. `{ggplot2}` and it's built-in function `map_data()` make this a breeze. Note that we use `alpha = 0.75` in case there are multiple occurrences in the same place. That way, the darker the fill color, the more occurrences in that geographic location.
 
-```{r ggplot-geog-plot-1, fig.height = 3.5}
+```{r ggplot-geog-plot-1, fig.height = 3.5, warning = FALSE}
 # Get map data
 world <- st_as_sf(map("world", fill = TRUE, plot = FALSE))
 world <- st_wrap_dateline(world)
@@ -312,7 +312,7 @@ revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
   scale_x_continuous(breaks = seq(-500, 0, 100),
                      labels = seq(500, 0, -100),
                      limits = c(-500, 0)) +
-  coord_geo_polar(dat = "periods") +
+  coord_geo_radial(dat = "periods") +
   theme(line = element_line(linewidth = 1),
         axis.text.r = element_text(size = 5, hjust = -0.5, vjust = -1.5))
 ```
