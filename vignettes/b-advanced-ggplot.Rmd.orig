@@ -278,10 +278,11 @@ library(deeptime)
 revts(ggtree(vertebrate.tree, size = 1)) +
   scale_x_continuous(breaks = seq(-500, 0, 100),
                      labels = seq(500, 0, -100),
-                     limits = c(-500, 0)) +
-  coord_geo_polar(dat = "periods") +
-  theme(line = element_line(linewidth = 1),
-        axis.text.r = element_text(size = 5, hjust = -0.5, vjust = -1.5))
+                     limits = c(-500, 0),
+                     expand = expansion(mult = 0)) +
+  scale_y_continuous(guide = NULL) +
+  coord_geo_radial(dat = "periods") +
+  theme_classic()
 ```
 
 That's looking a lot prettier! Let's go ahead and add our silhouettes now. Note that we need to attach the `vertebrate_data` object with the `%<+%` operator from `{ggtree}`.
@@ -291,10 +292,11 @@ revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
   geom_phylopic(aes(img = svg), size = 25) +
   scale_x_continuous(breaks = seq(-500, 0, 100),
                      labels = seq(500, 0, -100),
-                     limits = c(-500, 0)) +
-  coord_geo_polar(dat = "periods") +
-  theme(line = element_line(linewidth = 1),
-        axis.text.r = element_text(size = 5, hjust = -0.5, vjust = -1.5))
+                     limits = c(-500, 0),
+                     expand = expansion(mult = 0)) +
+  scale_y_continuous(guide = NULL) +
+  coord_geo_radial(dat = "periods") +
+  theme_classic()
 ```
 
 Note that only a single size is specified and aspect ratio is always maintained, hence why the silhouettes all have the same height but different widths. Let's fix some of the silhouettes by rotating them 90 degrees:
@@ -311,10 +313,11 @@ revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
   geom_phylopic(aes(img = svg), size = 25) +
   scale_x_continuous(breaks = seq(-500, 0, 100),
                      labels = seq(500, 0, -100),
-                     limits = c(-500, 0)) +
+                     limits = c(-500, 0),
+                     expand = expansion(mult = 0)) +
+  scale_y_continuous(guide = NULL) +
   coord_geo_radial(dat = "periods") +
-  theme(line = element_line(linewidth = 1),
-        axis.text.r = element_text(size = 5, hjust = -0.5, vjust = -1.5))
+  theme_classic()
 ```
 
 Beautiful!
