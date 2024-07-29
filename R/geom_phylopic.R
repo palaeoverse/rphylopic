@@ -14,8 +14,8 @@ phylopic_env <- new.env()
 #'   aesthetic specifies the height or width, respectively, of the silhouettes
 #'   in the units of the y axis (only one is allowed). The aspect ratio of the
 #'   silhouettes will always be maintained. The `hjust` and `vjust` aesthetics
-#'   can be used to manage the justification of the silhouettes with respect the
-#'   `x` and `y` coordinates.
+#'   can be used to manage the justification of the silhouettes with respect to
+#'   the `x` and `y` coordinates.
 #'
 #'   The `color` (default: NA), `fill` (default: "black"), and `alpha` (
 #'   default: 1) aesthetics can be used to change the outline color, fill color,
@@ -143,7 +143,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
   optional_aes = c("height", "width", "img", "name", "uuid"),
                    # one and only one of img/name/uuid
                    # size is deprecated
-  default_aes = aes(height = 6, width = NA,
+  default_aes = aes(height = NA, width = NA,
                     alpha = 1, color = NA, fill = "black",
                     horizontal = FALSE, vertical = FALSE, angle = 0,
                     hjust = 0.5, vjust = 0.5),
@@ -282,7 +282,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     # Transform data
     data <- coord$transform(data, panel_params)
 
-    if (all(is.na(data$width))) {
+    if (any(!is.na(data$height))) {
       # Calculate height as percentage of y limits
       # (or r limits for polar coordinates)
       if ("y.range" %in% names(panel_params)) {
@@ -295,16 +295,13 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
         y_diff <- 1
       }
       if (any(data$height < (y_diff / 1000))) {
-        warning(paste("Your specified silhouette `height`(s) are more than 1000",
-                      "times smaller than your y-axis range. You probably want",
-                      "to use a larger `height`."), call. = FALSE)
+        warning(paste("Your specified silhouette `height`(s) are more than",
+                      "1000 times smaller than your y-axis range. You probably",
+                      "want to use a larger `height`."), call. = FALSE)
       }
-      heights <- data$height / y_diff
-      
-      # Hack to make silhouettes the full height of the plot
-      heights[is.infinite(heights)] <- 1
-      widths <- data$width
-    } else {
+      data$height <- data$height / y_diff
+    }
+    if (any(!is.na(data$width))) {
       # Calculate width as percentage of x limits
       # (or r limits for polar coordinates)
       if ("x.range" %in% names(panel_params)) {
@@ -321,20 +318,16 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
                       "times smaller than your x-axis range. You probably want",
                       "to use a larger `width`."), call. = FALSE)
       }
-      widths <- data$width / x_diff
-      
-      # Hack to make silhouettes the full height of the plot
-      widths[is.infinite(widths)] <- 1
-      heights <- data$height
+      data$width <- data$width / x_diff
     }
-    
 
     # Make a grob for each silhouette
     grobs <- lapply(seq_len(nrow(data)), function(i) {
       if (is.null(data$img[[i]])) {
         nullGrob()
       } else {
-        phylopicGrob(data$img[[i]], data$x[i], data$y[i], heights[i], widths[i],
+        phylopicGrob(data$img[[i]], data$x[i], data$y[i],
+                     data$height[i], data$width[i],
                      data$colour[i], data$fill[i], data$alpha[i],
                      data$horizontal[i], data$vertical[i], data$angle[i],
                      data$hjust[i], data$vjust[i],
@@ -464,7 +457,6 @@ phylopicGrob <- function(img, x, y, height, width,
                          horizontal, vertical, angle,
                          hjust, vjust,
                          remove_background) {
-  # modified from add_phylopic for now
   if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
   if (!is.na(angle) && angle != 0) img <- rotate_phylopic(img, angle)
 
@@ -474,6 +466,10 @@ phylopicGrob <- function(img, x, y, height, width,
   fill <- if (!is.null(fill) && fill == "original") NULL else fill
   img <- recolor_phylopic(img, alpha, color, fill, remove_background)
 
+  # convert NAs to NULLs
+  if (is.na(height)) height <- NULL
+  if (is.na(width)) width <- NULL
+
   # grobify
   if (is(img, "Picture")) { # svg
     if ("summary" %in% slotNames(img) &&
@@ -482,33 +478,23 @@ phylopicGrob <- function(img, x, y, height, width,
         all(is.finite(img@summary@xscale)) && diff(img@summary@xscale) != 0 &&
         is.numeric(img@summary@yscale) && length(img@summary@yscale) == 2 &&
         all(is.finite(img@summary@yscale)) && diff(img@summary@yscale) != 0) {
-      # placeholder until pictureGrob supports a NULL height/width
-      if (is.na(height)) height <- width / aspect_ratio(img)
-      if (is.na(width)) width <- height * aspect_ratio(img)
       # modified from
       # https://github.com/k-hench/hypoimg/blob/master/R/hypoimg_recolor_svg.R
       img_grob <- pictureGrob(img, x = x, y = y,
                               height = height, width = width,
                               default.units = "native", expansion = 0,
-                              just = c(hjust, vjust))
+                              hjust = hjust, vjust = vjust,
+                              delayContent = TRUE)
       img_grob <- gList(img_grob)
       img_grob <- gTree(children = img_grob)
     } else {
       img_grob <- nullGrob()
     }
   } else { # png
-    if (is.na(height)) {
       img_grob <- rasterGrob(img, x = x, y = y,
-                             height = NULL, width = width,
+                             height = height, width = width,
                              default.units = "native",
-                             just = c(hjust, vjust))
-    }
-    if (is.na(width)) {
-      img_grob <- rasterGrob(img, x = x, y = y,
-                             height = height, width = NULL,
-                             default.units = "native",
-                             just = c(hjust, vjust))
-    }
+                             hjust = hjust, vjust = vjust)
   }
   return(img_grob)
 }

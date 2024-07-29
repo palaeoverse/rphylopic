@@ -17,15 +17,15 @@
 #' @param ysize `r lifecycle::badge("deprecated")` use the `height` or `width`
 #'   argument instead.
 #' @param height \code{numeric}. Height of the silhouette in coordinate space.
-#'   If "NA" and `width` is specified, the `height is determined by the aspect
-#'   ratio of the original image. If "Inf", the default, and `width` is "NA",
-#'   the height will be as tall as will fit within the plot area. One or both of
+#'   If "NA", the default, and `width` is "NA", the silhouette will be as large
+#'   as fits in the plot area. If "NA" and `width` is specified, the height is
+#'   determined by the aspect ratio of the original image. One or both of
 #'   `height` and `width` must be "NA".
 #' @param width \code{numeric}. Width of the silhouette in coordinate space. If
-#'   "NA", the default, and `height` is specified, the width is determined by
-#'   the aspect ratio of the original image. If "Inf" and `height` is "NA",
-#'   the width will be as wide as will fit within the plot area. One or both of
-#'   `height` and `width` must be "NA".
+#'   "NA", the default, and `height` is "NA", the silhouette will be as large as
+#'   fits in the plot area. If "NA", the default, and `height` is specified, the
+#'   width is determined by the aspect ratio of the original image. One or both
+#'   of `height` and `width` must be "NA".
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
 #' @param color \code{character}. Color of silhouette outline. If "original" or
@@ -103,7 +103,7 @@
 #' p + ggtitle("R Cat Herd!!")
 #' }
 add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
-                         x, y, ysize = deprecated(), height = Inf, width = NA,
+                         x, y, ysize = deprecated(), height = NA, width = NA,
                          alpha = 1, color = NA, fill = "black",
                          horizontal = FALSE, vertical = FALSE, angle = 0,
                          hjust = 0.5, vjust = 0.5,
@@ -121,7 +121,7 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
   if (lifecycle::is_present(ysize)) {
     lifecycle::deprecate_warn("1.4.0", "add_phylopic(ysize)",
                               "add_phylopic(height)")
-    if (is.null(height)) height <- ysize
+    if (is.null(height) || all(is.na(height))) height <- ysize
   }
 
   # Make all variables the same length

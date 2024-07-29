@@ -12,7 +12,7 @@ add_phylopic(
   x,
   y,
   ysize = deprecated(),
-  height = Inf,
+  height = NA,
   width = NA,
   alpha = 1,
   color = NA,
@@ -48,13 +48,16 @@ ShareAlike clause. The user can also combine these filters as a vector.}
 argument instead.}
 
 \item{height}{\code{numeric}. Height of the silhouette in coordinate space.
-If "NA" and \code{width} is specified, the \verb{height is determined by the aspect ratio of the original image. If "Inf", the default, and }width\verb{is "NA", the height will be as tall as will fit within the plot area. One or both of}height\code{and}width` must be "NA".}
+If "NA", the default, and \code{width} is "NA", the silhouette will be as large
+as fits in the plot area. If "NA" and \code{width} is specified, the height is
+determined by the aspect ratio of the original image. One or both of
+\code{height} and \code{width} must be "NA".}
 
 \item{width}{\code{numeric}. Width of the silhouette in coordinate space. If
-"NA", the default, and \code{height} is specified, the width is determined by
-the aspect ratio of the original image. If "Inf" and \code{height} is "NA",
-the width will be as wide as will fit within the plot area. One or both of
-\code{height} and \code{width} must be "NA".}
+"NA", the default, and \code{height} is "NA", the silhouette will be as large as
+fits in the plot area. If "NA", the default, and \code{height} is specified, the
+width is determined by the aspect ratio of the original image. One or both
+of \code{height} and \code{width} must be "NA".}
 
 \item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
 of the silhouette (0 is fully transparent, 1 is fully opaque).}
