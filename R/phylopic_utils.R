@@ -282,8 +282,12 @@ recolor_content <- function(x, alpha, color, fill, remove_background) {
 #' @importFrom grImport2 grid.picture
 #' @export
 plot.Picture <- function(x, ...) {
+  args <- list(...)
+  if (is.null(args$expansion)) args$expansion <- 0
+  if (is.null(args$delayContent)) args$delayContent <- TRUE
+  args$picture <- x
   grid.newpage()
-  grid.picture(x, ...)
+  do.call(grid.picture, args)
 }
 
 #' @rdname plot_phylopic
