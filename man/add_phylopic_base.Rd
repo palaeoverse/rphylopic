@@ -41,22 +41,27 @@ for images which allows commercial usage, and "sa" for images without a
 ShareAlike clause. The user can also combine these filters as a vector.}
 
 \item{x}{\code{numeric}. x value of the silhouette center. Ignored if \code{y} and
-\code{ysize} are not specified.}
+\code{ysize} are not specified. If "NULL", the default, the mean value of the
+x-axis is used.}
 
 \item{y}{\code{numeric}. y value of the silhouette center. Ignored if \code{x} and
-\code{ysize} are not specified.}
+\code{ysize} are not specified. If "NULL", the default, the mean value of the
+y-axis is used.}
 
 \item{ysize}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} use the \code{height} or \code{width}
 argument instead.}
 
 \item{height}{\code{numeric}. Height of the silhouette in coordinate space.
-If "NULL" and \code{width} is specified, the \verb{height is determined by the aspect ratio of the original image. If "Inf", the default, and }width\verb{is "NULL", the height will be as tall as will fit within the plot area. One or both of}height\code{and}width` must be "NULL".}
+If "NULL", the default, and \code{width} is also "NULL", the silhouette will be
+as large as fits in the plot area. If "NULL" and \code{width} is specified, the
+height is determined by the aspect ratio of the original image. One or both
+of \code{height} and \code{width} must be "NULL".}
 
 \item{width}{\code{numeric}. Width of the silhouette in coordinate space. If
-"NULL", the default, and \code{height} is specified, the width is determined by
-the aspect ratio of the original image. If "Inf" and \code{height} is "NA", the
-width will be as wide as will fit within the plot area. One or both of
-\code{height} and \code{width} must be "NULL".}
+"NULL", the default, and \code{height} is also "NULL", the silhouette will be as
+large as fits in the plot area. If "NULL" and \code{height} is specified, the
+width is determined by the aspect ratio of the original image. One or both
+of \code{height} and \code{width} must be "NULL".}
 
 \item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
 of the silhouette (0 is fully transparent, 1 is fully opaque).}
@@ -101,8 +106,8 @@ One (and only one) of \code{img}, \code{name}, or \code{uuid} must be specified.
 Use parameters \code{x}, \code{y}, and \code{height}/\code{width} to place the silhouette at a
 specified position on the plot. If all of these parameters are unspecified,
 then the silhouette will be plotted to the full height and/or width of the
-plot. The aspect ratio of the silhouette will always be maintained (even
-when a plot is resized). However, if the plot is resized after plotting the
+plot. The aspect ratio of \code{Picture} objects will always be maintained (even
+when a plot is resized). However, if the plot is resized after plotting a
 silhouette, the absolute size and/or position of the silhouette may change.
 
 Any argument (except for \code{remove_background}) may be a vector of values if
@@ -123,7 +128,7 @@ Also, outline colors do not currently work for png array objects.
 # single image
 plot(1, 1, type = "n", main = "A cat")
 add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                  x = 1, y = 1, ysize = 0.4)
+                  x = 1, y = 1, height = 0.4)
 
 # lots of images using a uuid
 posx <- runif(10, 0, 1)
