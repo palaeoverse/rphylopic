@@ -1,5 +1,7 @@
 # rphylopic (development version)
 
+# rphylopic 1.4.0
+
 * Added add_phylopic_legend (#83)
 * Added permalink generation option to get_attribution (#81)
 * Added ability to specify horizontal and vertical justification of silhouettes (#101)

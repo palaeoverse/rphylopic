@@ -38,8 +38,10 @@ relevant if \code{name} supplied.}
 \item{auto}{\code{numeric}. This argument allows the user to automate input
 into the menu choice. If the input value is \code{1}, the first returned image
 will be selected. If the input value is \code{2}, requested images will be
-automatically cycled through with the final image returned. If \code{NULL}
-(default), the user must interactively respond to the called menu.}
+automatically cycled through with the final image returned. If the input
+value is \code{3}, a list of attribution information for each image is
+returned (this functionality is principally intended for testing). If
+\code{NULL} (default), the user must interactively respond to the called menu.}
 }
 \value{
 A \link[grImport2:Picture-class]{Picture} object is returned. The uuid of
