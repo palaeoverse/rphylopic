@@ -37,6 +37,8 @@ reference:
   contents:
   - geom_phylopic
   - phylopic_key_glyph
+  - scale_height_continuous
+  - scale_width_continuous
   - add_phylopic
   - add_phylopic_base
   - add_phylopic_legend
