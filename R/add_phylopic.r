@@ -119,7 +119,7 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
   }
 
   if (lifecycle::is_present(ysize)) {
-    lifecycle::deprecate_warn("1.4.0", "add_phylopic(ysize)",
+    lifecycle::deprecate_warn("1.5.0", "add_phylopic(ysize)",
                               "add_phylopic(height)")
     if (is.null(height) || all(is.na(height))) height <- ysize
   }
