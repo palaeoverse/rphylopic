@@ -52,7 +52,7 @@ test_that("geom_phylopic works", {
   # Errors and warnings
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y, uuid = uuid), size = 5)
-  expect_deprecated(plot(gg))
+  lifecycle::expect_deprecated(plot(gg))
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y, uuid = uuid), alpha = -5)
   expect_error(plot(gg))
