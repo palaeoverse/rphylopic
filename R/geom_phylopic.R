@@ -106,7 +106,7 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
     dots$img <- list(dots$img)
   }
   if (!is.null(dots$size)) {
-    lifecycle::deprecate_warn("1.4.0",
+    lifecycle::deprecate_warn("1.5.0",
                               I("Using the `size` aesthetic in this geom"),
                               I("the `height` and `width` aesthetics"),
                               user_env = globalenv())
@@ -230,7 +230,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     default_aes <- self$default_aes
     # Inherit size as height if no height aesthetic and param exist
     if (!is.null(data$size)) {
-      lifecycle::deprecate_warn("1.4.0",
+      lifecycle::deprecate_warn("1.5.0",
                                 I("Using the `size` aesthetic in this geom"),
                                 I("the `height` and `width` aesthetics"),
                                 user_env = globalenv())
@@ -266,7 +266,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       stop("`vjust` must be between 0 and 1.")
     }
     if (!is.null(data$size)) {
-      lifecycle::deprecate_warn("1.4.0",
+      lifecycle::deprecate_warn("1.5.0",
                                 I("Using the `size` aesthetic in this geom"),
                                 I("the `height` and `width` aesthetics"),
                                 user_env = globalenv())
@@ -294,7 +294,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       } else {
         y_diff <- 1
       }
-      if (any(data$height < (y_diff / 1000))) {
+      if (any(data$height < (y_diff / 1000), na.rm = TRUE)) {
         warning(paste("Your specified silhouette `height`(s) are more than",
                       "1000 times smaller than your y-axis range. You probably",
                       "want to use a larger `height`."), call. = FALSE)
@@ -313,7 +313,7 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       } else {
         x_diff <- 1
       }
-      if (any(data$width < (x_diff / 1000))) {
+      if (any(data$width < (x_diff / 1000), na.rm = TRUE)) {
         warning(paste("Your specified silhouette `width`(s) are more than 1000",
                       "times smaller than your x-axis range. You probably want",
                       "to use a larger `width`."), call. = FALSE)
