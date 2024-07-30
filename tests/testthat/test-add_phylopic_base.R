@@ -7,6 +7,12 @@ test_that("add_phylopic_base works", {
     add_phylopic_base(name = "Felis silvestris catus", height = .7,
                       verbose = TRUE)
   })
+  
+  expect_doppelganger("phylopic with width", function() {
+    plot(1, 1, type = "n", main = "A cat")
+    add_phylopic_base(name = "Felis silvestris catus", width = .4,
+                      verbose = TRUE)
+  })
 
   # png phylopic in background
   expect_doppelganger("phylopic png in background", function() {
@@ -45,6 +51,10 @@ test_that("add_phylopic_base works", {
                                                 verbose = TRUE)))
   expect_warning(add_phylopic_base(uuid = "jkl;daf", filter = "by"))
   
+  lifecycle::expect_deprecated({
+    add_phylopic_base(name = "Felis silvestris catus", ysize = .7)
+  })
+  
   # Expect error
   expect_error(add_phylopic_base(img = "cat"))
   expect_error(add_phylopic_base(img = cat, verbose = "yes"))
@@ -53,4 +63,6 @@ test_that("add_phylopic_base works", {
   expect_error(add_phylopic_base(cat, alpha = 3))
   expect_error(add_phylopic_base(name = 42))
   expect_error(add_phylopic_base(uuid = 42))
+  expect_error(add_phylopic_base(name = "Felis silvestris catus",
+                                 height = 5, width = 5))
 })

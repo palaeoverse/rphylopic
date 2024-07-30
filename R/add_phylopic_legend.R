@@ -49,7 +49,7 @@ add_phylopic_legend <- function(x, y = NULL, legend,
                                 color = NA, fill = "black", 
                                 ...) {
   if (lifecycle::is_present(ysize)) {
-    lifecycle::deprecate_warn("1.4.0", "add_phylopic_legend(ysize)",
+    lifecycle::deprecate_warn("1.5.0", "add_phylopic_legend(ysize)",
                               "add_phylopic_legend(height)")
     if (is.null(height)) height <- ysize
   }
@@ -76,7 +76,7 @@ add_phylopic_legend <- function(x, y = NULL, legend,
   # size values
   size <- args[["pt.cex"]]
   if (!is.null(size)) height <- size
-  # Set default ysize if required
+  # Set default height if required
   if (is.null(height)) height <- (abs(diff(leg_pos$text$y)) * 0.5)
   # Extract positions
   # Adjust x position slightly to account for width

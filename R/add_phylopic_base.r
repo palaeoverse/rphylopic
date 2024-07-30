@@ -139,7 +139,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     stop("`verbose` should be a logical value.")
   }
   if (lifecycle::is_present(ysize)) {
-    lifecycle::deprecate_warn("1.4.0", "add_phylopic_base(ysize)",
+    lifecycle::deprecate_warn("1.5.0", "add_phylopic_base(ysize)",
                               "add_phylopic_base(height)")
     if (is.null(height)) height <- ysize
   }
