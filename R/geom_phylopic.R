@@ -499,6 +499,40 @@ phylopicGrob <- function(img, x, y, height, width,
   return(img_grob)
 }
 
+#' Scales for phylopic heighgt or width
+#'
+#' `scale_height_continuous()` scales the height of silhouettes whereas
+#' `scale_width_continuous()` scales the height of silhouettes. 
+#' @inheritParams ggplot2::scale_size_continuous
+#' @export
+#' @importFrom ggplot2 continuous_scale waiver
+#' @importFrom scales pal_area
+#' @rdname scales
+scale_height_continuous <- function(name = waiver(), breaks = waiver(), labels = waiver(),
+                                    limits = NULL, range = c(1, 6),
+                                    transform = "identity",
+                                    trans = lifecycle::deprecated(),
+                                    guide = "none") {
+  continuous_scale("height", palette = scales::pal_area(range), name = name,
+                   breaks = breaks, labels = labels, limits = limits,
+                   transform = transform, trans = trans, guide = guide)
+}
+
+#' @inheritParams ggplot2::scale_size_continuous
+#' @export
+#' @importFrom ggplot2 continuous_scale waiver
+#' @importFrom scales pal_area
+#' @rdname scales
+scale_width_continuous <- function(name = waiver(), breaks = waiver(), labels = waiver(),
+                                    limits = NULL, range = c(1, 6),
+                                    transform = "identity",
+                                    trans = lifecycle::deprecated(),
+                                    guide = "none") {
+  continuous_scale("width", palette = scales::pal_area(range), name = name,
+                   breaks = breaks, labels = labels, limits = limits,
+                   transform = transform, trans = trans, guide = guide)
+}
+
 #' @importFrom grid grobName
 ggname <- function(prefix, grob) {
   # copied from ggplot2

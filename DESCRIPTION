@@ -36,7 +36,8 @@ Imports:
     methods,
     lifecycle,
     pbapply,
-    knitr
+    knitr,
+    scales
 Suggests:
     testthat (>= 3.0.0),
     vdiffr (>= 1.0.0),
