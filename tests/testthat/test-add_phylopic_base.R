@@ -51,18 +51,20 @@ test_that("add_phylopic_base works", {
                                                 verbose = TRUE)))
   expect_warning(add_phylopic_base(uuid = "jkl;daf", filter = "by"))
   
+  cat_svg <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
   lifecycle::expect_deprecated({
-    add_phylopic_base(name = "Felis silvestris catus", ysize = .7)
+    add_phylopic_base(cat_svg, ysize = .7)
   })
   
   # Expect error
   expect_error(add_phylopic_base(img = "cat"))
-  expect_error(add_phylopic_base(img = cat, verbose = "yes"))
-  expect_error(add_phylopic_base(cat, name = "cat"))
+  expect_error(add_phylopic_base(img = cat_svg, verbose = "yes"))
+  expect_error(add_phylopic_base(cat_svg, name = "cat"))
   expect_error(add_phylopic_base())
-  expect_error(add_phylopic_base(cat, alpha = 3))
+  expect_error(add_phylopic_base(cat_svg, alpha = 3))
   expect_error(add_phylopic_base(name = 42))
   expect_error(add_phylopic_base(uuid = 42))
-  expect_error(add_phylopic_base(name = "Felis silvestris catus",
-                                 height = 5, width = 5))
+  expect_error(add_phylopic_base(cat_svg, height = 5, width = 5))
+  expect_error(add_phylopic_base(cat_svg, hjust = 5))
+  expect_error(add_phylopic_base(cat_svg, vjust = 5))
 })

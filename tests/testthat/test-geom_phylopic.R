@@ -80,6 +80,12 @@ test_that("geom_phylopic works", {
     geom_phylopic(aes(x = x, y = y), img = -5)
   expect_error(plot(gg))
   gg <- ggplot(df) +
+    geom_phylopic(aes(x = x, y = y, uuid = uuid), hjust = 5)
+  expect_error(plot(gg))
+  gg <- ggplot(df) +
+    geom_phylopic(aes(x = x, y = y, uuid = uuid), vjust = 5)
+  expect_error(plot(gg))
+  gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y), name = "asdfghjkl", verbose = TRUE)
   expect_warning(plot(gg))
   gg <- ggplot(df) +
