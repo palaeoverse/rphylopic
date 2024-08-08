@@ -499,7 +499,7 @@ phylopicGrob <- function(img, x, y, height, width,
   return(img_grob)
 }
 
-#' Scales for phylopic heighgt or width
+#' Scales for phylopic height or width
 #'
 #' `scale_height_continuous()` scales the height of silhouettes whereas
 #' `scale_width_continuous()` scales the height of silhouettes. 
