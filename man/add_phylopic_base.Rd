@@ -40,13 +40,11 @@ Use "by" to limit results to images which do not require attribution, "nc"
 for images which allows commercial usage, and "sa" for images without a
 ShareAlike clause. The user can also combine these filters as a vector.}
 
-\item{x}{\code{numeric}. x value of the silhouette center. Ignored if \code{y} and
-\code{ysize} are not specified. If "NULL", the default, the mean value of the
-x-axis is used.}
+\item{x}{\code{numeric}. x value of the silhouette center. If "NULL", the
+default, the mean value of the x-axis is used.}
 
-\item{y}{\code{numeric}. y value of the silhouette center. Ignored if \code{x} and
-\code{ysize} are not specified. If "NULL", the default, the mean value of the
-y-axis is used.}
+\item{y}{\code{numeric}. y value of the silhouette center. If "NULL", the
+default, the mean value of the y-axis is used.}
 
 \item{ysize}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} use the \code{height} or \code{width}
 argument instead.}
@@ -103,12 +101,13 @@ silhouettes on top of an existing base R plot (like \code{\link[=points]{points(
 }
 \details{
 One (and only one) of \code{img}, \code{name}, or \code{uuid} must be specified.
-Use parameters \code{x}, \code{y}, and \code{height}/\code{width} to place the silhouette at a
-specified position on the plot. If all of these parameters are unspecified,
-then the silhouette will be plotted to the full height and/or width of the
-plot. The aspect ratio of \code{Picture} objects will always be maintained (even
-when a plot is resized). However, if the plot is resized after plotting a
-silhouette, the absolute size and/or position of the silhouette may change.
+Use parameters \code{x}, \code{y}, \code{hjust}, and \code{vjust} to place the silhouette at a
+specified position on the plot. If \code{height} and \code{width} are both
+unspecified, then the silhouette will be plotted to the full height and/or
+width of the plot. The aspect ratio of \code{Picture} objects will always be
+maintained (even when a plot is resized). However, if the plot is resized
+after plotting a silhouette, the absolute size and/or position of the
+silhouette may change.
 
 Any argument (except for \code{remove_background}) may be a vector of values if
 multiple silhouettes should be plotted. In this case, all other arguments

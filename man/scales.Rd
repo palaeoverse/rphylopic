@@ -3,7 +3,7 @@
 \name{scale_height_continuous}
 \alias{scale_height_continuous}
 \alias{scale_width_continuous}
-\title{Scales for phylopic heighgt or width}
+\title{Scales for phylopic height or width}
 \usage{
 scale_height_continuous(
   name = waiver(),

@@ -86,7 +86,7 @@
 #' # Put a silhouette in several places based on UUID
 #' posx <- runif(10, 0, 10)
 #' posy <- runif(10, 0, 10)
-#' sizey <- runif(10, 0.4, 2)
+#' heights <- runif(10, 0.4, 2)
 #' angle <- runif(10, 0, 360)
 #' hor <- sample(c(TRUE, FALSE), 10, TRUE)
 #' ver <- sample(c(TRUE, FALSE), 10, TRUE)
@@ -97,7 +97,7 @@
 #' p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
 #'   geom_blank() +
 #'   add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-#'                x = posx, y = posy, height = sizey,
+#'                x = posx, y = posy, height = heights,
 #'                fill = fills, alpha = alpha, angle = angle,
 #'                horizontal = hor, vertical = ver)
 #' p + ggtitle("R Cat Herd!!")

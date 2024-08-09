@@ -12,12 +12,10 @@
 #'   Use "by" to limit results to images which do not require attribution, "nc"
 #'   for images which allows commercial usage, and "sa" for images without a
 #'   ShareAlike clause. The user can also combine these filters as a vector.
-#' @param x \code{numeric}. x value of the silhouette center. Ignored if `y` and
-#'   `ysize` are not specified. If "NULL", the default, the mean value of the
-#'   x-axis is used.
-#' @param y \code{numeric}. y value of the silhouette center. Ignored if `x` and
-#'   `ysize` are not specified. If "NULL", the default, the mean value of the
-#'   y-axis is used.
+#' @param x \code{numeric}. x value of the silhouette center. If "NULL", the
+#'   default, the mean value of the x-axis is used.
+#' @param y \code{numeric}. y value of the silhouette center. If "NULL", the
+#'   default, the mean value of the y-axis is used.
 #' @param ysize `r lifecycle::badge("deprecated")` use the `height` or `width`
 #'   argument instead.
 #' @param height \code{numeric}. Height of the silhouette in coordinate space.
@@ -55,12 +53,13 @@
 #' @param verbose \code{logical}. Should the attribution information for the
 #'   used silhouette(s) be printed to the console (see [get_attribution()])?
 #' @details One (and only one) of `img`, `name`, or `uuid` must be specified.
-#'   Use parameters `x`, `y`, and `height`/`width` to place the silhouette at a
-#'   specified position on the plot. If all of these parameters are unspecified,
-#'   then the silhouette will be plotted to the full height and/or width of the
-#'   plot. The aspect ratio of `Picture` objects will always be maintained (even
-#'   when a plot is resized). However, if the plot is resized after plotting a
-#'   silhouette, the absolute size and/or position of the silhouette may change.
+#'   Use parameters `x`, `y`, `hjust`, and `vjust` to place the silhouette at a
+#'   specified position on the plot. If `height` and `width` are both
+#'   unspecified, then the silhouette will be plotted to the full height and/or
+#'   width of the plot. The aspect ratio of `Picture` objects will always be
+#'   maintained (even when a plot is resized). However, if the plot is resized
+#'   after plotting a silhouette, the absolute size and/or position of the
+#'   silhouette may change.
 #'
 #'   Any argument (except for `remove_background`) may be a vector of values if
 #'   multiple silhouettes should be plotted. In this case, all other arguments
@@ -205,11 +204,19 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   # get plot limits
   usr <- par()$usr
   usr_x <- if (par()$xlog) 10^usr[1:2] else usr[1:2]
+  #usr_x <- usr[1:2]
   usr_y <- if (par()$ylog) 10^usr[3:4] else usr[3:4]
+  #usr_y <- usr[3:4]
 
   # set default position and dimensions if need be
-  if (is.null(x)) x <- mean(usr_x)
-  if (is.null(y)) y <- mean(usr_y)
+  if (is.null(x)) {
+    mn <- mean(usr[1:2])
+    x <- if (par()$xlog) 10 ^ mn else mn
+  }
+  if (is.null(y)) {
+    mn <- mean(usr[3:4])
+    y <- if (par()$ylog) 10 ^ mn else mn
+  }
   if (is.null(height) && is.null(width)) {
     height <- abs(diff(usr_y))
     width <- abs(diff(usr_x))
@@ -218,13 +225,33 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   # convert x and y to normalized device coordinates
   x <- grconvertX(x, to = "ndc")
   y <- grconvertY(y, to = "ndc")
-
+  
   # convert width and/or height to normalized device coordinates if need be
   if (!is.null(height)) {
-    height <- grconvertY(height, to = "ndc") - grconvertY(0, to = "ndc")
+    if (any(height < (abs(diff(usr[3:4])) / 1000), na.rm = TRUE)) {
+      warning(paste("Your specified silhouette `height`(s) are more than",
+                    "1000 times smaller than your y-axis range. You probably",
+                    "want to use a larger `height`."), call. = FALSE)
+    }
+    if (par()$ylog) {
+      base_y <- grconvertY(1, to = "ndc")
+    } else {
+      base_y <- grconvertY(0, to = "ndc")
+    }
+    height <- grconvertY(height, to = "ndc") - base_y
   }
   if (!is.null(width)) {
-    width <- grconvertX(width, to = "ndc") - grconvertX(0, to = "ndc")
+    if (any(width < (abs(diff(usr[1:2])) / 1000), na.rm = TRUE)) {
+      warning(paste("Your specified silhouette `width`(s) are more than 1000",
+                    "times smaller than your x-axis range. You probably want",
+                    "to use a larger `width`."), call. = FALSE)
+    }
+    if (par()$xlog) {
+      base_x <- grconvertX(1, to = "ndc")
+    } else {
+      base_x <- grconvertX(0, to = "ndc")
+    }
+    width <- grconvertX(width, to = "ndc") - base_x
   }
   
   # change NULLs to NAs
