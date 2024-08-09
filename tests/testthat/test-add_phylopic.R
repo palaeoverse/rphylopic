@@ -35,18 +35,62 @@ test_that("add_phylopic works", {
   p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
     geom_blank() +
     add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                 x = posx, y = posy, ysize = sizey,
+                 x = posx, y = posy, height = sizey,
                  fill = fills, color = cols, alpha = alpha,
                  angle = angle, horizontal = hor, vertical = ver)
   p <- p + ggtitle("R Cat Herd!!")
   expect_doppelganger("phylopics on top of plot", p)
+  
+  p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
+    geom_blank() +
+    add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+                 x = posx, y = posy, width = sizey,
+                 fill = fills, color = cols, alpha = alpha,
+                 angle = angle, horizontal = hor, vertical = ver)
+  expect_doppelganger("phylopics with widths", p)
 
+  p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
+    geom_blank() +
+    add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+                 x = posx, y = posy,
+                 width = c(1, NA, 2, NA), height = c(NA, 1, NA, 2),
+                 fill = fills, color = cols, alpha = alpha,
+                 angle = angle, horizontal = hor, vertical = ver)
+  expect_doppelganger("phylopics with alt height and width", p)
+
+  lifecycle::expect_deprecated({
+    p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
+      geom_blank() +
+      add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+                   x = posx, y = posy, ysize = sizey)
+    plot(p)
+  })
+
+  p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
+    geom_blank()
+  cat_svg <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
   # Expect error
   expect_error(add_phylopic(img = "cat"))
-  expect_error(add_phylopic(cat, name = "cat"))
+  expect_error(add_phylopic(cat_svg, name = "cat"))
   expect_error(add_phylopic())
-  expect_error(add_phylopic(cat, alpha = 3))
-  expect_error(add_phylopic(name = 42))
-  expect_error(add_phylopic(name = "bueller"))
-  expect_error(add_phylopic(uuid = 42))
+  expect_error({
+    plot(p + add_phylopic(cat_svg, alpha = 3, x = 5, y = 5))
+  })
+  expect_error({
+    plot(p + add_phylopic(cat_svg, hjust = 3, x = 5, y = 5))
+  })
+  expect_error({
+    plot(p + add_phylopic(cat_svg, vjust = 3, x = 5, y = 5))
+  })
+  expect_error({
+    plot(p + add_phylopic(name = 42, x = 5, y = 5, verbose = TRUE))
+  })
+  expect_error({
+    plot(p + add_phylopic(uuid = 42, x = 5, y = 5, verbose = TRUE))
+  })
+
+  # Expect warning
+  expect_warning({
+    plot(p + add_phylopic(name = "bueller", x = 5, y = 5, verbose = TRUE))
+  })
 })

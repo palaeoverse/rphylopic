@@ -10,7 +10,7 @@ test_that("geom_phylopic works", {
                             "c8f71c27-71db-4b34-ac2d-e97fea8762cf",
                             "0a8ab4f9-04c9-4485-b21a-df683d506055"))
   gg <- ggplot(df) +
-    geom_phylopic(aes(x = x, y = y, uuid = uuid), color = "purple", size = 10,
+    geom_phylopic(aes(x = x, y = y, uuid = uuid), color = "purple", height = 10,
                   horizontal = TRUE, angle = 45) +
     facet_wrap(~uuid) +
     coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
@@ -18,24 +18,55 @@ test_that("geom_phylopic works", {
   expect_true(is.ggplot(gg))
   expect_true(is(gg$layers[[1]]$geom, "GeomPhylopic"))
   expect_doppelganger("geom_phylopic", gg)
+  
+  gg <- ggplot(df) +
+    geom_phylopic(aes(x = x, y = y, uuid = uuid), width = 0.5) +
+    facet_wrap(~uuid) +
+    coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
+    theme_classic(base_size = 16)
+  expect_doppelganger("geom_phylopic with width", gg)
 
+  cat_svg <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
+  gg <- ggplot(df) +
+    geom_phylopic(aes(x = x, y = y), img = list(cat_svg)) +
+    coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
+    theme_classic(base_size = 16)
+  expect_doppelganger("geom_phylopic with no dims", gg)
+  
+  gg <- ggplot(df) +
+    geom_phylopic(aes(x = x, y = y, uuid = uuid),
+                  height = c(NA, 10, NA, 10), width = c(0.5, NA, 0.5, NA)) +
+    coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
+    theme_classic(base_size = 16)
+  expect_doppelganger("geom_phylopic with alt height and width", gg)
+  
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
                           format = "raster")
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y), img = list(cat_png),
-                  fill = "purple", size = 10) +
+                  fill = "purple", height = 10) +
     coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
     theme_classic(base_size = 16)
   expect_doppelganger("geom_phylopic with png", gg)
 
   # Errors and warnings
+  lifecycle::expect_deprecated({
+    gg <- ggplot(df) +
+      geom_phylopic(aes(x = x, y = y, uuid = uuid), size = 5)
+    plot(gg)
+  })
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y, uuid = uuid), alpha = -5)
   expect_error(plot(gg))
   expect_error(ggplot(df) +
-                 geom_phylopic(aes(x = x, y = y, uuid = uuid), remove_background = "yes"))
+                 geom_phylopic(aes(x = x, y = y, uuid = uuid),
+                               remove_background = "yes"))
   expect_error(ggplot(df) +
                  geom_phylopic(aes(x = x, y = y, uuid = uuid), verbose = "yes"))
+  gg <- ggplot(df) +
+    geom_phylopic(aes(x = x, y = y, uuid = uuid),
+                  name = "cat", height = 1, width = 1)
+  expect_error(plot(gg))
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y, uuid = uuid), name = "cat", verbose = TRUE)
   expect_error(plot(gg))
@@ -49,13 +80,19 @@ test_that("geom_phylopic works", {
     geom_phylopic(aes(x = x, y = y), img = -5)
   expect_error(plot(gg))
   gg <- ggplot(df) +
+    geom_phylopic(aes(x = x, y = y, uuid = uuid), hjust = 5)
+  expect_error(plot(gg))
+  gg <- ggplot(df) +
+    geom_phylopic(aes(x = x, y = y, uuid = uuid), vjust = 5)
+  expect_error(plot(gg))
+  gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y), name = "asdfghjkl", verbose = TRUE)
   expect_warning(plot(gg))
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y), uuid = "asdfghjkl")
   expect_warning(plot(gg))
   gg <- ggplot(df) +
-    geom_phylopic(aes(x = x, y = y, uuid = uuid), size = 1E-6)
+    geom_phylopic(aes(x = x, y = y, uuid = uuid), height = 1E-6)
   expect_warning(plot(gg))
 })
 
@@ -66,7 +103,7 @@ test_that("phylopic_key_glyph works", {
   df <- data.frame(x = c(2, 4), y = c(10, 20),
                    name = c("Felis silvestris catus", "Odobenus rosmarus"))
   gg <- ggplot(df) +
-    geom_phylopic(aes(x = x, y = y, name = name, color = name), size = 10,
+    geom_phylopic(aes(x = x, y = y, name = name, color = name), height = 10,
                   show.legend = TRUE, verbose = TRUE,
                   key_glyph = phylopic_key_glyph(name = df$name)) +
     coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
@@ -78,7 +115,7 @@ test_that("phylopic_key_glyph works", {
 
   gg <- ggplot(df) +
     geom_phylopic(
-      aes(x = x, y = y, name = name, color = name), size = 10,
+      aes(x = x, y = y, name = name, color = name), height = 10,
       show.legend = TRUE, verbose = TRUE,
       key_glyph =
         phylopic_key_glyph(uuid = c("23cd6aa4-9587-4a2e-8e26-de42885004c9",
@@ -90,7 +127,7 @@ test_that("phylopic_key_glyph works", {
 
   cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
   gg <- ggplot(df) +
-    geom_phylopic(aes(x = x, y = y, name = name, color = name), size = 10,
+    geom_phylopic(aes(x = x, y = y, name = name, color = name), height = 10,
                   show.legend = TRUE, verbose = TRUE,
                   key_glyph = phylopic_key_glyph(img = cat)) +
     coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
@@ -100,7 +137,7 @@ test_that("phylopic_key_glyph works", {
   # errors/warnings
   expect_error(ggplot(df) +
                  geom_phylopic(
-                   aes(x = x, y = y, name = name, color = name), size = 10,
+                   aes(x = x, y = y, name = name, color = name), height = 10,
                    show.legend = TRUE, verbose = TRUE,
                    key_glyph =
                      phylopic_key_glyph(
@@ -112,7 +149,7 @@ test_that("phylopic_key_glyph works", {
                  theme_classic(base_size = 16))
   expect_error(ggplot(df) +
                  geom_phylopic(
-                   aes(x = x, y = y, name = name, color = name), size = 10,
+                   aes(x = x, y = y, name = name, color = name), height = 10,
                    show.legend = TRUE, verbose = TRUE,
                    key_glyph =
                      phylopic_key_glyph(name = 12345)
@@ -121,7 +158,7 @@ test_that("phylopic_key_glyph works", {
                  theme_classic(base_size = 16))
   expect_warning(ggplot(df) +
                    geom_phylopic(
-                     aes(x = x, y = y, name = name, color = name), size = 10,
+                     aes(x = x, y = y, name = name, color = name), height = 10,
                      show.legend = TRUE, verbose = TRUE,
                      key_glyph =
                        phylopic_key_glyph(name = "12345")
@@ -130,7 +167,7 @@ test_that("phylopic_key_glyph works", {
                    theme_classic(base_size = 16))
   expect_error(ggplot(df) +
                  geom_phylopic(
-                   aes(x = x, y = y, name = name, color = name), size = 10,
+                   aes(x = x, y = y, name = name, color = name), height = 10,
                    show.legend = TRUE, verbose = TRUE,
                    key_glyph =
                      phylopic_key_glyph(uuid = 12345)
@@ -139,7 +176,7 @@ test_that("phylopic_key_glyph works", {
                  theme_classic(base_size = 16))
   expect_warning(ggplot(df) +
                    geom_phylopic(
-                     aes(x = x, y = y, name = name, color = name), size = 10,
+                     aes(x = x, y = y, name = name, color = name), height = 10,
                      show.legend = TRUE, verbose = TRUE,
                      key_glyph =
                        phylopic_key_glyph(uuid = "12345")
@@ -148,7 +185,7 @@ test_that("phylopic_key_glyph works", {
                    theme_classic(base_size = 16))
   expect_error(ggplot(df) +
                  geom_phylopic(
-                   aes(x = x, y = y, name = name, color = name), size = 10,
+                   aes(x = x, y = y, name = name, color = name), height = 10,
                    show.legend = TRUE, verbose = TRUE,
                    key_glyph =
                      phylopic_key_glyph(img = 12345)

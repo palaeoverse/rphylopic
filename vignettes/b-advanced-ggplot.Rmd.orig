@@ -67,13 +67,13 @@ ggplot(penguins_subset) +
   theme_bw(base_size = 15)
 ```
 
-That's a nice basic plot! But you know what would make it nicer? If we added a penguin silhouette to the plot. Sadly, we don't have a different silhouette for each species (although we could make one...), so let's just go with putting a single silhouette in the top panel. We'll use the `geom_phylopic()` function, which will require us to make a `data.frame`. Note that the `x` and `y` aesthetics specify the center of the silhouette, and the `size` argument specifies how tall the silhouette is in the units of the y-axis.
+That's a nice basic plot! But you know what would make it nicer? If we added a penguin silhouette to the plot. Sadly, we don't have a different silhouette for each species (although we could make one...), so let's just go with putting a single silhouette in the top panel. We'll use the `geom_phylopic()` function, which will require us to make a `data.frame`. Note that the `x` and `y` aesthetics specify the center of the silhouette, and the `height` argument specifies how tall the silhouette is in the units of the y-axis.
 
 ```{r ggplot-penguin-plot-2}
 silhouette_df <- data.frame(x = 59, y = 215, species = "Adelie")
 ggplot(penguins_subset) +
   geom_point(aes(x = bill_length_mm, y = flipper_length_mm)) +
-  geom_phylopic(data = silhouette_df, aes(x = x, y = y), size = 30,
+  geom_phylopic(data = silhouette_df, aes(x = x, y = y), height = 30,
                 img = penguin_rot) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
   facet_wrap(~species, ncol = 1) +
@@ -91,25 +91,36 @@ ggplot(penguins_subset) +
   theme_bw(base_size = 15)
 ```
 
-The default silhouette size for `geom_phylopic()` is 1.5 which appears to work well given the range of the y-axis here. However, we can also vary the size based on some other aspect of data. In this case, let's try making the size of the silhouettes relative to the penguins' body masses. `{ggplot2}` should work its magic and make them reasonable sizes for the plot:
+The default silhouette size for `geom_phylopic()` is as large as will fit within the plot area. That won't work well here. Instead, we can specify a `height` or `width` to use (in y-axis or x-axis units, respectively):
 
-```{r ggplot-penguin-plot-4}
+```{r ggplot-penguin-plot-3b}
 ggplot(penguins_subset) +
   geom_phylopic(img = penguin_rot,
-                aes(x = bill_length_mm, y = flipper_length_mm,
-                    size = body_mass_g)) +
+                aes(x = bill_length_mm, y = flipper_length_mm), height = 5) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
   facet_wrap(~species, ncol = 1) +
   theme_bw(base_size = 15)
 ```
 
-Finally, let's give the female and male penguins different fill colors. Note that the default for `geom_phylopic()` is to not display a legend, so we need to set `show.legend = TRUE`. However, we only want a legend for the fill colors, so we use `guide = "none"` for the size scale. We also want to show the fill color in the legend, so we need to override the shape:
+Alternatively, we can vary the height based on some other aspect of data, and the values will be automatically scaled for us. In this case, let's try making the size of the silhouettes relative to the penguins' body masses. Behind the scenes, __rphylopic__ will work its magic and rescale them to values between 1 and 6. Note that, depending on your own data, you may want to customize how the values are scaled by using `scale_height_continuous()` (or `scale_width_continuous()` if you are using the `width` aesthetic) just as you would use `scale_size_continuous()`. We'll just use the defaults here:
+
+```{r ggplot-penguin-plot-4}
+ggplot(penguins_subset) +
+  geom_phylopic(img = penguin_rot,
+                aes(x = bill_length_mm, y = flipper_length_mm,
+                    height = body_mass_g)) +
+  labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
+  facet_wrap(~species, ncol = 1) +
+  theme_bw(base_size = 15)
+```
+
+Nice! Finally, let's give the female and male penguins different fill colors. Note that the default for `geom_phylopic()` is to not display a legend, so we need to set `show.legend = TRUE`. However, we only want a legend for the fill colors, so we use `guide = "none"` for the size scale. We also want to show the fill color in the legend, so we need to override the shape:
 
 ```{r ggplot-penguin-plot-5}
 ggplot(penguins_subset) +
   geom_phylopic(img = penguin_rot,
                 aes(x = bill_length_mm, y = flipper_length_mm,
-                    size = body_mass_g, fill = sex),
+                    height = body_mass_g, fill = sex),
                 show.legend = TRUE) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
   scale_size_continuous(guide = "none") +
@@ -118,16 +129,16 @@ ggplot(penguins_subset) +
                      guide = guide_legend(override.aes = list(shape = 21))) +
   facet_wrap(~species, ncol = 1) +
   theme_bw(base_size = 15) +
-  theme(legend.position = c(0.9, 0.9))
+  theme(legend.position = "inside", legend.position.inside = c(0.9, 0.9))
 ```
 
-Hmm...the colored dots in the legend are great, but lucky for us, the package also supplies a convenient way to include silhouettes in the legend. Due to technical constraints, you'll need to specify the images/uuids/names again within `phylopic_key_glyph()`. If you supply more than one silhouette to this function, it will cycle through them as it generates legend keys (recycling as needed). Note that `phylopic_key_glyph()` does not currently support the size aesthetic.
+Hmm...the colored dots in the legend are great, but lucky for us, the package also supplies a convenient way to include silhouettes in the legend. Due to technical constraints, you'll need to specify the images/uuids/names again within `phylopic_key_glyph()`. If you supply more than one silhouette to this function, it will cycle through them as it generates legend keys (recycling as needed). Note that `phylopic_key_glyph()` does not currently support the `height`/`width` aesthetics.
 
 ```{r ggplot-penguin-plot-6}
 ggplot(penguins_subset) +
   geom_phylopic(img = penguin_rot,
                 aes(x = bill_length_mm, y = flipper_length_mm,
-                    size = body_mass_g, fill = sex),
+                    height = body_mass_g, fill = sex),
                 show.legend = TRUE,
                 key_glyph = phylopic_key_glyph(img = penguin_rot)) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
@@ -136,7 +147,7 @@ ggplot(penguins_subset) +
                      labels = c("Female", "Male")) +
   facet_wrap(~species, ncol = 1) +
   theme_bw(base_size = 15) +
-  theme(legend.position.inside = c(0.9, 0.9))
+  theme(legend.position = "inside", legend.position.inside = c(0.9, 0.9))
 ```
 
 Now that's a nice figure!
@@ -174,7 +185,7 @@ world <- st_wrap_dateline(world)
 ggplot(world) +
   geom_sf(fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
   geom_point(data = tetrapods, aes(x = lng, y = lat),
-             size = 4, alpha = 0.75, fill = "blue") +
+             height = 4, alpha = 0.75, fill = "blue") +
   theme_void() +
   coord_sf()
 ```
@@ -185,7 +196,7 @@ Now, as with the penguin figure above, we can easily replace those points with s
 ggplot(world) +
   geom_sf(fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
   geom_phylopic(data = tetrapods, aes(x = lng, y = lat, name = genus),
-                size = 4, alpha = 0.75, fill = "blue") +
+                height = 4, alpha = 0.75, fill = "blue") +
   theme_void() +
   coord_sf()
 ```
@@ -194,7 +205,7 @@ Snazzy!
 
 Note that while we used the genus name as the `name` aesthetic here, we easily could have done `name = "Diplocaulus"` outside of the `aes()` call instead. However, if we were plotting occurrences of multiple genera, we'd definitely want to plot them as different silhouettes using `name = genus` within the `aes()` call.
 
-Also, note that we could change the projection of the map and data using the `crs` and `default_crs` arguments in `coord_sf()`. When projecting data, note that the y-axis limits will change to projected limits. For example, in the Robinson projection, the y-axis limits are roughly -8,600,000 and 8,600,000 in projected coordinates. Therefore, you may need to adjust the `size` argument/aesthetic accordingly when projecting maps and data.
+Also, note that we could change the projection of the map and data using the `crs` and `default_crs` arguments in `coord_sf()`. When projecting data, note that the y-axis limits will change to projected limits. For example, in the Robinson projection, the y-axis limits are roughly -8,600,000 and 8,600,000 in projected coordinates. Therefore, you may need to adjust the `height` argument/aesthetic accordingly when projecting maps and data.
 
 ```{r ggplot-geog-plot-3, fig.height = 3.5, warning = FALSE}
 # Set up a bounding box
@@ -203,7 +214,7 @@ bbox <- st_graticule(crs = st_crs("ESRI:54030"),
 ggplot(world) +
   geom_sf(fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
   geom_phylopic(data = tetrapods, aes(x = lng, y = lat, name = genus),
-                size = 4E5, alpha = 0.75, fill = "blue") +
+                height = 4E5, alpha = 0.75, fill = "blue") +
   geom_sf(data = bbox) +
   theme_void() +
   coord_sf(default_crs = st_crs(4326), crs = st_crs("ESRI:54030"))
@@ -272,7 +283,7 @@ ggtree(vertebrate.tree, size = 1, layout = "circular")
 
 Hmm...that's a bit boring. Let's add a geological timescale to the background using `coord_geo_polar()` from the `{deeptime}` package. Note that we need to use the `revts()` function to reverse the time axis to work with `coord_geo_polar()`.
 
-```{r ggplot-phylo-plot-2}
+```{r ggplot-phylo-plot-2, message = FALSE}
 library(deeptime)
 # Plot the tree with a geological timescale in the background
 revts(ggtree(vertebrate.tree, size = 1)) +
@@ -289,7 +300,7 @@ That's looking a lot prettier! Let's go ahead and add our silhouettes now. Note 
 
 ```{r ggplot-phylo-plot-3, message = FALSE, warning = FALSE}
 revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
-  geom_phylopic(aes(img = svg), size = 25) +
+  geom_phylopic(aes(img = svg), height = 25) +
   scale_x_continuous(breaks = seq(-500, 0, 100),
                      labels = seq(500, 0, -100),
                      limits = c(-500, 0),
@@ -299,7 +310,7 @@ revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
   theme_classic()
 ```
 
-Note that only a single size is specified and aspect ratio is always maintained, hence why the silhouettes all have the same height but different widths. Let's fix some of the silhouettes by rotating them 90 degrees:
+Note that only a single height is specified and aspect ratio is always maintained, hence why the silhouettes all have the same height but different widths. Let's fix some of the silhouettes by rotating them 90 degrees:
 
 ```{r}
 vertebrate_data$svg[[1]] <- rotate_phylopic(img = vertebrate_data$svg[[1]])
@@ -310,7 +321,7 @@ And now the finished product:
 
 ```{r ggplot-phylo-plot-4, message = FALSE, warning = FALSE}
 revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
-  geom_phylopic(aes(img = svg), size = 25) +
+  geom_phylopic(aes(img = svg), height = 25) +
   scale_x_continuous(breaks = seq(-500, 0, 100),
                      labels = seq(500, 0, -100),
                      limits = c(-500, 0),

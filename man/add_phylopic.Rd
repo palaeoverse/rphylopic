@@ -11,13 +11,17 @@ add_phylopic(
   filter = NULL,
   x,
   y,
-  ysize = Inf,
+  ysize = deprecated(),
+  height = NA,
+  width = NA,
   alpha = 1,
   color = NA,
   fill = "black",
   horizontal = FALSE,
   vertical = FALSE,
   angle = 0,
+  hjust = 0.5,
+  vjust = 0.5,
   remove_background = TRUE,
   verbose = FALSE
 )
@@ -40,9 +44,20 @@ ShareAlike clause. The user can also combine these filters as a vector.}
 
 \item{y}{\code{numeric}. y value of the silhouette center.}
 
-\item{ysize}{\code{numeric}. Height of the silhouette. The width is
-determined by the aspect ratio of the original image. If "Inf", the
-default, the height will be as tall as will fit within the plot area.}
+\item{ysize}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} use the \code{height} or \code{width}
+argument instead.}
+
+\item{height}{\code{numeric}. Height of the silhouette in coordinate space.
+If "NA", the default, and \code{width} is "NA", the silhouette will be as large
+as fits in the plot area. If "NA" and \code{width} is specified, the height is
+determined by the aspect ratio of the original image. One or both of
+\code{height} and \code{width} must be "NA".}
+
+\item{width}{\code{numeric}. Width of the silhouette in coordinate space. If
+"NA", the default, and \code{height} is "NA", the silhouette will be as large as
+fits in the plot area. If "NA", the default, and \code{height} is specified, the
+width is determined by the aspect ratio of the original image. One or both
+of \code{height} and \code{width} must be "NA".}
 
 \item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
 of the silhouette (0 is fully transparent, 1 is fully opaque).}
@@ -65,6 +80,18 @@ horizontally?}
 
 \item{angle}{\code{numeric}. The number of degrees to rotate the silhouette
 clockwise. The default is no rotation.}
+
+\item{hjust}{\code{numeric}. A numeric vector between 0 and 1 specifying
+horizontal justification (left = 0, center = 0.5, right = 1). Note that,
+due to the enforcement of the silhouette's aspect ratio, there may be
+unexpected behavior due to interactions between the aspect ratio of the
+plot and the aspect ratio of the silhouette.}
+
+\item{vjust}{\code{numeric}. A numeric vector between 0 and 1 specifying
+vertical justification (top = 1, middle = 0.5, bottom = 0). Note that, due
+to the enforcement of the silhouette's aspect ratio, there may be
+unexpected behavior due to interactions between the aspect ratio of the
+plot and the aspect ratio of the silhouette.}
 
 \item{remove_background}{\code{logical}. Should any white background be
 removed from the silhouette(s)? See \code{\link[=recolor_phylopic]{recolor_phylopic()}} for details.}
@@ -106,7 +133,7 @@ ggplot(iris) +
 # Put a silhouette in several places based on UUID
 posx <- runif(10, 0, 10)
 posy <- runif(10, 0, 10)
-sizey <- runif(10, 0.4, 2)
+heights <- runif(10, 0.4, 2)
 angle <- runif(10, 0, 360)
 hor <- sample(c(TRUE, FALSE), 10, TRUE)
 ver <- sample(c(TRUE, FALSE), 10, TRUE)
@@ -117,7 +144,7 @@ alpha <- runif(10, 0.3, 1)
 p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
   geom_blank() +
   add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-               x = posx, y = posy, ysize = sizey,
+               x = posx, y = posy, height = heights,
                fill = fills, alpha = alpha, angle = angle,
                horizontal = hor, vertical = ver)
 p + ggtitle("R Cat Herd!!")

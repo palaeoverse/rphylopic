@@ -81,7 +81,7 @@ for (i in seq_along(species_split)) {
 }
 ```
 
-That's a nice basic plot! But you know what would make it nicer? If we added a penguin silhouette to the plot. Sadly, we don't have a different silhouette for each species (although we could make one...), so let's just go with putting a single silhouette in the top panel. To do that, we can use the `add_phylopic_base()` function. Note that the `x` and `y` arguments specify the center of the silhouette, and the `ysize` argument specifies how tall the silhouette is in the units of the y-axis.
+That's a nice basic plot! But you know what would make it nicer? If we added a penguin silhouette to the plot. Sadly, we don't have a different silhouette for each species (although we could make one...), so let's just go with putting a single silhouette in the top panel. To do that, we can use the `add_phylopic_base()` function. Note that the `x` and `y` arguments specify the center of the silhouette, and the `height` argument specifies how tall the silhouette is in the units of the y-axis.
 
 ```{r base-penguin-plot-2}
 # Set up the plot area
@@ -95,7 +95,7 @@ for (i in seq_along(species_split)) {
        main = names(species_split)[i],
        xlim = range(penguins_subset$bill_length_mm, na.rm = TRUE),
        ylim = range(penguins_subset$flipper_length_mm, na.rm = TRUE))
-  if (i == 1) add_phylopic_base(img = penguin_rot, x = 59, y = 215, ysize = 30)
+  if (i == 1) add_phylopic_base(img = penguin_rot, x = 59, y = 215, height = 30)
 }
 ```
 
@@ -132,7 +132,7 @@ for (i in seq_along(species_split)) {
   add_phylopic_base(img = penguin_rot,
                     x = species_data$bill_length_mm,
                     y = species_data$flipper_length_mm,
-                    ysize = species_data$body_mass_g /
+                    height = species_data$body_mass_g /
                       max(penguins_subset$body_mass_g, na.rm = TRUE) * 8)
 }
 ```
@@ -151,7 +151,7 @@ for (i in seq_along(species_split)) {
   add_phylopic_base(img = penguin_rot,
                     x = species_data$bill_length_mm,
                     y = species_data$flipper_length_mm,
-                    ysize = species_data$body_mass_g /
+                    height = species_data$body_mass_g /
                       max(penguins_subset$body_mass_g, na.rm = TRUE) * 8,
                     fill = ifelse(species_data$sex == "male", "blue", "orange"))
 }
@@ -199,7 +199,7 @@ Now, as with the penguin figure above, we can easily replace those points with s
 ```{r base-geog-plot-2, fig.height = 5, warning = FALSE}
 map("world", col = "lightgrey", fill = TRUE)
 add_phylopic_base(name = "Diplocaulus", x = tetrapods$lng, y = tetrapods$lat,
-                  ysize = 8, fill = "blue", alpha = 0.75)
+                  height = 8, fill = "blue", alpha = 0.75)
 ```
 
 Snazzy!
@@ -282,7 +282,7 @@ That's looking a lot prettier! Let's go ahead and replace the tip labels with ou
 plot(vertebrate.tree, show.tip.label = FALSE)
 axis_geo_phylo(intervals = "periods")
 add_phylopic_base(img = vertebrate_data$svg,
-                  x = max(nodeHeights(vertebrate.tree)), y = 1:11, ysize = 0.5)
+                  x = max(nodeHeights(vertebrate.tree)), y = 1:11, height = 0.5)
 ```
 
 Note that only a single size is specified and aspect ratio is always maintained, hence why the silhouettes all have the same height but different widths. Let's fix some of the silhouettes by rotating them 90 degrees:
@@ -298,7 +298,7 @@ And now the finished product:
 plot(vertebrate.tree, show.tip.label = FALSE)
 axis_geo_phylo(intervals = "periods")
 add_phylopic_base(img = vertebrate_data$svg,
-                  x = max(nodeHeights(vertebrate.tree)), y = 1:11, ysize = 0.5)
+                  x = max(nodeHeights(vertebrate.tree)), y = 1:11, height = 0.5)
 ```
 
 Beautiful!
