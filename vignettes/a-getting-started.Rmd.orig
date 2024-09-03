@@ -89,14 +89,14 @@ Let's start with base R by using `add_phylopic_base()`:
 ```{r intro-base-plot, warning = FALSE}
 # OK, now we've got the image we want... let's add it to a plot!
 plot(x = 1, y = 1, type = "n", ann = FALSE)
-add_phylopic_base(img = img, x = 1.25, y = 1.25, ysize = 0.25)
+add_phylopic_base(img = img, x = 1.25, y = 1.25, height = 0.25)
 
 # But can't we just add an image straight away using the UUID? Sure!
 uuid <- get_uuid(name = "Canis lupus", n = 1)
-add_phylopic_base(uuid = uuid, x = 1, y = 1, ysize = 0.25)
+add_phylopic_base(uuid = uuid, x = 1, y = 1, height = 0.25)
 
 # What about just using the first image linked to the name? Definitely!
-add_phylopic_base(name = "Canis lupus", x = 0.75, y = 0.75, ysize = 0.25)
+add_phylopic_base(name = "Canis lupus", x = 0.75, y = 0.75, height = 0.25)
 ```
 
 Ah, you've found out our little secret! You can actually skip the steps of getting the UUID altogether by just searching for the desired taxon in `add_phylopic_base()`. However, this will always return the first matched silhouette meaning you might be missing out on all the other options! It's always worth checking out your options with `pick_phylopic()` first.
@@ -108,14 +108,14 @@ You can also accomplish the same plot with the `{ggplot2}` package. Here, we'll 
 library(ggplot2)
 p <- ggplot() +
   coord_cartesian(xlim = c(0.6, 1.4), ylim = c(0.6, 1.4)) +
-  add_phylopic(img = img, x = 1.25, y = 1.25, ysize = 0.25)
+  add_phylopic(img = img, x = 1.25, y = 1.25, height = 0.25)
 
 # But can't we just add an image straight away using the UUID? Sure!
 uuid <- get_uuid(name = "Canis lupus", n = 1)
-p <- p + add_phylopic(uuid = uuid, x = 1, y = 1, ysize = 0.25)
+p <- p + add_phylopic(uuid = uuid, x = 1, y = 1, height = 0.25)
 
 # What about just using the first image linked to the name? Definitely!
-p + add_phylopic(name = "Canis lupus", x = 0.75, y = 0.75, ysize = 0.25)
+p + add_phylopic(name = "Canis lupus", x = 0.75, y = 0.75, height = 0.25)
 ```
 
 ## Transforming silhouettes
@@ -147,13 +147,13 @@ Let's see what those look like in the same plot:
 ```{r intro-transform-plot}
 ggplot() +
   coord_cartesian(xlim = c(0.6, 1.4), ylim = c(0.6, 1.4)) +
-  add_phylopic(img = img_flip, x = 1.25, y = 1.25, ysize = 0.25) +
-  add_phylopic(img = img_rot, x = 1, y = 1, ysize = 0.25) +
-  add_phylopic(img = img_col, x = 0.75, y = 0.75, ysize = 0.25,
+  add_phylopic(img = img_flip, x = 1.25, y = 1.25, height = 0.25) +
+  add_phylopic(img = img_rot, x = 1, y = 1, height = 0.25) +
+  add_phylopic(img = img_col, x = 0.75, y = 0.75, height = 0.25,
                fill = "original")
 ```
 
-You'll notice that the rotated silhouette is smaller than the other two silhouettes. This is because our functions have arguments to specify the height (`ysize`). The width is automatically set to maintain the original aspect ratio of the silhouette. In this case, the aspect ratio of the rotated silhouette has changed, so the same height results in a smaller silhouette overall.
+You'll notice that the rotated silhouette is smaller than the other two silhouettes. This is because we've specifed the `height` of our silhouettes. The width is then automatically set to maintain the original aspect ratio of the silhouette. In this case, the aspect ratio of the rotated silhouette has changed, so the same `height` results in a smaller silhouette overall. If you'd prefer, you could also specify the `width` of the silhouettes.
 
 For convenience, we have also included these transformation options within all of the visualization functions. The default fill is "black", hence why we needed to specify `fill = "original"` above. However, when the same transformed silhouette will be used for multiple visualizations, we suggest transforming the silhouette first, saving it as a new object, then using this new object for visualization purposes.
 

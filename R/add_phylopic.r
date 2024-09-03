@@ -14,9 +14,18 @@
 #'   ShareAlike clause. The user can also combine these filters as a vector.
 #' @param x \code{numeric}. x value of the silhouette center.
 #' @param y \code{numeric}. y value of the silhouette center.
-#' @param ysize \code{numeric}. Height of the silhouette. The width is
-#'   determined by the aspect ratio of the original image. If "Inf", the
-#'   default, the height will be as tall as will fit within the plot area.
+#' @param ysize `r lifecycle::badge("deprecated")` use the `height` or `width`
+#'   argument instead.
+#' @param height \code{numeric}. Height of the silhouette in coordinate space.
+#'   If "NA", the default, and `width` is "NA", the silhouette will be as large
+#'   as fits in the plot area. If "NA" and `width` is specified, the height is
+#'   determined by the aspect ratio of the original image. One or both of
+#'   `height` and `width` must be "NA".
+#' @param width \code{numeric}. Width of the silhouette in coordinate space. If
+#'   "NA", the default, and `height` is "NA", the silhouette will be as large as
+#'   fits in the plot area. If "NA", the default, and `height` is specified, the
+#'   width is determined by the aspect ratio of the original image. One or both
+#'   of `height` and `width` must be "NA".
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
 #' @param color \code{character}. Color of silhouette outline. If "original" or
@@ -33,6 +42,16 @@
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
 #' @param angle \code{numeric}. The number of degrees to rotate the silhouette
 #'   clockwise. The default is no rotation.
+#' @param hjust \code{numeric}. A numeric vector between 0 and 1 specifying
+#'   horizontal justification (left = 0, center = 0.5, right = 1). Note that,
+#'   due to the enforcement of the silhouette's aspect ratio, there may be
+#'   unexpected behavior due to interactions between the aspect ratio of the
+#'   plot and the aspect ratio of the silhouette.
+#' @param vjust \code{numeric}. A numeric vector between 0 and 1 specifying
+#'   vertical justification (top = 1, middle = 0.5, bottom = 0). Note that, due
+#'   to the enforcement of the silhouette's aspect ratio, there may be
+#'   unexpected behavior due to interactions between the aspect ratio of the
+#'   plot and the aspect ratio of the silhouette.
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
 #' @param verbose \code{logical}. Should the attribution information for the
@@ -55,6 +74,7 @@
 #'   Note that png array objects can only be rotated by multiples of 90 degrees.
 #'   Also, outline colors do not currently work for png array objects.
 #' @importFrom ggplot2 annotate
+#' @importFrom lifecycle deprecated
 #' @export
 #' @examples \dontrun{
 #' # Put a silhouette behind a plot based on a taxonomic name
@@ -66,7 +86,7 @@
 #' # Put a silhouette in several places based on UUID
 #' posx <- runif(10, 0, 10)
 #' posy <- runif(10, 0, 10)
-#' sizey <- runif(10, 0.4, 2)
+#' heights <- runif(10, 0.4, 2)
 #' angle <- runif(10, 0, 360)
 #' hor <- sample(c(TRUE, FALSE), 10, TRUE)
 #' ver <- sample(c(TRUE, FALSE), 10, TRUE)
@@ -77,15 +97,16 @@
 #' p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
 #'   geom_blank() +
 #'   add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-#'                x = posx, y = posy, ysize = sizey,
+#'                x = posx, y = posy, height = heights,
 #'                fill = fills, alpha = alpha, angle = angle,
 #'                horizontal = hor, vertical = ver)
 #' p + ggtitle("R Cat Herd!!")
 #' }
 add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
-                         x, y, ysize = Inf,
+                         x, y, ysize = deprecated(), height = NA, width = NA,
                          alpha = 1, color = NA, fill = "black",
                          horizontal = FALSE, vertical = FALSE, angle = 0,
+                         hjust = 0.5, vjust = 0.5,
                          remove_background = TRUE, verbose = FALSE) {
   if (all(sapply(list(img, name, uuid), is.null))) {
     stop("One of `img`, `name`, or `uuid` is required.")
@@ -97,25 +118,35 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
     stop("`verbose` should be a logical value.")
   }
 
+  if (lifecycle::is_present(ysize)) {
+    lifecycle::deprecate_warn("1.5.0", "add_phylopic(ysize)",
+                              "add_phylopic(height)")
+    if (is.null(height) || all(is.na(height))) height <- ysize
+  }
+
   # Make all variables the same length
   x_len <- length(x)
   y_len <- length(y)
   max_len <- max(x_len, y_len)
   x <- rep_len(x, max_len)
   y <- rep_len(y, max_len)
-  ysize <- rep_len(ysize, max_len)
+  height <- rep_len(height, max_len)
+  width <- rep_len(width, max_len)
   alpha <- rep_len(alpha, max_len)
   color <- rep_len(color, max_len)
   fill <- rep_len(fill, max_len)
   horizontal <- rep_len(horizontal, max_len)
   vertical <- rep_len(vertical, max_len)
   angle <- rep_len(angle, max_len)
+  hjust <- rep_len(hjust, max_len)
+  vjust <- rep_len(vjust, max_len)
 
   # Put together all of the variables
   args <- list(geom = GeomPhylopic,
-               x = x, y = y, size = ysize,
+               x = x, y = y, height = height, width = width,
                alpha = alpha, color = color, fill = fill,
                horizontal = horizontal, vertical = vertical, angle = angle,
+               hjust = hjust, vjust = vjust,
                remove_background = remove_background, verbose = verbose,
                filter = list(filter))
   # Only include the one silhouette argument

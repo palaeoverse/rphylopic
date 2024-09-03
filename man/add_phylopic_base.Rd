@@ -11,13 +11,17 @@ add_phylopic_base(
   filter = NULL,
   x = NULL,
   y = NULL,
-  ysize = NULL,
+  ysize = deprecated(),
+  height = NULL,
+  width = NULL,
   alpha = 1,
   color = NA,
   fill = "black",
   horizontal = FALSE,
   vertical = FALSE,
   angle = 0,
+  hjust = 0.5,
+  vjust = 0.5,
   remove_background = TRUE,
   verbose = FALSE
 )
@@ -36,15 +40,26 @@ Use "by" to limit results to images which do not require attribution, "nc"
 for images which allows commercial usage, and "sa" for images without a
 ShareAlike clause. The user can also combine these filters as a vector.}
 
-\item{x}{\code{numeric}. x value of the silhouette center. Ignored if \code{y} and
-\code{ysize} are not specified.}
+\item{x}{\code{numeric}. x value of the silhouette center. If "NULL", the
+default, the mean value of the x-axis is used.}
 
-\item{y}{\code{numeric}. y value of the silhouette center. Ignored if \code{x} and
-\code{ysize} are not specified.}
+\item{y}{\code{numeric}. y value of the silhouette center. If "NULL", the
+default, the mean value of the y-axis is used.}
 
-\item{ysize}{\code{numeric}. Height of the silhouette. The width is
-determined by the aspect ratio of the original image. Ignored if \code{x} and
-\code{y} are not specified.}
+\item{ysize}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} use the \code{height} or \code{width}
+argument instead.}
+
+\item{height}{\code{numeric}. Height of the silhouette in coordinate space.
+If "NULL", the default, and \code{width} is also "NULL", the silhouette will be
+as large as fits in the plot area. If "NULL" and \code{width} is specified, the
+height is determined by the aspect ratio of the original image. One or both
+of \code{height} and \code{width} must be "NULL".}
+
+\item{width}{\code{numeric}. Width of the silhouette in coordinate space. If
+"NULL", the default, and \code{height} is also "NULL", the silhouette will be as
+large as fits in the plot area. If "NULL" and \code{height} is specified, the
+width is determined by the aspect ratio of the original image. One or both
+of \code{height} and \code{width} must be "NULL".}
 
 \item{alpha}{\code{numeric}. A value between 0 and 1, specifying the opacity
 of the silhouette (0 is fully transparent, 1 is fully opaque).}
@@ -68,6 +83,12 @@ horizontally?}
 \item{angle}{\code{numeric}. The number of degrees to rotate the silhouette
 clockwise. The default is no rotation.}
 
+\item{hjust}{\code{numeric}. A numeric vector between 0 and 1 specifying
+horizontal justification (left = 0, center = 0.5, right = 1).}
+
+\item{vjust}{\code{numeric}. A numeric vector between 0 and 1 specifying
+vertical justification (top = 1, middle = 0.5, bottom = 0).}
+
 \item{remove_background}{\code{logical}. Should any white background be
 removed from the silhouette(s)? See \code{\link[=recolor_phylopic]{recolor_phylopic()}} for details.}
 
@@ -80,12 +101,13 @@ silhouettes on top of an existing base R plot (like \code{\link[=points]{points(
 }
 \details{
 One (and only one) of \code{img}, \code{name}, or \code{uuid} must be specified.
-Use parameters \code{x}, \code{y}, and \code{ysize} to place the silhouette at a specified
-position on the plot. If all three of these parameters are unspecified,
-then the silhouette will be plotted to the full height and width of the
-plot. The aspect ratio of the silhouette will always be maintained (even
-when a plot is resized). However, if the plot is resized after plotting the
-silhouette, the absolute size and/or position of the silhouette may change.
+Use parameters \code{x}, \code{y}, \code{hjust}, and \code{vjust} to place the silhouette at a
+specified position on the plot. If \code{height} and \code{width} are both
+unspecified, then the silhouette will be plotted to the full height and/or
+width of the plot. The aspect ratio of \code{Picture} objects will always be
+maintained (even when a plot is resized). However, if the plot is resized
+after plotting a silhouette, the absolute size and/or position of the
+silhouette may change.
 
 Any argument (except for \code{remove_background}) may be a vector of values if
 multiple silhouettes should be plotted. In this case, all other arguments
@@ -105,7 +127,7 @@ Also, outline colors do not currently work for png array objects.
 # single image
 plot(1, 1, type = "n", main = "A cat")
 add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                  x = 1, y = 1, ysize = 0.4)
+                  x = 1, y = 1, height = 0.4)
 
 # lots of images using a uuid
 posx <- runif(10, 0, 1)
@@ -119,7 +141,7 @@ fills <- sample(c("black", "darkorange", "grey42", "white"), 10,
 
 plot(posx, posy, type = "n", main = "A cat herd")
 add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                  x = posx, y = posy, ysize = size,
+                  x = posx, y = posy, height = size,
                   fill = fills, angle = angle,
                   horizontal = hor, vertical = ver)
 
@@ -131,6 +153,6 @@ plot(posx, posy, type = "n", main = "A cat herd, on top of a cat",
 # plot background cat
 add_phylopic_base(img = cat, alpha = 0.2)
 # overlay smaller cats
-add_phylopic_base(img = cat, x = posx, y = posy, ysize = size, alpha = 0.8)
+add_phylopic_base(img = cat, x = posx, y = posy, height = size, alpha = 0.8)
 }
 }

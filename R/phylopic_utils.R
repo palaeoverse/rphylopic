@@ -39,6 +39,7 @@ flip_phylopic.Picture <- function(img, horizontal = TRUE, vertical = FALSE) {
 
 #' @export
 flip_phylopic.array <- function(img, horizontal = TRUE, vertical = FALSE) {
+  cls <- class(img)
   if (length(dim(img)) != 3) {
     stop("`img` must be an array with three dimensions.")
   }
@@ -50,6 +51,7 @@ flip_phylopic.array <- function(img, horizontal = TRUE, vertical = FALSE) {
   if (vertical) {
     img <- img[rev(seq_len(nrow(img))), , , drop = FALSE]
   }
+  class(img) <- cls
   img
 }
 
@@ -112,6 +114,7 @@ rotate_phylopic.array <- function(img, angle = 90) {
              function(i) rotate(img_new[, , i]))
     )
   }
+  class(img_new) <- class(img)
   img_new
 }
 
@@ -180,6 +183,7 @@ recolor_phylopic <- function(img, alpha = 1, color = NULL, fill = NULL,
 #' @export
 recolor_phylopic.array <- function(img, alpha = 1, color = NULL, fill = NULL,
                                    remove_background = TRUE) {
+  cls <- class(img)
   if (!is.null(color)) {
     message("Outline color does not currently work with png image objects.")
   }
@@ -210,6 +214,7 @@ recolor_phylopic.array <- function(img, alpha = 1, color = NULL, fill = NULL,
                        rep(cols[3, 1], imglen),
                        img[, , 4] * alpha), dim = dims)
   }
+  class(new_img) <- cls
   return(new_img)
 }
 
@@ -282,8 +287,12 @@ recolor_content <- function(x, alpha, color, fill, remove_background) {
 #' @importFrom grImport2 grid.picture
 #' @export
 plot.Picture <- function(x, ...) {
+  args <- list(...)
+  if (is.null(args$expansion)) args$expansion <- 0
+  if (is.null(args$delayContent)) args$delayContent <- TRUE
+  args$picture <- x
   grid.newpage()
-  grid.picture(x, ...)
+  do.call(grid.picture, args)
 }
 
 #' @rdname plot_phylopic

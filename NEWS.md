@@ -1,5 +1,9 @@
 # rphylopic (development version)
 
+* Added ability to specify horizontal and vertical justification of silhouettes (#101)
+* Added ability to specify width or height for silhouettes (#103)
+  * Note that all "ysize" and "size" arguments/aesthetics are now deprecated in favor of "height" and "width" arguments/aesthetics
+
 # rphylopic 1.4.0
 
 * Added add_phylopic_legend (#83)

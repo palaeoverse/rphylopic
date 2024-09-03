@@ -12,13 +12,22 @@
 #'   Use "by" to limit results to images which do not require attribution, "nc"
 #'   for images which allows commercial usage, and "sa" for images without a
 #'   ShareAlike clause. The user can also combine these filters as a vector.
-#' @param x \code{numeric}. x value of the silhouette center. Ignored if `y` and
-#'   `ysize` are not specified.
-#' @param y \code{numeric}. y value of the silhouette center. Ignored if `x` and
-#'   `ysize` are not specified.
-#' @param ysize \code{numeric}. Height of the silhouette. The width is
-#'   determined by the aspect ratio of the original image. Ignored if `x` and
-#'   `y` are not specified.
+#' @param x \code{numeric}. x value of the silhouette center. If "NULL", the
+#'   default, the mean value of the x-axis is used.
+#' @param y \code{numeric}. y value of the silhouette center. If "NULL", the
+#'   default, the mean value of the y-axis is used.
+#' @param ysize `r lifecycle::badge("deprecated")` use the `height` or `width`
+#'   argument instead.
+#' @param height \code{numeric}. Height of the silhouette in coordinate space.
+#'   If "NULL", the default, and `width` is also "NULL", the silhouette will be
+#'   as large as fits in the plot area. If "NULL" and `width` is specified, the
+#'   height is determined by the aspect ratio of the original image. One or both
+#'   of `height` and `width` must be "NULL".
+#' @param width \code{numeric}. Width of the silhouette in coordinate space. If
+#'   "NULL", the default, and `height` is also "NULL", the silhouette will be as
+#'   large as fits in the plot area. If "NULL" and `height` is specified, the
+#'   width is determined by the aspect ratio of the original image. One or both
+#'   of `height` and `width` must be "NULL".
 #' @param alpha \code{numeric}. A value between 0 and 1, specifying the opacity
 #'   of the silhouette (0 is fully transparent, 1 is fully opaque).
 #' @param color \code{character}. Color of silhouette outline. If "original" or
@@ -35,17 +44,22 @@
 #' @param vertical \code{logical}. Should the silhouette be flipped vertically?
 #' @param angle \code{numeric}. The number of degrees to rotate the silhouette
 #'   clockwise. The default is no rotation.
+#' @param hjust \code{numeric}. A numeric vector between 0 and 1 specifying
+#'   horizontal justification (left = 0, center = 0.5, right = 1).
+#' @param vjust \code{numeric}. A numeric vector between 0 and 1 specifying
+#'   vertical justification (top = 1, middle = 0.5, bottom = 0).
 #' @param remove_background \code{logical}. Should any white background be
 #'   removed from the silhouette(s)? See [recolor_phylopic()] for details.
 #' @param verbose \code{logical}. Should the attribution information for the
 #'   used silhouette(s) be printed to the console (see [get_attribution()])?
 #' @details One (and only one) of `img`, `name`, or `uuid` must be specified.
-#'   Use parameters `x`, `y`, and `ysize` to place the silhouette at a specified
-#'   position on the plot. If all three of these parameters are unspecified,
-#'   then the silhouette will be plotted to the full height and width of the
-#'   plot. The aspect ratio of the silhouette will always be maintained (even
-#'   when a plot is resized). However, if the plot is resized after plotting the
-#'   silhouette, the absolute size and/or position of the silhouette may change.
+#'   Use parameters `x`, `y`, `hjust`, and `vjust` to place the silhouette at a
+#'   specified position on the plot. If `height` and `width` are both
+#'   unspecified, then the silhouette will be plotted to the full height and/or
+#'   width of the plot. The aspect ratio of `Picture` objects will always be
+#'   maintained (even when a plot is resized). However, if the plot is resized
+#'   after plotting a silhouette, the absolute size and/or position of the
+#'   silhouette may change.
 #'
 #'   Any argument (except for `remove_background`) may be a vector of values if
 #'   multiple silhouettes should be plotted. In this case, all other arguments
@@ -63,12 +77,13 @@
 #' @importFrom grid grid.raster
 #' @importFrom grImport2 grid.picture
 #' @importFrom methods is slotNames
+#' @importFrom lifecycle deprecated
 #' @export
 #' @examples \dontrun{
 #' # single image
 #' plot(1, 1, type = "n", main = "A cat")
 #' add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-#'                   x = 1, y = 1, ysize = 0.4)
+#'                   x = 1, y = 1, height = 0.4)
 #'
 #' # lots of images using a uuid
 #' posx <- runif(10, 0, 1)
@@ -82,7 +97,7 @@
 #'
 #' plot(posx, posy, type = "n", main = "A cat herd")
 #' add_phylopic_base(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-#'                   x = posx, y = posy, ysize = size,
+#'                   x = posx, y = posy, height = size,
 #'                   fill = fills, angle = angle,
 #'                   horizontal = hor, vertical = ver)
 #'
@@ -94,13 +109,15 @@
 #' # plot background cat
 #' add_phylopic_base(img = cat, alpha = 0.2)
 #' # overlay smaller cats
-#' add_phylopic_base(img = cat, x = posx, y = posy, ysize = size, alpha = 0.8)
+#' add_phylopic_base(img = cat, x = posx, y = posy, height = size, alpha = 0.8)
 #' }
 add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
                               filter = NULL,
-                              x = NULL, y = NULL, ysize = NULL,
+                              x = NULL, y = NULL, ysize = deprecated(),
+                              height = NULL, width = NULL,
                               alpha = 1, color = NA, fill = "black",
                               horizontal = FALSE, vertical = FALSE, angle = 0,
+                              hjust = 0.5, vjust = 0.5,
                               remove_background = TRUE, verbose = FALSE) {
   if (all(sapply(list(img, name, uuid), is.null))) {
     stop("One of `img`, `name`, or `uuid` is required.")
@@ -111,8 +128,22 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   if (any(alpha > 1 | alpha < 0)) {
     stop("`alpha` must be between 0 and 1.")
   }
+  if (any(hjust > 1 | hjust < 0)) {
+    stop("`hjust` must be between 0 and 1.")
+  }
+  if (any(vjust > 1 | vjust < 0)) {
+    stop("`vjust` must be between 0 and 1.")
+  }
   if (!is.logical(verbose)) {
     stop("`verbose` should be a logical value.")
+  }
+  if (lifecycle::is_present(ysize)) {
+    lifecycle::deprecate_warn("1.5.0", "add_phylopic_base(ysize)",
+                              "add_phylopic_base(height)")
+    if (is.null(height)) height <- ysize
+  }
+  if (!is.null(height) & !is.null(width)) {
+    stop("At least one of `height` or `width` must be NULL.")
   }
 
   if (!is.null(name)) {
@@ -173,20 +204,62 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   # get plot limits
   usr <- par()$usr
   usr_x <- if (par()$xlog) 10^usr[1:2] else usr[1:2]
+  #usr_x <- usr[1:2]
   usr_y <- if (par()$ylog) 10^usr[3:4] else usr[3:4]
+  #usr_y <- usr[3:4]
 
-  # set default position and size if need be
-  if (is.null(x)) x <- mean(usr_x)
-  if (is.null(y)) y <- mean(usr_y)
-  if (is.null(ysize)) ysize <- abs(diff(usr_y))
-
-  # convert x, y, and ysize to normalized device coordinates
+  # set default position and dimensions if need be
+  if (is.null(x)) {
+    mn <- mean(usr[1:2])
+    x <- if (par()$xlog) 10 ^ mn else mn
+  }
+  if (is.null(y)) {
+    mn <- mean(usr[3:4])
+    y <- if (par()$ylog) 10 ^ mn else mn
+  }
+  if (is.null(height) && is.null(width)) {
+    height <- abs(diff(usr_y))
+    width <- abs(diff(usr_x))
+  }
+  
+  # convert x and y to normalized device coordinates
   x <- grconvertX(x, to = "ndc")
   y <- grconvertY(y, to = "ndc")
-  ysize <- grconvertY(ysize, to = "ndc") - grconvertY(0, to = "ndc")
+  
+  # convert width and/or height to normalized device coordinates if need be
+  if (!is.null(height)) {
+    if (any(height < (abs(diff(usr[3:4])) / 1000), na.rm = TRUE)) {
+      warning(paste("Your specified silhouette `height`(s) are more than",
+                    "1000 times smaller than your y-axis range. You probably",
+                    "want to use a larger `height`."), call. = FALSE)
+    }
+    if (par()$ylog) {
+      base_y <- grconvertY(1, to = "ndc")
+    } else {
+      base_y <- grconvertY(0, to = "ndc")
+    }
+    height <- grconvertY(height, to = "ndc") - base_y
+  }
+  if (!is.null(width)) {
+    if (any(width < (abs(diff(usr[1:2])) / 1000), na.rm = TRUE)) {
+      warning(paste("Your specified silhouette `width`(s) are more than 1000",
+                    "times smaller than your x-axis range. You probably want",
+                    "to use a larger `width`."), call. = FALSE)
+    }
+    if (par()$xlog) {
+      base_x <- grconvertX(1, to = "ndc")
+    } else {
+      base_x <- grconvertX(0, to = "ndc")
+    }
+    width <- grconvertX(width, to = "ndc") - base_x
+  }
+  
+  # change NULLs to NAs
+  if (is.null(width)) width <- NA
+  if (is.null(height)) height <- NA
 
-  invisible(mapply(function(img, x, y, ysize, alpha, color, fill,
-                            horizontal, vertical, angle) {
+  invisible(mapply(function(img, x, y, height, width, alpha, color, fill,
+                            horizontal, vertical, angle, hjust, vjust) {
     if (is.null(img)) return(NULL)
 
     if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
@@ -201,6 +274,10 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     if (fill == "original") fill <- NULL
     img <- recolor_phylopic(img, alpha, color, fill, remove_background)
 
+    # convert NAs back to NULLs
+    if (is.na(width)) width <- NULL
+    if (is.na(height)) height <- NULL
+
     # grobify and plot
     if (is(img, "Picture")) { # svg
       if ("summary" %in% slotNames(img) &&
@@ -209,14 +286,21 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
           all(is.finite(img@summary@xscale)) && diff(img@summary@xscale) != 0 &&
           is.numeric(img@summary@yscale) && length(img@summary@yscale) == 2 &&
           all(is.finite(img@summary@yscale)) && diff(img@summary@yscale) != 0) {
-        grid.picture(img, x = x, y = y, height = ysize, expansion = 0)
+        grid.picture(img, x = x, y = y, height = height, width = width,
+                     expansion = 0, hjust = hjust, vjust = vjust,
+                     delayContent = TRUE)
       } else {
         return(NULL)
       }
     } else { # png
-      grid.raster(img, x = x, y = y, height = ysize)
+      # check width and height are correct aspect ratio
+      grid.raster(img, x = x, y = y, width = width, height = height,
+                  hjust = hjust, vjust = vjust)
+      
     }
   },
-  img = imgs, x = x, y = y, ysize = ysize, alpha = alpha, color = color,
-  fill = fill, horizontal = horizontal, vertical = vertical, angle = angle))
+  img = imgs, x = x, y = y,
+  height = height, width = width, alpha = alpha, color = color, fill = fill,
+  horizontal = horizontal, vertical = vertical, angle = angle,
+  hjust = hjust, vjust = vjust))
 }

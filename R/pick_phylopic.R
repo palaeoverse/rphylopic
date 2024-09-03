@@ -156,7 +156,7 @@ pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
       # Plot silhouettes
       p <- ggplot(data = df) +
         geom_phylopic(aes(x = x, y = y, img = img),
-                      size = df$size,
+                      height = df$size,
                       color = "original") +
         facet_wrap(~label) +
         coord_equal(xlim = c(0, 1), ylim = c(0, 1)) +

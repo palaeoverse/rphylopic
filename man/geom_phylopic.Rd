@@ -39,20 +39,59 @@ the plot data. The return value must be a \code{data.frame}, and
 will be used as the layer data. A \code{function} can be created
 from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
 
-\item{stat}{The statistical transformation to use on the data for this
-layer, either as a \code{ggproto} \code{Geom} subclass or as a string naming the
-stat stripped of the \code{stat_} prefix (e.g. \code{"count"} rather than
-\code{"stat_count"})}
+\item{stat}{The statistical transformation to use on the data for this layer.
+When using a \verb{geom_*()} function to construct a layer, the \code{stat}
+argument can be used the override the default coupling between geoms and
+stats. The \code{stat} argument accepts the following:
+\itemize{
+\item A \code{Stat} ggproto subclass, for example \code{StatCount}.
+\item A string naming the stat. To give the stat as a string, strip the
+function name of the \code{stat_} prefix. For example, to use \code{stat_count()},
+give the stat as \code{"count"}.
+\item For more information and other ways to specify the stat, see the
+\link[ggplot2:layer_stats]{layer stat} documentation.
+}}
 
-\item{position}{Position adjustment, either as a string naming the adjustment
-(e.g. \code{"jitter"} to use \code{position_jitter}), or the result of a call to a
-position adjustment function. Use the latter if you need to change the
-settings of the adjustment.}
+\item{position}{A position adjustment to use on the data for this layer. This
+can be used in various ways, including to prevent overplotting and
+improving the display. The \code{position} argument accepts the following:
+\itemize{
+\item The result of calling a position function, such as \code{position_jitter()}.
+This method allows for passing extra arguments to the position.
+\item A string naming the position adjustment. To give the position as a
+string, strip the function name of the \code{position_} prefix. For example,
+to use \code{position_jitter()}, give the position as \code{"jitter"}.
+\item For more information and other ways to specify the position, see the
+\link[ggplot2:layer_positions]{layer position} documentation.
+}}
 
-\item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}. These are
-often aesthetics, used to set an aesthetic to a fixed value, like
-\code{colour = "red"} or \code{size = 3}. They may also be parameters
-to the paired geom/stat.}
+\item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}'s \code{params} argument. These
+arguments broadly fall into one of 4 categories below. Notably, further
+arguments to the \code{position} argument, or aesthetics that are required
+can \emph{not} be passed through \code{...}. Unknown arguments that are not part
+of the 4 categories below are ignored.
+\itemize{
+\item Static aesthetics that are not mapped to a scale, but are at a fixed
+value and apply to the layer as a whole. For example, \code{colour = "red"}
+or \code{linewidth = 3}. The geom's documentation has an \strong{Aesthetics}
+section that lists the available options. The 'required' aesthetics
+cannot be passed on to the \code{params}. Please note that while passing
+unmapped aesthetics as vectors is technically possible, the order and
+required length is not guaranteed to be parallel to the input data.
+\item When constructing a layer using
+a \verb{stat_*()} function, the \code{...} argument can be used to pass on
+parameters to the \code{geom} part of the layer. An example of this is
+\code{stat_density(geom = "area", outline.type = "both")}. The geom's
+documentation lists which parameters it can accept.
+\item Inversely, when constructing a layer using a
+\verb{geom_*()} function, the \code{...} argument can be used to pass on parameters
+to the \code{stat} part of the layer. An example of this is
+\code{geom_area(stat = "density", adjust = 0.5)}. The stat's documentation
+lists which parameters it can accept.
+\item The \code{key_glyph} argument of \code{\link[ggplot2:layer]{layer()}} may also be passed on through
+\code{...}. This can be one of the functions described as
+\link[ggplot2:draw_key]{key glyphs}, to change the display of the layer in the legend.
+}}
 
 \item{na.rm}{If \code{FALSE}, the default, missing values are removed with
 a warning. If \code{TRUE}, missing values are silently removed.}
@@ -89,9 +128,12 @@ One (and only one) of the \code{img}, \code{name}, or \code{uuid} aesthetics mus
 be specified. The \code{img} aesthetic can be
 \link[grImport2:Picture-class]{Picture} objects or png array objects, e.g.,
 from using \code{\link[=get_phylopic]{get_phylopic()}}. Use the \code{x} and \code{y} aesthetics to place the
-silhouettes at specified positions on the plot. The \code{size} aesthetic
-specifies the height of the silhouettes in the units of the y axis. The
-aspect ratio of the silhouettes will always be maintained.
+silhouettes at specified positions on the plot. The \code{height} or \code{width}
+aesthetic specifies the height or width, respectively, of the silhouettes
+in the units of the y axis (only one is allowed). The aspect ratio of the
+silhouettes will always be maintained. The \code{hjust} and \code{vjust} aesthetics
+can be used to manage the justification of the silhouettes with respect to
+the \code{x} and \code{y} coordinates.
 
 The \code{color} (default: NA), \code{fill} (default: "black"), and \code{alpha} (
 default: 1) aesthetics can be used to change the outline color, fill color,
@@ -119,14 +161,18 @@ Also, outline colors do not currently work for png array objects.
 \itemize{
 \item \strong{x} (required)
 \item \strong{y} (required)
-\item \strong{img/uuid/name} (one, and only one, required)
-\item size
-\item color/colour
+\item \strong{img} \emph{or} \strong{uuid} \emph{or} \strong{name} (one, and only one, required)
+\item height \emph{or} width (optional, maximum of only one allowed)
+\item ysize \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Deprecated in favor of height or
+width
+\item color \emph{or} colour
 \item fill
 \item alpha
 \item horizontal
 \item vertical
 \item angle
+\item hjust
+\item vjust
 
 Learn more about setting these aesthetics in \code{\link[=add_phylopic]{add_phylopic()}}.
 }
@@ -139,7 +185,7 @@ df <- data.frame(x = c(2, 4), y = c(10, 20),
                  name = c("Felis silvestris catus", "Odobenus rosmarus"))
 ggplot(df) +
   geom_phylopic(aes(x = x, y = y, name = name),
-                fill = "purple", size = 10) +
+                fill = "purple", height = 10) +
   facet_wrap(~name) +
   coord_cartesian(xlim = c(1,6), ylim = c(5, 30))
 }
