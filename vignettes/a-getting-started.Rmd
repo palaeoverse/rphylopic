@@ -9,7 +9,7 @@ vignette: >
 
 **Authors:** Lewis A. Jones & William Gearty
 
-**Last updated:** 2024-07-30
+**Last updated:** 2024-09-03
 
 
 
@@ -53,8 +53,9 @@ citation("rphylopic")
 ```
 ## To cite rphylopic in publications, use the following citation:
 ## 
-##   Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising
-##   PhyloPic silhouettes. Methods in Ecology and Evolution, 14(11), 2700-2708. doi: 10.1111/2041-210X.14221.
+##   Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming,
+##   and visualising PhyloPic silhouettes. Methods in Ecology and Evolution, 14(11),
+##   2700-2708. doi: 10.1111/2041-210X.14221.
 ## 
 ## A BibTeX entry for LaTeX users is
 ## 

@@ -9,7 +9,7 @@ vignette: >
 
 **Authors:** William Gearty & Lewis A. Jones
 
-**Last updated:** 2024-07-30
+**Last updated:** 2024-09-03
 
 
 
@@ -278,7 +278,7 @@ vertebrate_data
 ```
 ##                   species                                 uuid
 ## 1  Carcharodon_carcharias 00f208a3-887d-4ae8-838c-2124f53b9fc1
-## 2       Carassius_auratus ace2b280-abe8-4dce-96db-be4e393f836d
+## 2       Carassius_auratus abcb9d2c-db21-4b63-b8e7-b770b11ad288
 ## 3     Latimeria_chalumnae 12c38a8a-6d68-4af3-ada3-05cafdfc25c2
 ## 4            Homo_sapiens 9c6af553-390c-4bdd-baeb-6992cbc540b1
 ## 5             Lemur_catta 8a187391-82a3-4d9b-a402-3a310bf7dc38
