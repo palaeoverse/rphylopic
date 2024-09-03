@@ -54,13 +54,17 @@ silhouettes as a separate layer to an existing ggplot plot.</p>
 <span>  filter <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">y</span>,</span>
-<span>  ysize <span class="op">=</span> <span class="cn">Inf</span>,</span>
+<span>  ysize <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  height <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  width <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  color <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  fill <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  horizontal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  vertical <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  angle <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  vjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  remove_background <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -100,9 +104,24 @@ ShareAlike clause. The user can also combine these filters as a vector.</p></dd>
 
 
 <dt id="arg-ysize">ysize<a class="anchor" aria-label="anchor" href="#arg-ysize"></a></dt>
-<dd><p><code>numeric</code>. Height of the silhouette. The width is
-determined by the aspect ratio of the original image. If "Inf", the
-default, the height will be as tall as will fit within the plot area.</p></dd>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> use the <code>height</code> or <code>width</code>
+argument instead.</p></dd>
+
+
+<dt id="arg-height">height<a class="anchor" aria-label="anchor" href="#arg-height"></a></dt>
+<dd><p><code>numeric</code>. Height of the silhouette in coordinate space.
+If "NA", the default, and <code>width</code> is "NA", the silhouette will be as large
+as fits in the plot area. If "NA" and <code>width</code> is specified, the height is
+determined by the aspect ratio of the original image. One or both of
+<code>height</code> and <code>width</code> must be "NA".</p></dd>
+
+
+<dt id="arg-width">width<a class="anchor" aria-label="anchor" href="#arg-width"></a></dt>
+<dd><p><code>numeric</code>. Width of the silhouette in coordinate space. If
+"NA", the default, and <code>height</code> is "NA", the silhouette will be as large as
+fits in the plot area. If "NA", the default, and <code>height</code> is specified, the
+width is determined by the aspect ratio of the original image. One or both
+of <code>height</code> and <code>width</code> must be "NA".</p></dd>
 
 
 <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
@@ -137,6 +156,22 @@ horizontally?</p></dd>
 <dt id="arg-angle">angle<a class="anchor" aria-label="anchor" href="#arg-angle"></a></dt>
 <dd><p><code>numeric</code>. The number of degrees to rotate the silhouette
 clockwise. The default is no rotation.</p></dd>
+
+
+<dt id="arg-hjust">hjust<a class="anchor" aria-label="anchor" href="#arg-hjust"></a></dt>
+<dd><p><code>numeric</code>. A numeric vector between 0 and 1 specifying
+horizontal justification (left = 0, center = 0.5, right = 1). Note that,
+due to the enforcement of the silhouette's aspect ratio, there may be
+unexpected behavior due to interactions between the aspect ratio of the
+plot and the aspect ratio of the silhouette.</p></dd>
+
+
+<dt id="arg-vjust">vjust<a class="anchor" aria-label="anchor" href="#arg-vjust"></a></dt>
+<dd><p><code>numeric</code>. A numeric vector between 0 and 1 specifying
+vertical justification (top = 1, middle = 0.5, bottom = 0). Note that, due
+to the enforcement of the silhouette's aspect ratio, there may be
+unexpected behavior due to interactions between the aspect ratio of the
+plot and the aspect ratio of the silhouette.</p></dd>
 
 
 <dt id="arg-remove-background">remove_background<a class="anchor" aria-label="anchor" href="#arg-remove-background"></a></dt>
@@ -179,7 +214,7 @@ Also, outline colors do not currently work for png array objects.</p>
 <span class="r-in"><span><span class="co"># Put a silhouette in several places based on UUID</span></span></span>
 <span class="r-in"><span><span class="va">posx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">posy</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">sizey</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0.4</span>, <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">heights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0.4</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">angle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">360</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">hor</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fl">10</span>, <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ver</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span>, <span class="fl">10</span>, <span class="cn">TRUE</span><span class="op">)</span></span></span>
@@ -190,7 +225,7 @@ Also, outline colors do not currently work for png array objects.</p>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>cat.x <span class="op">=</span> <span class="va">posx</span>, cat.y <span class="op">=</span> <span class="va">posy</span><span class="op">)</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">cat.x</span>, <span class="va">cat.y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_blank.html" class="external-link">geom_blank</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu">add_phylopic</span><span class="op">(</span>uuid <span class="op">=</span> <span class="st">"23cd6aa4-9587-4a2e-8e26-de42885004c9"</span>,</span></span>
-<span class="r-in"><span>               x <span class="op">=</span> <span class="va">posx</span>, y <span class="op">=</span> <span class="va">posy</span>, ysize <span class="op">=</span> <span class="va">sizey</span>,</span></span>
+<span class="r-in"><span>               x <span class="op">=</span> <span class="va">posx</span>, y <span class="op">=</span> <span class="va">posy</span>, height <span class="op">=</span> <span class="va">heights</span>,</span></span>
 <span class="r-in"><span>               fill <span class="op">=</span> <span class="va">fills</span>, alpha <span class="op">=</span> <span class="va">alpha</span>, angle <span class="op">=</span> <span class="va">angle</span>,</span></span>
 <span class="r-in"><span>               horizontal <span class="op">=</span> <span class="va">hor</span>, vertical <span class="op">=</span> <span class="va">ver</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"R Cat Herd!!"</span><span class="op">)</span></span></span>

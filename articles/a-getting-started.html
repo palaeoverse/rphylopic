@@ -73,7 +73,7 @@
     
     
 <p><strong>Authors:</strong> Lewis A. Jones &amp; William Gearty</p>
-<p><strong>Last updated:</strong> 2024-04-23</p>
+<p><strong>Last updated:</strong> 2024-07-30</p>
 <div style="text-align: justify">
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -114,8 +114,8 @@ appropriate citation via:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"rphylopic"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## To cite rphylopic in publications, use the following citation:</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">##   Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising PhyloPic silhouettes.</span></span>
-<span><span class="co">##   Methods in Ecology and Evolution, 14(11), 2700-2708. doi: 10.1111/2041-210X.14221.</span></span>
+<span><span class="co">##   Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising</span></span>
+<span><span class="co">##   PhyloPic silhouettes. Methods in Ecology and Evolution, 14(11), 2700-2708. doi: 10.1111/2041-210X.14221.</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## A BibTeX entry for LaTeX users is</span></span>
 <span><span class="co">## </span></span>
@@ -184,14 +184,14 @@ right image for you. Let’s go with option 1!</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># OK, now we've got the image we want... let's add it to a plot!</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">1</span>, type <span class="op">=</span> <span class="st">"n"</span>, ann <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img</span>, x <span class="op">=</span> <span class="fl">1.25</span>, y <span class="op">=</span> <span class="fl">1.25</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img</span>, x <span class="op">=</span> <span class="fl">1.25</span>, y <span class="op">=</span> <span class="fl">1.25</span>, height <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># But can't we just add an image straight away using the UUID? Sure!</span></span>
 <span><span class="va">uuid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_uuid.html">get_uuid</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Canis lupus"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>uuid <span class="op">=</span> <span class="va">uuid</span>, x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">1</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>uuid <span class="op">=</span> <span class="va">uuid</span>, x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">1</span>, height <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># What about just using the first image linked to the name? Definitely!</span></span>
-<span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Canis lupus"</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">0.75</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Canis lupus"</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">0.75</span>, height <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="intro-base-plot-1.png" alt="plot of chunk intro-base-plot" width="100%"><p class="caption">
 plot of chunk intro-base-plot
@@ -214,14 +214,14 @@ the functionality and all of the arguments are the same:</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6</span>, <span class="fl">1.4</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6</span>, <span class="fl">1.4</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img</span>, x <span class="op">=</span> <span class="fl">1.25</span>, y <span class="op">=</span> <span class="fl">1.25</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img</span>, x <span class="op">=</span> <span class="fl">1.25</span>, y <span class="op">=</span> <span class="fl">1.25</span>, height <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># But can't we just add an image straight away using the UUID? Sure!</span></span>
 <span><span class="va">uuid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_uuid.html">get_uuid</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Canis lupus"</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>uuid <span class="op">=</span> <span class="va">uuid</span>, x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">1</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>uuid <span class="op">=</span> <span class="va">uuid</span>, x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">1</span>, height <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># What about just using the first image linked to the name? Definitely!</span></span>
-<span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Canis lupus"</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">0.75</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Canis lupus"</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">0.75</span>, height <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="intro-ggplot-plot-1.png" alt="plot of chunk intro-ggplot-plot" width="100%"><p class="caption">
 plot of chunk intro-ggplot-plot
@@ -264,9 +264,9 @@ information, such as categorical data, through color.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6</span>, <span class="fl">1.4</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.6</span>, <span class="fl">1.4</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img_flip</span>, x <span class="op">=</span> <span class="fl">1.25</span>, y <span class="op">=</span> <span class="fl">1.25</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img_rot</span>, x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">1</span>, ysize <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img_col</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">0.75</span>, ysize <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>  <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img_flip</span>, x <span class="op">=</span> <span class="fl">1.25</span>, y <span class="op">=</span> <span class="fl">1.25</span>, height <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img_rot</span>, x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">1</span>, height <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/add_phylopic.html">add_phylopic</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">img_col</span>, x <span class="op">=</span> <span class="fl">0.75</span>, y <span class="op">=</span> <span class="fl">0.75</span>, height <span class="op">=</span> <span class="fl">0.25</span>,</span>
 <span>               fill <span class="op">=</span> <span class="st">"original"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="intro-transform-plot-1.png" alt="plot of chunk intro-transform-plot" width="100%"><p class="caption">
@@ -274,11 +274,12 @@ plot of chunk intro-transform-plot
 </p>
 </div>
 <p>You’ll notice that the rotated silhouette is smaller than the other
-two silhouettes. This is because our functions have arguments to specify
-the height (<code>ysize</code>). The width is automatically set to
-maintain the original aspect ratio of the silhouette. In this case, the
-aspect ratio of the rotated silhouette has changed, so the same height
-results in a smaller silhouette overall.</p>
+two silhouettes. This is because we’ve specifed the <code>height</code>
+of our silhouettes. The width is then automatically set to maintain the
+original aspect ratio of the silhouette. In this case, the aspect ratio
+of the rotated silhouette has changed, so the same <code>height</code>
+results in a smaller silhouette overall. If you’d prefer, you could also
+specify the <code>width</code> of the silhouettes.</p>
 <p>For convenience, we have also included these transformation options
 within all of the visualization functions. The default fill is “black”,
 hence why we needed to specify <code>fill = "original"</code> above.
@@ -331,7 +332,7 @@ your publications:</p>
 <span><span class="va">uuid</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_uuid.html">get_uuid</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Nycticebus"</span><span class="op">)</span></span>
 <span><span class="co"># Get attribution data for uuid</span></span>
 <span><span class="fu"><a href="../reference/get_attribution.html">get_attribution</a></span><span class="op">(</span>uuid <span class="op">=</span> <span class="va">uuid</span>, text <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023) and were added using the rphylopic R package ver. 1.3.0.9000 (Gearty &amp; Jones, 2023). Silhouette was made by Mareike C. Janiak, 2020 (Public Domain Mark 1.0). Silhouette was contributed by Mareike Janiak.</span></span></code></pre>
+<pre><code><span><span class="co">## Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023) and were added using the rphylopic R package ver. 1.4.0.9000 (Gearty &amp; Jones, 2023). Silhouette was made by Mareike C. Janiak, 2020 (Public Domain Mark 1.0). Silhouette was contributed by Mareike Janiak.</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="save-an-image">Save an image<a class="anchor" aria-label="anchor" href="#save-an-image"></a>

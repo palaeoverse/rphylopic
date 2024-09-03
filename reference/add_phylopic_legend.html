@@ -54,7 +54,8 @@ silhouettes as a legend to an existing base R plot (like <code><a href="https://
 <span>  img <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  uuid <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  ysize <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ysize <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  height <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  color <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  fill <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -96,6 +97,11 @@ that returned by <code><a href="get_uuid.html">get_uuid()</a></code> or <code><a
 
 
 <dt id="arg-ysize">ysize<a class="anchor" aria-label="anchor" href="#arg-ysize"></a></dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> use the <code>height</code>
+argument instead.</p></dd>
+
+
+<dt id="arg-height">height<a class="anchor" aria-label="anchor" href="#arg-height"></a></dt>
 <dd><p><code>numeric</code>. Height of the legend silhouette(s). The width
 is determined by the aspect ratio of the original image.</p></dd>
 
@@ -142,10 +148,10 @@ such as text (e.g. <code>cex</code>), legend box (e.g. <code>bg</code>), and col
 <span class="r-in"><span><span class="co"># Add data points</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>uuid <span class="op">=</span> <span class="va">uuids</span>,</span></span>
 <span class="r-in"><span>  color <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"green"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">7.5</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">7.5</span><span class="op">)</span>, ysize <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">7.5</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">7.5</span><span class="op">)</span>, height <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Add legend</span></span></span>
 <span class="r-in"><span><span class="fu">add_phylopic_legend</span><span class="op">(</span>uuid <span class="op">=</span> <span class="va">uuids</span>, </span></span>
-<span class="r-in"><span>  ysize <span class="op">=</span> <span class="fl">0.5</span>, color <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"green"</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>  height <span class="op">=</span> <span class="fl">0.5</span>, color <span class="op">=</span> <span class="st">"black"</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"green"</span><span class="op">)</span>, </span></span>
 <span class="r-in"><span>  x <span class="op">=</span> <span class="st">"bottomright"</span>, legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Wolf 1"</span>, <span class="st">"Wolf 2"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  bg <span class="op">=</span> <span class="st">"lightgrey"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="add_phylopic_legend-1.png" alt="" width="700" height="433"></span>

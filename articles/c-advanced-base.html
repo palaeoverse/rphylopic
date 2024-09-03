@@ -73,7 +73,7 @@
     
     
 <p><strong>Authors:</strong> William Gearty &amp; Lewis A. Jones</p>
-<p><strong>Last updated:</strong> 2024-04-23</p>
+<p><strong>Last updated:</strong> 2024-07-30</p>
 <div style="text-align: justify">
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -141,7 +141,7 @@ different silhouette for each species (although we could make one…), so
 let’s just go with putting a single silhouette in the top panel. To do
 that, we can use the <code><a href="../reference/add_phylopic_base.html">add_phylopic_base()</a></code> function. Note
 that the <code>x</code> and <code>y</code> arguments specify the center
-of the silhouette, and the <code>ysize</code> argument specifies how
+of the silhouette, and the <code>height</code> argument specifies how
 tall the silhouette is in the units of the y-axis.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Set up the plot area</span></span>
@@ -155,7 +155,7 @@ tall the silhouette is in the units of the y-axis.</p>
 <span>       main <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">species_split</span><span class="op">)</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
 <span>       xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">penguins_subset</span><span class="op">$</span><span class="va">bill_length_mm</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>       ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">penguins_subset</span><span class="op">$</span><span class="va">flipper_length_mm</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">i</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">penguin_rot</span>, x <span class="op">=</span> <span class="fl">59</span>, y <span class="op">=</span> <span class="fl">215</span>, ysize <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">i</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">penguin_rot</span>, x <span class="op">=</span> <span class="fl">59</span>, y <span class="op">=</span> <span class="fl">215</span>, height <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <div class="figure">
 <img src="base-penguin-plot-2-1.png" alt="plot of chunk base-penguin-plot-2" width="100%"><p class="caption">
@@ -204,7 +204,7 @@ scaling factor of 8 seems to work well for this size figure.</p>
 <span>  <span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">penguin_rot</span>,</span>
 <span>                    x <span class="op">=</span> <span class="va">species_data</span><span class="op">$</span><span class="va">bill_length_mm</span>,</span>
 <span>                    y <span class="op">=</span> <span class="va">species_data</span><span class="op">$</span><span class="va">flipper_length_mm</span>,</span>
-<span>                    ysize <span class="op">=</span> <span class="va">species_data</span><span class="op">$</span><span class="va">body_mass_g</span> <span class="op">/</span></span>
+<span>                    height <span class="op">=</span> <span class="va">species_data</span><span class="op">$</span><span class="va">body_mass_g</span> <span class="op">/</span></span>
 <span>                      <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">penguins_subset</span><span class="op">$</span><span class="va">body_mass_g</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">*</span> <span class="fl">8</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <div class="figure">
@@ -226,7 +226,7 @@ colors. We’ll also add a legend to the last panel.</p>
 <span>  <span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">penguin_rot</span>,</span>
 <span>                    x <span class="op">=</span> <span class="va">species_data</span><span class="op">$</span><span class="va">bill_length_mm</span>,</span>
 <span>                    y <span class="op">=</span> <span class="va">species_data</span><span class="op">$</span><span class="va">flipper_length_mm</span>,</span>
-<span>                    ysize <span class="op">=</span> <span class="va">species_data</span><span class="op">$</span><span class="va">body_mass_g</span> <span class="op">/</span></span>
+<span>                    height <span class="op">=</span> <span class="va">species_data</span><span class="op">$</span><span class="va">body_mass_g</span> <span class="op">/</span></span>
 <span>                      <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">penguins_subset</span><span class="op">$</span><span class="va">body_mass_g</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">*</span> <span class="fl">8</span>,</span>
 <span>                    fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">species_data</span><span class="op">$</span><span class="va">sex</span> <span class="op">==</span> <span class="st">"male"</span>, <span class="st">"blue"</span>, <span class="st">"orange"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -287,7 +287,7 @@ points with silhouettes.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/maps/man/map.html" class="external-link">map</a></span><span class="op">(</span><span class="st">"world"</span>, col <span class="op">=</span> <span class="st">"lightgrey"</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Diplocaulus"</span>, x <span class="op">=</span> <span class="va">tetrapods</span><span class="op">$</span><span class="va">lng</span>, y <span class="op">=</span> <span class="va">tetrapods</span><span class="op">$</span><span class="va">lat</span>,</span>
-<span>                  ysize <span class="op">=</span> <span class="fl">8</span>, fill <span class="op">=</span> <span class="st">"blue"</span>, alpha <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span></code></pre></div>
+<span>                  height <span class="op">=</span> <span class="fl">8</span>, fill <span class="op">=</span> <span class="st">"blue"</span>, alpha <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="base-geog-plot-2-1.png" alt="plot of chunk base-geog-plot-2" width="100%"><p class="caption">
 plot of chunk base-geog-plot-2
@@ -334,7 +334,7 @@ species:</p>
 <span><span class="va">vertebrate_data</span></span></code></pre></div>
 <pre><code><span><span class="co">##                   species                                 uuid</span></span>
 <span><span class="co">## 1  Carcharodon_carcharias 00f208a3-887d-4ae8-838c-2124f53b9fc1</span></span>
-<span><span class="co">## 2       Carassius_auratus b1995423-0170-4ff1-af49-1cdf692d8fc7</span></span>
+<span><span class="co">## 2       Carassius_auratus ace2b280-abe8-4dce-96db-be4e393f836d</span></span>
 <span><span class="co">## 3     Latimeria_chalumnae 12c38a8a-6d68-4af3-ada3-05cafdfc25c2</span></span>
 <span><span class="co">## 4            Homo_sapiens 9c6af553-390c-4bdd-baeb-6992cbc540b1</span></span>
 <span><span class="co">## 5             Lemur_catta 8a187391-82a3-4d9b-a402-3a310bf7dc38</span></span>
@@ -413,7 +413,7 @@ x-axis is the total height of the tree. We can calculate this using the
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vertebrate.tree</span>, show.tip.label <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/axis_geo.html" class="external-link">axis_geo_phylo</a></span><span class="op">(</span>intervals <span class="op">=</span> <span class="st">"periods"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">vertebrate_data</span><span class="op">$</span><span class="va">svg</span>,</span>
-<span>                  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phytools/man/nodeHeights.html" class="external-link">nodeHeights</a></span><span class="op">(</span><span class="va">vertebrate.tree</span><span class="op">)</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">11</span>, ysize <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
+<span>                  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phytools/man/nodeHeights.html" class="external-link">nodeHeights</a></span><span class="op">(</span><span class="va">vertebrate.tree</span><span class="op">)</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">11</span>, height <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="base-phylo-plot-3-1.png" alt="plot of chunk base-phylo-plot-3" width="100%"><p class="caption">
 plot of chunk base-phylo-plot-3
@@ -431,7 +431,7 @@ degrees:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vertebrate.tree</span>, show.tip.label <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/axis_geo.html" class="external-link">axis_geo_phylo</a></span><span class="op">(</span>intervals <span class="op">=</span> <span class="st">"periods"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">vertebrate_data</span><span class="op">$</span><span class="va">svg</span>,</span>
-<span>                  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phytools/man/nodeHeights.html" class="external-link">nodeHeights</a></span><span class="op">(</span><span class="va">vertebrate.tree</span><span class="op">)</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">11</span>, ysize <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
+<span>                  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phytools/man/nodeHeights.html" class="external-link">nodeHeights</a></span><span class="op">(</span><span class="va">vertebrate.tree</span><span class="op">)</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">11</span>, height <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="base-phylo-plot-4-1.png" alt="plot of chunk base-phylo-plot-4" width="100%"><p class="caption">
 plot of chunk base-phylo-plot-4
