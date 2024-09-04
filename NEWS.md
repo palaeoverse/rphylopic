@@ -1,3 +1,5 @@
+# rphylopic (development version)
+
 # rphylopic 1.5.0
 
 * Added ability to specify horizontal and vertical justification of silhouettes (#101)
