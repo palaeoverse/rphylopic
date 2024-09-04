@@ -21,16 +21,16 @@ test_that("add_phylopic works", {
 
   # a bunch of little colored phylopics, with existing image
   set.seed(1234)
-  posx <- runif(50, 0, 10)
-  posy <- runif(50, 0, 10)
-  sizey <- runif(50, 0.4, 2)
-  angle <- runif(50, 0, 360)
-  hor <- sample(c(TRUE, FALSE), 50, TRUE)
-  ver <- sample(c(TRUE, FALSE), 50, TRUE)
-  fills <- sample(c("black", "darkorange", "grey42", "white"), 50,
+  posx <- runif(10, 0, 10)
+  posy <- runif(10, 0, 10)
+  sizey <- runif(10, 0.4, 2)
+  angle <- runif(10, 0, 360)
+  hor <- sample(c(TRUE, FALSE), 10, TRUE)
+  ver <- sample(c(TRUE, FALSE), 10, TRUE)
+  fills <- sample(c("black", "darkorange", "grey42", "white"), 10,
                  replace = TRUE)
   cols <- ifelse(fills == "white", "black", NA)
-  alpha <- runif(50, 0, 1)
+  alpha <- runif(10, 0, 1)
 
   p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
     geom_blank() +
@@ -38,7 +38,6 @@ test_that("add_phylopic works", {
                  x = posx, y = posy, height = sizey,
                  fill = fills, color = cols, alpha = alpha,
                  angle = angle, horizontal = hor, vertical = ver)
-  p <- p + ggtitle("R Cat Herd!!")
   expect_doppelganger("phylopics on top of plot", p)
   
   p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +

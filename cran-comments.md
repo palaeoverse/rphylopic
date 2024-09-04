@@ -1,3 +1,5 @@
+In response to a request by CRAN, I have reduced the size of some of the test snapshots to reduce the overall tarball size.
+
 ## Test environments (with Github Actions)
 
 * Windows 10.0.20348 (x86_64-w64-mingw32): R 4.4.1
