@@ -1,5 +1,7 @@
 # rphylopic (development version)
 
+* Added add_phylopic_tree() to add silhouettes to plotted trees (#110)
+
 # rphylopic 1.5.0
 
 * Added ability to specify horizontal and vertical justification of silhouettes (#101)
