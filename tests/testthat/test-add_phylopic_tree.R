@@ -1,4 +1,4 @@
-test_that("add_phylopic works", {
+test_that("add_phylopic_tree works", {
   skip_if_offline(host = "api.phylopic.org")
   
   expect_doppelganger("Add cat to tree", function() {
@@ -45,6 +45,17 @@ test_that("add_phylopic works", {
         fill = "#665566"
       ),
       "used the .name. argument"
+    )
+    
+    # Fail gracefully if taxon missing
+    expect_error(
+      add_phylopic_tree(
+        tree,
+        "maus", # Should throw error
+        uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9", # Silhouette to plot
+        fill = "red"
+      ),
+      "Could not find 'maus' in tree.tip.label.  Did you mean 'mouse'\\?"
     )
   })
 })

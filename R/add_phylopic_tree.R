@@ -46,6 +46,15 @@ add_phylopic_tree <- function(tree, tip, img = NULL,
                               padding = 1/200,
                               hjust = 0,
                               ...) {
+  tipLabels <- tree[["tip.label"]]
+  leafIndex <- match(tip, tipLabels)
+  if (is.na(leafIndex)) {
+    nearMiss <- agrep(tip, tipLabels, max.distance = 0.5)
+    stop("Could not find '", tip, "' in tree$tip.label.  ",
+         if (length(nearMiss)) {
+           paste0("Did you mean '", tipLabels[[nearMiss]], "'?")
+         })
+  }
   coords <- tryCatch(get("last_plot.phylo", envir = .PlotPhyloEnv),
                      error = function(e) {
                        plot(tree)
@@ -63,7 +72,7 @@ add_phylopic_tree <- function(tree, tip, img = NULL,
     name = name,
     uuid = uuid,
     x = rightEdge - width - padX,
-    y = coords[["yy"]][[match(tip, tree[["tip.label"]])]],
+    y = coords[["yy"]][[leafIndex]],
     hjust = hjust,
     width = width,
     ...
