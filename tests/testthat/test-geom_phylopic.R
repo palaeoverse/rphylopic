@@ -15,7 +15,7 @@ test_that("geom_phylopic works", {
     facet_wrap(~uuid) +
     coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
     theme_classic(base_size = 16)
-  expect_true(is.ggplot(gg))
+  expect_true(is_ggplot(gg))
   expect_true(is(gg$layers[[1]]$geom, "GeomPhylopic"))
   expect_doppelganger("geom_phylopic", gg)
   
