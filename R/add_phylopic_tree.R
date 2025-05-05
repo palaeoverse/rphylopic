@@ -6,13 +6,12 @@
 #' @inheritParams add_phylopic
 #' @param tree The phylogenetic tree object of class `phylo` on which to add
 #' the silhouette.
-#' @param tip The tip label of the tree against which to add the silhouette.
-#' @param relWidth The width of the silhouette relative to the plotting area.
-#' @param padding Distance to offset the silhouette from the plot edge,
-#' relative to the size of the plotting area.
+#' @param tip The tip labels against which to add the silhouettes.
+#' @param relWidth The width of each silhouette relative to the plotting area.
+#' @param padding Distance to inset each silhouette from the right edge of the
+#' plotting area, relative to the size of the plotting area.
 #' Negative values offset to the right.
-#' @param \dots Further arguments to pass to `add_phylopic_base()`.
-#' @details Images will be plotted flush with the right margin of the plot area.
+#' @param \dots Further arguments to pass to `add_phylopic_base()`..
 #' @author [Martin R. Smith](https://orcid.org/0000-0001-5660-1727) 
 #' (<martin.smith@durham.ac.uk>)
 #' @importFrom ape plot.phylo .PlotPhyloEnv
@@ -48,11 +47,16 @@ add_phylopic_tree <- function(tree, tip, img = NULL,
                               ...) {
   tipLabels <- tree[["tip.label"]]
   leafIndex <- match(tip, tipLabels)
-  if (is.na(leafIndex)) {
-    nearMiss <- agrep(tip, tipLabels, max.distance = 0.5)
-    stop("Could not find '", tip, "' in tree$tip.label.  ",
+  leafMissing <- is.na(leafIndex)
+  if (any(leafMissing)) {
+    nearMiss <- unlist(lapply(tip[leafMissing], agrep, tipLabels,
+                              max.distance = 0.5), use.names = FALSE,
+                       recursive = FALSE)
+    stop("Could not find '", paste(tip[leafMissing], collapse = "', '"),
+                                   "' in tree$tip.label.  ",
          if (length(nearMiss)) {
-           paste0("Did you mean '", tipLabels[[nearMiss]], "'?")
+           paste0("Did you mean '",
+                  paste(tipLabels[nearMiss], collapse = "', '"), "'?")
          })
   }
   coords <- tryCatch(get("last_plot.phylo", envir = .PlotPhyloEnv),
@@ -72,7 +76,7 @@ add_phylopic_tree <- function(tree, tip, img = NULL,
     name = name,
     uuid = uuid,
     x = rightEdge - width - padX,
-    y = coords[["yy"]][[leafIndex]],
+    y = coords[["yy"]][leafIndex],
     hjust = hjust,
     width = width,
     ...

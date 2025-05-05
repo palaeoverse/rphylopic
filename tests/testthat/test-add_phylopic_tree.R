@@ -1,7 +1,7 @@
 test_that("add_phylopic_tree works", {
   skip_if_offline(host = "api.phylopic.org")
   
-  expect_doppelganger("Add cat to tree", function() {
+  expect_doppelganger("Add individual silhouettes to tree", function() {
     # Load the ape library to work with phylogenetic trees
     library("ape")
     
@@ -56,6 +56,49 @@ test_that("add_phylopic_tree works", {
         fill = "red"
       ),
       "Could not find 'maus' in tree.tip.label.  Did you mean 'mouse'\\?"
+    )
+  })
+
+  expect_doppelganger("Add vector of silhouettes to tree", function() {
+    # Load the ape library to work with phylogenetic trees
+    library("ape")
+    
+    # Read a phylogenetic tree
+    tree <- ape::read.tree(text = "(cat, (dog, mouse));")
+  
+    # Set edge of plot = edge of device
+    par(mar = rep(0, 4)) 
+    plot(tree)
+    
+    # Add a vector of silhouettes to the tree
+    add_phylopic_tree(
+      tree = tree, # No tree plotted - plot silently
+      tip = c("cat", "mouse", "dog"),
+      uuid = c("23cd6aa4-9587-4a2e-8e26-de42885004c9",
+               "dd0a795e-4be3-4f99-a084-2427c1319d31",
+               "6f3ebbc6-be53-4216-b45b-946f7984669b"),
+      relWidth = c(0.1, 0.2, 0.16),
+      padding = c(1/200, 0.8, -0.08),
+      vjust = c(0.2, 1, 1),
+      fill = c("brown", "lightblue", "#665566"),
+    )
+    
+    # Check leaf validation
+    expect_error(add_phylopic_tree(
+      tree = tree, # No tree plotted - plot silently
+      tip = c("cat", "mouse", "dawg", "maus", "non-existent taxon"),
+      uuid = c("23cd6aa4-9587-4a2e-8e26-de42885004c9",
+               "dd0a795e-4be3-4f99-a084-2427c1319d31",
+               "6f3ebbc6-be53-4216-b45b-946f7984669b",
+               "dd0a795e-4be3-4f99-a084-2427c1319d31",
+               "dd0a795e-4be3-4f99-a084-2427c1319d31"
+               ),
+      relWidth = c(0.1, 0.2, 0.16, 9, 9),
+      padding = c(1/200, 0.8, -0.08, 0, 0),
+      vjust = c(0.2, 1, 1, 0.5, 0.5),
+      fill = c("brown", "lightblue", "#665566", "red", "red"),
+      ),
+    "Could not find 'dawg', 'maus', 'no.+on' in tree.+ mean 'dog', 'mouse'\\?"
     )
   })
 })
