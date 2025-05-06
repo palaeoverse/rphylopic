@@ -7,9 +7,23 @@ test_that("add_phylopic_tree works", {
     
     # Read a phylogenetic tree
     tree <- ape::read.tree(text = "(cat, (dog, mouse));")
-  
+    
+    # Fail if no tree has (ever) been plotted
+    # It would be nice to warn also if the plotting window has been closed -
+    # Not sure whether this is possible
+    expect_error(add_phylopic_tree(
+      tree, # No tree plotted - plot silently
+      "cat", # Which leaf should the silhouette be plotted against?
+      uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9", # Silhouette to plot
+      relWidth = 0.1,
+      vjust = 0.2,
+      fill = "brown"
+    ), "plot\\(tree\\) has not been called")
+    
+    
     # Set edge of plot = edge of device
-    par(mar = rep(0, 4)) 
+    par(mar = rep(0, 4))
+    plot(tree)
     
     # Add a PhyloPic silhouette of a cat to the tree
     add_phylopic_tree(

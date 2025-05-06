@@ -61,8 +61,7 @@ add_phylopic_tree <- function(tree, tip, img = NULL,
   }
   coords <- tryCatch(get("last_plot.phylo", envir = .PlotPhyloEnv),
                      error = function(e) {
-                       plot(tree)
-                       get("last_plot.phylo", envir = .PlotPhyloEnv)
+                       stop("plot(tree) has not been called")
                      })
   rightEdge <- par("usr")[[2]]
   leftEdge <- par("usr")[[1]]
