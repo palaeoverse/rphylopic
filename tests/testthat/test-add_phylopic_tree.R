@@ -21,9 +21,9 @@ test_that("add_phylopic_tree works", {
     # Fail if no tree has (ever) been plotted
     plot.new() # Open a graphics device without plotting a tree
     expect_error(add_phylopic_tree(
-      tree, # No tree plotted - plot silently
-      "cat", # Which leaf should the silhouette be plotted against?
-      uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9", # Silhouette to plot
+      tree,
+      "cat",
+      uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
       relWidth = 0.1,
       vjust = 0.2,
       fill = "brown"
@@ -36,9 +36,9 @@ test_that("add_phylopic_tree works", {
     
     # Add a PhyloPic silhouette of a cat to the tree
     add_phylopic_tree(
-      tree, # No tree plotted - plot silently
-      "cat", # Which leaf should the silhouette be plotted against?
-      uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9", # Silhouette to plot
+      tree,
+      "cat",
+      uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
       relWidth = 0.1,
       vjust = 0.2,
       fill = "brown"
@@ -47,8 +47,8 @@ test_that("add_phylopic_tree works", {
     # Add a mouse, by taxon name
     expect_warning(
       add_phylopic_tree(
-        tree, # Must be the tree that was plotted
-        "mouse", # Which leaf should the silhouette be plotted against?
+        tree,
+        "mouse",
         name = "mus",
         relWidth = 0.2,
         padding = 0.8, # Should appear flush with left margin
@@ -61,8 +61,8 @@ test_that("add_phylopic_tree works", {
     # Add a dog, by name
     expect_warning(
       add_phylopic_tree(
-        tree, # Must be the tree that was plotted
-        "dog", # Which leaf should the silhouette be plotted against?
+        tree,
+        "dog",
         relWidth = 0.16,
         padding = -0.08, # Half off the page
         fill = "#665566"
@@ -95,11 +95,11 @@ test_that("add_phylopic_tree works", {
     
     # Add a vector of silhouettes to the tree
     add_phylopic_tree(
-      tree = tree, # No tree plotted - plot silently
       tip = c("cat", "mouse", "dog"),
       uuid = c("23cd6aa4-9587-4a2e-8e26-de42885004c9",
                "dd0a795e-4be3-4f99-a084-2427c1319d31",
                "6f3ebbc6-be53-4216-b45b-946f7984669b"),
+      tree = tree,
       relWidth = c(0.1, 0.2, 0.16),
       padding = c(1/200, 0.8, -0.08),
       vjust = c(0.2, 1, 1),
@@ -108,7 +108,7 @@ test_that("add_phylopic_tree works", {
     
     # Check leaf validation
     expect_error(add_phylopic_tree(
-      tree = tree, # No tree plotted - plot silently
+      tree = tree,
       tip = c("cat", "mouse", "dawg", "maus", "non-existent taxon"),
       uuid = c("23cd6aa4-9587-4a2e-8e26-de42885004c9",
                "dd0a795e-4be3-4f99-a084-2427c1319d31",
