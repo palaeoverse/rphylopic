@@ -44,6 +44,7 @@ test_that("add_phylopic_tree works", {
       "cat",
       uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
       relWidth = 0.1,
+      padding = 0.01,
       vjust = 0.2,
       fill = "brown"
     )
@@ -55,7 +56,7 @@ test_that("add_phylopic_tree works", {
         "mouse",
         name = "mus",
         relWidth = 0.2,
-        padding = 0.8, # Should appear flush with left margin
+        relPadding = 0.8, # Should appear flush with left margin
         fill = "lightblue",
         vjust = 1
       ),

@@ -11,8 +11,9 @@ add_phylopic_tree(
   name = if (is.null(img) && is.null(uuid)) tip else NULL,
   uuid = NULL,
   width,
+  padding = NULL,
   relWidth = 0.06,
-  padding = 1/200,
+  relPadding = 1/200,
   hjust = 0,
   ...
 )
@@ -38,11 +39,13 @@ large as fits in the plot area. If "NULL" and \code{height} is specified, the
 width is determined by the aspect ratio of the original image. One or both
 of \code{height} and \code{width} must be "NULL".}
 
-\item{relWidth}{The width of each silhouette relative to the plotting area.}
-
-\item{padding}{Distance to inset each silhouette from the right edge of the
-plotting area, relative to the size of the plotting area.
+\item{padding, relPadding}{Distance to inset each silhouette from the right
+edge of the plotting area,
+in the plot coordinate system (\code{padding}) or
+relative to the size of the plotting area (\code{relPadding}).
 Negative values offset to the right.}
+
+\item{relWidth}{The width of each silhouette relative to the plotting area.}
 
 \item{hjust}{\code{numeric}. A numeric vector between 0 and 1 specifying
 horizontal justification (left = 0, center = 0.5, right = 1).}
