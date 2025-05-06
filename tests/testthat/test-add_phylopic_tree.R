@@ -3,7 +3,7 @@ test_that("add_phylopic_tree works", {
   
   expect_error(
     add_phylopic_tree(
-      tree,
+      ape::read.tree(text = "(cat, mouse);"),
       "mouse",
       uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9", # Silhouette to plot
       fill = "red"
