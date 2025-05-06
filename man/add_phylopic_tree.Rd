@@ -21,7 +21,7 @@ add_phylopic_tree(
 \item{tree}{The phylogenetic tree object of class \code{phylo} on which to add
 the silhouette.}
 
-\item{tip}{The tip label of the tree against which to add the silhouette.}
+\item{tip}{The tip labels against which to add the silhouettes.}
 
 \item{img}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
 from using \code{\link[=get_phylopic]{get_phylopic()}}.}
@@ -37,10 +37,10 @@ fits in the plot area. If "NA", the default, and \code{height} is specified, the
 width is determined by the aspect ratio of the original image. One or both
 of \code{height} and \code{width} must be "NA".}
 
-\item{relWidth}{The width of the silhouette relative to the plotting area.}
+\item{relWidth}{The width of each silhouette relative to the plotting area.}
 
-\item{padding}{Distance to offset the silhouette from the plot edge,
-relative to the size of the plotting area.
+\item{padding}{Distance to inset each silhouette from the right edge of the
+plotting area, relative to the size of the plotting area.
 Negative values offset to the right.}
 
 \item{hjust}{\code{numeric}. A numeric vector between 0 and 1 specifying
@@ -53,10 +53,8 @@ plot and the aspect ratio of the silhouette.}
 }
 \description{
 Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
-silhouettes alongside the associated leaves of a phylogenetic tree.
-}
-\details{
-Images will be plotted flush with the right margin of the plot area.
+silhouettes alongside the associated leaves of a phylogenetic tree that has
+been plotted in the active graphics device.
 }
 \examples{
 \dontrun{
