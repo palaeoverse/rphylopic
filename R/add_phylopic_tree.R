@@ -20,6 +20,7 @@
 #' @seealso
 #' For trees plotted using \pkg{ggtree}, see [`geom_phylopic()`].
 #' @importFrom ape plot.phylo .PlotPhyloEnv
+#' @importFrom grDevices dev.cur
 #' @export
 #' @examples \dontrun{
 #'  # Load the ape library to work with phylogenetic trees
