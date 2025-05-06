@@ -1,7 +1,8 @@
 #' Add PhyloPics to a plotted phylogenetic tree
 #'
 #' Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
-#' silhouettes alongside the associated leaves of a phylogenetic tree.
+#' silhouettes alongside the associated leaves of a phylogenetic tree that has
+#' been plotted in the active graphics device.
 #'
 #' @inheritParams add_phylopic
 #' @param tree The phylogenetic tree object of class `phylo` on which to add
@@ -45,6 +46,12 @@ add_phylopic_tree <- function(tree, tip, img = NULL,
                               padding = 1/200,
                               hjust = 0,
                               ...) {
+  if (dev.cur() < 2) {
+    # It would be nice to check whether the plotting device that contains
+    # last_plot.phylo is still the active device, but this is not possible - so
+    # we leave the responsibility of calling the function sensibly to the user.
+    stop("No plotting device is open; try plot(tree)")
+  }
   tipLabels <- tree[["tip.label"]]
   leafIndex <- match(tip, tipLabels)
   leafMissing <- is.na(leafIndex)

@@ -1,6 +1,16 @@
 test_that("add_phylopic_tree works", {
   skip_if_offline(host = "api.phylopic.org")
   
+  expect_error(
+    add_phylopic_tree(
+      tree,
+      "mouse",
+      uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9", # Silhouette to plot
+      fill = "red"
+    ),
+    "No plotting device is open"
+  )
+  
   expect_doppelganger("Add individual silhouettes to tree", function() {
     # Load the ape library to work with phylogenetic trees
     library("ape")
@@ -9,8 +19,7 @@ test_that("add_phylopic_tree works", {
     tree <- ape::read.tree(text = "(cat, (dog, mouse));")
     
     # Fail if no tree has (ever) been plotted
-    # It would be nice to warn also if the plotting window has been closed -
-    # Not sure whether this is possible
+    plot.new() # Open a graphics device without plotting a tree
     expect_error(add_phylopic_tree(
       tree, # No tree plotted - plot silently
       "cat", # Which leaf should the silhouette be plotted against?
