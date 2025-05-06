@@ -33,10 +33,10 @@ from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
 \item{width}{\code{numeric}. Width of the silhouette in coordinate space. If
-"NA", the default, and \code{height} is "NA", the silhouette will be as large as
-fits in the plot area. If "NA", the default, and \code{height} is specified, the
+"NULL", the default, and \code{height} is also "NULL", the silhouette will be as
+large as fits in the plot area. If "NULL" and \code{height} is specified, the
 width is determined by the aspect ratio of the original image. One or both
-of \code{height} and \code{width} must be "NA".}
+of \code{height} and \code{width} must be "NULL".}
 
 \item{relWidth}{The width of each silhouette relative to the plotting area.}
 
@@ -45,10 +45,7 @@ plotting area, relative to the size of the plotting area.
 Negative values offset to the right.}
 
 \item{hjust}{\code{numeric}. A numeric vector between 0 and 1 specifying
-horizontal justification (left = 0, center = 0.5, right = 1). Note that,
-due to the enforcement of the silhouette's aspect ratio, there may be
-unexpected behavior due to interactions between the aspect ratio of the
-plot and the aspect ratio of the silhouette.}
+horizontal justification (left = 0, center = 0.5, right = 1).}
 
 \item{\dots}{Further arguments to pass to \code{add_phylopic_base()}.}
 }
