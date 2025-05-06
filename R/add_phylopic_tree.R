@@ -5,7 +5,7 @@
 #' been plotted in the active graphics device using the base R graphics
 #' functions.
 #'
-#' @inheritParams add_phylopic
+#' @inheritParams add_phylopic_base
 #' @param tree The phylogenetic tree object of class `phylo` on which to add
 #' the silhouette.
 #' @param tip The tip labels against which to add the silhouettes.
