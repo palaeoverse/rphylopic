@@ -24,6 +24,7 @@ RoxygenNote: 7.3.2
 Depends: 
     R (>= 4.0)
 Imports:
+    ape,
     ggplot2,
     jsonlite,
     grid,
@@ -46,7 +47,6 @@ Suggests:
     phytools,
     palaeoverse,
     ggtree,
-    ape,
     deeptime,
     palmerpenguins,
     maps,
