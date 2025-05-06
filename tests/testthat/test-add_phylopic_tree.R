@@ -1,6 +1,10 @@
 test_that("add_phylopic_tree works", {
   skip_if_offline(host = "api.phylopic.org")
   
+  if (dev.cur() > 1) {
+    # Ensure graphics device is off
+    dev.off()
+  }
   expect_error(
     add_phylopic_tree(
       ape::read.tree(text = "(cat, mouse);"),
