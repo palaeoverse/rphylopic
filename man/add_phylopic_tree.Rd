@@ -6,7 +6,7 @@
 \usage{
 add_phylopic_tree(
   tree,
-  tip,
+  tip = names(img) \%||\% names(uuid) \%||\% names(name) \%||\% name,
   img = NULL,
   name = if (is.null(img) && is.null(uuid)) tip else NULL,
   uuid = NULL,
@@ -21,7 +21,8 @@ add_phylopic_tree(
 \item{tree}{The phylogenetic tree object of class \code{phylo} on which to add
 the silhouette.}
 
-\item{tip}{The tip labels against which to add the silhouettes.}
+\item{tip}{The tip labels against which to add the silhouettes.
+If not specified, the names of the \code{img}, \code{uuid} or \code{name} vector are used.}
 
 \item{img}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
 from using \code{\link[=get_phylopic]{get_phylopic()}}.}

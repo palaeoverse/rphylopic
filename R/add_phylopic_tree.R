@@ -8,11 +8,12 @@
 #' @param tree The phylogenetic tree object of class `phylo` on which to add
 #' the silhouette.
 #' @param tip The tip labels against which to add the silhouettes.
+#' If not specified, the names of the `img`, `uuid` or `name` vector are used.
 #' @param relWidth The width of each silhouette relative to the plotting area.
 #' @param padding Distance to inset each silhouette from the right edge of the
 #' plotting area, relative to the size of the plotting area.
 #' Negative values offset to the right.
-#' @param \dots Further arguments to pass to `add_phylopic_base()`..
+#' @param \dots Further arguments to pass to `add_phylopic_base()`.
 #' @author [Martin R. Smith](https://orcid.org/0000-0001-5660-1727) 
 #' (<martin.smith@durham.ac.uk>)
 #' @importFrom ape plot.phylo .PlotPhyloEnv
@@ -39,7 +40,9 @@
 #'   fill = "brown"
 #' )
 #' }
-add_phylopic_tree <- function(tree, tip, img = NULL,
+add_phylopic_tree <- function(tree, tip = names(img) %||% names(uuid) %||%
+                                names(name) %||% name,
+                              img = NULL,
                               name = if (is.null(img) && is.null(uuid)) tip 
                                 else NULL, 
                               uuid = NULL, width, relWidth = 0.06,

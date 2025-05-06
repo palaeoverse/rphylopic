@@ -95,11 +95,10 @@ test_that("add_phylopic_tree works", {
     
     # Add a vector of silhouettes to the tree
     add_phylopic_tree(
-      tip = c("cat", "mouse", "dog"),
-      uuid = c("23cd6aa4-9587-4a2e-8e26-de42885004c9",
-               "dd0a795e-4be3-4f99-a084-2427c1319d31",
-               "6f3ebbc6-be53-4216-b45b-946f7984669b"),
       tree = tree,
+      uuid = c(cat = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+               mouse = "dd0a795e-4be3-4f99-a084-2427c1319d31",
+               dog = "6f3ebbc6-be53-4216-b45b-946f7984669b"),
       relWidth = c(0.1, 0.2, 0.16),
       padding = c(1/200, 0.8, -0.08),
       vjust = c(0.2, 1, 1),
