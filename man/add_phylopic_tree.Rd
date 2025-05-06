@@ -2,7 +2,7 @@
 % Please edit documentation in R/add_phylopic_tree.R
 \name{add_phylopic_tree}
 \alias{add_phylopic_tree}
-\title{Add PhyloPics to a plotted phylogenetic tree}
+\title{Add PhyloPics to a phylogenetic tree plotted with base R}
 \usage{
 add_phylopic_tree(
   tree,
@@ -55,7 +55,8 @@ plot and the aspect ratio of the silhouette.}
 \description{
 Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
 silhouettes alongside the associated leaves of a phylogenetic tree that has
-been plotted in the active graphics device.
+been plotted in the active graphics device using the base R graphics
+functions.
 }
 \examples{
 \dontrun{
@@ -80,6 +81,9 @@ add_phylopic_tree(
   fill = "brown"
 )
 }
+}
+\seealso{
+For trees plotted using \pkg{ggtree}, see \code{\link[=geom_phylopic]{geom_phylopic()}}.
 }
 \author{
 \href{https://orcid.org/0000-0001-5660-1727}{Martin R. Smith}

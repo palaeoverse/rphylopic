@@ -1,8 +1,9 @@
-#' Add PhyloPics to a plotted phylogenetic tree
+#' Add PhyloPics to a phylogenetic tree plotted with base R
 #'
 #' Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
 #' silhouettes alongside the associated leaves of a phylogenetic tree that has
-#' been plotted in the active graphics device.
+#' been plotted in the active graphics device using the base R graphics
+#' functions.
 #'
 #' @inheritParams add_phylopic
 #' @param tree The phylogenetic tree object of class `phylo` on which to add
@@ -16,6 +17,8 @@
 #' @param \dots Further arguments to pass to `add_phylopic_base()`.
 #' @author [Martin R. Smith](https://orcid.org/0000-0001-5660-1727) 
 #' (<martin.smith@durham.ac.uk>)
+#' @seealso
+#' For trees plotted using \pkg{ggtree}, see [`geom_phylopic()`].
 #' @importFrom ape plot.phylo .PlotPhyloEnv
 #' @export
 #' @examples \dontrun{
