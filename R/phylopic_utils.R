@@ -13,8 +13,12 @@
 #' @family transformations
 #' @export
 flip_phylopic <- function(img, horizontal = TRUE, vertical = FALSE) {
-  if (!is.logical(horizontal)) stop("`horizontal` must be TRUE or FALSE.")
-  if (!is.logical(vertical)) stop("`vertical` must be TRUE or FALSE.")
+  if (!is.logical(horizontal)) {
+    stop("`horizontal` must be TRUE or FALSE.")
+  }
+  if (!is.logical(vertical)) {
+    stop("`vertical` must be TRUE or FALSE.")
+  }
   UseMethod("flip_phylopic")
 }
 
@@ -23,15 +27,11 @@ flip_phylopic.Picture <- function(img, horizontal = TRUE, vertical = FALSE) {
   # modified from
   # https://github.com/thomasp85/ggforce/blob/main/R/trans_linear.R
   if (horizontal) {
-    mat <- matrix(c(-1, 0, 0,
-                    0, 1, 0,
-                    0, 0, 1), ncol = 3, byrow = TRUE)
+    mat <- matrix(c(-1, 0, 0, 0, 1, 0, 0, 0, 1), ncol = 3, byrow = TRUE)
     img <- transform_picture(img, mat)
   }
   if (vertical) {
-    mat <- matrix(c(1, 0, 0,
-                    0, -1, 0,
-                    0, 0, 1), ncol = 3, byrow = TRUE)
+    mat <- matrix(c(1, 0, 0, 0, -1, 0, 0, 0, 1), ncol = 3, byrow = TRUE)
     img <- transform_picture(img, mat)
   }
   img
@@ -70,7 +70,9 @@ flip_phylopic.array <- function(img, horizontal = TRUE, vertical = FALSE) {
 #' @family transformations
 #' @export
 rotate_phylopic <- function(img, angle = 90) {
-  if (!is.numeric(angle)) stop("`angle` must be a number.")
+  if (!is.numeric(angle)) {
+    stop("`angle` must be a number.")
+  }
   UseMethod("rotate_phylopic")
 }
 
@@ -82,9 +84,11 @@ rotate_phylopic.Picture <- function(img, angle = 90) {
   angle <- (2 * pi) - angle
   # create rotation matrix (modified from
   # https://github.com/thomasp85/ggforce/blob/main/R/trans_linear.R)
-  mat <- matrix(c(cos(angle), sin(angle), 0,
-                  -sin(angle), cos(angle), 0,
-                  0, 0, 1), ncol = 3, byrow = TRUE)
+  mat <- matrix(
+    c(cos(angle), sin(angle), 0, -sin(angle), cos(angle), 0, 0, 0, 1),
+    ncol = 3,
+    byrow = TRUE
+  )
   transform_picture(img, mat)
 }
 
@@ -94,14 +98,18 @@ rotate_phylopic.array <- function(img, angle = 90) {
     stop("`img` must be an array with three dimensions.")
   }
   if (angle %% 90 != 0) {
-    stop(paste("`angle` must be divisible by 90. Other angles are not yet",
-               "implemented for rasterized PhyloPics."))
+    stop(paste(
+      "`angle` must be divisible by 90. Other angles are not yet",
+      "implemented for rasterized PhyloPics."
+    ))
   }
 
   # modified from https://stackoverflow.com/a/16497058/4660582
-  if (angle > 0) { # clockwise
+  if (angle > 0) {
+    # clockwise
     rotate <- function(mat) t(mat[rev(seq_len(nrow(mat))), , drop = FALSE])
-  } else if (angle < 0) { # counter clockwise
+  } else if (angle < 0) {
+    # counter clockwise
     rotate <- function(mat) {
       mat_t <- t(mat)
       mat_t[rev(seq_len(nrow(mat_t))), , drop = FALSE]
@@ -110,8 +118,7 @@ rotate_phylopic.array <- function(img, angle = 90) {
   img_new <- img
   for (i in seq_len(abs(angle) / 90)) {
     img_new <- simplify2array(
-      lapply(seq_len(dim(img_new)[3]),
-             function(i) rotate(img_new[, , i]))
+      lapply(seq_len(dim(img_new)[3]), function(i) rotate(img_new[,, i]))
     )
   }
   class(img_new) <- class(img)
@@ -136,9 +143,13 @@ transform_summary <- function(summary, mat) {
   rev_y <- summary@yscale[1] > summary@yscale[2]
   # set the new scales
   summary@xscale <- range(corners_trans[1, ])
-  if (rev_x) summary@xscale <- rev(summary@xscale)
+  if (rev_x) {
+    summary@xscale <- rev(summary@xscale)
+  }
   summary@yscale <- range(corners_trans[2, ])
-  if (rev_y) summary@yscale <- rev(summary@yscale)
+  if (rev_y) {
+    summary@yscale <- rev(summary@yscale)
+  }
   summary
 }
 
@@ -169,8 +180,13 @@ transform_summary <- function(summary, mat) {
 #' @family transformations
 #' @importFrom grDevices rgb col2rgb
 #' @export
-recolor_phylopic <- function(img, alpha = 1, color = NULL, fill = NULL,
-                             remove_background = TRUE) {
+recolor_phylopic <- function(
+  img,
+  alpha = 1,
+  color = NULL,
+  fill = NULL,
+  remove_background = TRUE
+) {
   if (!is.numeric(alpha) || alpha < 0 || alpha > 1) {
     stop("`alpha` must be a number between 0 and 1.")
   }
@@ -181,8 +197,13 @@ recolor_phylopic <- function(img, alpha = 1, color = NULL, fill = NULL,
 }
 
 #' @export
-recolor_phylopic.array <- function(img, alpha = 1, color = NULL, fill = NULL,
-                                   remove_background = TRUE) {
+recolor_phylopic.array <- function(
+  img,
+  alpha = 1,
+  color = NULL,
+  fill = NULL,
+  remove_background = TRUE
+) {
   cls <- class(img)
   if (!is.null(color)) {
     message("Outline color does not currently work with png image objects.")
@@ -193,26 +214,37 @@ recolor_phylopic.array <- function(img, alpha = 1, color = NULL, fill = NULL,
   }
 
   # convert to RGBA if needed
-  if (dims[3] == 1) { # grayscale
+  if (dims[3] == 1) {
+    # grayscale
     img <- g_to_rgba(img)
-  } else if (dims[3] == 2) { # greyscale and alpha
+  } else if (dims[3] == 2) {
+    # greyscale and alpha
     img <- ga_to_rgba(img)
-  } else if (dims[3] == 3) { # RGB
+  } else if (dims[3] == 3) {
+    # RGB
     img <- rgb_to_rgba(img)
-  } else if (dims[3] > 4) { # not supported
-    stop(paste("`img` must be in G, GA, RGB, or RGBA format.",
-               "More than four channels is not supported."))
+  } else if (dims[3] > 4) {
+    # not supported
+    stop(paste(
+      "`img` must be in G, GA, RGB, or RGBA format.",
+      "More than four channels is not supported."
+    ))
   }
   dims <- dim(img) # update dimensions
   if (is.null(fill)) {
-    new_img <- array(c(img[, , 1:3], img[, , 4] * alpha), dim = dims)
+    new_img <- array(c(img[,, 1:3], img[,, 4] * alpha), dim = dims)
   } else {
     cols <- col2rgb(fill) / 255
-    imglen <- length(img[, , 1])
-    new_img <- array(c(rep(cols[1, 1], imglen),
-                       rep(cols[2, 1], imglen),
-                       rep(cols[3, 1], imglen),
-                       img[, , 4] * alpha), dim = dims)
+    imglen <- length(img[,, 1])
+    new_img <- array(
+      c(
+        rep(cols[1, 1], imglen),
+        rep(cols[2, 1], imglen),
+        rep(cols[3, 1], imglen),
+        img[,, 4] * alpha
+      ),
+      dim = dims
+    )
   }
   class(new_img) <- cls
   return(new_img)
@@ -220,28 +252,35 @@ recolor_phylopic.array <- function(img, alpha = 1, color = NULL, fill = NULL,
 
 ga_to_rgba <- function(img) {
   new_img <- array(0, dim = c(dim(img)[1:2], 4))
-  new_img[, , 4] <- img[, , 2]
+  new_img[,, 4] <- img[,, 2]
   new_img
 }
 
 g_to_rgba <- function(img) {
   new_img <- array(0, dim = c(dim(img)[1:2], 2))
-  new_img[, , 2] <- img
+  new_img[,, 2] <- img
   ga_to_rgba(new_img)
 }
 
 rgb_to_rgba <- function(img) {
   new_img <- array(0, dim = c(dim(img)[1:2], 4))
-  new_img[, , 1:3] <- img[, , 1:3]
-  new_img[, , 4] <- 1
+  new_img[,, 1:3] <- img[,, 1:3]
+  new_img[,, 4] <- 1
   new_img
 }
 
 #' @export
-recolor_phylopic.Picture <- function(img, alpha = 1, color = NULL, fill = NULL,
-                                     remove_background = TRUE) {
+recolor_phylopic.Picture <- function(
+  img,
+  alpha = 1,
+  color = NULL,
+  fill = NULL,
+  remove_background = TRUE
+) {
   img <- recolor_content(img, alpha, color, fill, remove_background)
-  if (length(img@content) == 0) stop("Invalid 'Picture' object")
+  if (length(img@content) == 0) {
+    stop("Invalid 'Picture' object")
+  }
   return(img)
 }
 
@@ -250,9 +289,12 @@ recolor_content <- function(x, alpha, color, fill, remove_background) {
   tmp <- lapply(x@content, function(element) {
     if (is(element, "PicturePath")) {
       # a bit of a hack until PhyloPic fixes these white backgrounds
-      if (remove_background && "gp" %in% slotNames(element) &&
+      if (
+        remove_background &&
+          "gp" %in% slotNames(element) &&
           "fill" %in% names(element@gp) &&
-          element@gp$fill %in% c("#FFFFFFFF", "#FFFFFF")) {
+          element@gp$fill %in% c("#FFFFFFFF", "#FFFFFF")
+      ) {
         return(NULL)
       } else {
         element@gp$alpha <- alpha
@@ -288,8 +330,12 @@ recolor_content <- function(x, alpha, color, fill, remove_background) {
 #' @export
 plot.Picture <- function(x, ...) {
   args <- list(...)
-  if (is.null(args$expansion)) args$expansion <- 0
-  if (is.null(args$delayContent)) args$delayContent <- TRUE
+  if (is.null(args$expansion)) {
+    args$expansion <- 0
+  }
+  if (is.null(args$delayContent)) {
+    args$delayContent <- TRUE
+  }
   args$picture <- x
   grid.newpage()
   do.call(grid.picture, args)
@@ -310,29 +356,41 @@ plot.phylopic <- function(x, ...) {
 #' @export
 print.Picture <- function(x, ...) {
   dims <- c(abs(diff(x@summary@xscale)), abs(diff(x@summary@yscale)))
-  cat(paste0("PhyloPic silhouette object (vector format)",
-             "\nDimensions: ", dims[1], " pixels wide and ",
-             dims[2], " pixels tall",
-             "\nuuid: ", attr(x, "uuid"),
-             "\nURL: ", attr(x, "url")))
+  cat(paste0(
+    "PhyloPic silhouette object (vector format)",
+    "\nDimensions: ",
+    dims[1],
+    " pixels wide and ",
+    dims[2],
+    " pixels tall",
+    "\nuuid: ",
+    attr(x, "uuid"),
+    "\nURL: ",
+    attr(x, "url")
+  ))
   invisible(x)
 }
 
 # runs print() when you just type the object name (S4-specific)
-setMethod(f = "show",
-          signature = "Picture",
-          definition = function(object) {
-            print(object)
-          })
+setMethod(f = "show", signature = "Picture", definition = function(object) {
+  print(object)
+})
 
 #' @rdname get_phylopic
 #' @export
 print.phylopic <- function(x, ...) {
   dims <- dim(x)
-  cat(paste0("PhyloPic silhouette object (raster format)",
-             "\nDimensions: ", dims[2], " pixels wide and ",
-             dims[1], " pixels tall",
-             "\nuuid: ", attr(x, "uuid"),
-             "\nURL: ", attr(x, "url")))
+  cat(paste0(
+    "PhyloPic silhouette object (raster format)",
+    "\nDimensions: ",
+    dims[2],
+    " pixels wide and ",
+    dims[1],
+    " pixels tall",
+    "\nuuid: ",
+    attr(x, "uuid"),
+    "\nURL: ",
+    attr(x, "url")
+  ))
   invisible(x)
 }

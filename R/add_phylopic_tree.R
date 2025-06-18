@@ -17,7 +17,7 @@
 #' relative to the size of the plotting area (`relPadding`).
 #' Negative values offset to the right.
 #' @param \dots Further arguments to pass to `add_phylopic_base()`.
-#' @author [Martin R. Smith](https://orcid.org/0000-0001-5660-1727) 
+#' @author [Martin R. Smith](https://orcid.org/0000-0001-5660-1727)
 #' (<martin.smith@durham.ac.uk>)
 #' @seealso
 #' For trees plotted using \pkg{ggtree}, see [`geom_phylopic()`].
@@ -27,16 +27,16 @@
 #' @examples \dontrun{
 #'  # Load the ape library to work with phylogenetic trees
 #' library("ape")
-#' 
+#'
 #' # Read a phylogenetic tree
 #' tree <- ape::read.tree(text = "(cat, (dog, mouse));")
-#' 
+#'
 #' # Set a large right margin to accommodate the silhouettes
 #' par(mar = c(1, 1, 1, 10))
-#' 
+#'
 #' # Plot the tree
 #' plot(tree)
-#' 
+#'
 #' # Add a PhyloPic silhouette of a cat to the tree
 #' add_phylopic_tree(
 #'   tree, # Must be the tree that was plotted
@@ -46,15 +46,23 @@
 #'   fill = "brown"
 #' )
 #' }
-add_phylopic_tree <- function(tree, tip = names(img) %||% names(uuid) %||%
-                                names(name) %||% name,
-                              img = NULL,
-                              name = if (is.null(img) && is.null(uuid)) tip 
-                                else NULL, 
-                              uuid = NULL, width, padding = NULL,
-                              relWidth = 0.06, relPadding = 1/200,
-                              hjust = 0,
-                              ...) {
+add_phylopic_tree <- function(
+  tree,
+  tip = names(img) %||% names(uuid) %||% names(name) %||% name,
+  img = NULL,
+  name = if (is.null(img) && is.null(uuid)) {
+    tip
+  } else {
+    NULL
+  },
+  uuid = NULL,
+  width,
+  padding = NULL,
+  relWidth = 0.06,
+  relPadding = 1 / 200,
+  hjust = 0,
+  ...
+) {
   if (dev.cur() < 2) {
     # It would be nice to check whether the plotting device that contains
     # last_plot.phylo is still the active device, but this is not possible - so
@@ -65,20 +73,30 @@ add_phylopic_tree <- function(tree, tip = names(img) %||% names(uuid) %||%
   leafIndex <- match(tip, tipLabels)
   leafMissing <- is.na(leafIndex)
   if (any(leafMissing)) {
-    nearMiss <- unlist(lapply(tip[leafMissing], agrep, tipLabels,
-                              max.distance = 0.5), use.names = FALSE,
-                       recursive = FALSE)
-    stop("Could not find '", paste(tip[leafMissing], collapse = "', '"),
-                                   "' in tree$tip.label.  ",
-         if (length(nearMiss)) {
-           paste0("Did you mean '",
-                  paste(tipLabels[nearMiss], collapse = "', '"), "'?")
-         })
+    nearMiss <- unlist(
+      lapply(tip[leafMissing], agrep, tipLabels, max.distance = 0.5),
+      use.names = FALSE,
+      recursive = FALSE
+    )
+    stop(
+      "Could not find '",
+      paste(tip[leafMissing], collapse = "', '"),
+      "' in tree$tip.label.  ",
+      if (length(nearMiss)) {
+        paste0(
+          "Did you mean '",
+          paste(tipLabels[nearMiss], collapse = "', '"),
+          "'?"
+        )
+      }
+    )
   }
-  coords <- tryCatch(get("last_plot.phylo", envir = .PlotPhyloEnv),
-                     error = function(e) {
-                       stop("plot(tree) has not been called")
-                     })
+  coords <- tryCatch(
+    get("last_plot.phylo", envir = .PlotPhyloEnv),
+    error = function(e) {
+      stop("plot(tree) has not been called")
+    }
+  )
   rightEdge <- par("usr")[[2]]
   leftEdge <- par("usr")[[1]]
   plotWidth <- rightEdge - leftEdge

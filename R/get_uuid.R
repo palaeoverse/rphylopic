@@ -34,8 +34,13 @@
 #' uuid <- get_uuid(name = "Acropora cervicornis")
 #' uuid <- get_uuid(name = "Dinosauria", n = 5, url = TRUE)
 #' }
-get_uuid <- function(name = NULL, img = NULL, n = 1, filter = NULL,
-                     url = FALSE) {
+get_uuid <- function(
+  name = NULL,
+  img = NULL,
+  n = 1,
+  filter = NULL,
+  url = FALSE
+) {
   # Handle img -----------------------------------------------------------
   if (!is.null(img)) {
     if (is.list(img)) {
@@ -73,14 +78,22 @@ get_uuid <- function(name = NULL, img = NULL, n = 1, filter = NULL,
   name <- gsub("_", " ", name)
   # API call -------------------------------------------------------------
   opts <- list()
-  if (!is.null(name)) opts$filter_name <- name
+  if (!is.null(name)) {
+    opts$filter_name <- name
+  }
   # Get clade uuid
   opts$page <- 0
   opts$embed_items <- "true"
   # Filter options
-  if ("by" %in% filter) opts$filter_license_by <- "false"
-  if ("nc" %in% filter) opts$filter_license_nc <- "false"
-  if ("sa" %in% filter) opts$filter_license_sa <- "false"
+  if ("by" %in% filter) {
+    opts$filter_license_by <- "false"
+  }
+  if ("nc" %in% filter) {
+    opts$filter_license_nc <- "false"
+  }
+  if ("sa" %in% filter) {
+    opts$filter_license_sa <- "false"
+  }
   api_return <- phy_GET("nodes", opts)
   clade_uuid <- api_return$`_embedded`$items$uuid
   if (is.null(clade_uuid)) {
@@ -90,12 +103,21 @@ get_uuid <- function(name = NULL, img = NULL, n = 1, filter = NULL,
     mch <- mch$matches
     # No match
     if (is.null(unlist(mch))) {
-      stop(paste0("Image resource not available for '", name, "'. \n",
-                  "Ensure provided name is a valid taxonomic name or ",
-                  "try a species/genus resolution name."))
+      stop(paste0(
+        "Image resource not available for '",
+        name,
+        "'. \n",
+        "Ensure provided name is a valid taxonomic name or ",
+        "try a species/genus resolution name."
+      ))
     } else {
-      stop(paste0("Image resource not available for '", name, "'. ",
-                  "Did you mean one of the following? \n", toString(mch)))
+      stop(paste0(
+        "Image resource not available for '",
+        name,
+        "'. ",
+        "Did you mean one of the following? \n",
+        toString(mch)
+      ))
     }
   }
   # Reset options
@@ -103,9 +125,15 @@ get_uuid <- function(name = NULL, img = NULL, n = 1, filter = NULL,
   # First uuid should always be the closest link
   opts$filter_clade <- clade_uuid[1]
   # Filter options
-  if ("by" %in% filter) opts$filter_license_by <- "false"
-  if ("nc" %in% filter) opts$filter_license_nc <- "false"
-  if ("sa" %in% filter) opts$filter_license_sa <- "false"
+  if ("by" %in% filter) {
+    opts$filter_license_by <- "false"
+  }
+  if ("nc" %in% filter) {
+    opts$filter_license_nc <- "false"
+  }
+  if ("sa" %in% filter) {
+    opts$filter_license_sa <- "false"
+  }
   api_return <- phy_GET("images", opts)
   if ("totalItems" %in% names(api_return)) {
     total_items <- api_return$totalItems

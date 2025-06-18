@@ -34,8 +34,12 @@
 #' img_svg <- get_phylopic(uuid, format = "vector") # vector format
 #' img_png <- get_phylopic(uuid, format = "raster") # raster format
 #' }
-get_phylopic <- function(uuid = NULL, format = "vector", height = 512,
-                         preview = FALSE) {
+get_phylopic <- function(
+  uuid = NULL,
+  format = "vector",
+  height = 512,
+  preview = FALSE
+) {
   # Error handling -------------------------------------------------------
   if (is.null(uuid)) {
     stop("A `uuid` is required (hint: use `get_uuid()`).")
@@ -50,18 +54,22 @@ get_phylopic <- function(uuid = NULL, format = "vector", height = 512,
     stop("`preview` is not of class logical.")
   }
   if (is.numeric(format) || grepl("^[[:digit:]]+$", as.character(format))) {
-    lifecycle::deprecate_warn("1.1.0",
-                              paste0("get_phylopic(format = '",
-                                     "no longer supports numeric values')"),
-                              details = paste0("Use the `height` argument ",
-                                               "instead with the `format` ",
-                                               "argument set to \"raster\"."))
+    lifecycle::deprecate_warn(
+      "1.1.0",
+      paste0("get_phylopic(format = '", "no longer supports numeric values')"),
+      details = paste0(
+        "Use the `height` argument ",
+        "instead with the `format` ",
+        "argument set to \"raster\"."
+      )
+    )
     height <- as.numeric(format)
     format <- "raster"
   }
   format <- match.arg(as.character(format), c("raster", "vector"))
   image_info <- phy_GET(file.path("images", uuid))$`_links`
-  if (format == "raster") { # get raster
+  if (format == "raster") {
+    # get raster
     rasters <- image_info$rasterFiles
     # check if there is an existing file with the desired height
     ind <- grepl(paste0("x", height), rasters$sizes)
@@ -74,7 +82,8 @@ get_phylopic <- function(uuid = NULL, format = "vector", height = 512,
       img <- make_png(url, height)
     }
     class(img) <- c("phylopic", class(img))
-  } else if (format == "vector") { # get vector
+  } else if (format == "vector") {
+    # get vector
     url <- image_info$vectorFile$href
     img <- get_svg(url)
   }
@@ -92,44 +101,51 @@ get_phylopic <- function(uuid = NULL, format = "vector", height = 512,
 #' @importFrom rsvg rsvg_svg
 #' @importFrom grImport2 readPicture
 get_svg <- function(url) {
-  tryCatch({
-    res <- GET(url = url)
-    filename <- file.path(tempdir(), "temp.svg")
-    rsvg_svg(res$content, filename)
-    img_new <- readPicture(filename, warn = FALSE)
-  }, error = function(e) {
-    stop("Problem downloading vector file. Please try again.")
-  })
+  tryCatch(
+    {
+      res <- GET(url = url)
+      filename <- file.path(tempdir(), "temp.svg")
+      rsvg_svg(res$content, filename)
+      img_new <- readPicture(filename, warn = FALSE)
+    },
+    error = function(e) {
+      stop("Problem downloading vector file. Please try again.")
+    }
+  )
   img_new
 }
 
 #' @importFrom httr GET
 #' @importFrom png readPNG
 get_png <- function(x) {
-  tryCatch({
-    res <- GET(url = x)
-    img_tmp <- readPNG(res$content)
-    # convert to RGBA if in GA format
-    if (dim(img_tmp)[3] == 2) {
-      img_new <- ga_to_rgba(img_tmp)
-    } else {
-      img_new <- img_tmp
+  tryCatch(
+    {
+      res <- GET(url = x)
+      img_tmp <- readPNG(res$content)
+      # convert to RGBA if in GA format
+      if (dim(img_tmp)[3] == 2) {
+        img_new <- ga_to_rgba(img_tmp)
+      } else {
+        img_new <- img_tmp
+      }
+    },
+    error = function(e) {
+      stop("Problem downloading raster file. Please try again.")
     }
-  },
-  error = function(e) {
-    stop("Problem downloading raster file. Please try again.")
-  })
+  )
   img_new
 }
 
 #' @importFrom rsvg rsvg_png
 #' @importFrom png readPNG
 make_png <- function(url, height) {
-  tryCatch({
-    img_new <- readPNG(rsvg_png(url, height = height))
-  },
-  error = function(e) {
-    stop("Problem downloading vector file. Please try again.")
-  })
+  tryCatch(
+    {
+      img_new <- readPNG(rsvg_png(url, height = height))
+    },
+    error = function(e) {
+      stop("Problem downloading vector file. Please try again.")
+    }
+  )
   img_new
 }
