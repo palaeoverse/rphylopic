@@ -59,19 +59,25 @@ save_phylopic <- function(img = NULL, path = NULL, bg = "transparent", ...) {
   type <- tools::file_ext(path)
   # Check for output format
   if (!type %in% available_formats) {
-    msg <- paste0(type, " format not supported by this function.",
-                  " Use one of the following: ", toString(available_formats))
+    msg <- paste0(
+      type,
+      " format not supported by this function.",
+      " Use one of the following: ",
+      toString(available_formats)
+    )
     stop(msg)
   }
   # Save image ---------------------------------------------------------
   # Generate function list of different format
-  formats <- list(pdf = pdf,
-                  png = png,
-                  svg = svg,
-                  tiff = tiff,
-                  jpeg = jpeg,
-                  jpg = jpeg,
-                  bmp = bmp)
+  formats <- list(
+    pdf = pdf,
+    png = png,
+    svg = svg,
+    tiff = tiff,
+    jpeg = jpeg,
+    jpg = jpeg,
+    bmp = bmp
+  )
   # Filter for correct function
   fun <- formats[[type]]
   # Save file

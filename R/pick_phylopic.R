@@ -15,7 +15,7 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #'   requested `name`, multiple silhouettes may exist. If `n` exceeds the number
 #'   of available images, all available uuids will be returned. Defaults to 5.
 #'   Only relevant if `name` supplied.
-#' @param uuid \code{character}. A vector (or list) of valid PhyloPic 
+#' @param uuid \code{character}. A vector (or list) of valid PhyloPic
 #'   silhouette uuids, such as that returned by [get_uuid()] or
 #'   [resolve_phylopic()].
 #' @param view \code{numeric}. Number of silhouettes that should be plotted at
@@ -29,8 +29,8 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #'   into the menu choice. If the input value is `1`, the first returned image
 #'   will be selected. If the input value is `2`, requested images will be
 #'   automatically cycled through with the final image returned. If the input
-#'   value is `3`, a list of attribution information for each image is 
-#'   returned (this functionality is principally intended for testing). If 
+#'   value is `3`, a list of attribution information for each image is
+#'   returned (this functionality is principally intended for testing). If
 #'   `NULL` (default), the user must interactively respond to the called menu.
 #'
 #' @return A [Picture][grImport2::Picture-class] object is returned. The uuid of
@@ -59,8 +59,14 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #' # 3 x 3 pane layout
 #' img <- pick_phylopic(name = "Scleractinia", n = 9, view = 9)
 #' }
-pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
-                          filter = NULL, auto = NULL) {
+pick_phylopic <- function(
+  name = NULL,
+  n = 5,
+  uuid = NULL,
+  view = 1,
+  filter = NULL,
+  auto = NULL
+) {
   # Error handling
   if (!is.null(auto) && !auto %in% c(1, 2, 3)) {
     stop("`auto` must be of value: NULL, 1, 2, or 3")
@@ -78,17 +84,29 @@ pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
     grid.picture(img)
     # Add text for attribution
     att <- att[[1]][[1]]
-    att_string <- paste0("Contributor: ", att$contributor, "\n",
-                         "Created: ", att$created, "\n",
-                         "Attribution: ", att$attribution, "\n",
-                         "License: ", att$license)
-    grid.text(label = att_string,
-              x = 0.96, y = 0.92,
-              just = "right",
-              gp = gpar(fontsize = 8, col = "purple", fontface = "bold"))
+    att_string <- paste0(
+      "Contributor: ",
+      att$contributor,
+      "\n",
+      "Created: ",
+      att$created,
+      "\n",
+      "Attribution: ",
+      att$attribution,
+      "\n",
+      "License: ",
+      att$license
+    )
+    grid.text(
+      label = att_string,
+      x = 0.96,
+      y = 0.92,
+      just = "right",
+      gp = gpar(fontsize = 8, col = "purple", fontface = "bold")
+    )
     return(img)
   }
-  
+
   if (is.null(uuid)) {
     # Get uuids
     uuids <- get_uuid(name = name, n = n, filter = filter, url = FALSE)
@@ -113,8 +131,10 @@ pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
 
   # Suppress warnings when there is an uneven split
   if ((length(uuids) %% view) != 0) {
-    uuids <- suppressWarnings(split(x = uuids,
-                                    f = ceiling(seq_along(uuids) / view)))
+    uuids <- suppressWarnings(split(
+      x = uuids,
+      f = ceiling(seq_along(uuids) / view)
+    ))
   } else {
     uuids <- split(x = uuids, f = ceiling(seq_along(uuids) / view))
   }
@@ -134,16 +154,27 @@ pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
     # Attribution text
     n_spaces <- 3 + floor(log10(length(att) + 1))
     att_string <- lapply(att, function(x) {
-      paste0(x$contributor, " (", x$created, ").\n", strrep(" ", n_spaces),
-             "License: ", x$license)
+      paste0(
+        x$contributor,
+        " (",
+        x$created,
+        ").\n",
+        strrep(" ", n_spaces),
+        "License: ",
+        x$license
+      )
     })
     att_string <- unlist(att_string)
 
     # Set up menu
     if (is.null(auto)) {
       # Set up plotting dataframe
-      df <- data.frame(x = 0.5, y = 0.5, uuid = uuids[[i]],
-                       label = seq_len(length(uuids[[i]])))
+      df <- data.frame(
+        x = 0.5,
+        y = 0.5,
+        uuid = uuids[[i]],
+        label = seq_len(length(uuids[[i]]))
+      )
       if (view > 1) {
         dims <- sapply(img, dim)
         df$size <- sapply(height / dims[2, ], min, 1)
@@ -155,19 +186,28 @@ pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
       df$img <- img
       # Plot silhouettes
       p <- ggplot(data = df) +
-        geom_phylopic(aes(x = x, y = y, img = img),
-                      height = df$size,
-                      color = "original") +
+        geom_phylopic(
+          aes(x = x, y = y, img = img),
+          height = df$size,
+          color = "original"
+        ) +
         facet_wrap(~label) +
         coord_equal(xlim = c(0, 1), ylim = c(0, 1)) +
         theme_void() +
-        theme(strip.text = element_text(face = "bold",
-                                        size = 11,
-                                        color = "purple"))
+        theme(
+          strip.text = element_text(face = "bold", size = 11, color = "purple")
+        )
       print(p)
-      m <- menu(choices = c(att_string, "Next"),
-                title = paste0("Choose an option (", i, "/",
-                               ceiling(n_uuids / view), " pages):"))
+      m <- menu(
+        choices = c(att_string, "Next"),
+        title = paste0(
+          "Choose an option (",
+          i,
+          "/",
+          ceiling(n_uuids / view),
+          " pages):"
+        )
+      )
       if (m == 0) return()
     } else {
       # Select final uuid

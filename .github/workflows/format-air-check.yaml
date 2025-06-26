@@ -1,0 +1,45 @@
+###############################################################################
+# OVERVIEW
+###############################################################################
+# The following is a workflow derived from
+# https://github.com/posit-dev/setup-air/blob/main/examples/format-check.yaml
+#
+# Description:
+#
+# This runs air format . --check on every push to main and on every pull
+# request. This is a very simple action that fails if any files would be
+# reformatted. When this happens, reformat locally using air format . or
+# the Air: Format Workspace Folder command in VS Code or Positron, and commit
+# and push the results.
+# 
+# To install air on MacOS or Linux:
+# curl -LsSf https://github.com/posit-dev/air/releases/latest/download/
+# air-installer.sh | sh
+#
+# Links:
+#
+# Air GitHub Page: https://github.com/posit-dev/air
+# Air Configuration: https://posit-dev.github.io/air/configuration.html
+# Air Actions: https://posit-dev.github.io/air/integration-github-actions.html
+###############################################################################
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+name: format-air-check.yaml
+
+permissions: read-all
+
+jobs:
+  format-check:
+    name: format-air-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install
+        uses: posit-dev/setup-air@v1
+
+      - name: Check
+        run: air format . --check

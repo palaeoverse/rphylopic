@@ -111,14 +111,27 @@
 #' # overlay smaller cats
 #' add_phylopic_base(img = cat, x = posx, y = posy, height = size, alpha = 0.8)
 #' }
-add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
-                              filter = NULL,
-                              x = NULL, y = NULL, ysize = deprecated(),
-                              height = NULL, width = NULL,
-                              alpha = 1, color = NA, fill = "black",
-                              horizontal = FALSE, vertical = FALSE, angle = 0,
-                              hjust = 0.5, vjust = 0.5,
-                              remove_background = TRUE, verbose = FALSE) {
+add_phylopic_base <- function(
+  img = NULL,
+  name = NULL,
+  uuid = NULL,
+  filter = NULL,
+  x = NULL,
+  y = NULL,
+  ysize = deprecated(),
+  height = NULL,
+  width = NULL,
+  alpha = 1,
+  color = NA,
+  fill = "black",
+  horizontal = FALSE,
+  vertical = FALSE,
+  angle = 0,
+  hjust = 0.5,
+  vjust = 0.5,
+  remove_background = TRUE,
+  verbose = FALSE
+) {
   if (all(sapply(list(img, name, uuid), is.null))) {
     stop("One of `img`, `name`, or `uuid` is required.")
   }
@@ -138,8 +151,11 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     stop("`verbose` should be a logical value.")
   }
   if (lifecycle::is_present(ysize)) {
-    lifecycle::deprecate_warn("1.5.0", "add_phylopic_base(ysize)",
-                              "add_phylopic_base(height)")
+    lifecycle::deprecate_warn(
+      "1.5.0",
+      "add_phylopic_base(ysize)",
+      "add_phylopic_base(height)"
+    )
     if (is.null(height)) height <- ysize
   }
   if (!is.null(height) & !is.null(width)) {
@@ -151,20 +167,32 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
       stop("`name` should be of class character.")
     }
     if (!verbose) {
-      warning(paste("You've used the `name` argument. You may want to use",
-                    "`verbose = TRUE` to get attribution information",
-                    "for the silhouette(s)."), call. = FALSE)
+      warning(
+        paste(
+          "You've used the `name` argument. You may want to use",
+          "`verbose = TRUE` to get attribution information",
+          "for the silhouette(s)."
+        ),
+        call. = FALSE
+      )
     }
     # Get PhyloPic for each unique name
     name_unique <- unique(name)
     imgs <- sapply(name_unique, function(x) {
-      id <- tryCatch(get_uuid(name = x, filter = filter),
-                     error = function(cond) NA)
+      id <- tryCatch(
+        get_uuid(name = x, filter = filter),
+        error = function(cond) NA
+      )
       if (is.na(id)) {
         text <- paste0("`name` ", '"', name, '"')
         if (!is.null(filter)) {
-          text <- paste0(text, " with `filter` ", '"',
-                         paste0(filter, collapse = "/"), '"')
+          text <- paste0(
+            text,
+            " with `filter` ",
+            '"',
+            paste0(filter, collapse = "/"),
+            '"'
+          )
         }
         warning(paste0(text, " returned no PhyloPic results."))
         return(NULL)
@@ -179,8 +207,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     # Get PhyloPic for each unique uuid
     uuid_unique <- unique(uuid)
     imgs <- sapply(uuid_unique, function(x) {
-      img <- tryCatch(get_phylopic(x),
-                      error = function(cond) NULL)
+      img <- tryCatch(get_phylopic(x), error = function(cond) NULL)
       if (is.null(img)) {
         warning(paste0('"', x, '"', " is not a valid PhyloPic `uuid`."))
       }
@@ -188,12 +215,18 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     })
     imgs <- imgs[uuid]
   } else {
-    if (!is.list(img)) img <- list(img)
-    if (any(sapply(img, function(x) {
-      !is(x, "Picture") && !is.array(x)
-    }))) {
-      stop(paste("`img` should be of class Picture (for a vector image)",
-                 "or class array (for a raster image)."))
+    if (!is.list(img)) {
+      img <- list(img)
+    }
+    if (
+      any(sapply(img, function(x) {
+        !is(x, "Picture") && !is.array(x)
+      }))
+    ) {
+      stop(paste(
+        "`img` should be of class Picture (for a vector image)",
+        "or class array (for a raster image)."
+      ))
     }
     imgs <- img
   }
@@ -211,27 +244,32 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   # set default position and dimensions if need be
   if (is.null(x)) {
     mn <- mean(usr[1:2])
-    x <- if (par()$xlog) 10 ^ mn else mn
+    x <- if (par()$xlog) 10^mn else mn
   }
   if (is.null(y)) {
     mn <- mean(usr[3:4])
-    y <- if (par()$ylog) 10 ^ mn else mn
+    y <- if (par()$ylog) 10^mn else mn
   }
   if (is.null(height) && is.null(width)) {
     height <- abs(diff(usr_y))
     width <- abs(diff(usr_x))
   }
-  
+
   # convert x and y to normalized device coordinates
   x <- grconvertX(x, to = "ndc")
   y <- grconvertY(y, to = "ndc")
-  
+
   # convert width and/or height to normalized device coordinates if need be
   if (!is.null(height)) {
     if (any(height < (abs(diff(usr[3:4])) / 1000), na.rm = TRUE)) {
-      warning(paste("Your specified silhouette `height`(s) are more than",
-                    "1000 times smaller than your y-axis range. You probably",
-                    "want to use a larger `height`."), call. = FALSE)
+      warning(
+        paste(
+          "Your specified silhouette `height`(s) are more than",
+          "1000 times smaller than your y-axis range. You probably",
+          "want to use a larger `height`."
+        ),
+        call. = FALSE
+      )
     }
     if (par()$ylog) {
       base_y <- grconvertY(1, to = "ndc")
@@ -242,9 +280,14 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
   }
   if (!is.null(width)) {
     if (any(width < (abs(diff(usr[1:2])) / 1000), na.rm = TRUE)) {
-      warning(paste("Your specified silhouette `width`(s) are more than 1000",
-                    "times smaller than your x-axis range. You probably want",
-                    "to use a larger `width`."), call. = FALSE)
+      warning(
+        paste(
+          "Your specified silhouette `width`(s) are more than 1000",
+          "times smaller than your x-axis range. You probably want",
+          "to use a larger `width`."
+        ),
+        call. = FALSE
+      )
     }
     if (par()$xlog) {
       base_x <- grconvertX(1, to = "ndc")
@@ -253,54 +296,119 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     }
     width <- grconvertX(width, to = "ndc") - base_x
   }
-  
+
   # change NULLs to NAs
-  if (is.null(width)) width <- NA
-  if (is.null(height)) height <- NA
+  if (is.null(width)) {
+    width <- NA
+  }
+  if (is.null(height)) {
+    height <- NA
+  }
 
-  invisible(mapply(function(img, x, y, height, width, alpha, color, fill,
-                            horizontal, vertical, angle, hjust, vjust) {
-    if (is.null(img)) return(NULL)
-
-    if (horizontal || vertical) img <- flip_phylopic(img, horizontal, vertical)
-    if (angle != 0) img <- rotate_phylopic(img, angle)
-
-    # recolor if necessary
-    if (is.na(color) || color == "original") color <- NULL
-    if (is.na(fill)) {
-      fill <- color
-      color <- NULL
-    }
-    if (fill == "original") fill <- NULL
-    img <- recolor_phylopic(img, alpha, color, fill, remove_background)
-
-    # convert NAs back to NULLs
-    if (is.na(width)) width <- NULL
-    if (is.na(height)) height <- NULL
-
-    # grobify and plot
-    if (is(img, "Picture")) { # svg
-      if ("summary" %in% slotNames(img) &&
-          all(c("xscale", "yscale") %in% slotNames(img@summary)) &&
-          is.numeric(img@summary@xscale) && length(img@summary@xscale) == 2 &&
-          all(is.finite(img@summary@xscale)) && diff(img@summary@xscale) != 0 &&
-          is.numeric(img@summary@yscale) && length(img@summary@yscale) == 2 &&
-          all(is.finite(img@summary@yscale)) && diff(img@summary@yscale) != 0) {
-        grid.picture(img, x = x, y = y, height = height, width = width,
-                     expansion = 0, hjust = hjust, vjust = vjust,
-                     delayContent = TRUE)
-      } else {
+  invisible(mapply(
+    function(
+      img,
+      x,
+      y,
+      height,
+      width,
+      alpha,
+      color,
+      fill,
+      horizontal,
+      vertical,
+      angle,
+      hjust,
+      vjust
+    ) {
+      if (is.null(img)) {
         return(NULL)
       }
-    } else { # png
-      # check width and height are correct aspect ratio
-      grid.raster(img, x = x, y = y, width = width, height = height,
-                  hjust = hjust, vjust = vjust)
-      
-    }
-  },
-  img = imgs, x = x, y = y,
-  height = height, width = width, alpha = alpha, color = color, fill = fill,
-  horizontal = horizontal, vertical = vertical, angle = angle,
-  hjust = hjust, vjust = vjust))
+
+      if (horizontal || vertical) {
+        img <- flip_phylopic(img, horizontal, vertical)
+      }
+      if (angle != 0) {
+        img <- rotate_phylopic(img, angle)
+      }
+
+      # recolor if necessary
+      if (is.na(color) || color == "original") {
+        color <- NULL
+      }
+      if (is.na(fill)) {
+        fill <- color
+        color <- NULL
+      }
+      if (fill == "original") {
+        fill <- NULL
+      }
+      img <- recolor_phylopic(img, alpha, color, fill, remove_background)
+
+      # convert NAs back to NULLs
+      if (is.na(width)) {
+        width <- NULL
+      }
+      if (is.na(height)) {
+        height <- NULL
+      }
+
+      # grobify and plot
+      if (is(img, "Picture")) {
+        # svg
+        if (
+          "summary" %in%
+            slotNames(img) &&
+            all(c("xscale", "yscale") %in% slotNames(img@summary)) &&
+            is.numeric(img@summary@xscale) &&
+            length(img@summary@xscale) == 2 &&
+            all(is.finite(img@summary@xscale)) &&
+            diff(img@summary@xscale) != 0 &&
+            is.numeric(img@summary@yscale) &&
+            length(img@summary@yscale) == 2 &&
+            all(is.finite(img@summary@yscale)) &&
+            diff(img@summary@yscale) != 0
+        ) {
+          grid.picture(
+            img,
+            x = x,
+            y = y,
+            height = height,
+            width = width,
+            expansion = 0,
+            hjust = hjust,
+            vjust = vjust,
+            delayContent = TRUE
+          )
+        } else {
+          return(NULL)
+        }
+      } else {
+        # png
+        # check width and height are correct aspect ratio
+        grid.raster(
+          img,
+          x = x,
+          y = y,
+          width = width,
+          height = height,
+          hjust = hjust,
+          vjust = vjust
+        )
+      }
+    },
+    img = imgs,
+    x = x,
+    y = y,
+    height = height,
+    width = width,
+    alpha = alpha,
+    color = color,
+    fill = fill,
+    horizontal = horizontal,
+    vertical = vertical,
+    angle = angle,
+    hjust = hjust,
+    vjust = vjust
+  ))
 }

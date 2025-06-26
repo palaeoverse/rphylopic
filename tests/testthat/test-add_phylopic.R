@@ -11,11 +11,19 @@ test_that("add_phylopic works", {
   expect_doppelganger("phylopic in background", p)
 
   # png phylopic in background
-  cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                          format = "raster")
+  cat_png <- get_phylopic(
+    "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+    format = "raster"
+  )
   p <- ggplot(iris) +
-    add_phylopic(cat_png, x = 6.1, y = 3.2, alpha = 0.2, angle = 90,
-                 horizontal = TRUE) +
+    add_phylopic(
+      cat_png,
+      x = 6.1,
+      y = 3.2,
+      alpha = 0.2,
+      angle = 90,
+      horizontal = TRUE
+    ) +
     geom_point(aes(x = Sepal.Length, y = Sepal.Width))
   expect_doppelganger("phylopic png in background", p)
 
@@ -27,41 +35,72 @@ test_that("add_phylopic works", {
   angle <- runif(10, 0, 360)
   hor <- sample(c(TRUE, FALSE), 10, TRUE)
   ver <- sample(c(TRUE, FALSE), 10, TRUE)
-  fills <- sample(c("black", "darkorange", "grey42", "white"), 10,
-                 replace = TRUE)
+  fills <- sample(
+    c("black", "darkorange", "grey42", "white"),
+    10,
+    replace = TRUE
+  )
   cols <- ifelse(fills == "white", "black", NA)
   alpha <- runif(10, 0, 1)
 
   p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
     geom_blank() +
-    add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                 x = posx, y = posy, height = sizey,
-                 fill = fills, color = cols, alpha = alpha,
-                 angle = angle, horizontal = hor, vertical = ver)
+    add_phylopic(
+      uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+      x = posx,
+      y = posy,
+      height = sizey,
+      fill = fills,
+      color = cols,
+      alpha = alpha,
+      angle = angle,
+      horizontal = hor,
+      vertical = ver
+    )
   expect_doppelganger("phylopics on top of plot", p)
-  
+
   p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
     geom_blank() +
-    add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                 x = posx, y = posy, width = sizey,
-                 fill = fills, color = cols, alpha = alpha,
-                 angle = angle, horizontal = hor, vertical = ver)
+    add_phylopic(
+      uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+      x = posx,
+      y = posy,
+      width = sizey,
+      fill = fills,
+      color = cols,
+      alpha = alpha,
+      angle = angle,
+      horizontal = hor,
+      vertical = ver
+    )
   expect_doppelganger("phylopics with widths", p)
 
   p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
     geom_blank() +
-    add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                 x = posx, y = posy,
-                 width = c(1, NA, 2, NA), height = c(NA, 1, NA, 2),
-                 fill = fills, color = cols, alpha = alpha,
-                 angle = angle, horizontal = hor, vertical = ver)
+    add_phylopic(
+      uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+      x = posx,
+      y = posy,
+      width = c(1, NA, 2, NA),
+      height = c(NA, 1, NA, 2),
+      fill = fills,
+      color = cols,
+      alpha = alpha,
+      angle = angle,
+      horizontal = hor,
+      vertical = ver
+    )
   expect_doppelganger("phylopics with alt height and width", p)
 
   lifecycle::expect_deprecated({
     p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
       geom_blank() +
-      add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                   x = posx, y = posy, ysize = sizey)
+      add_phylopic(
+        uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+        x = posx,
+        y = posy,
+        ysize = sizey
+      )
     plot(p)
   })
 

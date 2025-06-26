@@ -10,7 +10,7 @@
 #'   is supplied, `uuid` is ignored. Defaults to NULL.
 #' @param text \code{logical}. Should attribution information be returned as
 #' a text paragraph? Defaults to `FALSE`.
-#' @param permalink \code{logical}. Should a permalink be created for this 
+#' @param permalink \code{logical}. Should a permalink be created for this
 #' collection of `uuid`(s)? Defaults to `FALSE`.
 #'
 #' @return A \code{list} of PhyloPic attribution data for an image `uuid` or
@@ -20,10 +20,10 @@
 #'   including: contributor name, contributor uuid, contributor contact,
 #'   image uuid, license, and license abbreviation. If `text` is set to
 #'   `TRUE`, a text paragraph with the contributor name, year of contribution,
-#'    and license type is printed and image attribution data is returned 
-#'    invisibly (i.e. using [invisible()]. If `permalink` is set to `TRUE`, a 
+#'    and license type is printed and image attribution data is returned
+#'    invisibly (i.e. using [invisible()]. If `permalink` is set to `TRUE`, a
 #'    permanent link (hosted by [PhyloPic](https://www.phylopic.org)) will be
-#'    generated. This link can be used to view and share details about the 
+#'    generated. This link can be used to view and share details about the
 #'    image silhouettes, including contributors and licenses.
 #' @importFrom knitr combine_words
 #' @importFrom utils packageVersion
@@ -34,7 +34,7 @@
 #' uuid <- get_uuid(name = "Acropora cervicornis")
 #' # Get attribution data for uuid
 #' attri <- get_attribution(uuid = uuid)
-#' 
+#'
 #' # Get list of valid uuids
 #' uuids <- get_uuid(name = "Scleractinia", n = 5)
 #' # Get attribution data for uuids
@@ -42,8 +42,12 @@
 #' # Get attribution data for uuids and create permalink
 #' get_attribution(uuid = uuids, text = TRUE, permalink = TRUE)
 #' }
-get_attribution <- function(uuid = NULL, img = NULL, text = FALSE, 
-                            permalink = FALSE) {
+get_attribution <- function(
+  uuid = NULL,
+  img = NULL,
+  text = FALSE,
+  permalink = FALSE
+) {
   # Handle img -----------------------------------------------------------
   if (!is.null(img)) {
     if (is.list(img)) {
@@ -66,27 +70,30 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE,
     stop("`text` should be of class logical.")
   }
   # Get licenses ---------------------------------------------------------
-  links <- c("https://creativecommons.org/publicdomain/zero/1.0/",
-             "https://creativecommons.org/publicdomain/mark/1.0/",
-             "https://creativecommons.org/licenses/by/4.0/",
-             "https://creativecommons.org/licenses/by-sa/3.0/",
-             "https://creativecommons.org/licenses/by/3.0/",
-             "https://creativecommons.org/licenses/by-nc-sa/3.0/",
-             "https://creativecommons.org/licenses/by-nc/3.0/")
-  abbr <- c("CC0 1.0",
-            "Public Domain Mark 1.0",
-            "CC BY 4.0",
-            "CC BY-SA 3.0",
-            "CC BY 3.0",
-            "CC BY-NC-SA 3.0",
-            "CC BY-NC 3.0")
+  links <- c(
+    "https://creativecommons.org/publicdomain/zero/1.0/",
+    "https://creativecommons.org/publicdomain/mark/1.0/",
+    "https://creativecommons.org/licenses/by/4.0/",
+    "https://creativecommons.org/licenses/by-sa/3.0/",
+    "https://creativecommons.org/licenses/by/3.0/",
+    "https://creativecommons.org/licenses/by-nc-sa/3.0/",
+    "https://creativecommons.org/licenses/by-nc/3.0/"
+  )
+  abbr <- c(
+    "CC0 1.0",
+    "Public Domain Mark 1.0",
+    "CC BY 4.0",
+    "CC BY-SA 3.0",
+    "CC BY 3.0",
+    "CC BY-NC-SA 3.0",
+    "CC BY-NC 3.0"
+  )
   licenses <- data.frame(links, abbr)
   # Create permalink ------------------------------------------------------
   if (permalink) {
     coll <- phy_POST(path = "collections", body = uuid)$uuid
-    url <- paste0("https://www.phylopic.org/api/permalinks/collections/", 
-                  coll)
-    coll <- GET(url = url) 
+    url <- paste0("https://www.phylopic.org/api/permalinks/collections/", coll)
+    coll <- GET(url = url)
     hash <- response_to_JSON(coll)
     perm <- paste0("https://www.phylopic.org/permalinks/", hash)
   }
@@ -99,8 +106,10 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE,
     })
     att <- unlist(att, recursive = FALSE)
   } else {
-    api_return <- phy_GET(file.path("images", uuid),
-                          list(embed_contributor = "true"))
+    api_return <- phy_GET(
+      file.path("images", uuid),
+      list(embed_contributor = "true")
+    )
     # Process output -------------------------------------------------------
     att <- list(
       attribution = api_return$attribution,
@@ -125,7 +134,7 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE,
     if (is.null(att$attribution)) {
       att$attribution <- "Unknown"
     }
-    # Make sublist 
+    # Make sublist
     att <- list(images = att)
     names(att) <- uuid
   }
@@ -133,9 +142,15 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE,
   if (text) {
     # Attributors
     txt <- lapply(att, function(x) {
-      paste0(x$attribution, ", ",
-             substr(x$created, start = 1, stop = 4), " ",
-             "(", x$license_abbr, ")")
+      paste0(
+        x$attribution,
+        ", ",
+        substr(x$created, start = 1, stop = 4),
+        " ",
+        "(",
+        x$license_abbr,
+        ")"
+      )
     })
     # Keep unique items
     txt <- unique(unlist(txt))
@@ -158,15 +173,24 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE,
     } else {
       cont <- paste0("Silhouette was contributed by ", toString(cont), ".")
     }
-    txt <- paste0("Organism silhouettes are from PhyloPic ",
-                  "(https://www.phylopic.org/; T. Michael Keesey, 2023) ",
-                  "and were added using the rphylopic R package ver. ",
-                  packageVersion("rphylopic"), " (Gearty & Jones, 2023). ",
-                  txt, " ", cont)
+    txt <- paste0(
+      "Organism silhouettes are from PhyloPic ",
+      "(https://www.phylopic.org/; T. Michael Keesey, 2023) ",
+      "and were added using the rphylopic R package ver. ",
+      packageVersion("rphylopic"),
+      " (Gearty & Jones, 2023). ",
+      txt,
+      " ",
+      cont
+    )
     # Add permalink?
     if (permalink) {
-      txt <- paste0(txt, " Full attribution details are available at: ", 
-                    perm, ".")
+      txt <- paste0(
+        txt,
+        " Full attribution details are available at: ",
+        perm,
+        "."
+      )
     }
   }
   # Assign to images

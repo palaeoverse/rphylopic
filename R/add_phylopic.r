@@ -102,12 +102,27 @@
 #'                horizontal = hor, vertical = ver)
 #' p + ggtitle("R Cat Herd!!")
 #' }
-add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
-                         x, y, ysize = deprecated(), height = NA, width = NA,
-                         alpha = 1, color = NA, fill = "black",
-                         horizontal = FALSE, vertical = FALSE, angle = 0,
-                         hjust = 0.5, vjust = 0.5,
-                         remove_background = TRUE, verbose = FALSE) {
+add_phylopic <- function(
+  img = NULL,
+  name = NULL,
+  uuid = NULL,
+  filter = NULL,
+  x,
+  y,
+  ysize = deprecated(),
+  height = NA,
+  width = NA,
+  alpha = 1,
+  color = NA,
+  fill = "black",
+  horizontal = FALSE,
+  vertical = FALSE,
+  angle = 0,
+  hjust = 0.5,
+  vjust = 0.5,
+  remove_background = TRUE,
+  verbose = FALSE
+) {
   if (all(sapply(list(img, name, uuid), is.null))) {
     stop("One of `img`, `name`, or `uuid` is required.")
   }
@@ -119,8 +134,11 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
   }
 
   if (lifecycle::is_present(ysize)) {
-    lifecycle::deprecate_warn("1.5.0", "add_phylopic(ysize)",
-                              "add_phylopic(height)")
+    lifecycle::deprecate_warn(
+      "1.5.0",
+      "add_phylopic(ysize)",
+      "add_phylopic(height)"
+    )
     if (is.null(height) || all(is.na(height))) height <- ysize
   }
 
@@ -142,13 +160,24 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
   vjust <- rep_len(vjust, max_len)
 
   # Put together all of the variables
-  args <- list(geom = GeomPhylopic,
-               x = x, y = y, height = height, width = width,
-               alpha = alpha, color = color, fill = fill,
-               horizontal = horizontal, vertical = vertical, angle = angle,
-               hjust = hjust, vjust = vjust,
-               remove_background = remove_background, verbose = verbose,
-               filter = list(filter))
+  args <- list(
+    geom = GeomPhylopic,
+    x = x,
+    y = y,
+    height = height,
+    width = width,
+    alpha = alpha,
+    color = color,
+    fill = fill,
+    horizontal = horizontal,
+    vertical = vertical,
+    angle = angle,
+    hjust = hjust,
+    vjust = vjust,
+    remove_background = remove_background,
+    verbose = verbose,
+    filter = list(filter)
+  )
   # Only include the one silhouette argument
   if (!is.null(img)) {
     if (is.list(img)) {
@@ -157,8 +186,12 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
       args$img <- rep_len(list(img), max_len)
     }
   }
-  if (!is.null(name)) args$name <- rep_len(name, max_len)
-  if (!is.null(uuid)) args$uuid <- rep_len(uuid, max_len)
+  if (!is.null(name)) {
+    args$name <- rep_len(name, max_len)
+  }
+  if (!is.null(uuid)) {
+    args$uuid <- rep_len(uuid, max_len)
+  }
 
   return(do.call(annotate, args))
 }
