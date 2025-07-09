@@ -213,9 +213,9 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
 
 # check that a particular URL (e.g., for an API) is online
 check_url <- function(url) {
-  headers <- curlGetHeaders(url)
+  tryCatch(headers <- curlGetHeaders(url), error = function(e) e)
   if (attr(headers, "status") != 200) {
-    stop("API is not available or you have no internet connection.")
+    stop("API is not available. Error status: ", attr(headers, "status"), ".")
   }
 }
 
