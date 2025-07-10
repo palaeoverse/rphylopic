@@ -68,8 +68,6 @@ rphylopic.igraph <- function(coords, v = NULL, params) {
 #' 
 #' @details Additional details...
 #' 
-#' @importFrom igraph add_shape
-#' @importFrom igraph shape_noclip
 #' @importFrom rlang check_installed
 #' @export
 #' @examples \dontrun{
@@ -84,25 +82,25 @@ rphylopic.igraph <- function(coords, v = NULL, params) {
 #' }
 activate_igraph <- function() {
   check_installed("igraph", reason = "to use `rphylopic_igraph_activate()`")
-  add_shape("phylopic",
-            clip = shape_noclip,
-            plot = rphylopic.igraph,
-            parameters = list(
-              vertex.img = NULL,
-              vertex.name = NULL,
-              vertex.uuid = NULL,
-              vertex.filter = NULL,
-              vertex.alpha = 1,
-              vertex.color = "black",
-              vertex.frame.color = NA,
-              vertex.size = 20,
-              vertex.horizontal = FALSE,
-              vertex.vertical = FALSE,
-              vertex.angle = 0,
-              vertex.hjust = 0.5,
-              vertex.vjust = 0.5,
-              vertex.remove_background = TRUE,
-              vertex.verbose = FALSE
-            )
+  igraph::add_shape("phylopic",
+                    clip = igraph::shape_noclip,
+                    plot = rphylopic.igraph,
+                    parameters = list(
+                      vertex.img = NULL,
+                      vertex.name = NULL,
+                      vertex.uuid = NULL,
+                      vertex.filter = NULL,
+                      vertex.alpha = 1,
+                      vertex.color = "black",
+                      vertex.frame.color = NA,
+                      vertex.size = 20,
+                      vertex.horizontal = FALSE,
+                      vertex.vertical = FALSE,
+                      vertex.angle = 0,
+                      vertex.hjust = 0.5,
+                      vertex.vjust = 0.5,
+                      vertex.remove_background = TRUE,
+                      vertex.verbose = FALSE
+                    )
   )
 }
