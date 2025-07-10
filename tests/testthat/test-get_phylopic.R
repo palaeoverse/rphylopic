@@ -8,6 +8,10 @@ test_that("get_phylopic works", {
   expect_true(is(get_phylopic(uuid = uuid, format = "raster"), "array"))
   expect_true(is(get_phylopic(uuid = uuid, format = "raster",
                               height = 300), "array"))
+  expect_true(is(get_phylopic(uuid = uuid, format = "vector", source = TRUE),
+                 "Picture"))
+  expect_true(is(get_phylopic(uuid = uuid, format = "raster", source = TRUE),
+                 "array"))
 
   expect_no_error(get_phylopic(uuid = uuid, preview = TRUE))
 
