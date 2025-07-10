@@ -43,6 +43,7 @@ reference:
   - add_phylopic_base
   - add_phylopic_legend
   - add_phylopic_tree
+  - activate_igraph
 - title: Modifying silhouettes
   desc: >
     Functions to modify silhouettes in various ways.
