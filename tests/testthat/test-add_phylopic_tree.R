@@ -40,7 +40,7 @@ test_that("add_phylopic_tree works", {
       "mouse",
       name = "mus",
       relWidth = 0.2,
-      relPadding = 0.8, # Should appear flush with left margin
+      relPadding = -0.85, # Should appear flush with left margin
       fill = "lightblue",
       vjust = 1
     ),
@@ -91,7 +91,7 @@ test_that("add_phylopic_tree works", {
       "mouse",
       uuid = "dd0a795e-4be3-4f99-a084-2427c1319d31",
       relWidth = 0.2,
-      relPadding = 0.8, # Should appear flush with left margin
+      relPadding = -0.85, # Should appear flush with left margin
       fill = "lightblue",
       vjust = 1
     )
@@ -100,7 +100,7 @@ test_that("add_phylopic_tree works", {
       "dog",
       uuid = "6f3ebbc6-be53-4216-b45b-946f7984669b",
       relWidth = 0.16,
-      padding = -0.08, # Half off the page
+      padding = 0.08, # Half off the page
       fill = "#665566"
     )
   })
@@ -125,7 +125,7 @@ test_that("add_phylopic_tree works with vectors", {
              "dd0a795e-4be3-4f99-a084-2427c1319d31"
     ),
     relWidth = c(0.1, 0.2, 0.16, 9, 9),
-    padding = c(1/200, 0.8, -0.08, 0, 0),
+    padding = c(-1/200, -0.85, 0.08, 0, 0),
     vjust = c(0.2, 1, 1, 0.5, 0.5),
     fill = c("brown", "lightblue", "#665566", "red", "red"),
   ),
@@ -145,7 +145,7 @@ test_that("add_phylopic_tree works with vectors", {
                mouse = "dd0a795e-4be3-4f99-a084-2427c1319d31",
                dog = "6f3ebbc6-be53-4216-b45b-946f7984669b"),
       relWidth = c(0.1, 0.2, 0.16),
-      padding = c(1/200, 0.8, -0.08),
+      padding = c(-1/200, -0.85, 0.08),
       vjust = c(0.2, 1, 1),
       fill = c("brown", "lightblue", "#665566"),
     )
