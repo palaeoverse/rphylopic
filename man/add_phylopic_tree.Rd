@@ -19,11 +19,11 @@ add_phylopic_tree(
 )
 }
 \arguments{
-\item{tree}{The phylogenetic tree object of class \code{phylo} on which to add
-the silhouette.}
+\item{tree}{The phylogenetic tree object of class \code{phylo} on which to add the
+silhouette.}
 
-\item{tip}{The tip labels against which to add the silhouettes.
-If not specified, the names of the \code{img}, \code{uuid} or \code{name} vector are used.}
+\item{tip}{The tip labels against which to add the silhouettes. If not
+specified, the names of the \code{img}, \code{uuid} or \code{name} vector are used.}
 
 \item{img}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
 from using \code{\link[=get_phylopic]{get_phylopic()}}.}
@@ -40,17 +40,16 @@ width is determined by the aspect ratio of the original image. One or both
 of \code{height} and \code{width} must be "NULL".}
 
 \item{padding, relPadding}{Distance to inset each silhouette from the right
-edge of the plotting area,
-in the plot coordinate system (\code{padding}) or
-relative to the size of the plotting area (\code{relPadding}).
-Negative values offset to the right.}
+edge of the plotting area, in the plot coordinate system (\code{padding}) or
+relative to the size of the plotting area (\code{relPadding}). Negative values
+offset to the right.}
 
 \item{relWidth}{The width of each silhouette relative to the plotting area.}
 
 \item{hjust}{\code{numeric}. A numeric vector between 0 and 1 specifying
 horizontal justification (left = 0, center = 0.5, right = 1).}
 
-\item{\dots}{Further arguments to pass to \code{add_phylopic_base()}.}
+\item{\dots}{Further arguments to pass to \code{\link[=add_phylopic_base]{add_phylopic_base()}}.}
 }
 \description{
 Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
@@ -60,7 +59,7 @@ functions.
 }
 \examples{
 \dontrun{
- # Load the ape library to work with phylogenetic trees
+# Load the ape library to work with phylogenetic trees
 library("ape")
 
 # Read a phylogenetic tree

@@ -6,26 +6,24 @@
 #' functions.
 #'
 #' @inheritParams add_phylopic_base
-#' @param tree The phylogenetic tree object of class `phylo` on which to add
-#' the silhouette.
-#' @param tip The tip labels against which to add the silhouettes.
-#' If not specified, the names of the `img`, `uuid` or `name` vector are used.
+#' @param tree The phylogenetic tree object of class `phylo` on which to add the
+#'   silhouette.
+#' @param tip The tip labels against which to add the silhouettes. If not
+#'   specified, the names of the `img`, `uuid` or `name` vector are used.
 #' @param relWidth The width of each silhouette relative to the plotting area.
 #' @param padding,relPadding Distance to inset each silhouette from the right
-#' edge of the plotting area,
-#' in the plot coordinate system (`padding`) or
-#' relative to the size of the plotting area (`relPadding`).
-#' Negative values offset to the right.
-#' @param \dots Further arguments to pass to `add_phylopic_base()`.
-#' @author [Martin R. Smith](https://orcid.org/0000-0001-5660-1727) 
-#' (<martin.smith@durham.ac.uk>)
-#' @seealso
-#' For trees plotted using \pkg{ggtree}, see [`geom_phylopic()`].
+#'   edge of the plotting area, in the plot coordinate system (`padding`) or
+#'   relative to the size of the plotting area (`relPadding`). Negative values
+#'   offset to the right.
+#' @param \dots Further arguments to pass to [add_phylopic_base()].
+#' @author [Martin R. Smith](https://orcid.org/0000-0001-5660-1727)
+#'   (<martin.smith@durham.ac.uk>)
+#' @seealso For trees plotted using \pkg{ggtree}, see [`geom_phylopic()`].
 #' @importFrom ape plot.phylo .PlotPhyloEnv
 #' @importFrom grDevices dev.cur
 #' @export
 #' @examples \dontrun{
-#'  # Load the ape library to work with phylogenetic trees
+#' # Load the ape library to work with phylogenetic trees
 #' library("ape")
 #' 
 #' # Read a phylogenetic tree
