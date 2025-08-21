@@ -161,7 +161,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
       id <- tryCatch(get_uuid(name = x, filter = filter),
                      error = function(cond) NA)
       if (is.na(id)) {
-        text <- paste0("`name` ", '"', name, '"')
+        text <- paste0("`name` ", '"', x, '"')
         if (!is.null(filter)) {
           text <- paste0(text, " with `filter` ", '"',
                          paste0(filter, collapse = "/"), '"')

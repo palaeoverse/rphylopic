@@ -1,6 +1,7 @@
 # rphylopic (development version)
 
 * Added add_phylopic_tree() to add silhouettes to plotted trees (#110)
+* Fixed a bug in add_phylopic_base() where all names were reported as not returning PhyloPic results when only a single name actually returned no PhyloPic results
 
 # rphylopic 1.5.0
 
