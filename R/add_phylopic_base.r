@@ -166,7 +166,7 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
           text <- paste0(text, " with `filter` ", '"',
                          paste0(filter, collapse = "/"), '"')
         }
-        warning(paste0(text, " returned no PhyloPic results."))
+        warning(paste0(text, " returned no PhyloPic results."), call. = FALSE)
         return(NULL)
       }
       get_phylopic(id)
