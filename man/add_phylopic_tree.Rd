@@ -33,18 +33,15 @@ from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 \item{uuid}{\code{character}. A valid uuid for a PhyloPic silhouette (such as
 that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
-\item{width}{\code{numeric}. Width of the silhouette in coordinate space. If
-"NULL", the default, and \code{height} is also "NULL", the silhouette will be as
-large as fits in the plot area. If "NULL" and \code{height} is specified, the
-width is determined by the aspect ratio of the original image. One or both
-of \code{height} and \code{width} must be "NULL".}
+\item{width, relWidth}{The width of each silhouette, in the plot coordinate
+system (\code{width}) or relative to the size of the plotting area (\code{relWidth}).
+If "NULL" and \code{height} is specified, the width is determined by the aspect
+ratio of the original image. One of height and width must be "NULL".}
 
-\item{padding, relPadding}{Distance to inset each silhouette from the right
-edge of the plotting area, in the plot coordinate system (\code{padding}) or
-relative to the size of the plotting area (\code{relPadding}). Negative values
-offset to the right.}
-
-\item{relWidth}{The width of each silhouette relative to the plotting area.}
+\item{padding, relPadding}{Distance to inset each silhouette from it's
+respective tree tip, in the plot coordinate system (\code{padding}) or relative
+to the size of the plotting area (\code{relPadding}). Negative values offset to
+the left.}
 
 \item{hjust}{\code{numeric}. A numeric vector between 0 and 1 specifying
 horizontal justification (left = 0, center = 0.5, right = 1).}

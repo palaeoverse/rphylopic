@@ -10,11 +10,14 @@
 #'   silhouette.
 #' @param tip The tip labels against which to add the silhouettes. If not
 #'   specified, the names of the `img`, `uuid` or `name` vector are used.
-#' @param relWidth The width of each silhouette relative to the plotting area.
-#' @param padding,relPadding Distance to inset each silhouette from the right
-#'   edge of the plotting area, in the plot coordinate system (`padding`) or
-#'   relative to the size of the plotting area (`relPadding`). Negative values
-#'   offset to the right.
+#' @param width,relWidth The width of each silhouette, in the plot coordinate
+#'   system (`width`) or relative to the size of the plotting area (`relWidth`).
+#'   If "NULL" and `height` is specified, the width is determined by the aspect
+#'   ratio of the original image. One of height and width must be "NULL".
+#' @param padding,relPadding Distance to inset each silhouette from it's
+#'   respective tree tip, in the plot coordinate system (`padding`) or relative
+#'   to the size of the plotting area (`relPadding`). Negative values offset to
+#'   the left.
 #' @param \dots Further arguments to pass to [add_phylopic_base()].
 #' @author [Martin R. Smith](https://orcid.org/0000-0001-5660-1727)
 #'   (<martin.smith@durham.ac.uk>)
