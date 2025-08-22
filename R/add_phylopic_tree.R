@@ -10,12 +10,20 @@
 #'   silhouette.
 #' @param tip The tip labels against which to add the silhouettes. If not
 #'   specified, the names of the `img`, `uuid` or `name` vector are used.
+#' @param align \code{character}. Should each silhouette be aligned to its
+#'   respective tip (`"tip"`, the default) or to the right-hand side of the
+#'   plotting area (`"plot"`)? If `"tip"` is specified, the silhouette is placed
+#'   at the x coordinate of the respective tip, plus any horizontal padding
+#'   specified by `padding` or `relPadding`. If `"plot"` is specified, the
+#'   silhouette is placed at the right-hand side of the plotting area,
+#'   determined by `par("usr")`, plus any horizontal padding specified by
+#'   `padding` or `relPadding`.
 #' @param width,relWidth The width of each silhouette, in the plot coordinate
 #'   system (`width`) or relative to the size of the plotting area (`relWidth`).
 #'   If "NULL" and `height` is specified, the width is determined by the aspect
 #'   ratio of the original image. One of height and width must be "NULL".
-#' @param padding,relPadding Distance to inset each silhouette from it's
-#'   respective tree tip, in the plot coordinate system (`padding`) or relative
+#' @param padding,relPadding Horizontal padding for each silhouette from it's
+#'   respective x value, in the plot coordinate system (`padding`) or relative
 #'   to the size of the plotting area (`relPadding`). Negative values offset to
 #'   the left.
 #' @param \dots Further arguments to pass to [add_phylopic_base()].
@@ -51,11 +59,13 @@ add_phylopic_tree <- function(tree, tip = names(img) %||% names(uuid) %||%
                                 names(name) %||% name,
                               img = NULL,
                               name = if (is.null(img) && is.null(uuid)) tip 
-                                else NULL, 
-                              uuid = NULL, width, padding = NULL,
+                                else NULL,
+                              uuid = NULL, align = "tip",
+                              width, padding = NULL,
                               relWidth = 0.06, relPadding = 1/200,
                               hjust = 0,
                               ...) {
+  align <- match.arg(align, c("tip", "plot"))
   if (dev.cur() < 2) {
     # It would be nice to check whether the plotting device that contains
     # last_plot.phylo is still the active device, but this is not possible - so
@@ -91,7 +101,9 @@ add_phylopic_tree <- function(tree, tip = names(img) %||% names(uuid) %||%
     img = img,
     name = name,
     uuid = uuid,
-    x = coords[["xx"]][leafIndex] + padX,
+    x = switch(align,
+               tip = coords[["xx"]][leafIndex],
+               plot = rightEdge) + padX,
     y = coords[["yy"]][leafIndex],
     hjust = hjust,
     width = width,

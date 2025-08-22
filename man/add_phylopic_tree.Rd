@@ -10,6 +10,7 @@ add_phylopic_tree(
   img = NULL,
   name = if (is.null(img) && is.null(uuid)) tip else NULL,
   uuid = NULL,
+  align = "tip",
   width,
   padding = NULL,
   relWidth = 0.06,
@@ -33,13 +34,22 @@ from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 \item{uuid}{\code{character}. A valid uuid for a PhyloPic silhouette (such as
 that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
+\item{align}{\code{character}. Should the silhouette be aligned to the
+respective tip (\code{"tip"}, the default) or to the right-hand side of the
+plotting area (\code{"plot"})? If \code{"tip"} is specified, the silhouette is placed
+at the x coordinate of the respective tip, plus any horizontal padding
+specified by \code{padding} or \code{relPadding}. If \code{"plot"} is specified, the
+silhouette is placed at the right-hand side of the plotting area,
+determined by \code{par("usr")}, plus any horizontal padding specified by
+\code{padding} or \code{relPadding}.}
+
 \item{width, relWidth}{The width of each silhouette, in the plot coordinate
 system (\code{width}) or relative to the size of the plotting area (\code{relWidth}).
 If "NULL" and \code{height} is specified, the width is determined by the aspect
 ratio of the original image. One of height and width must be "NULL".}
 
-\item{padding, relPadding}{Distance to inset each silhouette from it's
-respective tree tip, in the plot coordinate system (\code{padding}) or relative
+\item{padding, relPadding}{Horizontal padding for each silhouette from it's
+respective x value, in the plot coordinate system (\code{padding}) or relative
 to the size of the plotting area (\code{relPadding}). Negative values offset to
 the left.}
 
