@@ -276,13 +276,14 @@ plot(vertebrate.tree)
 axis_geo_phylo(intervals = "periods")
 ```
 
-That's looking a lot prettier! Let's go ahead and replace the tip labels with our silhouettes now using `add_phylopic_base()`. Note that while it may look like all of the tips have an x-axis value of 0, that's actually a trick from `axis_geo_phylo()`. In reality, the left end of the x-axis is 0, and the right end of the x-axis is the total height of the tree. We can calculate this using the `nodeHeights()` function.
+That's looking a lot prettier! Let's go ahead and replace the tip labels with our silhouettes now using `add_phylopic_tree()` (a wrapper of `add_phylopic_base()` for phylogenetic trees). Note that while it may look like all of the tips have an x-axis value of 0, that's actually a trick from `axis_geo_phylo()`. In reality, the left end of the x-axis is 0, and the right end of the x-axis is the total height of the tree. Fortunately, `add_phylopic_tree()` figures out the x and y coordinates for the silhouettes for us, so we don't have to worry about doing any funny math.
 
 ```{r base-phylo-plot-3}
 plot(vertebrate.tree, show.tip.label = FALSE)
 axis_geo_phylo(intervals = "periods")
-add_phylopic_base(img = vertebrate_data$svg,
-                  x = max(nodeHeights(vertebrate.tree)), y = 1:11, height = 0.5)
+add_phylopic_tree(vertebrate.tree, tip = vertebrate_data$species,
+                  img = vertebrate_data$svg, height = 0.5, width = NULL,
+                  padding = 0, hjust = 0.5)
 ```
 
 Note that only a single size is specified and aspect ratio is always maintained, hence why the silhouettes all have the same height but different widths. Let's fix some of the silhouettes by rotating them 90 degrees:
@@ -297,8 +298,9 @@ And now the finished product:
 ```{r base-phylo-plot-4}
 plot(vertebrate.tree, show.tip.label = FALSE)
 axis_geo_phylo(intervals = "periods")
-add_phylopic_base(img = vertebrate_data$svg,
-                  x = max(nodeHeights(vertebrate.tree)), y = 1:11, height = 0.5)
+add_phylopic_tree(vertebrate.tree, tip = vertebrate_data$species,
+                  img = vertebrate_data$svg, height = 0.5, width = NULL,
+                  padding = 0, hjust = 0.5)
 ```
 
 Beautiful!
