@@ -4,7 +4,7 @@
 * Fixed a bug in add_phylopic_base() where all names were reported as not returning PhyloPic results when only a single name actually returned no PhyloPic results
 * PhyloPic API responses (including images) are now cached in a temporary directory to speed up repeated calls (#123)
   * The cache is cleared when the R session ends
-  * The cache can also be manually cleared using httpcache::clear_cache()
+  * The cache can also be manually cleared using httpcache::clearCache()
 
 # rphylopic 1.5.0
 
