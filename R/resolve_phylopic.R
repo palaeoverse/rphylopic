@@ -55,7 +55,7 @@
 #'     Database}} ("pbdb" is also allowed)
 #'   }
 #'
-#' @importFrom httr POST
+#' @importFrom httpcache POST
 #' @importFrom utils URLencode URLdecode
 #' @importFrom stats setNames
 #' @export
@@ -179,15 +179,17 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     check_url("https://api.opentreeoflife.org/")
     namespace <- "taxonomy"
     url <- "https://api.opentreeoflife.org/v3/tnrs/autocomplete_name"
-    res <- POST(url = url, encode = "json", body = list("name" = name))
+    res <- httpcache::POST(url = url, encode = "json",
+                           body = list("name" = name))
     jsn <- response_to_JSON(res)
     if (length(jsn) == 0) stop("No results returned from the API.")
     ids <- jsn$ott_id[1]
     name_vec <- jsn$unique_name[1]
     if (hierarchy) {
       url <- "https://api.opentreeoflife.org/v3/taxonomy/taxon_info"
-      res <- POST(url = url, encode = "json",
-                  body = list("include_lineage" = TRUE, "ott_id" = ids))
+      res <- httpcache::POST(url = url, encode = "json",
+                             body = list("include_lineage" = TRUE,
+                                         "ott_id" = ids))
       jsn <- response_to_JSON(res)
       ids <- c(ids, jsn$lineage$ott_id)
       name_vec <- c(name_vec, jsn$lineage$unique_name)
@@ -219,9 +221,9 @@ check_url <- function(url) {
   }
 }
 
-#' @importFrom httr GET
+#' @importFrom httpcache GET
 json_GET <- function(url) {
-  res <- GET(url = url)
+  res <- httpcache::GET(url = url)
   if (length(res$content) == 0) stop("No results returned from the API.")
   response_to_JSON(res)
 }

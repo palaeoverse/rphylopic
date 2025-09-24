@@ -13,7 +13,7 @@ as_null <- function(x) if (length(x) == 0) NULL else x
 
 pbase <- function() "https://api.phylopic.org"
 
-#' @importFrom httr GET
+#' @importFrom httpcache GET
 #' @importFrom curl nslookup
 phy_GET <- function(path, query = list(), ...) {
   # Check PhyloPic (or user) is online
@@ -24,17 +24,18 @@ phy_GET <- function(path, query = list(), ...) {
     stop("PhyloPic is not available or you have no internet connection.")
   })
   query <- as_null(pc(query))
-  tt <- GET(url = pbase(), path = path, query = query)
+  tt <- httpcache::GET(url = file.path(pbase(), path), query = query)
   jsn <- response_to_JSON(tt)
   if (tt$status == 400) { # need to supply the build argument
     query[["build"]] <- jsn$build
-    tt <- GET(url = pbase(), path = path, query = query)
+    tt <- httpcache::GET(url = file.path(pbase(), path), query = query)
     jsn <- response_to_JSON(tt)
   }
   jsn
 }
 
-#' @importFrom httr POST add_headers
+#' @importFrom httpcache POST
+#' @importFrom httr add_headers
 #' @importFrom jsonlite toJSON
 #' @importFrom curl nslookup
 phy_POST <- function(path, body = list(), ...) {
@@ -47,9 +48,10 @@ phy_POST <- function(path, body = list(), ...) {
   })
   # Convert to JSON
   body <- toJSON(body)
-  resp <- POST(url = pbase(), path = path, body = body,
-               add_headers("Content-type" = "application/vnd.phylopic.v2+json"),
-               encode = "raw")
+  resp <- httpcache::POST(url = file.path(pbase(), path), body = body,
+                          add_headers("Content-type" =
+                                        "application/vnd.phylopic.v2+json"),
+                          encode = "raw")
   resp <- response_to_JSON(resp)
   resp
 }
