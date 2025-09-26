@@ -226,7 +226,8 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     data$img <- imgs
     data
   },
-  use_defaults = function(self, data, params = list(), modifiers = aes()) {
+  use_defaults = function(self, data, params = list(), modifiers = aes(),
+                          default_aes = NULL, theme = NULL, ...) {
     default_aes <- self$default_aes
     # Inherit size as height if no height aesthetic and param exist
     if (!is.null(data$size)) {
@@ -242,7 +243,8 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     # if fill isn't specified in the original data, copy over the colour column
     col_fill <- c("colour", "fill") %in% colnames(data) |
       c("colour", "fill") %in% names(params)
-    data <- ggproto_parent(Geom, self)$use_defaults(data, params, modifiers)
+    data <- ggproto_parent(Geom, self)$use_defaults(data, params, modifiers,
+                                                    default_aes, theme, ...)
     if (col_fill[1] && !col_fill[2]) {
       data$fill <- data$colour
       data$colour <- NA
