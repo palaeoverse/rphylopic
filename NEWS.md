@@ -5,6 +5,7 @@
 * PhyloPic API responses (including images) are now cached in a temporary directory to speed up repeated calls (#123)
   * The cache is cleared when the R session ends
   * The cache can also be manually cleared using httpcache::clearCache()
+* Fixed geom_phylopic() and add_phylopic() under ggplot2 4.0.0 and up (#125)
 
 # rphylopic 1.5.0
 
