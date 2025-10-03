@@ -88,12 +88,12 @@ get_phylopic <- function(uuid = NULL, format = "vector", height = 512,
   img
 }
 
-#' @importFrom httr GET
+#' @importFrom httpcache GET
 #' @importFrom rsvg rsvg_svg
 #' @importFrom grImport2 readPicture
 get_svg <- function(url) {
   tryCatch({
-    res <- GET(url = url)
+    res <- httpcache::GET(url = url)
     filename <- file.path(tempdir(), "temp.svg")
     rsvg_svg(res$content, filename)
     img_new <- readPicture(filename, warn = FALSE)
@@ -103,11 +103,11 @@ get_svg <- function(url) {
   img_new
 }
 
-#' @importFrom httr GET
+#' @importFrom httpcache GET
 #' @importFrom png readPNG
 get_png <- function(x) {
   tryCatch({
-    res <- GET(url = x)
+    res <- httpcache::GET(url = x)
     img_tmp <- readPNG(res$content)
     # convert to RGBA if in GA format
     if (dim(img_tmp)[3] == 2) {
