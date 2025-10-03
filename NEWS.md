@@ -3,6 +3,7 @@
 * Added add_phylopic_tree() to add silhouettes to plotted trees (#110)
 * Fixed a bug in add_phylopic_base() where all names were reported as not returning PhyloPic results when only a single name actually returned no PhyloPic results
 * resolve_phylopic() now will retry API calls if they fail
+* Fixed geom_phylopic() and add_phylopic() under ggplot2 4.0.0 and up (#125)
 
 # rphylopic 1.5.0
 
