@@ -11,12 +11,33 @@
             "orcid": "0000-0003-3902-8986"
         }
     ],
+    "contributors": [
+        {
+            "affiliation": "Fred Hutch Data Science Lab",
+            "name": "Chamberlain, Scott",
+            "orcid": "0000-0003-1444-9135",
+            "type": "Other"
+        }
+    ],
+    "related_identifiers": [
+        {
+            "identifier": "https://doi.org/10.1111/2041-210X.14221",
+            "relation": "isDescribedBy",
+            "resource_type": "publication-article"
+        }
+    ],
     "keywords": [
         "R",
         "data visualization",
         "ggplot2",
         "database",
-        "reproducible"
+        "reproducible",
+        "phylopic",
+        "biology",
+        "paleontology",
+        "silhouette",
+        "palaeoverse",
+        "biodiversity"
     ],
     "license": {
         "id": "GPL-3.0-only"
