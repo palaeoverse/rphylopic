@@ -112,8 +112,8 @@ get_svg <- function(url) {
 #' @importFrom httr GET
 #' @importFrom png readPNG
 get_png <- function(x) {
-  if (exists(url, envir = .phy_cache, inherits = FALSE)) {
-    return(get(url, envir = .phy_cache))
+  if (exists(x, envir = .phy_cache, inherits = FALSE)) {
+    return(get(x, envir = .phy_cache))
   }
   
   img_new <- tryCatch({
@@ -130,7 +130,7 @@ get_png <- function(x) {
     stop("Problem downloading raster file. Please try again.")
   })
   
-  assign(url, img_new, envir = .phy_cache)
+  assign(x, img_new, envir = .phy_cache)
   img_new
 }
 
