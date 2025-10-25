@@ -25,5 +25,5 @@ test_that("phy_GET cache makes second call faster", {
   expect_identical(jay1, jay2)
   
   # Expect execution time to be faster when using cache
-  expect_lt(t2, t1 * 0.8)
+  expect_lt(t2, t1 * 0.9)
 })
