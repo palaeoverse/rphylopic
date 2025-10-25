@@ -9,13 +9,19 @@ test_that("phy_GET cache makes second call faster", {
   
   # Clear any existing cache
   key <- .cache_key("GET", file.path("images", id), NULL)
+  svgKey <- sprintf("https://images.phylopic.org/images/%s/vector.svg", id)
   if (key_exists(key)) {
     rm(list = key, envir = .phy_cache)
   }
+  if (key_exists(svgKey)) {
+    rm(list = svgKey, envir = .phy_cache)
+  }
   expect_false(key_exists(key))
+  expect_false(key_exists(svgKey))
   
   t1 <- system.time(jay1 <- get_phylopic(id))[["elapsed"]]
   expect_true(key_exists(key))
+  expect_true(key_exists(svgKey))
   
   # Check cache is being used by setting non-existent host
   real_phost <- phost
