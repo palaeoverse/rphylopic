@@ -55,7 +55,7 @@
 #'     Database}} ("pbdb" is also allowed)
 #'   }
 #'
-#' @importFrom httr POST
+#' @importFrom httr RETRY
 #' @importFrom utils URLencode URLdecode
 #' @importFrom stats setNames
 #' @export
@@ -179,15 +179,15 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
     check_url("https://api.opentreeoflife.org/")
     namespace <- "taxonomy"
     url <- "https://api.opentreeoflife.org/v3/tnrs/autocomplete_name"
-    res <- POST(url = url, encode = "json", body = list("name" = name))
+    res <- RETRY("POST", url = url, encode = "json", body = list("name" = name))
     jsn <- response_to_JSON(res)
     if (length(jsn) == 0) stop("No results returned from the API.")
     ids <- jsn$ott_id[1]
     name_vec <- jsn$unique_name[1]
     if (hierarchy) {
       url <- "https://api.opentreeoflife.org/v3/taxonomy/taxon_info"
-      res <- POST(url = url, encode = "json",
-                  body = list("include_lineage" = TRUE, "ott_id" = ids))
+      res <- RETRY("POST", url = url, encode = "json",
+                   body = list("include_lineage" = TRUE, "ott_id" = ids))
       jsn <- response_to_JSON(res)
       ids <- c(ids, jsn$lineage$ott_id)
       name_vec <- c(name_vec, jsn$lineage$unique_name)
@@ -211,17 +211,16 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
   return(lst)
 }
 
+#' @importFrom httr RETRY stop_for_status
 # check that a particular URL (e.g., for an API) is online
 check_url <- function(url) {
-  headers <- curlGetHeaders(url)
-  if (attr(headers, "status") != 200) {
-    stop("API is not available or you have no internet connection.")
-  }
+  head_response <- RETRY("HEAD", url)
+  stop_for_status(head_response, task = "access the desired API")
 }
 
-#' @importFrom httr GET
+#' @importFrom httr RETRY
 json_GET <- function(url) {
-  res <- GET(url = url)
+  res <- RETRY("GET", url = url)
   if (length(res$content) == 0) stop("No results returned from the API.")
   response_to_JSON(res)
 }
