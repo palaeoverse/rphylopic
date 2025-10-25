@@ -14,9 +14,23 @@ as_null <- function(x) if (length(x) == 0) NULL else x
 phost <- function() "api.phylopic.org"
 pbase <- function() paste0("https://", phost())
 
+.phy_cache <- new.env(parent = emptyenv())
+
+#' @importFrom digest digest
+.cache_key <- function(method, path, payload = NULL) {
+  paste0(method, ":", path, ":", digest(payload))
+}
+
 #' @importFrom httr GET
 #' @importFrom curl nslookup
 phy_GET <- function(path, query = list(), ...) {
+  query <- as_null(pc(query))
+  key <- .cache_key("GET", path, query)
+  
+  if (exists(key, envir = .phy_cache, inherits = FALSE)) {
+    return(get(key, envir = .phy_cache))
+  }
+  
   # Check PhyloPic (or user) is online
   tryCatch({
     nslookup(phost())
@@ -24,7 +38,6 @@ phy_GET <- function(path, query = list(), ...) {
   error = function(e) {
     stop("PhyloPic is not available or you have no internet connection.")
   })
-  query <- as_null(pc(query))
   tt <- GET(url = pbase(), path = path, query = query)
   jsn <- response_to_JSON(tt)
   if (tt$status == 400) { # need to supply the build argument
@@ -32,6 +45,8 @@ phy_GET <- function(path, query = list(), ...) {
     tt <- GET(url = pbase(), path = path, query = query)
     jsn <- response_to_JSON(tt)
   }
+  
+  assign(key, jsn, envir = .phy_cache)
   jsn
 }
 

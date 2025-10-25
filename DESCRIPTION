@@ -25,6 +25,7 @@ Depends:
     R (>= 4.0)
 Imports:
     ape,
+    digest,
     ggplot2,
     jsonlite,
     grid,
