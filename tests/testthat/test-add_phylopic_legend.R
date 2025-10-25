@@ -1,5 +1,5 @@
 test_that("add_phylopic_legend works", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
   try(dev.off(), silent = TRUE) # clean up any stray plots
   
   # Get UUIDs
