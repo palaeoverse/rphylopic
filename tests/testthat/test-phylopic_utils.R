@@ -1,5 +1,5 @@
 test_that("flip_phylopic works", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
   cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
   expect_true(is(flip_phylopic(cat), "Picture"))
   expect_equal(diff(cat@summary@xscale),
@@ -23,7 +23,7 @@ test_that("flip_phylopic works", {
 })
 
 test_that("rotate_phylopic works", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
   cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
   expect_true(is(rotate_phylopic(cat), "Picture"))
   expect_true(all.equal(rotate_phylopic(cat)@summary@yscale,
@@ -41,7 +41,7 @@ test_that("rotate_phylopic works", {
 })
 
 test_that("recolor_phylopic works", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
   cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
   cat_recolor <- recolor_phylopic(cat, .5, color = "green", fill = "red")
   expect_true(is(cat_recolor, "Picture"))
@@ -80,7 +80,7 @@ test_that("recolor_phylopic works", {
 })
 
 test_that("Picture methods work", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
   cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
   expect_doppelganger("plot Picture", plot(cat))
   expect_output(print(cat), "PhyloPic silhouette object (vector format)",
@@ -90,7 +90,7 @@ test_that("Picture methods work", {
 })
 
 test_that("array methods work", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
   cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
                       format = "raster")
   expect_doppelganger("plot array", plot(cat))

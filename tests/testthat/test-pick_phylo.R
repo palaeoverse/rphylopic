@@ -1,5 +1,5 @@
 test_that("pick_phylopic works", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
 
   # Expect equal
   expect_true(is(pick_phylopic(name = "Acropora", n = 1),

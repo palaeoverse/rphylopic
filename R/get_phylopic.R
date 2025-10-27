@@ -92,44 +92,63 @@ get_phylopic <- function(uuid = NULL, format = "vector", height = 512,
 #' @importFrom rsvg rsvg_svg
 #' @importFrom grImport2 readPicture
 get_svg <- function(url) {
-  tryCatch({
+  if (exists(url, envir = .phy_cache, inherits = FALSE)) {
+    return(get(url, envir = .phy_cache))
+  }
+  
+  img_new <- tryCatch({
     res <- GET(url = url)
     filename <- file.path(tempdir(), "temp.svg")
     rsvg_svg(res$content, filename)
-    img_new <- readPicture(filename, warn = FALSE)
+    readPicture(filename, warn = FALSE)
   }, error = function(e) {
     stop("Problem downloading vector file. Please try again.")
   })
+  
+  assign(url, img_new, envir = .phy_cache)
   img_new
 }
 
 #' @importFrom httr GET
 #' @importFrom png readPNG
 get_png <- function(x) {
-  tryCatch({
+  if (exists(x, envir = .phy_cache, inherits = FALSE)) {
+    return(get(x, envir = .phy_cache))
+  }
+  
+  img_new <- tryCatch({
     res <- GET(url = x)
     img_tmp <- readPNG(res$content)
     # convert to RGBA if in GA format
     if (dim(img_tmp)[3] == 2) {
-      img_new <- ga_to_rgba(img_tmp)
+      ga_to_rgba(img_tmp)
     } else {
-      img_new <- img_tmp
+      img_tmp
     }
   },
   error = function(e) {
     stop("Problem downloading raster file. Please try again.")
   })
+  
+  assign(x, img_new, envir = .phy_cache)
   img_new
 }
 
 #' @importFrom rsvg rsvg_png
 #' @importFrom png readPNG
 make_png <- function(url, height) {
-  tryCatch({
-    img_new <- readPNG(rsvg_png(url, height = height))
+  key <- paste0(url, "?h=", height)
+  if (exists(key, envir = .phy_cache, inherits = FALSE)) {
+    return(get(key, envir = .phy_cache))
+  }
+  
+  img_new <- tryCatch({
+    readPNG(rsvg_png(url, height = height))
   },
   error = function(e) {
     stop("Problem downloading vector file. Please try again.")
   })
+  
+  assign(key, img_new, envir = .phy_cache)
   img_new
 }

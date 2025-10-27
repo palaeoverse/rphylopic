@@ -1,5 +1,5 @@
 test_that("add_phylopic_base works", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
 
   # phylopic in background, with name
   expect_doppelganger("phylopic in background", function() {

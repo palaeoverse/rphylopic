@@ -77,7 +77,7 @@
 #' @importFrom grid grid.raster
 #' @importFrom grImport2 grid.picture
 #' @importFrom methods is slotNames
-#' @importFrom lifecycle deprecated
+#' @importFrom lifecycle deprecated deprecate_warn is_present
 #' @export
 #' @examples \dontrun{
 #' # single image

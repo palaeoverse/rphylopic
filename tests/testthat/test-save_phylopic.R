@@ -1,5 +1,5 @@
 test_that("save_phylopic works", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
   # Get image
   img <- get_phylopic("918e22ea-53d9-4318-879d-1a3126968157")
   # Expect warning
