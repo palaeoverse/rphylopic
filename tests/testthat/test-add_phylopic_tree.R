@@ -103,6 +103,14 @@ test_that("add_phylopic_tree works", {
       padding = 0.08, # Half off the page
       fill = "#665566"
     )
+    add_phylopic_tree(
+      tree,
+      "mouse",
+      uuid = "dd0a795e-4be3-4f99-a084-2427c1319d31",
+      align = "plot", # Aligned with plot edge
+      relWidth = 0.16,
+      fill = "purple"
+    )
   })
 })
 
