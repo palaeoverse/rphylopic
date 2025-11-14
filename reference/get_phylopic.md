@@ -1,0 +1,78 @@
+# Retrieve an image for a given PhyloPic uuid
+
+This retrieves a PhyloPic silhouette as a vectorized or rasterized
+object.
+
+## Usage
+
+``` r
+get_phylopic(uuid = NULL, format = "vector", height = 512, preview = FALSE)
+
+# S3 method for class 'Picture'
+print(x, ...)
+
+# S3 method for class 'phylopic'
+print(x, ...)
+```
+
+## Arguments
+
+- uuid:
+
+  `character`. A PhyloPic image uuid.
+
+- format:
+
+  `character`. Format of the image. To return a vectorized image, use
+  "vector". To return a rasterized image, use "raster" and specify a
+  desired `height`.
+
+- height:
+
+  `numeric`. If `format` is "raster", this is the desired height of the
+  raster image in pixels. This is ignored if `format` is "vector".
+
+- preview:
+
+  `logical`. If `preview` is `TRUE`, the returned image is plotted.
+  Defaults to `FALSE`.
+
+- x:
+
+  A [Picture](https://rdrr.io/pkg/grImport2/man/Picture-class.html) or
+  png array object, e.g., from using `get_phylopic()`.
+
+- ...:
+
+  Ignored
+
+## Value
+
+If `format` is "vector", a
+[Picture](https://rdrr.io/pkg/grImport2/man/Picture-class.html) object
+is returned. If `format` is "raster", a png array representing the
+rasterized image is returned. Either way, the uuid and download url are
+included as the "uuid" and "url" attributes, respectively.
+
+## Details
+
+The `height` argument is ignored if the `format` argument is not set to
+"raster". If `format` is "raster", the `height` argument specifies the
+height of the desired raster object. The width of this raster object
+will be determined by the original aspect ratio of the silhouette. If a
+pre-rendered raster exists with the desired dimensions, it will be
+downloaded from PhyloPic. If not, the vector image from PhyloPic will be
+used to render a raster object of the desired size.
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+# uuid
+uuid <- "9fae30cd-fb59-4a81-a39c-e1826a35f612"
+
+# Get data for an image
+img_svg <- get_phylopic(uuid, format = "vector") # vector format
+img_png <- get_phylopic(uuid, format = "raster") # raster format
+} # }
+```
