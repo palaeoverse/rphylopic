@@ -1,5 +1,5 @@
 test_that("get_uuid works", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
   # Expect true
   expect_true(is.character(get_uuid(name = "Acropora cervicornis")))
   expect_true(is.character(get_uuid(name = "Tyrannosaurus", url = TRUE)))

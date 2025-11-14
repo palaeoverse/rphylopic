@@ -1,5 +1,5 @@
 test_that("add_phylopic_tree works", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
   skip_if_not_installed("ape")
   # Load the ape library to work with phylogenetic trees
   suppressPackageStartupMessages(require(ape, quietly = TRUE))
@@ -107,7 +107,7 @@ test_that("add_phylopic_tree works", {
 })
 
 test_that("add_phylopic_tree works with vectors", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
   skip_if_not_installed("ape")
   
   # Read a phylogenetic tree
