@@ -6,9 +6,9 @@
 #' functions.
 #'
 #' @inheritParams add_phylopic_base
-#' @param tree The phylogenetic tree object of class `phylo` on which to add the
+#' @param tree `phylo`. The phylogenetic tree object on which to add the
 #'   silhouette.
-#' @param tip The tip labels against which to add the silhouettes. If not
+#' @param tip `character`. The tip labels against which to add the silhouettes. If not
 #'   specified, the names of the `img`, `uuid` or `name` vector are used.
 #' @param align \code{character}. Should each silhouette be aligned to its
 #'   respective tip (`"tip"`, the default) or to the right-hand side of the
@@ -18,11 +18,11 @@
 #'   silhouette is placed at the right-hand side of the plotting area,
 #'   determined by `par("usr")`, plus any horizontal padding specified by
 #'   `padding` or `relPadding`.
-#' @param width,relWidth The width of each silhouette, in the plot coordinate
+#' @param width,relWidth `numeric`. The width of each silhouette, in the plot coordinate
 #'   system (`width`) or relative to the size of the plotting area (`relWidth`).
 #'   If "NULL" and `height` is specified, the width is determined by the aspect
 #'   ratio of the original image. One of height and width must be "NULL".
-#' @param padding,relPadding Horizontal padding for each silhouette from it's
+#' @param padding,relPadding `numeric`. Horizontal padding for each silhouette from its
 #'   respective x value, in the plot coordinate system (`padding`) or relative
 #'   to the size of the plotting area (`relPadding`). Negative values offset to
 #'   the left.
