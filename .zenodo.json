@@ -17,6 +17,12 @@
             "name": "Chamberlain, Scott",
             "orcid": "0000-0003-1444-9135",
             "type": "Other"
+        },
+        {
+            "affiliation": "Durham University",
+            "name": "Smith, Martin R.",
+            "orcid": "0000-0001-5660-1727",
+            "type": "Other"
         }
     ],
     "related_identifiers": [
@@ -24,7 +30,7 @@
             "identifier": "https://doi.org/10.1111/2041-210X.14221",
             "relation": "isDescribedBy",
             "resource_type": "publication-article"
-        }
+        },
     ],
     "keywords": [
         "R",
