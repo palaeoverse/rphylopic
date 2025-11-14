@@ -40,7 +40,8 @@ Imports:
     lifecycle,
     pbapply,
     knitr,
-    scales
+    scales,
+    rlang
 Suggests:
     testthat (>= 3.0.0),
     vdiffr (>= 1.0.0),
@@ -52,7 +53,8 @@ Suggests:
     deeptime,
     palmerpenguins,
     maps,
-    sf
+    sf,
+    igraph
 Config/testthat/edition: 3
 URL: https://rphylopic.palaeoverse.org,
      https://github.com/palaeoverse/rphylopic,
