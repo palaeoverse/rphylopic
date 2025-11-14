@@ -10,7 +10,9 @@ Authors@R: c(
     person(given = "Lewis A.", family = "Jones", email = "LewisAlan.Jones@uvigo.es",
       role = c("aut"), comment = c(ORCID = "0000-0003-3902-8986")),
     person(given = "Scott", family = "Chamberlain", email = "myrmecocystus@gmail.com",
-      role = c("aut"), comment = c(ORCID = "0000-0003-1444-9135")),
+      role = c("ctb"), comment = c(ORCID = "0000-0003-1444-9135")),
+     person(given = "Martin R.", family = "Smith", email = "martin.smith@durham.ac.uk",
+      role = c("ctb"), comment = c(ORCID = "0000-0001-5660-1727")),
     person(given = "David", family = "Miller", email = "dave@ninepointeightone.net",
       role = c("ctb"))
   )
