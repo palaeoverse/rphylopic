@@ -63,7 +63,7 @@ add_phylopic_tree <- function(tree, tip = names(img) %||% names(uuid) %||%
                               uuid = NULL, align = "tip",
                               width, padding = NULL,
                               relWidth = 0.06, relPadding = 1/200,
-                              hjust = 0,
+                              hjust = if(align == "tip") 0 else 1,
                               ...) {
   align <- match.arg(align, c("tip", "plot"))
   if (dev.cur() < 2) {
