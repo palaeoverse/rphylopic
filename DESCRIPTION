@@ -13,8 +13,8 @@ Authors@R: c(
       role = c("ctb"), comment = c(ORCID = "0000-0003-1444-9135")),
      person(given = "Martin R.", family = "Smith", email = "martin.smith@durham.ac.uk",
       role = c("ctb"), comment = c(ORCID = "0000-0001-5660-1727")),
-    person(given = "David", family = "Miller", email = "dave@ninepointeightone.net",
-      role = c("ctb"))
+    person(given = "David L.", family = "Miller", email = "dave@ninepointeightone.net",
+      role = c("ctb"), comment = c(ORCID = "0000-0002-9640-6755"))
   )
 License: GPL (>= 3)
 Language: en-US
