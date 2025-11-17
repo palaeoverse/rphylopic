@@ -3,29 +3,39 @@
 #' Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
 #' silhouettes alongside the associated leaves of a phylogenetic tree that has
 #' been plotted in the active graphics device using the base R graphics
-#' functions.
+#' functions. The current functionality assumes that the tree is not in a
+#' circular configuration and has a "rightwards" direction.
 #'
 #' @inheritParams add_phylopic_base
-#' @param tree The phylogenetic tree object of class `phylo` on which to add
-#' the silhouette.
-#' @param tip The tip labels against which to add the silhouettes.
-#' If not specified, the names of the `img`, `uuid` or `name` vector are used.
-#' @param relWidth The width of each silhouette relative to the plotting area.
-#' @param padding,relPadding Distance to inset each silhouette from the right
-#' edge of the plotting area,
-#' in the plot coordinate system (`padding`) or
-#' relative to the size of the plotting area (`relPadding`).
-#' Negative values offset to the right.
-#' @param \dots Further arguments to pass to `add_phylopic_base()`.
-#' @author [Martin R. Smith](https://orcid.org/0000-0001-5660-1727) 
-#' (<martin.smith@durham.ac.uk>)
-#' @seealso
-#' For trees plotted using \pkg{ggtree}, see [`geom_phylopic()`].
+#' @param tree `phylo`. The phylogenetic tree object on which to add the
+#'   silhouette.
+#' @param tip `character`. The tip labels against which to add the silhouettes. If not
+#'   specified, the names of the `img`, `uuid` or `name` vector are used.
+#' @param align \code{character}. Should each silhouette be aligned to its
+#'   respective tip (`"tip"`, the default) or to the right-hand side of the
+#'   plotting area (`"plot"`)? If `"tip"` is specified, the silhouette is placed
+#'   at the x coordinate of the respective tip, plus any horizontal padding
+#'   specified by `padding` or `relPadding`. If `"plot"` is specified, the
+#'   silhouette is placed at the right-hand side of the plotting area,
+#'   determined by `par("usr")`, plus any horizontal padding specified by
+#'   `padding` or `relPadding`.
+#' @param width,relWidth `numeric`. The width of each silhouette, in the plot coordinate
+#'   system (`width`) or relative to the size of the plotting area (`relWidth`).
+#'   If "NULL" and `height` is specified, the width is determined by the aspect
+#'   ratio of the original image. One of height and width must be "NULL".
+#' @param padding,relPadding `numeric`. Horizontal padding for each silhouette from its
+#'   respective x value, in the plot coordinate system (`padding`) or relative
+#'   to the size of the plotting area (`relPadding`). Negative values offset to
+#'   the left.
+#' @param \dots Further arguments to pass to [add_phylopic_base()].
+#' @author [Martin R. Smith](https://orcid.org/0000-0001-5660-1727)
+#'   (<martin.smith@durham.ac.uk>)
+#' @seealso For trees plotted using \pkg{ggtree}, see [`geom_phylopic()`].
 #' @importFrom ape plot.phylo .PlotPhyloEnv
 #' @importFrom grDevices dev.cur
 #' @export
 #' @examples \dontrun{
-#'  # Load the ape library to work with phylogenetic trees
+#' # Load the ape library to work with phylogenetic trees
 #' library("ape")
 #' 
 #' # Read a phylogenetic tree
@@ -50,11 +60,14 @@ add_phylopic_tree <- function(tree, tip = names(img) %||% names(uuid) %||%
                                 names(name) %||% name,
                               img = NULL,
                               name = if (is.null(img) && is.null(uuid)) tip 
-                                else NULL, 
-                              uuid = NULL, width, padding = NULL,
-                              relWidth = 0.06, relPadding = 1/200,
-                              hjust = 0,
+                                else NULL,
+                              uuid = NULL, align = "tip",
+                              width, padding = NULL,
+                              relWidth = 0.06,
+                              relPadding = if(align == "tip") 1/200 else -1/200,
+                              hjust = if(align == "tip") 0 else 1,
                               ...) {
+  align <- match.arg(align, c("tip", "plot"))
   if (dev.cur() < 2) {
     # It would be nice to check whether the plotting device that contains
     # last_plot.phylo is still the active device, but this is not possible - so
@@ -90,7 +103,9 @@ add_phylopic_tree <- function(tree, tip = names(img) %||% names(uuid) %||%
     img = img,
     name = name,
     uuid = uuid,
-    x = rightEdge - width - padX,
+    x = switch(align,
+               tip = coords[["xx"]][leafIndex],
+               plot = rightEdge) + padX,
     y = coords[["yy"]][leafIndex],
     hjust = hjust,
     width = width,

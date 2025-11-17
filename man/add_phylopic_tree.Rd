@@ -10,20 +10,21 @@ add_phylopic_tree(
   img = NULL,
   name = if (is.null(img) && is.null(uuid)) tip else NULL,
   uuid = NULL,
+  align = "tip",
   width,
   padding = NULL,
   relWidth = 0.06,
-  relPadding = 1/200,
-  hjust = 0,
+  relPadding = if (align == "tip") 1/200 else -1/200,
+  hjust = if (align == "tip") 0 else 1,
   ...
 )
 }
 \arguments{
-\item{tree}{The phylogenetic tree object of class \code{phylo} on which to add
-the silhouette.}
+\item{tree}{\code{phylo}. The phylogenetic tree object on which to add the
+silhouette.}
 
-\item{tip}{The tip labels against which to add the silhouettes.
-If not specified, the names of the \code{img}, \code{uuid} or \code{name} vector are used.}
+\item{tip}{\code{character}. The tip labels against which to add the silhouettes. If not
+specified, the names of the \code{img}, \code{uuid} or \code{name} vector are used.}
 
 \item{img}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
 from using \code{\link[=get_phylopic]{get_phylopic()}}.}
@@ -33,34 +34,40 @@ from using \code{\link[=get_phylopic]{get_phylopic()}}.}
 \item{uuid}{\code{character}. A valid uuid for a PhyloPic silhouette (such as
 that returned by \code{\link[=get_uuid]{get_uuid()}} or \code{\link[=pick_phylopic]{pick_phylopic()}}).}
 
-\item{width}{\code{numeric}. Width of the silhouette in coordinate space. If
-"NULL", the default, and \code{height} is also "NULL", the silhouette will be as
-large as fits in the plot area. If "NULL" and \code{height} is specified, the
-width is determined by the aspect ratio of the original image. One or both
-of \code{height} and \code{width} must be "NULL".}
+\item{align}{\code{character}. Should each silhouette be aligned to its
+respective tip (\code{"tip"}, the default) or to the right-hand side of the
+plotting area (\code{"plot"})? If \code{"tip"} is specified, the silhouette is placed
+at the x coordinate of the respective tip, plus any horizontal padding
+specified by \code{padding} or \code{relPadding}. If \code{"plot"} is specified, the
+silhouette is placed at the right-hand side of the plotting area,
+determined by \code{par("usr")}, plus any horizontal padding specified by
+\code{padding} or \code{relPadding}.}
 
-\item{padding, relPadding}{Distance to inset each silhouette from the right
-edge of the plotting area,
-in the plot coordinate system (\code{padding}) or
-relative to the size of the plotting area (\code{relPadding}).
-Negative values offset to the right.}
+\item{width, relWidth}{\code{numeric}. The width of each silhouette, in the plot coordinate
+system (\code{width}) or relative to the size of the plotting area (\code{relWidth}).
+If "NULL" and \code{height} is specified, the width is determined by the aspect
+ratio of the original image. One of height and width must be "NULL".}
 
-\item{relWidth}{The width of each silhouette relative to the plotting area.}
+\item{padding, relPadding}{\code{numeric}. Horizontal padding for each silhouette from its
+respective x value, in the plot coordinate system (\code{padding}) or relative
+to the size of the plotting area (\code{relPadding}). Negative values offset to
+the left.}
 
 \item{hjust}{\code{numeric}. A numeric vector between 0 and 1 specifying
 horizontal justification (left = 0, center = 0.5, right = 1).}
 
-\item{\dots}{Further arguments to pass to \code{add_phylopic_base()}.}
+\item{\dots}{Further arguments to pass to \code{\link[=add_phylopic_base]{add_phylopic_base()}}.}
 }
 \description{
 Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
 silhouettes alongside the associated leaves of a phylogenetic tree that has
 been plotted in the active graphics device using the base R graphics
-functions.
+functions. The current functionality assumes that the tree is not in a
+circular configuration and has a "rightwards" direction.
 }
 \examples{
 \dontrun{
- # Load the ape library to work with phylogenetic trees
+# Load the ape library to work with phylogenetic trees
 library("ape")
 
 # Read a phylogenetic tree
