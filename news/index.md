@@ -10,6 +10,9 @@
 - resolve_phylopic() now will retry API calls if they fail
 - Fixed geom_phylopic() and add_phylopic() under ggplot2 4.0.0 and up
   ([\#125](https://github.com/palaeoverse/rphylopic/issues/125))
+- get_phylopic() now has a “source” argument that can be used to
+  retrieve the original source file from the PhyloPic database
+  ([\#116](https://github.com/palaeoverse/rphylopic/issues/116))
 
 ## rphylopic 1.5.0
 
