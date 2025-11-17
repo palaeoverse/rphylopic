@@ -22,6 +22,6 @@ test_that("get_phylopic works", {
   expect_error(get_phylopic(uuid = uuid, format = "VHS"))
   expect_error(get_phylopic(uuid = uuid, preview = "yes"))
   # 512 was deprecated for format
-  expect_warning(get_phylopic(uuid = "c8f71c27-71db-4b34-ac2d-e97fea8762cf",
-                              format = "512"))
+  expect_error(get_phylopic(uuid = "c8f71c27-71db-4b34-ac2d-e97fea8762cf",
+                            format = "512"))
 })

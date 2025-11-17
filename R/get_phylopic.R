@@ -56,14 +56,12 @@ get_phylopic <- function(uuid = NULL, format = "vector", source = FALSE,
     stop("`preview` is not of class logical.")
   }
   if (is.numeric(format) || grepl("^[[:digit:]]+$", as.character(format))) {
-    lifecycle::deprecate_warn("1.1.0",
+    lifecycle::deprecate_stop("1.1.0",
                               paste0("get_phylopic(format = '",
                                      "no longer supports numeric values')"),
                               details = paste0("Use the `height` argument ",
                                                "instead with the `format` ",
                                                "argument set to \"raster\"."))
-    height <- as.numeric(format)
-    format <- "raster"
   }
   format <- match.arg(as.character(format), c("raster", "vector"))
   if (!is.logical(source)) {
