@@ -2,7 +2,7 @@
 
 ## rphylopic (development version)
 
-- Added add_phylopic_tree() to add silhouettes to plotted trees
+- Added add_phylopic_tree() to add silhouettes to base R trees
   ([\#110](https://github.com/palaeoverse/rphylopic/issues/110))
 - Fixed a bug in add_phylopic_base() where all names were reported as
   not returning PhyloPic results when only a single name actually
