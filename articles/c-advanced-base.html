@@ -72,7 +72,7 @@
     
     
 <p><strong>Authors:</strong> William Gearty &amp; Lewis A. Jones</p>
-<p><strong>Last updated:</strong> 2024-10-02</p>
+<p><strong>Last updated:</strong> 2025-11-17</p>
 <div style="text-align: justify">
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -338,7 +338,7 @@ species:</p>
 <span><span class="co">## 4            Homo_sapiens 9c6af553-390c-4bdd-baeb-6992cbc540b1</span></span>
 <span><span class="co">## 5             Lemur_catta 8a187391-82a3-4d9b-a402-3a310bf7dc38</span></span>
 <span><span class="co">## 6        Myotis_lucifugus                                 &lt;NA&gt;</span></span>
-<span><span class="co">## 7              Sus_scrofa 3d8acaf6-4355-491e-8e86-4a411b53b98b</span></span>
+<span><span class="co">## 7              Sus_scrofa 14a64a2f-166e-4bb4-b108-adc085cbcb7a</span></span>
 <span><span class="co">## 8  Megaptera_novaeangliae 012afb33-55c3-4fc6-9ae3-3a91fda32fd5</span></span>
 <span><span class="co">## 9              Bos_taurus dc5c561e-e030-444d-ba22-3d427b60e58a</span></span>
 <span><span class="co">## 10          Iguana_iguana 5dec03d9-66a2-4033-b1a9-6dbb3485199f</span></span>
@@ -402,17 +402,21 @@ plot of chunk base-phylo-plot-2
 </p>
 </div>
 <p>That’s looking a lot prettier! Let’s go ahead and replace the tip
-labels with our silhouettes now using <code><a href="../reference/add_phylopic_base.html">add_phylopic_base()</a></code>.
+labels with our silhouettes now using <code><a href="../reference/add_phylopic_tree.html">add_phylopic_tree()</a></code>
+(a wrapper of <code><a href="../reference/add_phylopic_base.html">add_phylopic_base()</a></code> for phylogenetic trees).
 Note that while it may look like all of the tips have an x-axis value of
 0, that’s actually a trick from <code><a href="https://palaeoverse.palaeoverse.org/reference/axis_geo.html" class="external-link">axis_geo_phylo()</a></code>. In
 reality, the left end of the x-axis is 0, and the right end of the
-x-axis is the total height of the tree. We can calculate this using the
-<code><a href="https://rdrr.io/pkg/phytools/man/nodeHeights.html" class="external-link">nodeHeights()</a></code> function.</p>
+x-axis is the total height of the tree. Fortunately,
+<code><a href="../reference/add_phylopic_tree.html">add_phylopic_tree()</a></code> figures out the x and y coordinates for
+the silhouettes for us, so we don’t have to worry about doing any funny
+math.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vertebrate.tree</span>, show.tip.label <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/axis_geo.html" class="external-link">axis_geo_phylo</a></span><span class="op">(</span>intervals <span class="op">=</span> <span class="st">"periods"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">vertebrate_data</span><span class="op">$</span><span class="va">svg</span>,</span>
-<span>                  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phytools/man/nodeHeights.html" class="external-link">nodeHeights</a></span><span class="op">(</span><span class="va">vertebrate.tree</span><span class="op">)</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">11</span>, height <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/add_phylopic_tree.html">add_phylopic_tree</a></span><span class="op">(</span><span class="va">vertebrate.tree</span>, tip <span class="op">=</span> <span class="va">vertebrate_data</span><span class="op">$</span><span class="va">species</span>,</span>
+<span>                  img <span class="op">=</span> <span class="va">vertebrate_data</span><span class="op">$</span><span class="va">svg</span>, height <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                  padding <span class="op">=</span> <span class="fl">0</span>, hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="base-phylo-plot-3-1.png" alt="plot of chunk base-phylo-plot-3" width="100%"><p class="caption">
 plot of chunk base-phylo-plot-3
@@ -429,8 +433,9 @@ degrees:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vertebrate.tree</span>, show.tip.label <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://palaeoverse.palaeoverse.org/reference/axis_geo.html" class="external-link">axis_geo_phylo</a></span><span class="op">(</span>intervals <span class="op">=</span> <span class="st">"periods"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/add_phylopic_base.html">add_phylopic_base</a></span><span class="op">(</span>img <span class="op">=</span> <span class="va">vertebrate_data</span><span class="op">$</span><span class="va">svg</span>,</span>
-<span>                  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/phytools/man/nodeHeights.html" class="external-link">nodeHeights</a></span><span class="op">(</span><span class="va">vertebrate.tree</span><span class="op">)</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">11</span>, height <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/add_phylopic_tree.html">add_phylopic_tree</a></span><span class="op">(</span><span class="va">vertebrate.tree</span>, tip <span class="op">=</span> <span class="va">vertebrate_data</span><span class="op">$</span><span class="va">species</span>,</span>
+<span>                  img <span class="op">=</span> <span class="va">vertebrate_data</span><span class="op">$</span><span class="va">svg</span>, height <span class="op">=</span> <span class="fl">0.5</span>, width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                  padding <span class="op">=</span> <span class="fl">0</span>, hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="base-phylo-plot-4-1.png" alt="plot of chunk base-phylo-plot-4" width="100%"><p class="caption">
 plot of chunk base-phylo-plot-4

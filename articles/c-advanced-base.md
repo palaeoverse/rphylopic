@@ -2,7 +2,7 @@
 
 **Authors:** William Gearty & Lewis A. Jones
 
-**Last updated:** 2024-10-02
+**Last updated:** 2025-11-17
 
 ## Introduction
 
@@ -309,7 +309,7 @@ vertebrate_data
     ## 4            Homo_sapiens 9c6af553-390c-4bdd-baeb-6992cbc540b1
     ## 5             Lemur_catta 8a187391-82a3-4d9b-a402-3a310bf7dc38
     ## 6        Myotis_lucifugus                                 <NA>
-    ## 7              Sus_scrofa 3d8acaf6-4355-491e-8e86-4a411b53b98b
+    ## 7              Sus_scrofa 14a64a2f-166e-4bb4-b108-adc085cbcb7a
     ## 8  Megaptera_novaeangliae 012afb33-55c3-4fc6-9ae3-3a91fda32fd5
     ## 9              Bos_taurus dc5c561e-e030-444d-ba22-3d427b60e58a
     ## 10          Iguana_iguana 5dec03d9-66a2-4033-b1a9-6dbb3485199f
@@ -394,20 +394,24 @@ plot of chunk base-phylo-plot-2
 
 That’s looking a lot prettier! Let’s go ahead and replace the tip labels
 with our silhouettes now using
-[`add_phylopic_base()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_base.md).
-Note that while it may look like all of the tips have an x-axis value of
-0, that’s actually a trick from
+[`add_phylopic_tree()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_tree.md)
+(a wrapper of
+[`add_phylopic_base()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_base.md)
+for phylogenetic trees). Note that while it may look like all of the
+tips have an x-axis value of 0, that’s actually a trick from
 [`axis_geo_phylo()`](https://palaeoverse.palaeoverse.org/reference/axis_geo.html).
 In reality, the left end of the x-axis is 0, and the right end of the
-x-axis is the total height of the tree. We can calculate this using the
-[`nodeHeights()`](https://rdrr.io/pkg/phytools/man/nodeHeights.html)
-function.
+x-axis is the total height of the tree. Fortunately,
+[`add_phylopic_tree()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_tree.md)
+figures out the x and y coordinates for the silhouettes for us, so we
+don’t have to worry about doing any funny math.
 
 ``` r
 plot(vertebrate.tree, show.tip.label = FALSE)
 axis_geo_phylo(intervals = "periods")
-add_phylopic_base(img = vertebrate_data$svg,
-                  x = max(nodeHeights(vertebrate.tree)), y = 1:11, height = 0.5)
+add_phylopic_tree(vertebrate.tree, tip = vertebrate_data$species,
+                  img = vertebrate_data$svg, height = 0.5, width = NULL,
+                  padding = 0, hjust = 0.5)
 ```
 
 ![plot of chunk base-phylo-plot-3](base-phylo-plot-3-1.png)
@@ -429,8 +433,9 @@ And now the finished product:
 ``` r
 plot(vertebrate.tree, show.tip.label = FALSE)
 axis_geo_phylo(intervals = "periods")
-add_phylopic_base(img = vertebrate_data$svg,
-                  x = max(nodeHeights(vertebrate.tree)), y = 1:11, height = 0.5)
+add_phylopic_tree(vertebrate.tree, tip = vertebrate_data$species,
+                  img = vertebrate_data$svg, height = 0.5, width = NULL,
+                  padding = 0, hjust = 0.5)
 ```
 
 ![plot of chunk base-phylo-plot-4](base-phylo-plot-4-1.png)

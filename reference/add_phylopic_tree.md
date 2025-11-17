@@ -3,7 +3,8 @@
 Specify existing images, taxonomic names, or PhyloPic uuids to add
 PhyloPic silhouettes alongside the associated leaves of a phylogenetic
 tree that has been plotted in the active graphics device using the base
-R graphics functions.
+R graphics functions. The current functionality assumes that the tree is
+not in a circular configuration and has a "rightwards" direction.
 
 ## Usage
 
@@ -14,11 +15,12 @@ add_phylopic_tree(
   img = NULL,
   name = if (is.null(img) && is.null(uuid)) tip else NULL,
   uuid = NULL,
+  align = "tip",
   width,
   padding = NULL,
   relWidth = 0.06,
-  relPadding = 1/200,
-  hjust = 0,
+  relPadding = if (align == "tip") 1/200 else -1/200,
+  hjust = if (align == "tip") 0 else 1,
   ...
 )
 ```
@@ -27,13 +29,13 @@ add_phylopic_tree(
 
 - tree:
 
-  The phylogenetic tree object of class `phylo` on which to add the
-  silhouette.
+  `phylo`. The phylogenetic tree object on which to add the silhouette.
 
 - tip:
 
-  The tip labels against which to add the silhouettes. If not specified,
-  the names of the `img`, `uuid` or `name` vector are used.
+  `character`. The tip labels against which to add the silhouettes. If
+  not specified, the names of the `img`, `uuid` or `name` vector are
+  used.
 
 - img:
 
@@ -54,24 +56,31 @@ add_phylopic_tree(
   or
   [`pick_phylopic()`](https://rphylopic.palaeoverse.org/reference/pick_phylopic.md)).
 
-- width:
+- align:
 
-  `numeric`. Width of the silhouette in coordinate space. If "NULL", the
-  default, and `height` is also "NULL", the silhouette will be as large
-  as fits in the plot area. If "NULL" and `height` is specified, the
-  width is determined by the aspect ratio of the original image. One or
-  both of `height` and `width` must be "NULL".
+  `character`. Should each silhouette be aligned to its respective tip
+  (`"tip"`, the default) or to the right-hand side of the plotting area
+  (`"plot"`)? If `"tip"` is specified, the silhouette is placed at the x
+  coordinate of the respective tip, plus any horizontal padding
+  specified by `padding` or `relPadding`. If `"plot"` is specified, the
+  silhouette is placed at the right-hand side of the plotting area,
+  determined by `par("usr")`, plus any horizontal padding specified by
+  `padding` or `relPadding`.
+
+- width, relWidth:
+
+  `numeric`. The width of each silhouette, in the plot coordinate system
+  (`width`) or relative to the size of the plotting area (`relWidth`).
+  If "NULL" and `height` is specified, the width is determined by the
+  aspect ratio of the original image. One of height and width must be
+  "NULL".
 
 - padding, relPadding:
 
-  Distance to inset each silhouette from the right edge of the plotting
-  area, in the plot coordinate system (`padding`) or relative to the
+  `numeric`. Horizontal padding for each silhouette from its respective
+  x value, in the plot coordinate system (`padding`) or relative to the
   size of the plotting area (`relPadding`). Negative values offset to
-  the right.
-
-- relWidth:
-
-  The width of each silhouette relative to the plotting area.
+  the left.
 
 - hjust:
 
@@ -97,7 +106,7 @@ For trees plotted using ggtree, see
 
 ``` r
 if (FALSE) { # \dontrun{
- # Load the ape library to work with phylogenetic trees
+# Load the ape library to work with phylogenetic trees
 library("ape")
 
 # Read a phylogenetic tree
