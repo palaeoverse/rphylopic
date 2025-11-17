@@ -62,7 +62,8 @@ horizontal justification (left = 0, center = 0.5, right = 1).}
 Specify existing images, taxonomic names, or PhyloPic uuids to add PhyloPic
 silhouettes alongside the associated leaves of a phylogenetic tree that has
 been plotted in the active graphics device using the base R graphics
-functions.
+functions. The current functionality assumes that the tree is not in a
+circular configuration and has a "rightwards" direction.
 }
 \examples{
 \dontrun{
