@@ -4,6 +4,7 @@
 * Fixed a bug in add_phylopic_base() where all names were reported as not returning PhyloPic results when only a single name actually returned no PhyloPic results
 * resolve_phylopic() now will retry API calls if they fail
 * Fixed geom_phylopic() and add_phylopic() under ggplot2 4.0.0 and up (#125)
+* get_phylopic() now has a "source" argument that can be used to retrieve the original source file from the PhyloPic database (#116)
 
 # rphylopic 1.5.0
 
