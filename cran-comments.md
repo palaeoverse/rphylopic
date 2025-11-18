@@ -1,4 +1,4 @@
-In response to a request by CRAN, I have reduced the size of some of the test snapshots to reduce the overall tarball size.
+Fixed the URLs triggering 301 codes.
 
 ## Test environments (with Github Actions)
 
