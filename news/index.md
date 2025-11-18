@@ -1,6 +1,6 @@
 # Changelog
 
-## rphylopic (development version)
+## rphylopic 1.6.0
 
 - Added add_phylopic_tree() to add silhouettes to base R trees
   ([\#110](https://github.com/palaeoverse/rphylopic/issues/110))
@@ -16,8 +16,6 @@
 
 ## rphylopic 1.5.0
 
-CRAN release: 2024-09-04
-
 - Added ability to specify horizontal and vertical justification of
   silhouettes
   ([\#101](https://github.com/palaeoverse/rphylopic/issues/101))
@@ -28,16 +26,12 @@ CRAN release: 2024-09-04
 
 ## rphylopic 1.4.0
 
-CRAN release: 2024-04-23
-
 - Added add_phylopic_legend
   ([\#83](https://github.com/palaeoverse/rphylopic/issues/83))
 - Added permalink generation option to get_attribution
   ([\#81](https://github.com/palaeoverse/rphylopic/issues/81))
 
 ## rphylopic 1.3.0
-
-CRAN release: 2023-12-20
 
 - updated citation
 - added warning when specified size is more than 1000 times smaller than
@@ -56,21 +50,15 @@ CRAN release: 2023-12-20
 
 ## rphylopic 1.2.2
 
-CRAN release: 2023-10-28
-
 - vignettes are now precompiled
 
 ## rphylopic 1.2.1
-
-CRAN release: 2023-10-10
 
 - updated rphylopic to work with grImport2 version 0.3.0 and rsvg
   version 2.6.0
 - rphylopic now requires grImport2 \>= 0.3.0 and rsvg \>= 2.6.0
 
 ## rphylopic 1.2.0
-
-CRAN release: 2023-08-29
 
 - added text argument to get_attribution
   ([\#56](https://github.com/palaeoverse/rphylopic/issues/56))
@@ -105,14 +93,10 @@ CRAN release: 2023-08-29
 
 ## rphylopic 1.1.1
 
-CRAN release: 2023-07-08
-
 - Minor fixes for Fedora
 - Better handling of malformed Picture objects
 
 ## rphylopic 1.1.0
-
-CRAN release: 2023-06-30
 
 - added functions for transforming PhyloPic silhouettes (flipping and
   rotating)
@@ -136,8 +120,6 @@ CRAN release: 2023-06-30
   [\#55](https://github.com/palaeoverse/rphylopic/issues/55))
 
 ## rphylopic 1.0.0
-
-CRAN release: 2023-03-20
 
 - rphylopic has now been transferred to the Palaeoverse community (new
   maintainer: William Gearty and author: Lewis Jones)
@@ -173,8 +155,6 @@ CRAN release: 2023-03-20
 
 ## rphylopic 0.3.0
 
-CRAN release: 2020-06-04
-
 #### NEW FEATURES
 
 - PDF cheatsheet and hex sticker added, from
@@ -198,8 +178,6 @@ CRAN release: 2020-06-04
   ([\#28](https://github.com/palaeoverse/rphylopic/issues/28))
 
 ## rphylopic 0.2.0
-
-CRAN release: 2018-11-19
 
 #### NEW FEATURES
 
