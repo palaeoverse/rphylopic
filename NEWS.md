@@ -1,3 +1,5 @@
+# rphylopic (development version)
+
 # rphylopic 1.6.0
 
 * Added add_phylopic_tree() to add silhouettes to base R trees (#110)
