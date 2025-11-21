@@ -20,7 +20,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/palaeoverse/rphylopic/blob/v1.6.0/inst/CITATION)
+[`inst/CITATION`](https://github.com/palaeoverse/rphylopic/blob/main/inst/CITATION)
 
 Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching,
 transforming, and visualising PhyloPic silhouettes. Methods in Ecology
