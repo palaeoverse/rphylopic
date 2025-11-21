@@ -126,7 +126,7 @@ As with any community project, society, or meeting we feel it is important to es
 
 If you use the `rphylopic` package in your work, please acknowledge the contributors responsible for the image, acknowledge the creator of PhyloPic ([Michael Keesey](http://tmkeesey.net)), and cite the following for `rphylopic`:
 
-Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising PhyloPic silhouettes. Methods in Ecology and Evolution, 14(11), 2700-2708. doi: 10.1111/2041-210X.14221.
+Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising PhyloPic silhouettes. Methods in Ecology and Evolution, 14(11), 2700-2708. doi: [10.1111/2041-210X.14221](https://doi.org/10.1111/2041-210X.14221).
 
 # Cheat sheet
 
