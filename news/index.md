@@ -1,5 +1,7 @@
 # Changelog
 
+## rphylopic (development version)
+
 ## rphylopic 1.6.0
 
 CRAN release: 2025-11-18

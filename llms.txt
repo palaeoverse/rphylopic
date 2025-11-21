@@ -11,7 +11,7 @@ website](http://phylopic.org/).
 Chamberlain](https://scottchamberlain.info). From ver. 1.0.0, the
 package is now developed and maintained by [William
 Gearty](https://williamgearty.com) and [Lewis A.
-Jones](https://lewisajones.com) from the [Palaeoverse
+Jones](https://www.lewisajones.com/) from the [Palaeoverse
 team](https://palaeoverse.org).
 
 ## Installation
