@@ -24,8 +24,8 @@ The picture can be a \link[grImport2:Picture-class]{Picture} or png array object
 e.g., from using \code{\link[=get_phylopic]{get_phylopic()}}.
 }
 \seealso{
-Other transformations: 
-\code{\link{recolor_phylopic}()},
-\code{\link{rotate_phylopic}()}
+Other transformations:
+\code{\link[=recolor_phylopic]{recolor_phylopic()}},
+\code{\link[=rotate_phylopic]{rotate_phylopic()}}
 }
 \concept{transformations}

@@ -23,8 +23,8 @@ e.g., from using \code{\link[=get_phylopic]{get_phylopic()}}. Note that png arra
 rotated by multiples of 90 degrees.
 }
 \seealso{
-Other transformations: 
-\code{\link{flip_phylopic}()},
-\code{\link{recolor_phylopic}()}
+Other transformations:
+\code{\link[=flip_phylopic]{flip_phylopic()}},
+\code{\link[=recolor_phylopic]{recolor_phylopic()}}
 }
 \concept{transformations}
