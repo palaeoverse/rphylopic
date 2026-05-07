@@ -226,8 +226,11 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     data$img <- imgs
     data
   },
-  use_defaults = function(self, data, params = list(), modifiers = aes()) {
-    default_aes <- self$default_aes
+  use_defaults = function(self, data, params = list(), modifiers = aes(),
+                          default_aes = NULL, theme = NULL, ...) {
+    if (packageVersion("ggplot2") < "4.0.0") {
+      default_aes <- self$default_aes
+    }
     # Inherit size as height if no height aesthetic and param exist
     if (!is.null(data$size)) {
       lifecycle::deprecate_warn("1.5.0",
@@ -242,7 +245,12 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     # if fill isn't specified in the original data, copy over the colour column
     col_fill <- c("colour", "fill") %in% colnames(data) |
       c("colour", "fill") %in% names(params)
-    data <- ggproto_parent(Geom, self)$use_defaults(data, params, modifiers)
+    if (packageVersion("ggplot2") < "4.0.0") {
+      data <- ggproto_parent(Geom, self)$use_defaults(data, params, modifiers)
+    } else {
+      data <- ggproto_parent(Geom, self)$use_defaults(data, params, modifiers,
+                                                      default_aes, theme, ...)
+    }
     if (col_fill[1] && !col_fill[2]) {
       data$fill <- data$colour
       data$colour <- NA

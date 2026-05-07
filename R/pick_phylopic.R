@@ -124,7 +124,8 @@ pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
     # Get image data
     height <- 1024 / ceiling(sqrt(view))
     if (view > 1 && length(uuids[[i]]) > 1) {
-      img <- pblapply(uuids[[i]], get_phylopic, format = "raster", height)
+      img <- pblapply(uuids[[i]], get_phylopic, format = "raster",
+                      height = height)
     } else {
       img <- sapply(uuids[[i]], get_phylopic)
     }
