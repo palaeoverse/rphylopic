@@ -56,7 +56,7 @@ rphylopic.igraph <- function(coords, v = NULL, params) {
                     horizontal = vertex.horizontal, vertical = vertex.vertical,
                     angle = vertex.angle,
                     hjust = vertex.hjust, vjust = vertex.vjust,
-                    remove_background = params("vertex", "verbose"),
+                    remove_background = params("vertex", "remove_background"),
                     verbose = params("vertex", "verbose"))
 }
 
