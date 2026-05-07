@@ -72,7 +72,7 @@ register_phylopic_shape <- function() {
                       vertex.alpha = 1,
                       vertex.color = "black",
                       vertex.frame.color = NA,
-                      vertex.size = 20,
+                      vertex.size = 40,
                       vertex.horizontal = FALSE,
                       vertex.vertical = FALSE,
                       vertex.angle = 0,
