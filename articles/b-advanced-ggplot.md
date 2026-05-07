@@ -23,6 +23,7 @@ package.
 First, let’s load our libraries and the penguin data:
 
 ``` r
+
 # Load libraries
 library(rphylopic)
 library(ggplot2)
@@ -35,6 +36,7 @@ penguins_subset <- subset(penguins, !is.na(sex))
 Now, let’s pick a silhouette to use for the penguins. Let’s pick \#2:
 
 ``` r
+
 # Pick a silhouette for Pygoscelis (here we pick #2)
 penguin <- pick_phylopic("Pygoscelis", n = 3, view = 3)
 ```
@@ -43,6 +45,7 @@ You may have noticed in the preview that the silhouette was a little
 slanted. Let’s rotate it clockwise just a smidgen:
 
 ``` r
+
 # It's a little slanted, so let's rotate it a little bit
 penguin_rot <- rotate_phylopic(img = penguin, angle = 15)
 ```
@@ -51,6 +54,7 @@ Now, let’s draft the plot that we want to make. In this case, let’s plot
 the penguins’ bill lengths vs. their flipper lengths:
 
 ``` r
+
 ggplot(penguins_subset) +
   geom_point(aes(x = bill_length_mm, y = flipper_length_mm)) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
@@ -73,6 +77,7 @@ function, which will require us to make a `data.frame`. Note that the
 the y-axis.
 
 ``` r
+
 silhouette_df <- data.frame(x = 59, y = 215, species = "Adelie")
 ggplot(penguins_subset) +
   geom_point(aes(x = bill_length_mm, y = flipper_length_mm)) +
@@ -96,6 +101,7 @@ function (in this case, we want to use the same image for each x-y
 pair):
 
 ``` r
+
 ggplot(penguins_subset) +
   geom_phylopic(img = penguin_rot,
                 aes(x = bill_length_mm, y = flipper_length_mm)) +
@@ -115,6 +121,7 @@ Instead, we can specify a `height` or `width` to use (in y-axis or
 x-axis units, respectively):
 
 ``` r
+
 ggplot(penguins_subset) +
   geom_phylopic(img = penguin_rot,
                 aes(x = bill_length_mm, y = flipper_length_mm), height = 5) +
@@ -141,6 +148,7 @@ if you are using the `width` aesthetic) just as you would use
 We’ll just use the defaults here:
 
 ``` r
+
 ggplot(penguins_subset) +
   geom_phylopic(img = penguin_rot,
                 aes(x = bill_length_mm, y = flipper_length_mm,
@@ -163,6 +171,7 @@ However, we only want a legend for the fill colors, so we use
 in the legend, so we need to override the shape:
 
 ``` r
+
 ggplot(penguins_subset) +
   geom_phylopic(img = penguin_rot,
                 aes(x = bill_length_mm, y = flipper_length_mm,
@@ -194,6 +203,7 @@ that
 does not currently support the `height`/`width` aesthetics.
 
 ``` r
+
 ggplot(penguins_subset) +
   geom_phylopic(img = penguin_rot,
                 aes(x = bill_length_mm, y = flipper_length_mm,
@@ -229,6 +239,7 @@ visualize the geographic distribution of *Diplocaulus* fossils.
 First, let’s load our libraries and the tetrapod data:
 
 ``` r
+
 # Load libraries
 library(rphylopic)
 library(ggplot2)
@@ -242,6 +253,7 @@ data(tetrapods)
 Then we’ll subset our occurrences to only those for *Diplocaulus*:
 
 ``` r
+
 # Subset to desired group
 tetrapods <- subset(tetrapods, genus == "Diplocaulus")
 ```
@@ -254,6 +266,7 @@ multiple occurrences in the same place. That way, the darker the fill
 color, the more occurrences in that geographic location.
 
 ``` r
+
 # Get map data
 world <- st_as_sf(map("world", fill = TRUE, plot = FALSE))
 world <- st_wrap_dateline(world)
@@ -274,6 +287,7 @@ Now, as with the penguin figure above, we can easily replace those
 points with silhouettes.
 
 ``` r
+
 ggplot(world) +
   geom_sf(fill = "lightgray", color = "darkgrey", linewidth = 0.1) +
   geom_phylopic(data = tetrapods, aes(x = lng, y = lat, name = genus),
@@ -306,6 +320,7 @@ you may need to adjust the `height` argument/aesthetic accordingly when
 projecting maps and data.
 
 ``` r
+
 # Set up a bounding box
 bbox <- st_graticule(crs = st_crs("ESRI:54030"),
                      lat = c(-89.9, 89.9), lon = c(-179.9, 179.9))
@@ -335,6 +350,7 @@ the names with PhyloPic silhouettes. First, let’s load our libraries and
 data:
 
 ``` r
+
 # Load libraries
 library(rphylopic)
 library(ggplot2)
@@ -352,6 +368,7 @@ call in a [`tryCatch()`](https://rdrr.io/r/base/conditions.html) call.
 This way, we should get either a UUID or `NA` for each species:
 
 ``` r
+
 # Make a data.frame for the PhyloPic names
 vertebrate_data <- data.frame(species = vertebrate.tree$tip.label, uuid = NA)
 # Try to get PhyloPic UUIDs for the species names
@@ -382,6 +399,7 @@ resolution of this phylogeny, we can just grab a silhouette for the
 subfamily (Vespertilioninae):
 
 ``` r
+
 vertebrate_data$uuid[vertebrate_data$species == "Myotis_lucifugus"] <-
   get_uuid("Vespertilioninae")
 ```
@@ -391,6 +409,7 @@ with
 [`pick_phylopic()`](https://rphylopic.palaeoverse.org/reference/pick_phylopic.md).
 
 ``` r
+
 # Pick a different boar image; we'll pick #2
 boar_svg <- pick_phylopic("Sus scrofa", view = 5)
 # Extract the UUID
@@ -420,6 +439,7 @@ to get these 11 UUIDs, we know that they are valid, so we don’t need to
 catch any errors this time.
 
 ``` r
+
 vertebrate_data$svg <- lapply(vertebrate_data$uuid, get_phylopic)
 ```
 
@@ -427,6 +447,7 @@ Now let’s go ahead and plot our phylogeny with the
 [ggtree](https://www.bioconductor.org/packages/ggtree) package:
 
 ``` r
+
 library(ggtree)
 # Plot the tree
 ggtree(vertebrate.tree, size = 1, layout = "circular")
@@ -446,6 +467,7 @@ reverse the time axis to work with
 [`coord_geo_polar()`](https://williamgearty.com/deeptime/reference/coord_geo_polar.html).
 
 ``` r
+
 library(deeptime)
 # Plot the tree with a geological timescale in the background
 revts(ggtree(vertebrate.tree, size = 1)) +
@@ -468,6 +490,7 @@ now. Note that we need to attach the `vertebrate_data` object with the
 [ggtree](https://www.amazon.com/Integration-Manipulation-Visualization-Phylogenetic-Computational-ebook/dp/B0B5NLZR1Z/).
 
 ``` r
+
 revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
   geom_phylopic(aes(img = svg), height = 25) +
   scale_x_continuous(breaks = seq(-500, 0, 100),
@@ -489,6 +512,7 @@ different widths. Let’s fix some of the silhouettes by rotating them 90
 degrees:
 
 ``` r
+
 vertebrate_data$svg[[1]] <- rotate_phylopic(img = vertebrate_data$svg[[1]])
 vertebrate_data$svg[[8]] <- rotate_phylopic(img = vertebrate_data$svg[[8]])
 ```
@@ -496,6 +520,7 @@ vertebrate_data$svg[[8]] <- rotate_phylopic(img = vertebrate_data$svg[[8]])
 And now the finished product:
 
 ``` r
+
 revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
   geom_phylopic(aes(img = svg), height = 25) +
   scale_x_continuous(breaks = seq(-500, 0, 100),

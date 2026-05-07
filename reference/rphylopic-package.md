@@ -23,12 +23,19 @@ Useful links:
 
 Authors:
 
-- Lewis A. Jones <LewisAlan.Jones@uvigo.es>
-  ([ORCID](https://orcid.org/0000-0003-3902-8986))
+- William Gearty <willgearty@gmail.com>
+  ([ORCID](https://orcid.org/0000-0003-0076-3262))
 
-- Scott Chamberlain <myrmecocystus@gmail.com>
-  ([ORCID](https://orcid.org/0000-0003-1444-9135))
+- Lewis A. Jones <lewis.jones@ucl.ac.uk>
+  ([ORCID](https://orcid.org/0000-0003-3902-8986))
 
 Other contributors:
 
-- David Miller <dave@ninepointeightone.net> \[contributor\]
+- Scott Chamberlain <myrmecocystus@gmail.com>
+  ([ORCID](https://orcid.org/0000-0003-1444-9135)) \[contributor\]
+
+- Martin R. Smith <martin.smith@durham.ac.uk>
+  ([ORCID](https://orcid.org/0000-0001-5660-1727)) \[contributor\]
+
+- David L. Miller <dave@ninepointeightone.net>
+  ([ORCID](https://orcid.org/0000-0002-9640-6755)) \[contributor\]

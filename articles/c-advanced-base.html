@@ -265,7 +265,7 @@ geographic distribution of <em>Diplocaulus</em> fossils.</p>
 <code class="sourceCode R"><span><span class="co"># Subset to desired group</span></span>
 <span><span class="va">tetrapods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">tetrapods</span>, <span class="va">genus</span> <span class="op">==</span> <span class="st">"Diplocaulus"</span><span class="op">)</span></span></code></pre></div>
 <p>Now, let’s plot those occurrences on a world map. Here we use the
-<code>{geodata}</code> and <a href="https://rspatial.org/raster" class="external-link">raster</a> packages to generate
+<a href="https://rspatial.github.io/geodata/" class="external-link">geodata</a> and <a href="https://rspatial.org/raster" class="external-link">raster</a> packages to generate
 the map. Then we add colored points on top of this. Note that we use
 <code>alpha = 0.75</code> in case there are multiple occurrences in the
 same place. That way, the darker the color, the more occurrences in that

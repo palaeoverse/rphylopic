@@ -19,6 +19,7 @@ team](https://palaeoverse.org).
 The stable version of `rphylopic` can be installed from CRAN using:
 
 ``` r
+
 install.packages("rphylopic")
 ```
 
@@ -26,6 +27,7 @@ The development version of `rphylopic` can be installed via GitHub
 using:
 
 ``` r
+
 install.packages("remotes")
 remotes::install_github("palaeoverse/rphylopic")
 ```
@@ -35,6 +37,7 @@ remotes::install_github("palaeoverse/rphylopic")
 ## Get an image uuid
 
 ``` r
+
 # Load rphylopic
 library(rphylopic)
 # Get a single image uuid for a species
@@ -48,6 +51,7 @@ uuid <- get_uuid(name = "Canis lupus", n = 5)
 ## Pick an image
 
 ``` r
+
 # How do I pick?!
 # It's difficult without seeing the image itself, let's use:
 img <- pick_phylopic(name = "Canis lupus", n = 5)
@@ -58,6 +62,7 @@ img <- pick_phylopic(name = "Canis lupus", n = 5)
 ### Base R
 
 ``` r
+
 # OK, now we've got the image we want... let's add it to a plot!
 plot(x = 1, y = 1, type = "n")
 add_phylopic_base(img = img, x = 1.25, y = 1.25, height = 0.25)
@@ -76,6 +81,7 @@ add_phylopic_base(name = "Canis lupus", x = 0.75, y = 1.25, height = 0.25, color
 ### ggplot2
 
 ``` r
+
 # All of this functionality is available for ggplot2 as well...
 # But we use add_phylopic and geom_phylopic instead!
 library(ggplot2)
@@ -96,6 +102,7 @@ ggplot(iris) +
 ## Get attribution
 
 ``` r
+
 # PhyloPic has a lot of contributors and we should acknowledge 
 # their work. You can get data about images using get_attribution
 
@@ -108,6 +115,7 @@ get_attribution(uuid = uuid)
 ## Save an image
 
 ``` r
+
 # How do I save an image?
 # Get image
 img <- pick_phylopic(name = "Phascolarctos cinereus", n = 1)

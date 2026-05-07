@@ -22,6 +22,7 @@ The **rphylopic** package can be installed via CRAN or its dedicated
 development version is preferred. To install via CRAN, simply use:
 
 ``` r
+
 install.packages("rphylopic")
 ```
 
@@ -30,6 +31,7 @@ To install the development version, first install the
 `install_github()` to install **rphylopic** directly from GitHub.
 
 ``` r
+
 install.packages("remotes")
 remotes::install_github("palaeoverse/rphylopic")
 ```
@@ -38,6 +40,7 @@ You can now load **rphylopic** using the default
 [`library()`](https://rdrr.io/r/base/library.html) function:
 
 ``` r
+
 library(rphylopic)
 ```
 
@@ -47,6 +50,7 @@ associated publication. This will help us to continue our work in
 supporting you to do yours. You can access the appropriate citation via:
 
 ``` r
+
 citation("rphylopic")
 ```
 
@@ -92,6 +96,7 @@ allows you to fetch `n` matched UUIDs.
 ### Get an image uuid
 
 ``` r
+
 # Load rphylopic
 library(rphylopic)
 # Get a single image UUID for a species
@@ -113,6 +118,7 @@ menu to allow you to select the right image for you. Let’s go with
 option 1!
 
 ``` r
+
 # How do I pick?!
 # It's difficult without seeing the image itself, let's use:
 img <- pick_phylopic(name = "Canis lupus", n = 4, view = 4)
@@ -128,6 +134,7 @@ Let’s start with base R by using
 [`add_phylopic_base()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_base.md):
 
 ``` r
+
 # OK, now we've got the image we want... let's add it to a plot!
 plot(x = 1, y = 1, type = "n", ann = FALSE)
 add_phylopic_base(img = img, x = 1.25, y = 1.25, height = 0.25)
@@ -162,6 +169,7 @@ You can also accomplish the same plot with the
 function, but the functionality and all of the arguments are the same:
 
 ``` r
+
 library(ggplot2)
 p <- ggplot() +
   coord_cartesian(xlim = c(0.6, 1.4), ylim = c(0.6, 1.4)) +
@@ -194,6 +202,7 @@ vertically. This may be useful if, for example, you want all of the
 silhouettes to face the same direction.
 
 ``` r
+
 # Flip silhouette horizontally
 img_flip <- flip_phylopic(img = img, horizontal = TRUE, vertical = FALSE)
 ```
@@ -205,6 +214,7 @@ degrees. This may be useful when trying to align a silhouette with text
 or other objects within a figure.
 
 ``` r
+
 # Rotate silhouette by 45 degrees
 img_rot <- rotate_phylopic(img = img, angle = 45)
 ```
@@ -219,6 +229,7 @@ trying to either match an existing visualization color palette or trying
 to convey extra information, such as categorical data, through color.
 
 ``` r
+
 # Change fill color to blue and transparency to 50%
 img_col <- recolor_phylopic(img = img, alpha = 0.5, fill = "blue")
 ```
@@ -226,6 +237,7 @@ img_col <- recolor_phylopic(img = img, alpha = 0.5, fill = "blue")
 Let’s see what those look like in the same plot:
 
 ``` r
+
 ggplot() +
   coord_cartesian(xlim = c(0.6, 1.4), ylim = c(0.6, 1.4)) +
   add_phylopic(img = img_flip, x = 1.25, y = 1.25, height = 0.25) +
@@ -262,6 +274,7 @@ acknowledge the contributors that made those silhouettes. Fortunately,
 function to get contributor data about specific images:
 
 ``` r
+
 # Get valid uuid
 uuid <- get_uuid(name = "Nycticebus")
 # Get attribution data for uuid
@@ -298,6 +311,7 @@ This function can even write a little blurb for you to include in your
 publications:
 
 ``` r
+
 # Get valid uuid
 uuid <- get_uuid(name = "Nycticebus")
 # Get attribution data for uuid
@@ -318,6 +332,7 @@ Vector Graphics (SVG), Tag Image File Format (TIFF), Joint Photographic
 Experts Group (JPEG), and bitmap (BMP).
 
 ``` r
+
 # How do I save an image?
 # Get image
 img <- pick_phylopic(name = "Phascolarctos cinereus", n = 1)

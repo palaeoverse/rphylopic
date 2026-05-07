@@ -24,6 +24,7 @@ package.
 First, let’s load our libraries and the penguin data:
 
 ``` r
+
 # Load libraries
 library(rphylopic)
 library(palmerpenguins)
@@ -34,6 +35,7 @@ data(penguins)
 Now, let’s pick a silhouette to use for the penguins. Let’s pick \#2:
 
 ``` r
+
 # Pick a silhouette for Pygoscelis (here we pick #2)
 penguin <- pick_phylopic("Pygoscelis", n = 3, view = 3)
 ```
@@ -42,6 +44,7 @@ You may have noticed in the preview that the silhouette was a little
 slanted. Let’s rotate it clockwise just a smidgen:
 
 ``` r
+
 # It's a little slanted, so let's rotate it a little bit
 penguin_rot <- rotate_phylopic(img = penguin, angle = 15)
 ```
@@ -49,6 +52,7 @@ penguin_rot <- rotate_phylopic(img = penguin, angle = 15)
 Now, let’s clean the data and split the data among the three species:
 
 ``` r
+
 # Subset the data to remove rows with missing sex values
 penguins_subset <- subset(penguins, !is.na(sex))
 # Split the data by species
@@ -60,6 +64,7 @@ Within each panel, we’ll plot the penguins’ bill lengths vs. their
 flipper lengths:
 
 ``` r
+
 # Set up the plot area
 par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
 
@@ -89,6 +94,7 @@ silhouette, and the `height` argument specifies how tall the silhouette
 is in the units of the y-axis.
 
 ``` r
+
 # Set up the plot area
 par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
 
@@ -116,6 +122,7 @@ function. In this case, we can again specify `img = penguin_rot` since
 we want to use the same image for each x-y pair:
 
 ``` r
+
 # Set up the plot area
 par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
 
@@ -144,6 +151,7 @@ to the penguins’ body masses. A scaling factor of 8 seems to work well
 for this size figure.
 
 ``` r
+
 par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
 
 for (i in seq_along(species_split)) {
@@ -168,6 +176,7 @@ Finally, let’s give the female and male penguins different fill colors.
 We’ll also add a legend to the last panel.
 
 ``` r
+
 par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
 
 for (i in seq_along(species_split)) {
@@ -209,6 +218,7 @@ visualize the geographic distribution of *Diplocaulus* fossils.
 First, let’s load our libraries and the tetrapod data:
 
 ``` r
+
 # Load libraries
 library(rphylopic)
 library(maps)
@@ -220,18 +230,20 @@ data(tetrapods)
 Then we’ll subset our occurrences to only those for *Diplocaulus*:
 
 ``` r
+
 # Subset to desired group
 tetrapods <- subset(tetrapods, genus == "Diplocaulus")
 ```
 
 Now, let’s plot those occurrences on a world map. Here we use the
-`{geodata}` and [raster](https://rspatial.org/raster) packages to
-generate the map. Then we add colored points on top of this. Note that
-we use `alpha = 0.75` in case there are multiple occurrences in the same
-place. That way, the darker the color, the more occurrences in that
-geographic location.
+[geodata](https://rspatial.github.io/geodata/) and
+[raster](https://rspatial.org/raster) packages to generate the map. Then
+we add colored points on top of this. Note that we use `alpha = 0.75` in
+case there are multiple occurrences in the same place. That way, the
+darker the color, the more occurrences in that geographic location.
 
 ``` r
+
 # Plot map
 map("world", col = "lightgrey", fill = TRUE)
 # Plot points
@@ -247,6 +259,7 @@ Now, as with the penguin figure above, we can easily replace those
 points with silhouettes.
 
 ``` r
+
 map("world", col = "lightgrey", fill = TRUE)
 add_phylopic_base(name = "Diplocaulus", x = tetrapods$lng, y = tetrapods$lat,
                   height = 8, fill = "blue", alpha = 0.75)
@@ -275,6 +288,7 @@ the names with PhyloPic silhouettes. First, let’s load our libraries and
 data:
 
 ``` r
+
 # Load libraries
 library(rphylopic)
 library(ggplot2)
@@ -292,6 +306,7 @@ call in a [`tryCatch()`](https://rdrr.io/r/base/conditions.html) call.
 This way, we should get either a UUID or `NA` for each species:
 
 ``` r
+
 # Make a data.frame for the PhyloPic names
 vertebrate_data <- data.frame(species = vertebrate.tree$tip.label, uuid = NA)
 # Try to get PhyloPic UUIDs for the species names
@@ -322,6 +337,7 @@ resolution of this phylogeny, we can just grab a silhouette for the
 subfamily (Vespertilioninae):
 
 ``` r
+
 vertebrate_data$uuid[vertebrate_data$species == "Myotis_lucifugus"] <-
   get_uuid("Vespertilioninae")
 ```
@@ -331,6 +347,7 @@ with
 [`pick_phylopic()`](https://rphylopic.palaeoverse.org/reference/pick_phylopic.md).
 
 ``` r
+
 # Pick a different boar image; we'll pick #2
 boar_svg <- pick_phylopic("Sus scrofa", view = 5)
 # Extract the UUID
@@ -360,6 +377,7 @@ to get these 11 UUIDs, we know that they are valid, so we don’t need to
 catch any errors this time.
 
 ``` r
+
 vertebrate_data$svg <- lapply(vertebrate_data$uuid, get_phylopic)
 ```
 
@@ -367,6 +385,7 @@ Now let’s go ahead and plot our phylogeny with the
 [ape](https://github.com/emmanuelparadis/ape) package:
 
 ``` r
+
 library(ape)
 # Plot the tree
 plot(vertebrate.tree)
@@ -382,6 +401,7 @@ using
 from the [palaeoverse](https://palaeoverse.palaeoverse.org) package.
 
 ``` r
+
 library(palaeoverse)
 # Plot the tree with a geological timescale on the bottom
 plot(vertebrate.tree)
@@ -407,6 +427,7 @@ figures out the x and y coordinates for the silhouettes for us, so we
 don’t have to worry about doing any funny math.
 
 ``` r
+
 plot(vertebrate.tree, show.tip.label = FALSE)
 axis_geo_phylo(intervals = "periods")
 add_phylopic_tree(vertebrate.tree, tip = vertebrate_data$species,
@@ -424,6 +445,7 @@ different widths. Let’s fix some of the silhouettes by rotating them 90
 degrees:
 
 ``` r
+
 vertebrate_data$svg[[1]] <- rotate_phylopic(img = vertebrate_data$svg[[1]])
 vertebrate_data$svg[[8]] <- rotate_phylopic(img = vertebrate_data$svg[[8]])
 ```
@@ -431,6 +453,7 @@ vertebrate_data$svg[[8]] <- rotate_phylopic(img = vertebrate_data$svg[[8]])
 And now the finished product:
 
 ``` r
+
 plot(vertebrate.tree, show.tip.label = FALSE)
 axis_geo_phylo(intervals = "periods")
 add_phylopic_tree(vertebrate.tree, tip = vertebrate_data$species,
