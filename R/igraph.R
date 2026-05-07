@@ -12,7 +12,7 @@ rphylopic.igraph <- function(coords, v = NULL, params) {
   if (length(vertex.frame.color) != 1 && !is.null(v)) {
     vertex.frame.color <- vertex.frame.color[v]
   }
-  vertex.size <- 1 / 200 * params("vertex", "size")
+  vertex.size <- params("vertex", "size")
   if (length(vertex.size) != 1 && !is.null(v)) {
     vertex.size <- vertex.size[v]
   }
