@@ -29,3 +29,5 @@ c-advanced-base.Rmd.orig
 ^Meta$
 ^workshop-materials$
 ^\.zenodo\.json$
+^\.positai$
+^\.claude$
