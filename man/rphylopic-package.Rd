@@ -26,7 +26,7 @@ Useful links:
 Authors:
 \itemize{
   \item William Gearty \email{willgearty@gmail.com} (\href{https://orcid.org/0000-0003-0076-3262}{ORCID})
-  \item Lewis A. Jones \email{LewisAlan.Jones@uvigo.es} (\href{https://orcid.org/0000-0003-3902-8986}{ORCID})
+  \item Lewis A. Jones \email{lewis.jones@ucl.ac.uk} (\href{https://orcid.org/0000-0003-3902-8986}{ORCID})
 }
 
 Other contributors:
