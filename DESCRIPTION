@@ -38,8 +38,7 @@ Imports:
     lifecycle,
     pbapply,
     knitr,
-    scales,
-    rlang
+    scales
 Suggests:
     testthat (>= 3.0.0),
     vdiffr (>= 1.0.0),

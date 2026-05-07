@@ -57,31 +57,11 @@ rphylopic.igraph <- function(coords, v = NULL, params) {
                     angle = vertex.angle,
                     hjust = vertex.hjust, vjust = vertex.vjust,
                     remove_background = params("vertex", "remove_background"),
-                    verbose = params("vertex", "verbose"))
+                    verbose = params("vertex", "verbose"),
+                    filter = params("vertex", "filter"))
 }
 
-#' Use PhyloPics with igraph
-#' 
-#' This function adds a new vertex shape ("phylopic") to igraph that allows you
-#' to use PhyloPics in your igraph plots. It sets up the necessary parameters
-#' (see Details below) and registers the shape with igraph.
-#' 
-#' @details Additional details...
-#' 
-#' @importFrom rlang check_installed
-#' @export
-#' @examples \dontrun{
-#' # load igraph and activate the connection with rphylopic
-#' library(igraph)
-#' activate_igraph()
-#' # create a simple graph
-#' g <- make_ring(10)
-#' # plot the graph with phylopics
-#' plot(g, vertex.shape = "phylopic", vertex.color = rainbow(vcount(g)),
-#'      vertex.name = "Gorilla")
-#' }
-activate_igraph <- function() {
-  check_installed("igraph", reason = "to use `rphylopic_igraph_activate()`")
+register_phylopic_shape <- function() {
   igraph::add_shape("phylopic",
                     clip = igraph::shape_noclip,
                     plot = rphylopic.igraph,
@@ -89,7 +69,6 @@ activate_igraph <- function() {
                       vertex.img = NULL,
                       vertex.name = NULL,
                       vertex.uuid = NULL,
-                      vertex.filter = NULL,
                       vertex.alpha = 1,
                       vertex.color = "black",
                       vertex.frame.color = NA,
@@ -99,8 +78,42 @@ activate_igraph <- function() {
                       vertex.angle = 0,
                       vertex.hjust = 0.5,
                       vertex.vjust = 0.5,
+                      vertex.filter = NULL,
                       vertex.remove_background = TRUE,
                       vertex.verbose = FALSE
                     )
   )
 }
+
+#' Use PhyloPic silhouettes with igraph
+#'
+#' @description
+#' When both `rphylopic` and `igraph` are loaded, rphylopic registers a
+#' custom vertex shape called `"phylopic"`. Setting `vertex.shape = "phylopic"`
+#' in [igraph::plot.igraph()] renders each vertex as a PhyloPic silhouette.
+#'
+#' @details
+#' The shape accepts the following vertex parameters, mirroring the
+#' arguments of [add_phylopic_base()]:
+#'
+#' \itemize{
+#'   \item `vertex.img`, `vertex.name`, `vertex.uuid` — silhouette source
+#'   \item `vertex.size` — silhouette height (in plot units)
+#'   \item `vertex.color`, `vertex.frame.color`, `vertex.alpha` — fill, outline,
+#'     opacity
+#'   \item `vertex.horizontal`, `vertex.vertical`, `vertex.angle` — orientation
+#'   \item `vertex.hjust`, `vertex.vjust` — anchoring
+#'   \item `vertex.remove_background`, `vertex.verbose`, `vertex.filter` —
+#'     passed to [add_phylopic_base()]
+#' }
+#'
+#' @examples
+#' \dontrun{
+#' library(igraph)
+#' g <- make_ring(10)
+#' plot(g, vertex.shape = "phylopic", vertex.name = "Gorilla",
+#'      vertex.color = rainbow(vcount(g)))
+#' }
+#' @seealso [add_phylopic_base()], [igraph::add_shape()]
+#' @name phylopic_igraph
+NULL
