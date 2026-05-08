@@ -21,6 +21,8 @@ opacity
 \item \code{vertex.hjust}, \code{vertex.vjust} — anchoring
 \item \code{vertex.remove_background}, \code{vertex.verbose}, \code{vertex.filter} —
 passed to \code{\link[=add_phylopic_base]{add_phylopic_base()}}
+\item \code{vertex.clip_scale} — numeric scale factor controlling the clipping
+of the edges (default: \code{0.7})
 }
 }
 \section{Note on interactive resizing}{

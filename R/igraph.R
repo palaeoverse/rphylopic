@@ -62,9 +62,19 @@ rphylopic.igraph <- function(coords, v = NULL, params) {
 }
 
 phylopic_clip <- function(coords, el, params, end = c("both", "from", "to")) {
+  clip_scale <- params("vertex", "clip_scale")
+  # Fall back to default if entirely unset, otherwise patch NAs in place
+  if (length(clip_scale) == 0) {
+    clip_scale <- 0.7
+  } else {
+    clip_scale[is.na(clip_scale)] <- 0.7
+  }
+  
+  # Wrap igraph's circle clip with a scaled-down vertex.size so arrows stop
+  # at roughly the silhouette outline rather than its bounding circle
   scaled_params <- function(type, name) {
     val <- params(type, name)
-    if (type == "vertex" && name == "size") val * 0.7 else val
+    if (type == "vertex" && name == "size") val * clip_scale else val
   }
   igraph::shapes("circle")$clip(coords, el, scaled_params, end)
 }
@@ -88,7 +98,8 @@ register_phylopic_shape <- function() {
                       vertex.vjust = 0.5,
                       vertex.filter = NULL,
                       vertex.remove_background = TRUE,
-                      vertex.verbose = FALSE
+                      vertex.verbose = FALSE,
+                      vertex.clip_scale = 0.7
                     )
   )
 }
@@ -113,6 +124,8 @@ register_phylopic_shape <- function() {
 #'   \item `vertex.hjust`, `vertex.vjust` — anchoring
 #'   \item `vertex.remove_background`, `vertex.verbose`, `vertex.filter` —
 #'     passed to [add_phylopic_base()]
+#'   \item `vertex.clip_scale` — numeric scale factor controlling the clipping
+#'     of the edges (default: `0.7`)
 #' }
 #' 
 #' @section Note on interactive resizing:
