@@ -1,5 +1,8 @@
 # rphylopic (development version)
 
+* Added support for using PhyloPic silhouettes as vertices when plotting `{igraph}` networks via a new `"phylopic"` vertex shape, registered automatically when both packages are loaded (#115, #118)
+* Added new "Network plots" sections to both advanced vignettes, demonstrating the new `{igraph}` integration in base R and the use of `geom_phylopic()` inside `{ggraph}` plots
+
 # rphylopic 1.6.0
 
 * Added add_phylopic_tree() to add silhouettes to base R trees (#110)
