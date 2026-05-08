@@ -123,3 +123,39 @@ test_that("igraph phylopic warnings and errors propagate", {
     "`name` argument"
   )
 })
+
+test_that("phylopic_clip handles default and NA clip_scale values", {
+  skip_if_not_installed("igraph")
+  
+  # Two edges out of a single source node
+  coords <- matrix(c(0, 0, 1, 0,
+                     0, 0, 0, 1), ncol = 4, byrow = TRUE)
+  el <- matrix(c(1, 2,
+                 1, 3), ncol = 2, byrow = TRUE)
+  
+  # Default branch: clip_scale unset
+  params_unset <- function(type, name) {
+    if (type == "vertex" && name == "size") return(20)
+    if (type == "vertex" && name == "clip_scale") return(numeric(0))
+    NULL
+  }
+  expect_no_error(phylopic_clip(coords, el, params_unset, "both"))
+  
+  # NA-patching branch: per-vertex clip_scale with some NAs
+  params_partial_na <- function(type, name) {
+    if (type == "vertex" && name == "size") return(rep(20, 3))
+    if (type == "vertex" && name == "clip_scale") return(c(NA, 0.5, NA))
+    NULL
+  }
+  expect_no_error(phylopic_clip(coords, el, params_partial_na, "both"))
+  
+  # User-supplied scalar should be honored
+  params_scalar <- function(type, name) {
+    if (type == "vertex" && name == "size") return(20)
+    if (type == "vertex" && name == "clip_scale") return(0.4)
+    NULL
+  }
+  result <- phylopic_clip(coords, el, params_scalar, "both")
+  expect_true(is.matrix(result))
+  expect_equal(ncol(result), 4)  # both endpoints clipped
+})

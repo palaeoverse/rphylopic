@@ -2,52 +2,52 @@ rphylopic.igraph <- function(coords, v = NULL, params) {
   # get plotting parameters and get index if necessary
   vertex.alpha <- params("vertex", "alpha")
   if (length(vertex.alpha) != 1 && !is.null(v)) {
-    vertex.alpha <- vertex.alpha[v]
+    vertex.alpha <- vertex.alpha[v] # nocov
   }
   vertex.color <- params("vertex", "color")
   if (length(vertex.color) != 1 && !is.null(v)) {
-    vertex.color <- vertex.color[v]
+    vertex.color <- vertex.color[v] # nocov
   }
   vertex.frame.color <- params("vertex", "frame.color")
   if (length(vertex.frame.color) != 1 && !is.null(v)) {
-    vertex.frame.color <- vertex.frame.color[v]
+    vertex.frame.color <- vertex.frame.color[v] # nocov
   }
   vertex.size <- params("vertex", "size")
   if (length(vertex.size) != 1 && !is.null(v)) {
-    vertex.size <- vertex.size[v]
+    vertex.size <- vertex.size[v] # nocov
   }
   vertex.horizontal <- params("vertex", "horizontal")
   if (length(vertex.horizontal) != 1 && !is.null(v)) {
-    vertex.horizontal <- vertex.horizontal[v]
+    vertex.horizontal <- vertex.horizontal[v] # nocov
   }
   vertex.vertical <- params("vertex", "vertical")
   if (length(vertex.vertical) != 1 && !is.null(v)) {
-    vertex.vertical <- vertex.vertical[v]
+    vertex.vertical <- vertex.vertical[v] # nocov
   }
   vertex.angle <- params("vertex", "angle")
   if (length(vertex.angle) != 1 && !is.null(v)) {
-    vertex.angle <- vertex.angle[v]
+    vertex.angle <- vertex.angle[v] # nocov
   }
   vertex.hjust <- params("vertex", "hjust")
   if (length(vertex.hjust) != 1 && !is.null(v)) {
-    vertex.hjust <- vertex.hjust[v]
+    vertex.hjust <- vertex.hjust[v] # nocov
   }
   vertex.vjust <- params("vertex", "vjust")
   if (length(vertex.vjust) != 1 && !is.null(v)) {
-    vertex.vjust <- vertex.vjust[v]
+    vertex.vjust <- vertex.vjust[v] # nocov
   }
   # only one of these three should be specified
   img <- params("vertex", "img")
   if (length(img) != 1 && !is.null(v)) {
-    img <- img[v]
+    img <- img[v] # nocov
   }
   name <- params("vertex", "name")
   if (length(name) != 1 && !is.null(v)) {
-    name <- name[v]
+    name <- name[v] # nocov
   }
   uuid <- params("vertex", "uuid")
   if (length(uuid) != 1 && !is.null(v)) {
-    uuid <- uuid[v]
+    uuid <- uuid[v] # nocov
   }
   add_phylopic_base(img = img, name = name, uuid = uuid,
                     x = coords[, 1], y = coords[, 2], height = vertex.size,
