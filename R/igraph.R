@@ -106,6 +106,15 @@ register_phylopic_shape <- function() {
 #'   \item `vertex.remove_background`, `vertex.verbose`, `vertex.filter` —
 #'     passed to [add_phylopic_base()]
 #' }
+#' 
+#' @section Note on interactive resizing:
+#' PhyloPic silhouettes are drawn as vector graphics on top of igraph's
+#' base-graphics plot. Rendering as vectors preserves silhouette resolution;
+#' however, when the graphics device is resized interactively the silhouettes
+#' will not reposition along with the underlying graph layout. The graph nodes,
+#' edges, and labels will redraw at their new coordinates while the
+#' silhouettes remain anchored to their original device positions. To
+#' restore alignment, re-run the `plot()` call after resizing.
 #'
 #' @examples
 #' \dontrun{
