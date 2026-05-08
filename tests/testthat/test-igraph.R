@@ -24,26 +24,28 @@ test_that("igraph plotting with phylopic shape works", {
   skip_if_not_installed("igraph")
   
   g <- igraph::make_ring(5)
+  layout <- igraph::layout_in_circle(g)
   
   # phylopic-by-name on a simple ring
   expect_doppelganger("igraph phylopic by name", function() {
-    plot(g, vertex.shape = "phylopic",
+    plot(g, layout = layout, vertex.shape = "phylopic",
          vertex.name = "Felis silvestris catus",
-         vertex.size = 30, vertex.verbose = TRUE)
+         vertex.size = 30, vertex.verbose = TRUE,
+         vertex.label = NA)
   })
   
   # phylopic-by-uuid
   expect_doppelganger("igraph phylopic by uuid", function() {
-    plot(g, vertex.shape = "phylopic",
+    plot(g, layout = layout, vertex.shape = "phylopic",
          vertex.uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-         vertex.size = 30)
+         vertex.size = 30, vertex.label = NA)
   })
   
   # phylopic-by-pre-fetched image
   expect_doppelganger("igraph phylopic by img", function() {
     cat <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
-    plot(g, vertex.shape = "phylopic", vertex.img = list(cat),
-         vertex.size = 30)
+    plot(g, layout = layout, vertex.shape = "phylopic", vertex.img = list(cat),
+         vertex.size = 30, vertex.label = NA)
   })
 })
 
@@ -54,41 +56,45 @@ test_that("igraph plotting respects per-vertex parameters", {
   # Per-vertex color, angle, and alpha are recycled by igraph's plot machinery
   expect_doppelganger("igraph phylopic per-vertex styling", function() {
     g <- igraph::make_ring(10)
-    plot(g, vertex.shape = "phylopic",
+    layout <- igraph::layout_in_circle(g)
+    plot(g, layout = layout, vertex.shape = "phylopic",
          vertex.uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
          vertex.color = rainbow(5),
          vertex.angle = seq(0, 288, length.out = 5),
          vertex.alpha = seq(0.3, 1, length.out = 5),
-         vertex.size = 30)
+         vertex.size = 30, vertex.label = NA)
   })
   
   # Per-vertex horizontal and vertical flips
   expect_doppelganger("igraph phylopic with flips", function() {
     g <- igraph::make_ring(4)
-    plot(g, vertex.shape = "phylopic",
+    layout <- igraph::layout_in_circle(g)
+    plot(g, layout = layout, vertex.shape = "phylopic",
          vertex.uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
          vertex.horizontal = c(TRUE, FALSE, TRUE, FALSE),
          vertex.vertical  = c(TRUE, TRUE, FALSE, FALSE),
-         vertex.size = 30)
+         vertex.size = 30, vertex.label = NA)
   })
   
   # vertex.frame.color and vertex.color map onto outline/fill
   expect_doppelganger("igraph phylopic with frame and fill", function() {
     g <- igraph::make_ring(3)
-    plot(g, vertex.shape = "phylopic",
+    layout <- igraph::layout_in_circle(g)
+    plot(g, layout = layout, vertex.shape = "phylopic",
          vertex.uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
          vertex.color = "darkorange",
          vertex.frame.color = "black",
-         vertex.size = 40)
+         vertex.size = 40, vertex.label = NA)
   })
   
   # vertex.filter should propagate through to get_uuid() during name lookup
   expect_doppelganger("igraph phylopic with filter", function() {
     g <- igraph::make_ring(3)
-    plot(g, vertex.shape = "phylopic",
+    layout <- igraph::layout_in_circle(g)
+    plot(g, layout = layout, vertex.shape = "phylopic",
          vertex.name = "Felis silvestris catus",
          vertex.filter = "by",
-         vertex.size = 30, vertex.verbose = TRUE)
+         vertex.size = 30, vertex.verbose = TRUE, vertex.label = NA)
   })
 })
 
