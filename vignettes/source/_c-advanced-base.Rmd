@@ -305,6 +305,54 @@ add_phylopic_tree(vertebrate.tree, tip = vertebrate_data$species,
 
 Beautiful!
 
+# Network plots
+
+The **rphylopic** package also integrates directly with the `{igraph}` package for plotting networks in base R. When both packages are loaded, **rphylopic** registers a custom `{igraph}` vertex shape called `"phylopic"` that can be used in calls to `plot()` on an `{igraph}` graph via `vertex.shape = "phylopic"`. Each phylopic-related parameter from `add_phylopic_base()` is exposed as a corresponding `vertex.*` argument (e.g., `vertex.name`, `vertex.uuid`, `vertex.color`, `vertex.angle`).
+
+Let's demonstrate with a simple Permian food web. First, we set up the network:
+
+```{r message = FALSE, warning = FALSE}
+# Load libraries
+library(rphylopic)
+library(igraph)
+# Define the same Permian tetrapod food web
+food_web <- data.frame(
+  from = c("Eryops", "Diplocaulus", "Diplocaulus", "Eryops"),
+  to   = c("Dimetrodon", "Dimetrodon",
+           "Xenacanthus decheni", "Xenacanthus decheni")
+)
+g <- graph_from_data_frame(food_web, directed = TRUE)
+layout <- layout_with_fr(g)
+```
+
+We can now render the graph with PhyloPic silhouettes as the nodes. The vertex names from `V(g)$name` are passed to the `vertex.name` argument, which **rphylopic** uses to look up silhouettes:
+
+```{r base-network-plot-1, fig.height = 3.5, warning = FALSE}
+plot(g, layout = layout,
+     vertex.shape = "phylopic",
+     vertex.name = V(g)$name,         # taxonomic names from the graph
+     vertex.size = 100,
+     vertex.label = NA,               # silhouettes replace text labels
+     edge.arrow.size = 0.5,
+     xlim = c(-0.5, 0.5), ylim = c(-0.5, 0.5),
+     asp = 0)
+```
+
+Most of the customization options from `add_phylopic_base()` are also available via the `vertex.*` arguments. For example, here we color each silhouette differently and apply a small rotation:
+
+```{r base-network-plot-2, fig.height = 3.5, warning = FALSE}
+plot(g, layout = layout,
+     vertex.shape = "phylopic",
+     vertex.name = V(g)$name,
+     vertex.size = 100,
+     vertex.color = rainbow(vcount(g)),  # per-vertex fill color
+     vertex.angle = 15,                  # rotate all silhouettes 15 degrees
+     vertex.label = NA,
+     edge.arrow.size = 0.5,
+     xlim = c(-0.5, 0.5), ylim = c(-0.5, 0.5),
+     asp = 0)
+```
+
 </div>
 
 ```{css echo = FALSE}

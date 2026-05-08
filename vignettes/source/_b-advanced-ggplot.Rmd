@@ -333,6 +333,43 @@ revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
 
 Beautiful!
 
+# Network plots
+
+The `{ggraph}` package extends `{ggplot2}` to network graphs and `geom_phylopic()` can be dropped into a `ggraph()` plot to render nodes as PhyloPic silhouettes. This is particularly useful for visualizing food webs, taxonomic networks, or other graph-structured data where the nodes represent organisms.
+
+Let's demonstrate with a simple Permian food web. First, we set up the network:
+
+```{r message = FALSE, warning = FALSE}
+# Load libraries
+library(rphylopic)
+library(ggplot2)
+library(igraph)
+library(ggraph)
+# Define a simple food web among Permian tetrapods and a Permian fish
+food_web <- data.frame(
+  from = c("Eryops", "Diplocaulus", "Diplocaulus", "Eryops"),
+  to   = c("Dimetrodon", "Dimetrodon",
+           "Xenacanthus decheni", "Xenacanthus decheni")
+)
+g <- graph_from_data_frame(food_web, directed = TRUE)
+```
+
+Each vertex name in `g` corresponds to a taxonomic name we can pass to PhyloPic. Because `geom_phylopic()` accepts the `name` aesthetic, we can map vertex names directly to silhouettes. The `x` and `y` aesthetics are also inherited from the `ggraph` initialization, but still need to be defined explicitly.
+
+```{r ggplot-network-plot-1, fig.height = 3.5, warning = FALSE}
+set.seed(42)
+ggraph(g, layout = "stress") +
+  geom_edge_link(arrow = arrow(length = unit(5, "mm"), type = "closed"),
+                 end_cap = circle(15, "mm"),
+                 color = "darkgrey") +
+  geom_phylopic(aes(x = x, y = y, name = name), height = 0.15) +
+  scale_x_continuous(expand = expansion(mult = 0.3)) +
+  scale_y_continuous(expand = expansion(mult = 0.3)) +
+  theme_void()
+```
+
+A couple things are worth noting here. First, the `height` value is in the units of the layout coordinates, which for a stress layout typically span roughly -1 to 1; you may need to adjust this for different layouts (e.g., `layout = "kk"` or `layout = "fr"` produce different coordinate ranges). Second, we use `end_cap = circle(15, "mm")` on the edges so the arrowheads stop just outside each silhouette rather than overlapping them; this value needs to be tuned to roughly match your silhouette `height`.
+
 </div>
 
 ```{css echo = FALSE}
