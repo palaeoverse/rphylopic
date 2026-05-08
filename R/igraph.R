@@ -61,9 +61,17 @@ rphylopic.igraph <- function(coords, v = NULL, params) {
                     filter = params("vertex", "filter"))
 }
 
+phylopic_clip <- function(coords, el, params, end = c("both", "from", "to")) {
+  scaled_params <- function(type, name) {
+    val <- params(type, name)
+    if (type == "vertex" && name == "size") val * 0.7 else val
+  }
+  igraph::shapes("circle")$clip(coords, el, scaled_params, end)
+}
+
 register_phylopic_shape <- function() {
   igraph::add_shape("phylopic",
-                    clip = igraph::shape_noclip,
+                    clip = phylopic_clip,
                     plot = rphylopic.igraph,
                     parameters = list(
                       vertex.img = NULL,
