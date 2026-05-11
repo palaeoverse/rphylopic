@@ -44,8 +44,8 @@ the entire image--including the background--is recolored. Setting
 the image (which should only be the background).
 }
 \seealso{
-Other transformations: 
-\code{\link{flip_phylopic}()},
-\code{\link{rotate_phylopic}()}
+Other transformations:
+\code{\link[=flip_phylopic]{flip_phylopic()}},
+\code{\link[=rotate_phylopic]{rotate_phylopic()}}
 }
 \concept{transformations}

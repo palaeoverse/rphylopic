@@ -5,14 +5,14 @@
 [![codecov](https://codecov.io/gh/palaeoverse/rphylopic/branch/main/graph/badge.svg?token=HQQO2CRIKT)](https://app.codecov.io/gh/palaeoverse-community/rphylopic)
 [![CRAN status](https://www.r-pkg.org/badges/version/rphylopic)](https://CRAN.R-project.org/package=rphylopic)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/rphylopic)](https://cran.r-project.org/package=rphylopic)
-[![Twitter URL](https://img.shields.io/twitter/follow/:ThePalaeoverse)](https://twitter.com/intent/follow?screen_name=ThePalaeoverse)
+[![Twitter URL](https://img.shields.io/twitter/follow/:ThePalaeoverse)](https://x.com/intent/follow?screen_name=ThePalaeoverse)
 <!-- badges: end -->
 
 <img src="https://images.phylopic.org/images/c65573fb-2659-46b9-b7a0-065232a2a08b/vector.svg"  width="150" height="150">
 
 The purpose of the `rphylopic` package is to allow users to add silhouettes of organisms to plots generated in base R and `ggplot2`. To do so, it uses silhouettes made available via the [PhyloPic website](http://phylopic.org/).
 
-`rphylopic` was originally developed and maintained by [Scott Chamberlain](https://scottchamberlain.info). From ver. 1.0.0, the package is now developed and maintained by [William Gearty](https://williamgearty.com) and [Lewis A. Jones](https://lewisajones.com) from the [Palaeoverse team](https://palaeoverse.org).
+`rphylopic` was originally developed and maintained by [Scott Chamberlain](https://scottchamberlain.info). From ver. 1.0.0, the package is now developed and maintained by [William Gearty](https://williamgearty.com) and [Lewis A. Jones](https://www.lewisajones.com/) from the [Palaeoverse team](https://palaeoverse.org).
 
 ## Installation
 
@@ -126,7 +126,7 @@ As with any community project, society, or meeting we feel it is important to es
 
 If you use the `rphylopic` package in your work, please acknowledge the contributors responsible for the image, acknowledge the creator of PhyloPic ([Michael Keesey](http://tmkeesey.net)), and cite the following for `rphylopic`:
 
-Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising PhyloPic silhouettes. Methods in Ecology and Evolution, 14(11), 2700-2708. doi: 10.1111/2041-210X.14221.
+Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising PhyloPic silhouettes. Methods in Ecology and Evolution, 14(11), 2700-2708. doi: [10.1111/2041-210X.14221](https://doi.org/10.1111/2041-210X.14221).
 
 # Cheat sheet
 

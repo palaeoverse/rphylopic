@@ -25,13 +25,15 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Lewis A. Jones \email{LewisAlan.Jones@uvigo.es} (\href{https://orcid.org/0000-0003-3902-8986}{ORCID})
-  \item Scott Chamberlain \email{myrmecocystus@gmail.com} (\href{https://orcid.org/0000-0003-1444-9135}{ORCID})
+  \item William Gearty \email{willgearty@gmail.com} (\href{https://orcid.org/0000-0003-0076-3262}{ORCID})
+  \item Lewis A. Jones \email{lewis.jones@ucl.ac.uk} (\href{https://orcid.org/0000-0003-3902-8986}{ORCID})
 }
 
 Other contributors:
 \itemize{
-  \item David Miller \email{dave@ninepointeightone.net} [contributor]
+  \item Scott Chamberlain \email{myrmecocystus@gmail.com} (\href{https://orcid.org/0000-0003-1444-9135}{ORCID}) [contributor]
+  \item Martin R. Smith \email{martin.smith@durham.ac.uk} (\href{https://orcid.org/0000-0001-5660-1727}{ORCID}) [contributor]
+  \item David L. Miller \email{dave@ninepointeightone.net} (\href{https://orcid.org/0000-0002-9640-6755}{ORCID}) [contributor]
 }
 
 }
