@@ -2,7 +2,7 @@
 
 * PhyloPic API responses (including images) are now cached in a temporary in-memory R environment to speed up repeated calls (#123)
   * The cache is cleared when the R session ends
-  * The cache can also be manually cleared using httpcache::clearCache()
+  * The cache can also be manually cleared using clear_phylopic_cache()
 
 # rphylopic 1.6.0
 

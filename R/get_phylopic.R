@@ -179,3 +179,16 @@ make_png <- function(url, height) {
   assign(key, img_new, envir = .phy_cache)
   img_new
 }
+
+#' Clear the rphylopic cache
+#'
+#' Clears both the HTTP response cache [httpcache::clearCache()] and the parsed
+#' image object cache used by [get_phylopic()].
+#'
+#' @return No return value, called for side effects.
+#' @export
+clear_phylopic_cache <- function() {
+  httpcache::clearCache()
+  rm(list = ls(envir = .phy_cache), envir = .phy_cache)
+  invisible(NULL)
+}
