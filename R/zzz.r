@@ -14,6 +14,8 @@ as_null <- function(x) if (length(x) == 0) NULL else x
 phost <- function() "api.phylopic.org"
 pbase <- function() paste0("https://", phost())
 
+.phy_cache <- new.env(parent = emptyenv())
+
 #' @importFrom httpcache GET
 #' @importFrom curl nslookup
 phy_GET <- function(path, query = list(), ...) {
