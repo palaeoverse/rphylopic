@@ -1,7 +1,7 @@
 suppressPackageStartupMessages(library(ggplot2, quietly = TRUE))
 
 test_that("geom_phylopic works", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
   try(dev.off(), silent = TRUE) # clean up any stray plots
 
   df <- data.frame(x = 2:5, y = seq(10, 25, 5),
@@ -97,7 +97,7 @@ test_that("geom_phylopic works", {
 })
 
 test_that("phylopic_key_glyph works", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
   try(dev.off(), silent = TRUE) # clean up any stray plots
 
   df <- data.frame(x = c(2, 4), y = c(10, 20),

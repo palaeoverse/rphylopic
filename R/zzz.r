@@ -11,14 +11,15 @@ pc <- function(l) Filter(Negate(is.null), l)
 
 as_null <- function(x) if (length(x) == 0) NULL else x
 
-pbase <- function() "https://api.phylopic.org"
+phost <- function() "api.phylopic.org"
+pbase <- function() paste0("https://", phost())
 
 #' @importFrom httpcache GET
 #' @importFrom curl nslookup
 phy_GET <- function(path, query = list(), ...) {
   # Check PhyloPic (or user) is online
   tryCatch({
-    nslookup("api.phylopic.org")
+    nslookup(phost())
   },
   error = function(e) {
     stop("PhyloPic is not available or you have no internet connection.")
@@ -41,7 +42,7 @@ phy_GET <- function(path, query = list(), ...) {
 phy_POST <- function(path, body = list(), ...) {
   # Check PhyloPic (or user) is online
   tryCatch({
-    nslookup("api.phylopic.org")
+    nslookup(phost())
   },
   error = function(e) {
     stop("PhyloPic is not available or you have no internet connection.")
