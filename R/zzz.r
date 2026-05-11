@@ -34,7 +34,7 @@ phy_GET <- function(path, query = list(), ...) {
   jsn
 }
 
-#' @importFrom httpcache POST
+#' @importFrom httr POST
 #' @importFrom httr add_headers
 #' @importFrom jsonlite toJSON
 #' @importFrom curl nslookup
@@ -48,10 +48,9 @@ phy_POST <- function(path, body = list(), ...) {
   })
   # Convert to JSON
   body <- toJSON(body)
-  resp <- httpcache::POST(url = file.path(pbase(), path), body = body,
-                          add_headers("Content-type" =
-                                        "application/vnd.phylopic.v2+json"),
-                          encode = "raw")
+  resp <- POST(url = pbase(), path = path, body = body,
+               add_headers("Content-type" = "application/vnd.phylopic.v2+json"),
+               encode = "raw")
   resp <- response_to_JSON(resp)
   resp
 }
