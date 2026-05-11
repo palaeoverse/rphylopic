@@ -21,9 +21,14 @@ test_that("get_phylopic cache makes second call faster", {
   
   # Second call: parsed-object cache hits in get_svg
   # result must be identical and meaningfully faster
+  # Error if GET is ever called
+  testthat::local_mocked_bindings(
+    GET = function(...) stop("network access not expected on cached call"),
+    .package = "httr"
+  )
   t2 <- system.time(jay2 <- get_phylopic(id))[["elapsed"]]
   expect_identical(jay1, jay2)
-  expect_lt(t2, t1 * 0.6)
+  expect_lt(t2, t1 * 0.2)
 })
 
 test_that("get_phylopic raster cache makes second call faster", {
@@ -52,11 +57,16 @@ test_that("get_phylopic raster cache makes second call faster", {
   expect_true(key_exists(png_height_key))
   
   # Second call: parsed-object cache hits in make_png
+  # Error if GET is ever called
+  testthat::local_mocked_bindings(
+    GET = function(...) stop("network access not expected on cached call"),
+    .package = "httr"
+  )
   t2 <- system.time(
     jay2 <- get_phylopic(id, format = "raster", height = height)
   )[["elapsed"]]
   expect_identical(jay1, jay2)
-  expect_lt(t2, t1 * 0.6)
+  expect_lt(t2, t1 * 0.2)
 })
 
 test_that("get_phylopic raster cache is keyed per height", {
@@ -82,6 +92,11 @@ test_that("get_phylopic raster cache is keyed per height", {
   
   # Second call at a different height misses the parsed-object cache
   # but hits httpcache for the SVG bytes
+  # Error if GET is ever called
+  testthat::local_mocked_bindings(
+    GET = function(...) stop("network access not expected on cached call"),
+    .package = "httr"
+  )
   t_diff <- system.time(
     jay256 <- get_phylopic(id, format = "raster", height = 256)
   )[["elapsed"]]
@@ -92,9 +107,11 @@ test_that("get_phylopic raster cache is keyed per height", {
   expect_false(identical(dim(jay256), dim(jay512)))
   
   # Third call at 256: parsed-object cache hits
-  t_same <- system.time(
-    jay256_repeat <- get_phylopic(id, format = "raster", height = 256)
-  )[["elapsed"]]
+  # Error if rsvg_png is ever called
+  testthat::local_mocked_bindings(
+    rsvg_png = function(...) stop("rasterization not expected on cached call"),
+    .package = "rsvg"
+  )
+  jay256_repeat <- get_phylopic(id, format = "raster", height = 256)
   expect_identical(jay256, jay256_repeat)
-  expect_lt(t_same, t_diff * 0.6)
 })
