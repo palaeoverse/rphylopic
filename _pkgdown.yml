@@ -43,6 +43,7 @@ reference:
   - add_phylopic_base
   - add_phylopic_legend
   - add_phylopic_tree
+  - clear_phylopic_cache
 - title: Modifying silhouettes
   desc: >
     Functions to modify silhouettes in various ways.
