@@ -147,11 +147,13 @@ get_png <- function(x) {
   img_new
 }
 
+#' @importFrom httpcache GET
 #' @importFrom rsvg rsvg_png
 #' @importFrom png readPNG
 make_png <- function(url, height) {
   tryCatch({
-    img_new <- readPNG(rsvg_png(url, height = height))
+    res <- httpcache::GET(url = url)
+    img_new <- readPNG(rsvg_png(res$content, height = height))
   },
   error = function(e) {
     stop("Problem downloading vector file. Please try again.")
