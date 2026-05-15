@@ -72,7 +72,7 @@
     
     
 <p><strong>Authors:</strong> William Gearty &amp; Lewis A. Jones</p>
-<p><strong>Last updated:</strong> 2025-11-17</p>
+<p><strong>Last updated:</strong> 2026-05-08</p>
 <div style="text-align: justify">
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -442,6 +442,72 @@ plot of chunk base-phylo-plot-4
 </p>
 </div>
 <p>Beautiful!</p>
+</div>
+<div class="section level2">
+<h2 id="network-plots">Network plots<a class="anchor" aria-label="anchor" href="#network-plots"></a>
+</h2>
+<p>The <strong>rphylopic</strong> package also integrates directly with
+the <a href="https://r.igraph.org/" class="external-link">igraph</a> package for plotting networks in base R. When
+both packages are loaded, <strong>rphylopic</strong> registers a custom
+<a href="https://r.igraph.org/" class="external-link">igraph</a> vertex shape called <code>"phylopic"</code> that
+can be used in calls to <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> on an <a href="https://r.igraph.org/" class="external-link">igraph</a>
+graph via <code>vertex.shape = "phylopic"</code>. Each phylopic-related
+parameter from <code><a href="../reference/add_phylopic_base.html">add_phylopic_base()</a></code> is exposed as a
+corresponding <code>vertex.*</code> argument (e.g.,
+<code>vertex.name</code>, <code>vertex.uuid</code>,
+<code>vertex.color</code>, <code>vertex.angle</code>).</p>
+<p>Let’s demonstrate with a simple Permian food web. First, we set up
+the network:</p>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Load libraries</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rphylopic.palaeoverse.org">rphylopic</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r.igraph.org/" class="external-link">igraph</a></span><span class="op">)</span></span>
+<span><span class="co"># Define the same Permian tetrapod food web</span></span>
+<span><span class="va">food_web</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Eryops"</span>, <span class="st">"Diplocaulus"</span>, <span class="st">"Diplocaulus"</span>, <span class="st">"Eryops"</span><span class="op">)</span>,</span>
+<span>  to   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Dimetrodon"</span>, <span class="st">"Dimetrodon"</span>,</span>
+<span>           <span class="st">"Xenacanthus decheni"</span>, <span class="st">"Xenacanthus decheni"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/graph_from_data_frame.html" class="external-link">graph_from_data_frame</a></span><span class="op">(</span><span class="va">food_web</span>, directed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">layout</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/layout_with_fr.html" class="external-link">layout_with_fr</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code></pre></div>
+<p>We can now render the graph with PhyloPic silhouettes as the nodes.
+The vertex names from <code>V(g)$name</code> are passed to the
+<code>vertex.name</code> argument, which <strong>rphylopic</strong> uses
+to look up silhouettes:</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g</span>, layout <span class="op">=</span> <span class="va">layout</span>,</span>
+<span>     vertex.shape <span class="op">=</span> <span class="st">"phylopic"</span>,</span>
+<span>     vertex.name <span class="op">=</span> <span class="fu"><a href="https://r.igraph.org/reference/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">name</span>,         <span class="co"># taxonomic names from the graph</span></span>
+<span>     vertex.size <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>     vertex.label <span class="op">=</span> <span class="cn">NA</span>,               <span class="co"># silhouettes replace text labels</span></span>
+<span>     edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>     xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>     asp <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="base-network-plot-1-1.png" alt="plot of chunk base-network-plot-1" width="100%"><p class="caption">
+plot of chunk base-network-plot-1
+</p>
+</div>
+<p>Most of the customization options from
+<code><a href="../reference/add_phylopic_base.html">add_phylopic_base()</a></code> are also available via the
+<code>vertex.*</code> arguments. For example, here we color each
+silhouette differently and apply a small rotation:</p>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g</span>, layout <span class="op">=</span> <span class="va">layout</span>,</span>
+<span>     vertex.shape <span class="op">=</span> <span class="st">"phylopic"</span>,</span>
+<span>     vertex.name <span class="op">=</span> <span class="fu"><a href="https://r.igraph.org/reference/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">$</span><span class="va">name</span>,</span>
+<span>     vertex.size <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>     vertex.color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">rainbow</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/gorder.html" class="external-link">vcount</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">)</span>,  <span class="co"># per-vertex fill color</span></span>
+<span>     vertex.angle <span class="op">=</span> <span class="fl">15</span>,                  <span class="co"># rotate all silhouettes 15 degrees</span></span>
+<span>     vertex.label <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>     edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>     xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>     asp <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="base-network-plot-2-1.png" alt="plot of chunk base-network-plot-2" width="100%"><p class="caption">
+plot of chunk base-network-plot-2
+</p>
+</div>
 </div>
 </div>
 <style type="text/css">

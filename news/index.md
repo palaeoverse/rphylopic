@@ -2,6 +2,17 @@
 
 ## rphylopic (development version)
 
+- Added support for using PhyloPic silhouettes as vertices when plotting
+  [igraph](https://r.igraph.org/) networks via a new `"phylopic"` vertex
+  shape, registered automatically when both packages are loaded
+  ([\#115](https://github.com/palaeoverse/rphylopic/issues/115),
+  [\#118](https://github.com/palaeoverse/rphylopic/issues/118))
+- Added new “Network plots” sections to both advanced vignettes,
+  demonstrating the new [igraph](https://r.igraph.org/) integration in
+  base R and the use of
+  [`geom_phylopic()`](https://rphylopic.palaeoverse.org/reference/geom_phylopic.md)
+  inside [ggraph](https://ggraph.data-imaginist.com) plots
+
 ## rphylopic 1.6.0
 
 CRAN release: 2025-11-18
