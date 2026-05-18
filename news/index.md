@@ -17,16 +17,25 @@
 
 CRAN release: 2025-11-18
 
-- Added add_phylopic_tree() to add silhouettes to base R trees
+- Added
+  [`add_phylopic_tree()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_tree.md)
+  to add silhouettes to base R trees
   ([\#110](https://github.com/palaeoverse/rphylopic/issues/110))
-- Fixed a bug in add_phylopic_base() where all names were reported as
-  not returning PhyloPic results when only a single name actually
-  returned no PhyloPic results
-- resolve_phylopic() now will retry API calls if they fail
-- Fixed geom_phylopic() and add_phylopic() under ggplot2 4.0.0 and up
+- Fixed a bug in
+  [`add_phylopic_base()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_base.md)
+  where all names were reported as not returning PhyloPic results when
+  only a single name actually returned no PhyloPic results
+- [`resolve_phylopic()`](https://rphylopic.palaeoverse.org/reference/resolve_phylopic.md)
+  now will retry API calls if they fail
+- Fixed
+  [`geom_phylopic()`](https://rphylopic.palaeoverse.org/reference/geom_phylopic.md)
+  and
+  [`add_phylopic()`](https://rphylopic.palaeoverse.org/reference/add_phylopic.md)
+  under [ggplot2](https://ggplot2.tidyverse.org) 4.0.0 and up
   ([\#125](https://github.com/palaeoverse/rphylopic/issues/125))
-- get_phylopic() now has a “source” argument that can be used to
-  retrieve the original source file from the PhyloPic database
+- [`get_phylopic()`](https://rphylopic.palaeoverse.org/reference/get_phylopic.md)
+  now has a “source” argument that can be used to retrieve the original
+  source file from the PhyloPic database
   ([\#116](https://github.com/palaeoverse/rphylopic/issues/116))
 
 ## rphylopic 1.5.0
@@ -45,9 +54,11 @@ CRAN release: 2024-09-04
 
 CRAN release: 2024-04-23
 
-- Added add_phylopic_legend
+- Added
+  [`add_phylopic_legend()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_legend.md)
   ([\#83](https://github.com/palaeoverse/rphylopic/issues/83))
-- Added permalink generation option to get_attribution
+- Added permalink generation option to
+  [`get_attribution()`](https://rphylopic.palaeoverse.org/reference/get_attribution.md)
   ([\#81](https://github.com/palaeoverse/rphylopic/issues/81))
 
 ## rphylopic 1.3.0
@@ -56,15 +67,18 @@ CRAN release: 2023-12-20
 
 - updated citation
 - added warning when specified size is more than 1000 times smaller than
-  the y-axis range (mostly useful for when making maps with coord_sf)
+  the y-axis range (mostly useful for when making maps with
+  [`ggplot2::coord_sf()`](https://ggplot2.tidyverse.org/reference/ggsf.html))
   ([\#86](https://github.com/palaeoverse/rphylopic/issues/86))
 - changed the defaults and behavior of the color and fill
   argument/aesthetics to better maintain backwards compatibility but
   also prevent unnecessary outlines
   ([\#87](https://github.com/palaeoverse/rphylopic/issues/87))
-- added resolve_phylopic
+- added
+  [`resolve_phylopic()`](https://rphylopic.palaeoverse.org/reference/resolve_phylopic.md)
   ([\#66](https://github.com/palaeoverse/rphylopic/issues/66))
-- pick_phylopic now accepts a list of uuids via the uuid argument
+- [`pick_phylopic()`](https://rphylopic.palaeoverse.org/reference/pick_phylopic.md)
+  now accepts a list of uuids via the uuid argument
   ([\#95](https://github.com/palaeoverse/rphylopic/issues/95))
 - fixed check behavior on CRAN (all tests and examples are now skipped)
 - caught a rare error when nothing matched `filter`
@@ -79,43 +93,73 @@ CRAN release: 2023-10-28
 
 CRAN release: 2023-10-10
 
-- updated rphylopic to work with grImport2 version 0.3.0 and rsvg
-  version 2.6.0
-- rphylopic now requires grImport2 \>= 0.3.0 and rsvg \>= 2.6.0
+- updated [rphylopic](https://rphylopic.palaeoverse.org) to work with
+  [grImport2](https://r-forge.r-project.org/projects/grimport/) version
+  0.3.0 and [rsvg](https://docs.ropensci.org/rsvg/) version 2.6.0
+- [rphylopic](https://rphylopic.palaeoverse.org) now requires
+  [grImport2](https://r-forge.r-project.org/projects/grimport/) \>=
+  0.3.0 and [rsvg](https://docs.ropensci.org/rsvg/) \>= 2.6.0
 
 ## rphylopic 1.2.0
 
 CRAN release: 2023-08-29
 
-- added text argument to get_attribution
+- added text argument to
+  [`get_attribution()`](https://rphylopic.palaeoverse.org/reference/get_attribution.md)
   ([\#56](https://github.com/palaeoverse/rphylopic/issues/56))
-- get_attribution now handles multiple uuids
-- added browse_phylopic function
-  ([\#60](https://github.com/palaeoverse/rphylopic/issues/60))
-- added preview argument to get_phylopic
+- [`get_attribution()`](https://rphylopic.palaeoverse.org/reference/get_attribution.md)
+  now handles multiple uuids
+- added
+  [`browse_phylopic()`](https://rphylopic.palaeoverse.org/reference/browse_phylopic.md)
+  function ([\#60](https://github.com/palaeoverse/rphylopic/issues/60))
+- added preview argument to
+  [`get_phylopic()`](https://rphylopic.palaeoverse.org/reference/get_phylopic.md)
   ([\#59](https://github.com/palaeoverse/rphylopic/issues/59))
-- switched to {maps} package in base R advanced vignette
-- geom_phylopic now properly handles a single unlisted image object
-  passed to the “img” parameter
+- switched to [maps](https://github.com/adeckmyn/maps) package in base R
+  advanced vignette
+- [`geom_phylopic()`](https://rphylopic.palaeoverse.org/reference/geom_phylopic.md)
+  now properly handles a single unlisted image object passed to the
+  “img” parameter
   ([\#75](https://github.com/palaeoverse/rphylopic/issues/75))
-- added filter (license) argument to get_uuid, pick_phylo,
-  add_phylopic_base, add_phylopic, and geom_phylopic
+- added filter (license) argument to
+  [`get_uuid()`](https://rphylopic.palaeoverse.org/reference/get_uuid.md),
+  [`pick_phylopic()`](https://rphylopic.palaeoverse.org/reference/pick_phylopic.md),
+  [`add_phylopic_base()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_base.md),
+  [`add_phylopic()`](https://rphylopic.palaeoverse.org/reference/add_phylopic.md),
+  and
+  [`geom_phylopic()`](https://rphylopic.palaeoverse.org/reference/geom_phylopic.md)
   ([\#72](https://github.com/palaeoverse/rphylopic/issues/72))
-- added img argument to get_uuid and get_attribution
-- added verbose argument (calls get_attribution) to geom_phylopic,
-  add_phylopic, and add_phylopic_base
+- added img argument to
+  [`get_uuid()`](https://rphylopic.palaeoverse.org/reference/get_uuid.md)
+  and
+  [`get_attribution()`](https://rphylopic.palaeoverse.org/reference/get_attribution.md)
+- added verbose argument (calls
+  [`get_attribution()`](https://rphylopic.palaeoverse.org/reference/get_attribution.md))
+  to
+  [`geom_phylopic()`](https://rphylopic.palaeoverse.org/reference/geom_phylopic.md),
+  [`add_phylopic()`](https://rphylopic.palaeoverse.org/reference/add_phylopic.md),
+  and
+  [`add_phylopic_base()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_base.md)
   ([\#71](https://github.com/palaeoverse/rphylopic/issues/71))
 - split out the functionality of the color argument/aesthetic to color
   (silhouette outline) and fill (silhouette) arguments/aesthetics in
-  add_phylopic, geom_phylopic, and add_phylopic_base
+  [`add_phylopic()`](https://rphylopic.palaeoverse.org/reference/add_phylopic.md),
+  [`geom_phylopic()`](https://rphylopic.palaeoverse.org/reference/geom_phylopic.md),
+  and
+  [`add_phylopic_base()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_base.md)
   ([\#58](https://github.com/palaeoverse/rphylopic/issues/58))
   - when only the color argument/aesthetic is specified, it is copied to
     the fill argument/aesthetic (maintaining mostly backwards
     compatibility with old code)
 - added plot and print methods for silhouette objects
   ([\#73](https://github.com/palaeoverse/rphylopic/issues/73))
-- fixed the behavior of geom_phylopic when used with coord_sf
-- added phylopic_key_glyph for using silhouettes inside ggplot legends
+- fixed the behavior of
+  [`geom_phylopic()`](https://rphylopic.palaeoverse.org/reference/geom_phylopic.md)
+  when used with
+  [`ggplot2::coord_sf()`](https://ggplot2.tidyverse.org/reference/ggsf.html)
+- added
+  [`phylopic_key_glyph()`](https://rphylopic.palaeoverse.org/reference/phylopic_key_glyph.md)
+  for using silhouettes inside ggplot legends
   ([\#57](https://github.com/palaeoverse/rphylopic/issues/57))
 
 ## rphylopic 1.1.1
@@ -131,21 +175,32 @@ CRAN release: 2023-06-30
 
 - added functions for transforming PhyloPic silhouettes (flipping and
   rotating)
-- save_phylopic bg argument updated to be “transparent” by default
-- added geom_phylopic
+- [`save_phylopic()`](https://rphylopic.palaeoverse.org/reference/save_phylopic.md)
+  bg argument updated to be “transparent” by default
+- added
+  [`geom_phylopic()`](https://rphylopic.palaeoverse.org/reference/geom_phylopic.md)
   ([\#25](https://github.com/palaeoverse/rphylopic/issues/25))
-- vectorized add_phylopic and add_phylopic_base
+- vectorized
+  [`add_phylopic()`](https://rphylopic.palaeoverse.org/reference/add_phylopic.md)
+  and
+  [`add_phylopic_base()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_base.md)
   ([\#42](https://github.com/palaeoverse/rphylopic/issues/42))
-- recolor_phylopic now removes white backgrounds by default
+- [`recolor_phylopic()`](https://rphylopic.palaeoverse.org/reference/recolor_phylopic.md)
+  now removes white backgrounds by default
 - fixed the handling of alpha values
-- get_phylopic can now return any size raster image
+- [`get_phylopic()`](https://rphylopic.palaeoverse.org/reference/get_phylopic.md)
+  can now return any size raster image
   ([\#50](https://github.com/palaeoverse/rphylopic/issues/50))
-- removed the “thumbnail” and “twitter” format options for get_phylopic
+- removed the “thumbnail” and “twitter” format options for
+  [`get_phylopic()`](https://rphylopic.palaeoverse.org/reference/get_phylopic.md)
 - fixed how silhouettes are gathered from PhyloPic
   ([\#51](https://github.com/palaeoverse/rphylopic/issues/51))
-- pick_phylopic updated to allow visualization of multiple silhouettes
-  at once ([\#43](https://github.com/palaeoverse/rphylopic/issues/43))
-- fixed add_phylopic_base for multi-panel figures
+- [`pick_phylopic()`](https://rphylopic.palaeoverse.org/reference/pick_phylopic.md)
+  updated to allow visualization of multiple silhouettes at once
+  ([\#43](https://github.com/palaeoverse/rphylopic/issues/43))
+- fixed
+  [`add_phylopic_base()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_base.md)
+  for multi-panel figures
 - added three vignettes
   ([\#49](https://github.com/palaeoverse/rphylopic/issues/49),
   [\#55](https://github.com/palaeoverse/rphylopic/issues/55))
@@ -154,37 +209,48 @@ CRAN release: 2023-06-30
 
 CRAN release: 2023-03-20
 
-- rphylopic has now been transferred to the Palaeoverse community (new
-  maintainer: William Gearty and author: Lewis Jones)
+- [rphylopic](https://rphylopic.palaeoverse.org) has now been
+  transferred to the Palaeoverse community (new maintainer: William
+  Gearty and author: Lewis Jones)
 - The package has been updated to work with PhyloPic API ver. \>=2.1.1
 - The package has been reworked to its core functionality of fetching
-  silhouettes and plotting them in base R and ggplot2:
-  - get_uuid: this function enables users to get uuid(s) associated with
-    a taxonomic name (new function)
-  - get_phylopic: this function enables users to get the PhyloPic
-    silhouette associated with a specific uuid (replaces image_get)
-  - pick_phylopic: this function enables users to pick specific PhyloPic
-    silhouettes when multiple are available for a given taxonomic name
-    (new function)
-  - add_phylopic_base: this function retains it’s core functionality and
-    is used to add a silhouette to a base R plot (updated from
-    add_phylopic_base)
-  - add_phylopic: this function retains it’s core functionality and is
-    used to add a silhouette to a ggplot2 (updated from add_phylopic)
-  - get_attribution: this function enables users to get the attribution
-    data associated with a specific uuid (new function)
-  - save_phylopic: this function enables users to save PhyloPic
-    silhouettes using various formats (replaces save_png)
+  silhouettes and plotting them in base R and
+  [ggplot2](https://ggplot2.tidyverse.org):
+  - [`get_uuid()`](https://rphylopic.palaeoverse.org/reference/get_uuid.md):
+    this function enables users to get uuid(s) associated with a
+    taxonomic name (new function)
+  - [`get_phylopic()`](https://rphylopic.palaeoverse.org/reference/get_phylopic.md):
+    this function enables users to get the PhyloPic silhouette
+    associated with a specific uuid (replaces `image_get()`)
+  - [`pick_phylopic()`](https://rphylopic.palaeoverse.org/reference/pick_phylopic.md):
+    this function enables users to pick specific PhyloPic silhouettes
+    when multiple are available for a given taxonomic name (new
+    function)
+  - [`add_phylopic_base()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_base.md):
+    this function retains it’s core functionality and is used to add a
+    silhouette to a base R plot (updated from
+    [`add_phylopic_base()`](https://rphylopic.palaeoverse.org/reference/add_phylopic_base.md))
+  - [`add_phylopic()`](https://rphylopic.palaeoverse.org/reference/add_phylopic.md):
+    this function retains it’s core functionality and is used to add a
+    silhouette to a [ggplot2](https://ggplot2.tidyverse.org) (updated
+    from
+    [`add_phylopic()`](https://rphylopic.palaeoverse.org/reference/add_phylopic.md))
+  - [`get_attribution()`](https://rphylopic.palaeoverse.org/reference/get_attribution.md):
+    this function enables users to get the attribution data associated
+    with a specific uuid (new function)
+  - [`save_phylopic()`](https://rphylopic.palaeoverse.org/reference/save_phylopic.md):
+    this function enables users to save PhyloPic silhouettes using
+    various formats (replaces `save_png()`)
 
 ## rphylopic 0.3.4
 
 #### NEW FEATURES
 
-- New exported function: `gather_images`
+- New exported function: `gather_images()`
 - New internal functions in *zzz.R*:
-  - `check_for_a_pkg`
-  - `messager`
-  - `message_parallel`
+  - `check_for_a_pkg()`
+  - `messager()`
+  - `message_parallel()`
 
 ## rphylopic 0.3.0
 
