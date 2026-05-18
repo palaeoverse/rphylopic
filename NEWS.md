@@ -2,7 +2,9 @@
 
 * PhyloPic API responses and parsed images are now cached in a temporary in-memory R environment to speed up repeated calls (#123)
   * The cache is cleared when the R session ends
-  * The cache can also be manually cleared using clear_phylopic_cache()
+  * The cache can also be manually cleared using `clear_phylopic_cache()`
+* Added support for using PhyloPic silhouettes as vertices when plotting `{igraph}` networks via a new `"phylopic"` vertex shape, registered automatically when both packages are loaded (#115, #118)
+* Added new "Network plots" sections to both advanced vignettes, demonstrating the new `{igraph}` integration in base R and the use of `geom_phylopic()` inside `{ggraph}` plots
 
 # rphylopic 1.6.0
 

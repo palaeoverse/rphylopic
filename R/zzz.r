@@ -7,6 +7,18 @@
                               ' in your work (hint: `citation("rphylopic")`).'))
 }
 
+.onLoad <- function(libname, pkgname) {# nocov start
+  # If igraph is already loaded when rphylopic loads, register immediately.
+  # Otherwise, register the moment igraph's namespace gets loaded.
+  if (requireNamespace("igraph", quietly = TRUE) &&
+      "igraph" %in% loadedNamespaces()) {
+    register_phylopic_shape()
+  } else {
+    setHook(packageEvent("igraph", "onLoad"),
+            function(...) register_phylopic_shape())
+  }
+}# nocov end
+
 pc <- function(l) Filter(Negate(is.null), l)
 
 as_null <- function(x) if (length(x) == 0) NULL else x

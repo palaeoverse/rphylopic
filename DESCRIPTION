@@ -52,7 +52,9 @@ Suggests:
     deeptime,
     palmerpenguins,
     maps,
-    sf
+    sf,
+    igraph,
+    ggraph
 Config/testthat/edition: 3
 URL: https://rphylopic.palaeoverse.org,
      https://github.com/palaeoverse/rphylopic,
