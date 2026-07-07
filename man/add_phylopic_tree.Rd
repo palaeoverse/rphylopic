@@ -23,8 +23,8 @@ add_phylopic_tree(
 \item{tree}{\code{phylo}. The phylogenetic tree object on which to add the
 silhouette.}
 
-\item{tip}{\code{character}. The tip labels against which to add the silhouettes. If not
-specified, the names of the \code{img}, \code{uuid} or \code{name} vector are used.}
+\item{tip}{\code{character}. The tip labels against which to add the silhouettes.
+If not specified, the names of the \code{img}, \code{uuid} or \code{name} vector are used.}
 
 \item{img}{A \link[grImport2:Picture-class]{Picture} or png array object, e.g.,
 from using \code{\link[=get_phylopic]{get_phylopic()}}.}
@@ -43,15 +43,16 @@ silhouette is placed at the right-hand side of the plotting area,
 determined by \code{par("usr")}, plus any horizontal padding specified by
 \code{padding} or \code{relPadding}.}
 
-\item{width, relWidth}{\code{numeric}. The width of each silhouette, in the plot coordinate
-system (\code{width}) or relative to the size of the plotting area (\code{relWidth}).
-If "NULL" and \code{height} is specified, the width is determined by the aspect
-ratio of the original image. One of height and width must be "NULL".}
+\item{width, relWidth}{\code{numeric}. The width of each silhouette, in the plot
+coordinate system (\code{width}) or relative to the size of the plotting area
+(\code{relWidth}). If "NULL" and \code{height} is specified, the width is determined
+by the aspect ratio of the original image. One of height and width must be
+"NULL".}
 
-\item{padding, relPadding}{\code{numeric}. Horizontal padding for each silhouette from its
-respective x value, in the plot coordinate system (\code{padding}) or relative
-to the size of the plotting area (\code{relPadding}). Negative values offset to
-the left.}
+\item{padding, relPadding}{\code{numeric}. Horizontal padding for each silhouette
+from its respective x value, in the plot coordinate system (\code{padding}) or
+relative to the size of the plotting area (\code{relPadding}). Negative values
+offset to the left.}
 
 \item{hjust}{\code{numeric}. A numeric vector between 0 and 1 specifying
 horizontal justification (left = 0, center = 0.5, right = 1).}
