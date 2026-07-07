@@ -5,7 +5,7 @@
 # a GitHub Actions CI runner with stable version of R.
 
 if (requireNamespace("vdiffr", quietly = TRUE) &&
-    utils::packageVersion("testthat") >= "3.0.3") {
+      utils::packageVersion("testthat") >= "3.0.3") {
   expect_doppelganger <- vdiffr::expect_doppelganger
 } else {
   # If vdiffr is not available and visual tests are explicitly required,

@@ -160,5 +160,5 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
   if (!is.null(name)) args$name <- rep_len(name, max_len)
   if (!is.null(uuid)) args$uuid <- rep_len(uuid, max_len)
 
-  return(do.call(annotate, args))
+  do.call(annotate, args)
 }

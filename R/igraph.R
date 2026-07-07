@@ -69,7 +69,7 @@ phylopic_clip <- function(coords, el, params, end = c("both", "from", "to")) {
   } else {
     clip_scale[is.na(clip_scale)] <- 0.7
   }
-  
+
   # Wrap igraph's circle clip with a scaled-down vertex.size so arrows stop
   # at roughly the silhouette outline rather than its bounding circle
   scaled_params <- function(type, name) {
@@ -80,27 +80,28 @@ phylopic_clip <- function(coords, el, params, end = c("both", "from", "to")) {
 }
 
 register_phylopic_shape <- function() {
-  igraph::add_shape("phylopic",
-                    clip = phylopic_clip,
-                    plot = rphylopic.igraph,
-                    parameters = list(
-                      vertex.img = NULL,
-                      vertex.name = NULL,
-                      vertex.uuid = NULL,
-                      vertex.alpha = 1,
-                      vertex.color = "black",
-                      vertex.frame.color = NA,
-                      vertex.size = 40,
-                      vertex.horizontal = FALSE,
-                      vertex.vertical = FALSE,
-                      vertex.angle = 0,
-                      vertex.hjust = 0.5,
-                      vertex.vjust = 0.5,
-                      vertex.filter = NULL,
-                      vertex.remove_background = TRUE,
-                      vertex.verbose = FALSE,
-                      vertex.clip_scale = 0.7
-                    )
+  igraph::add_shape(
+    "phylopic",
+    clip = phylopic_clip,
+    plot = rphylopic.igraph,
+    parameters = list(
+      vertex.img = NULL,
+      vertex.name = NULL,
+      vertex.uuid = NULL,
+      vertex.alpha = 1,
+      vertex.color = "black",
+      vertex.frame.color = NA,
+      vertex.size = 40,
+      vertex.horizontal = FALSE,
+      vertex.vertical = FALSE,
+      vertex.angle = 0,
+      vertex.hjust = 0.5,
+      vertex.vjust = 0.5,
+      vertex.filter = NULL,
+      vertex.remove_background = TRUE,
+      vertex.verbose = FALSE,
+      vertex.clip_scale = 0.7
+    )
   )
 }
 
@@ -127,7 +128,7 @@ register_phylopic_shape <- function() {
 #'   \item `vertex.clip_scale` — numeric scale factor controlling the clipping
 #'     of the edges (default: `0.7`)
 #' }
-#' 
+#'
 #' @section Note on interactive resizing:
 #' PhyloPic silhouettes are drawn as vector graphics on top of igraph's
 #' base-graphics plot. Rendering as vectors preserves silhouette resolution;

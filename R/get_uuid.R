@@ -133,6 +133,5 @@ get_uuid <- function(name = NULL, img = NULL, n = 1, filter = NULL,
     }
     uuids
   })
-  ret <- do.call(c, ret)[1:n]
-  return(ret)
+  do.call(c, ret)[1:n]
 }

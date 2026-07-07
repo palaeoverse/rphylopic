@@ -28,7 +28,7 @@ test_that("add_phylopic works", {
   hor <- sample(c(TRUE, FALSE), 10, TRUE)
   ver <- sample(c(TRUE, FALSE), 10, TRUE)
   fills <- sample(c("black", "darkorange", "grey42", "white"), 10,
-                 replace = TRUE)
+                  replace = TRUE)
   cols <- ifelse(fills == "white", "black", NA)
   alpha <- runif(10, 0, 1)
 
@@ -39,7 +39,7 @@ test_that("add_phylopic works", {
                  fill = fills, color = cols, alpha = alpha,
                  angle = angle, horizontal = hor, vertical = ver)
   expect_doppelganger("phylopics on top of plot", p)
-  
+
   p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
     geom_blank() +
     add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",

@@ -1,17 +1,19 @@
 #' @importFrom utils packageDescription
 .onAttach <- function(libname, pkgname) {
   pkgVersion <- packageDescription(pkgname, fields = "Version")
-  packageStartupMessage(paste0('You are using rphylopic v.', pkgVersion, '. ',
-                              'Please remember to credit PhyloPic contributors',
-                              ' (hint: `get_attribution()`) and cite rphylopic',
-                              ' in your work (hint: `citation("rphylopic")`).'))
+  packageStartupMessage(paste0(
+    "You are using rphylopic v.", pkgVersion, ". ",
+    "Please remember to credit PhyloPic contributors",
+    " (hint: `get_attribution()`) and cite rphylopic",
+    " in your work (hint: `citation(\"rphylopic\")`)."
+  ))
 }
 
 .onLoad <- function(libname, pkgname) {# nocov start
   # If igraph is already loaded when rphylopic loads, register immediately.
   # Otherwise, register the moment igraph's namespace gets loaded.
   if (requireNamespace("igraph", quietly = TRUE) &&
-      "igraph" %in% loadedNamespaces()) {
+        "igraph" %in% loadedNamespaces()) {
     register_phylopic_shape()
   } else {
     setHook(packageEvent("igraph", "onLoad"),
@@ -63,8 +65,10 @@ phy_POST <- function(path, body = list(), ...) {
   body <- toJSON(body)
   tryCatch({
     resp <- POST(url = pbase(), path = path, body = body,
-               add_headers("Content-type" = "application/vnd.phylopic.v2+json"),
-               encode = "raw")
+                 add_headers(
+                   "Content-type" = "application/vnd.phylopic.v2+json"
+                 ),
+                 encode = "raw")
   }, error = function(e) {
     # Check PhyloPic (or user) is online
     tryCatch({
@@ -83,5 +87,5 @@ phy_POST <- function(path, body = list(), ...) {
 #' @importFrom jsonlite fromJSON
 response_to_JSON <- function(response) {
   tmp <- content(response, as = "text", encoding = "UTF-8")
-  return(fromJSON(tmp))
+  fromJSON(tmp)
 }

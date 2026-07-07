@@ -215,7 +215,7 @@ recolor_phylopic.array <- function(img, alpha = 1, color = NULL, fill = NULL,
                        img[, , 4] * alpha), dim = dims)
   }
   class(new_img) <- cls
-  return(new_img)
+  new_img
 }
 
 ga_to_rgba <- function(img) {
@@ -242,7 +242,7 @@ recolor_phylopic.Picture <- function(img, alpha = 1, color = NULL, fill = NULL,
                                      remove_background = TRUE) {
   img <- recolor_content(img, alpha, color, fill, remove_background)
   if (length(img@content) == 0) stop("Invalid 'Picture' object")
-  return(img)
+  img
 }
 
 #' @importFrom methods slotNames
@@ -251,9 +251,9 @@ recolor_content <- function(x, alpha, color, fill, remove_background) {
     if (is(element, "PicturePath")) {
       # a bit of a hack until PhyloPic fixes these white backgrounds
       if (remove_background && "gp" %in% slotNames(element) &&
-          "fill" %in% names(element@gp) &&
-          element@gp$fill %in% c("#FFFFFFFF", "#FFFFFF")) {
-        return(NULL)
+            "fill" %in% names(element@gp) &&
+            element@gp$fill %in% c("#FFFFFFFF", "#FFFFFF")) {
+        NULL
       } else {
         element@gp$alpha <- alpha
         if (!is.null(color)) {
@@ -262,7 +262,7 @@ recolor_content <- function(x, alpha, color, fill, remove_background) {
         if (!is.null(fill)) {
           element@gp$fill <- fill
         }
-        return(element)
+        element
       }
     } else if (is(element, "PictureGroup")) {
       # need to go another level down
@@ -270,7 +270,7 @@ recolor_content <- function(x, alpha, color, fill, remove_background) {
     }
   })
   x@content <- Filter(function(element) !is.null(element), tmp)
-  return(x)
+  x
 }
 
 #' Preview a PhyloPic silhouette

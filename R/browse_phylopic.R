@@ -43,5 +43,5 @@ browse_phylopic <- function(name = NULL, uuid = NULL) {
   url <- paste0(url, uuid)
   browseURL(url = url)
 
-  return(url)
+  url
 }
