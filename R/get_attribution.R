@@ -27,7 +27,7 @@
 #'    image silhouettes, including contributors and licenses.
 #' @importFrom knitr combine_words
 #' @importFrom utils packageVersion
-#' @importFrom httr GET
+#' @importFrom httpcache GET
 #' @export
 #' @examples \dontrun{
 #' # Get valid uuid
@@ -86,7 +86,7 @@ get_attribution <- function(uuid = NULL, img = NULL, text = FALSE,
     coll <- phy_POST(path = "collections", body = uuid)$uuid
     url <- paste0("https://www.phylopic.org/api/permalinks/collections/", 
                   coll)
-    coll <- GET(url = url) 
+    coll <- httpcache::GET(url = url) 
     hash <- response_to_JSON(coll)
     perm <- paste0("https://www.phylopic.org/permalinks/", hash)
   }

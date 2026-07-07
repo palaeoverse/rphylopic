@@ -23,45 +23,58 @@ pc <- function(l) Filter(Negate(is.null), l)
 
 as_null <- function(x) if (length(x) == 0) NULL else x
 
-pbase <- function() "https://api.phylopic.org"
+phost <- function() "api.phylopic.org"
+pbase <- function() paste0("https://", phost())
 
-#' @importFrom httr GET
+.phy_cache <- new.env(parent = emptyenv())
+
+#' @importFrom httpcache GET
 #' @importFrom curl nslookup
 phy_GET <- function(path, query = list(), ...) {
-  # Check PhyloPic (or user) is online
-  tryCatch({
-    nslookup("api.phylopic.org")
-  },
-  error = function(e) {
-    stop("PhyloPic is not available or you have no internet connection.")
-  })
   query <- as_null(pc(query))
-  tt <- GET(url = pbase(), path = path, query = query)
+  url <- file.path(pbase(), path)
+  tt <- tryCatch({
+    # Cached responses should work even if user is offline
+    httpcache::GET(url = url, query = query)
+  }, error = function(e) {
+    # Check PhyloPic (or user) is online
+    tryCatch({
+      nslookup(phost())
+    }, error = function(e2) {
+      stop("PhyloPic is not available or you have no internet connection.")
+    })
+    stop(e)  # network is fine; rethrow the original GET error
+  })
   jsn <- response_to_JSON(tt)
   if (tt$status == 400) { # need to supply the build argument
     query[["build"]] <- jsn$build
-    tt <- GET(url = pbase(), path = path, query = query)
+    tt <- httpcache::GET(url = file.path(pbase(), path), query = query)
     jsn <- response_to_JSON(tt)
   }
   jsn
 }
 
-#' @importFrom httr POST add_headers
+#' @importFrom httr POST
+#' @importFrom httr add_headers
 #' @importFrom jsonlite toJSON
 #' @importFrom curl nslookup
 phy_POST <- function(path, body = list(), ...) {
-  # Check PhyloPic (or user) is online
-  tryCatch({
-    nslookup("api.phylopic.org")
-  },
-  error = function(e) {
-    stop("PhyloPic is not available or you have no internet connection.")
-  })
   # Convert to JSON
   body <- toJSON(body)
-  resp <- POST(url = pbase(), path = path, body = body,
+  tryCatch({
+    resp <- POST(url = pbase(), path = path, body = body,
                add_headers("Content-type" = "application/vnd.phylopic.v2+json"),
                encode = "raw")
+  }, error = function(e) {
+    # Check PhyloPic (or user) is online
+    tryCatch({
+      nslookup(phost())
+    },
+    error = function(e) {
+      stop("PhyloPic is not available or you have no internet connection.")
+    })
+    stop(e)  # network is fine; rethrow the original POST error
+  })
   resp <- response_to_JSON(resp)
   resp
 }

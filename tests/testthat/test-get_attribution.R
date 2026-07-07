@@ -1,5 +1,5 @@
 test_that("get_attribution works", {
-  skip_if_offline(host = "api.phylopic.org")
+  skip_if_offline(host = phost())
   # Get valid uuid
   uuid <- get_uuid(name = "Acropora cervicornis")
   # Expect true
