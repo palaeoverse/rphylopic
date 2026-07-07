@@ -207,6 +207,8 @@ Functions for adding silhouettes to various plots.
   : Add PhyloPics to a phylogenetic tree plotted with base R
 - [`phylopic_igraph`](https://rphylopic.palaeoverse.org/reference/phylopic_igraph.md)
   : Use PhyloPic silhouettes with igraph
+- [`clear_phylopic_cache()`](https://rphylopic.palaeoverse.org/reference/clear_phylopic_cache.md)
+  : Clear the rphylopic cache
 
 ## Modifying silhouettes
 
