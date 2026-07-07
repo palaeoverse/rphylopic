@@ -116,8 +116,8 @@ add_phylopic_base(uuid = uuids,
   color = "black", fill = c("blue", "green"),
   x = c(2.5, 7.5), y = c(2.5, 7.5), height = 2)
 # Add legend
-add_phylopic_legend(uuid = uuids, 
-  height = 0.5, color = "black", fill = c("blue", "green"), 
+add_phylopic_legend(uuid = uuids,
+  height = 0.5, color = "black", fill = c("blue", "green"),
   x = "bottomright", legend = c("Wolf 1", "Wolf 2"),
   bg = "lightgrey")
 ```

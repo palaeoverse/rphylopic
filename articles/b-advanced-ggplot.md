@@ -180,8 +180,8 @@ ggplot(penguins_subset) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
   scale_size_continuous(guide = "none") +
   scale_fill_manual("Sex", values = c("orange", "blue"),
-                     labels = c("Female", "Male"),
-                     guide = guide_legend(override.aes = list(shape = 21))) +
+                    labels = c("Female", "Male"),
+                    guide = guide_legend(override.aes = list(shape = 21))) +
   facet_wrap(~species, ncol = 1) +
   theme_bw(base_size = 15) +
   theme(legend.position = "inside", legend.position.inside = c(0.9, 0.9))
@@ -213,7 +213,7 @@ ggplot(penguins_subset) +
   labs(x = "Bill length (mm)", y = "Flipper length (mm)") +
   scale_size_continuous(guide = "none") +
   scale_fill_manual("Sex", values = c("orange", "blue"),
-                     labels = c("Female", "Male")) +
+                    labels = c("Female", "Male")) +
   facet_wrap(~species, ncol = 1) +
   theme_bw(base_size = 15) +
   theme(legend.position = "inside", legend.position.inside = c(0.9, 0.9))

@@ -38,9 +38,8 @@ resolution; however, when the graphics device is resized interactively
 the silhouettes will not reposition along with the underlying graph
 layout. The graph nodes, edges, and labels will redraw at their new
 coordinates while the silhouettes remain anchored to their original
-device positions. To restore alignment, re-run the
-[`plot()`](https://rdrr.io/r/graphics/plot.default.html) call after
-resizing.
+device positions. To restore alignment, re-run your `plot(...)` call
+after resizing.
 
 ## See also
 
@@ -52,6 +51,7 @@ resizing.
 ``` r
 if (FALSE) { # \dontrun{
 library(igraph)
+library(rphylopic)
 g <- make_ring(10)
 plot(g, vertex.shape = "phylopic", vertex.name = "Gorilla",
      vertex.color = rainbow(vcount(g)))

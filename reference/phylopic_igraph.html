@@ -74,7 +74,7 @@ however, when the graphics device is resized interactively the silhouettes
 will not reposition along with the underlying graph layout. The graph nodes,
 edges, and labels will redraw at their new coordinates while the
 silhouettes remain anchored to their original device positions. To
-restore alignment, re-run the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> call after resizing.</p>
+restore alignment, re-run your <code>plot(...)</code> call after resizing.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -85,6 +85,7 @@ restore alignment, re-run the <code><a href="https://rdrr.io/r/graphics/plot.def
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r.igraph.org/" class="external-link">igraph</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rphylopic.palaeoverse.org">rphylopic</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/make_ring.html" class="external-link">make_ring</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g</span>, vertex.shape <span class="op">=</span> <span class="st">"phylopic"</span>, vertex.name <span class="op">=</span> <span class="st">"Gorilla"</span>,</span></span>
 <span class="r-in"><span>     vertex.color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">rainbow</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/gorder.html" class="external-link">vcount</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
