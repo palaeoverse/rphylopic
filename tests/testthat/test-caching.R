@@ -22,7 +22,7 @@ test_that("get_phylopic cache makes second call faster", {
   # Second call: parsed-object cache hits in get_svg
   # result must be identical and meaningfully faster
   # Error if GET is ever called
-  testthat::local_mocked_bindings(
+  local_mocked_bindings(
     GET = function(...) stop("network access not expected on cached call"),
     .package = "httr"
   )
@@ -58,7 +58,7 @@ test_that("get_phylopic raster cache makes second call faster", {
   
   # Second call: parsed-object cache hits in make_png
   # Error if GET is ever called
-  testthat::local_mocked_bindings(
+  local_mocked_bindings(
     GET = function(...) stop("network access not expected on cached call"),
     .package = "httr"
   )
@@ -93,7 +93,7 @@ test_that("get_phylopic raster cache is keyed per height", {
   # Second call at a different height misses the parsed-object cache
   # but hits httpcache for the SVG bytes
   # Error if GET is ever called
-  testthat::local_mocked_bindings(
+  local_mocked_bindings(
     GET = function(...) stop("network access not expected on cached call"),
     .package = "httr"
   )
@@ -108,7 +108,7 @@ test_that("get_phylopic raster cache is keyed per height", {
   
   # Third call at 256: parsed-object cache hits
   # Error if rsvg_png is ever called
-  testthat::local_mocked_bindings(
+  local_mocked_bindings(
     rsvg_png = function(...) stop("rasterization not expected on cached call"),
     .package = "rsvg"
   )
