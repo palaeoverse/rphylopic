@@ -208,7 +208,7 @@ resolve_phylopic <- function(name, api = "gbif.org", hierarchy = FALSE,
       lst[[name_vec[i]]] <- get_uuid(tax, n = n, filter = filter, url = url_arg)
     }
   }
-  return(lst)
+  lst
 }
 
 #' @importFrom httr RETRY stop_for_status

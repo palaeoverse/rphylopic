@@ -14,7 +14,7 @@ knit("./source/_c-advanced-base.Rmd",
 library(devtools)
 build_vignettes()
 
-# x = vignette file name including file extension (e.g., "a-getting-started.Rmd")
+# x: vignette file name including file extension (e.g., "a-getting-started.Rmd")
 read_only <- function(x) {
   # Create file
   tmp <- file(x)

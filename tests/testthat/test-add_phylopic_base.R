@@ -7,7 +7,7 @@ test_that("add_phylopic_base works", {
     add_phylopic_base(name = "Felis silvestris catus", height = .7,
                       verbose = TRUE)
   })
-  
+
   expect_doppelganger("phylopic with width", function() {
     plot(1, 1, type = "n", main = "A cat")
     add_phylopic_base(name = "Felis silvestris catus", width = .4,
@@ -50,12 +50,12 @@ test_that("add_phylopic_base works", {
   expect_error(expect_warning(add_phylopic_base(name = "jkl;daf",
                                                 verbose = TRUE)))
   expect_warning(add_phylopic_base(uuid = "jkl;daf", filter = "by"))
-  
+
   cat_svg <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
   lifecycle::expect_deprecated({
     add_phylopic_base(cat_svg, ysize = .7)
   })
-  
+
   # Expect error
   expect_error(add_phylopic_base(img = "cat"))
   expect_error(add_phylopic_base(img = cat_svg, verbose = "yes"))

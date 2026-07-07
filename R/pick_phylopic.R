@@ -15,7 +15,7 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #'   requested `name`, multiple silhouettes may exist. If `n` exceeds the number
 #'   of available images, all available uuids will be returned. Defaults to 5.
 #'   Only relevant if `name` supplied.
-#' @param uuid \code{character}. A vector (or list) of valid PhyloPic 
+#' @param uuid \code{character}. A vector (or list) of valid PhyloPic
 #'   silhouette uuids, such as that returned by [get_uuid()] or
 #'   [resolve_phylopic()].
 #' @param view \code{numeric}. Number of silhouettes that should be plotted at
@@ -29,8 +29,8 @@ utils::globalVariables(c("x", "y", "uuid", "label"))
 #'   into the menu choice. If the input value is `1`, the first returned image
 #'   will be selected. If the input value is `2`, requested images will be
 #'   automatically cycled through with the final image returned. If the input
-#'   value is `3`, a list of attribution information for each image is 
-#'   returned (this functionality is principally intended for testing). If 
+#'   value is `3`, a list of attribution information for each image is
+#'   returned (this functionality is principally intended for testing). If
 #'   `NULL` (default), the user must interactively respond to the called menu.
 #'
 #' @return A [Picture][grImport2::Picture-class] object is returned. The uuid of
@@ -86,9 +86,9 @@ pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
               x = 0.96, y = 0.92,
               just = "right",
               gp = gpar(fontsize = 8, col = "purple", fontface = "bold"))
-    return(img)
+    img
   }
-  
+
   if (is.null(uuid)) {
     # Get uuids
     uuids <- get_uuid(name = name, n = n, filter = filter, url = FALSE)
@@ -144,7 +144,7 @@ pick_phylopic <- function(name = NULL, n = 5, uuid = NULL, view = 1,
     if (is.null(auto)) {
       # Set up plotting dataframe
       df <- data.frame(x = 0.5, y = 0.5, uuid = uuids[[i]],
-                       label = seq_len(length(uuids[[i]])))
+                       label = seq_along(uuids[[i]]))
       if (view > 1) {
         dims <- sapply(img, dim)
         df$size <- sapply(height / dims[2, ], min, 1)

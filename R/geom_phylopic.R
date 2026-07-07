@@ -141,8 +141,8 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
                       "horizontal", "vertical", "angle",
                       "hjust", "vjust"),
   optional_aes = c("height", "width", "img", "name", "uuid"),
-                   # one and only one of img/name/uuid
-                   # size is deprecated
+  # one and only one of img/name/uuid
+  # size is deprecated
   default_aes = aes(height = NA, width = NA,
                     alpha = 1, color = NA, fill = "black",
                     horizontal = FALSE, vertical = FALSE, angle = 0,
@@ -295,9 +295,11 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       # (or r limits for polar coordinates)
       if ("y.range" %in% names(panel_params)) {
         y_diff <- diff(panel_params$y.range)
-      } else if ("y_range" %in% names(panel_params)) { # exclusive to coord_sf
+      } else if ("y_range" %in% names(panel_params)) {
+        # exclusive to coord_sf
         y_diff <- diff(panel_params$y_range)
-      } else if ("r.range" %in% names(panel_params)) { # exclusive to coord_polar
+      } else if ("r.range" %in% names(panel_params)) {
+        # exclusive to coord_polar
         y_diff <- diff(panel_params$r.range)
       } else {
         y_diff <- 1
@@ -314,9 +316,11 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       # (or r limits for polar coordinates)
       if ("x.range" %in% names(panel_params)) {
         x_diff <- diff(panel_params$x.range)
-      } else if ("x_range" %in% names(panel_params)) { # exclusive to coord_sf
+      } else if ("x_range" %in% names(panel_params)) {
+        # exclusive to coord_sf
         x_diff <- diff(panel_params$x_range)
-      } else if ("r.range" %in% names(panel_params)) { # exclusive to coord_polar
+      } else if ("r.range" %in% names(panel_params)) {
+        # exclusive to coord_polar
         x_diff <- diff(panel_params$r.range)
       } else {
         x_diff <- 1
@@ -481,11 +485,11 @@ phylopicGrob <- function(img, x, y, height, width,
   # grobify
   if (is(img, "Picture")) { # svg
     if ("summary" %in% slotNames(img) &&
-        all(c("xscale", "yscale") %in% slotNames(img@summary)) &&
-        is.numeric(img@summary@xscale) && length(img@summary@xscale) == 2 &&
-        all(is.finite(img@summary@xscale)) && diff(img@summary@xscale) != 0 &&
-        is.numeric(img@summary@yscale) && length(img@summary@yscale) == 2 &&
-        all(is.finite(img@summary@yscale)) && diff(img@summary@yscale) != 0) {
+          all(c("xscale", "yscale") %in% slotNames(img@summary)) &&
+          is.numeric(img@summary@xscale) && length(img@summary@xscale) == 2 &&
+          all(is.finite(img@summary@xscale)) && diff(img@summary@xscale) != 0 &&
+          is.numeric(img@summary@yscale) && length(img@summary@yscale) == 2 &&
+          all(is.finite(img@summary@yscale)) && diff(img@summary@yscale) != 0) {
       # modified from
       # https://github.com/k-hench/hypoimg/blob/master/R/hypoimg_recolor_svg.R
       img_grob <- pictureGrob(img, x = x, y = y,
@@ -499,24 +503,25 @@ phylopicGrob <- function(img, x, y, height, width,
       img_grob <- nullGrob()
     }
   } else { # png
-      img_grob <- rasterGrob(img, x = x, y = y,
-                             height = height, width = width,
-                             default.units = "native",
-                             hjust = hjust, vjust = vjust)
+    img_grob <- rasterGrob(img, x = x, y = y,
+                           height = height, width = width,
+                           default.units = "native",
+                           hjust = hjust, vjust = vjust)
   }
-  return(img_grob)
+  img_grob
 }
 
 #' Scales for phylopic height or width
 #'
 #' `scale_height_continuous()` scales the height of silhouettes whereas
-#' `scale_width_continuous()` scales the height of silhouettes. 
+#' `scale_width_continuous()` scales the height of silhouettes.
 #' @inheritParams ggplot2::scale_size_continuous
 #' @export
 #' @importFrom ggplot2 continuous_scale waiver
 #' @importFrom scales pal_area
 #' @rdname scales
-scale_height_continuous <- function(name = waiver(), breaks = waiver(), labels = waiver(),
+scale_height_continuous <- function(name = waiver(), breaks = waiver(),
+                                    labels = waiver(),
                                     limits = NULL, range = c(1, 6),
                                     transform = "identity",
                                     trans = lifecycle::deprecated(),
@@ -531,11 +536,12 @@ scale_height_continuous <- function(name = waiver(), breaks = waiver(), labels =
 #' @importFrom ggplot2 continuous_scale waiver
 #' @importFrom scales pal_area
 #' @rdname scales
-scale_width_continuous <- function(name = waiver(), breaks = waiver(), labels = waiver(),
-                                    limits = NULL, range = c(1, 6),
-                                    transform = "identity",
-                                    trans = lifecycle::deprecated(),
-                                    guide = "none") {
+scale_width_continuous <- function(name = waiver(), breaks = waiver(),
+                                   labels = waiver(),
+                                   limits = NULL, range = c(1, 6),
+                                   transform = "identity",
+                                   trans = lifecycle::deprecated(),
+                                   guide = "none") {
   continuous_scale("width", palette = scales::pal_area(range), name = name,
                    breaks = breaks, labels = labels, limits = limits,
                    transform = transform, trans = trans, guide = guide)
@@ -550,9 +556,9 @@ ggname <- function(prefix, grob) {
 
 aspect_ratio <- function(img) {
   if (is(img, "Picture")) {
-    return(abs(diff(img@summary@xscale)) / abs(diff(img@summary@yscale)))
+    abs(diff(img@summary@xscale)) / abs(diff(img@summary@yscale))
   } else {
     dims <- dim(img)
-    return(dims[2] / dims[1])
+    dims[2] / dims[1]
   }
 }

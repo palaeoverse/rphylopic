@@ -18,7 +18,7 @@ test_that("geom_phylopic works", {
   expect_true(is_ggplot(gg))
   expect_true(is(gg$layers[[1]]$geom, "GeomPhylopic"))
   expect_doppelganger("geom_phylopic", gg)
-  
+
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y, uuid = uuid), width = 0.5) +
     facet_wrap(~uuid) +
@@ -32,14 +32,14 @@ test_that("geom_phylopic works", {
     coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
     theme_classic(base_size = 16)
   expect_doppelganger("geom_phylopic with no dims", gg)
-  
+
   gg <- ggplot(df) +
     geom_phylopic(aes(x = x, y = y, uuid = uuid),
                   height = c(NA, 10, NA, 10), width = c(0.5, NA, 0.5, NA)) +
     coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
     theme_classic(base_size = 16)
   expect_doppelganger("geom_phylopic with alt height and width", gg)
-  
+
   cat_png <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9",
                           format = "raster")
   gg <- ggplot(df) +
@@ -109,7 +109,7 @@ test_that("phylopic_key_glyph works", {
     coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
     theme_classic(base_size = 16)
   expect_doppelganger("phylopic_key_glyph", gg)
-  
+
   gg <- gg + theme(legend.key.size = grid::unit(5, "lines"))
   expect_doppelganger("phylopic_key_glyph with larger glyphs", gg)
 
@@ -133,63 +133,75 @@ test_that("phylopic_key_glyph works", {
     coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
     theme_classic(base_size = 16)
   expect_doppelganger("phylopic_key_glyph with img", gg)
-  
-  # errors/warnings
-  expect_error(ggplot(df) +
-                 geom_phylopic(
-                   aes(x = x, y = y, name = name, color = name), height = 10,
-                   show.legend = TRUE, verbose = TRUE,
-                   key_glyph =
-                     phylopic_key_glyph(
-                       uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
-                       img = cat
-                     )
-                 ) +
-                 coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
-                 theme_classic(base_size = 16))
-  expect_error(ggplot(df) +
-                 geom_phylopic(
-                   aes(x = x, y = y, name = name, color = name), height = 10,
-                   show.legend = TRUE, verbose = TRUE,
-                   key_glyph =
-                     phylopic_key_glyph(name = 12345)
-                 ) +
-                 coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
-                 theme_classic(base_size = 16))
-  expect_warning(ggplot(df) +
-                   geom_phylopic(
-                     aes(x = x, y = y, name = name, color = name), height = 10,
-                     show.legend = TRUE, verbose = TRUE,
-                     key_glyph =
-                       phylopic_key_glyph(name = "12345")
-                   ) +
-                   coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
-                   theme_classic(base_size = 16))
-  expect_error(ggplot(df) +
-                 geom_phylopic(
-                   aes(x = x, y = y, name = name, color = name), height = 10,
-                   show.legend = TRUE, verbose = TRUE,
-                   key_glyph =
-                     phylopic_key_glyph(uuid = 12345)
-                 ) +
-                 coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
-                 theme_classic(base_size = 16))
-  expect_warning(ggplot(df) +
-                   geom_phylopic(
-                     aes(x = x, y = y, name = name, color = name), height = 10,
-                     show.legend = TRUE, verbose = TRUE,
-                     key_glyph =
-                       phylopic_key_glyph(uuid = "12345")
-                   ) +
-                   coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
-                   theme_classic(base_size = 16))
-  expect_error(ggplot(df) +
-                 geom_phylopic(
-                   aes(x = x, y = y, name = name, color = name), height = 10,
-                   show.legend = TRUE, verbose = TRUE,
-                   key_glyph =
-                     phylopic_key_glyph(img = 12345)
-                 ) +
-                 coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
-                 theme_classic(base_size = 16))
+
+  # check errors/warnings
+  expect_error(
+    ggplot(df) +
+      geom_phylopic(
+        aes(x = x, y = y, name = name, color = name), height = 10,
+        show.legend = TRUE, verbose = TRUE,
+        key_glyph =
+          phylopic_key_glyph(
+            uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",
+            img = cat
+          )
+      ) +
+      coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
+      theme_classic(base_size = 16)
+  )
+  expect_error(
+    ggplot(df) +
+      geom_phylopic(
+        aes(x = x, y = y, name = name, color = name), height = 10,
+        show.legend = TRUE, verbose = TRUE,
+        key_glyph =
+          phylopic_key_glyph(name = 12345)
+      ) +
+      coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
+      theme_classic(base_size = 16)
+  )
+  expect_warning(
+    ggplot(df) +
+      geom_phylopic(
+        aes(x = x, y = y, name = name, color = name), height = 10,
+        show.legend = TRUE, verbose = TRUE,
+        key_glyph =
+          phylopic_key_glyph(name = "12345")
+      ) +
+      coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
+      theme_classic(base_size = 16)
+  )
+  expect_error(
+    ggplot(df) +
+      geom_phylopic(
+        aes(x = x, y = y, name = name, color = name), height = 10,
+        show.legend = TRUE, verbose = TRUE,
+        key_glyph =
+          phylopic_key_glyph(uuid = 12345)
+      ) +
+      coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
+      theme_classic(base_size = 16)
+  )
+  expect_warning(
+    ggplot(df) +
+      geom_phylopic(
+        aes(x = x, y = y, name = name, color = name), height = 10,
+        show.legend = TRUE, verbose = TRUE,
+        key_glyph =
+          phylopic_key_glyph(uuid = "12345")
+      ) +
+      coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
+      theme_classic(base_size = 16)
+  )
+  expect_error(
+    ggplot(df) +
+      geom_phylopic(
+        aes(x = x, y = y, name = name, color = name), height = 10,
+        show.legend = TRUE, verbose = TRUE,
+        key_glyph =
+          phylopic_key_glyph(img = 12345)
+      ) +
+      coord_cartesian(xlim = c(1, 6), ylim = c(5, 30)) +
+      theme_classic(base_size = 16)
+  )
 })

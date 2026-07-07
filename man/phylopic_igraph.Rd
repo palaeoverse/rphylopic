@@ -33,12 +33,13 @@ however, when the graphics device is resized interactively the silhouettes
 will not reposition along with the underlying graph layout. The graph nodes,
 edges, and labels will redraw at their new coordinates while the
 silhouettes remain anchored to their original device positions. To
-restore alignment, re-run the \code{plot()} call after resizing.
+restore alignment, re-run your \code{plot(...)} call after resizing.
 }
 
 \examples{
 \dontrun{
 library(igraph)
+library(rphylopic)
 g <- make_ring(10)
 plot(g, vertex.shape = "phylopic", vertex.name = "Gorilla",
      vertex.color = rainbow(vcount(g)))
