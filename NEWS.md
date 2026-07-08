@@ -1,4 +1,4 @@
-# rphylopic (development version)
+# rphylopic 1.7.0
 
 * PhyloPic API responses and parsed images are now cached in a temporary in-memory R environment to speed up repeated calls (#123)
   * The cache is cleared when the R session ends
