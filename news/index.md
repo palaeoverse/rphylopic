@@ -1,5 +1,7 @@
 # Changelog
 
+## rphylopic (development version)
+
 ## rphylopic 1.7.0
 
 - PhyloPic API responses and parsed images are now cached in a temporary
