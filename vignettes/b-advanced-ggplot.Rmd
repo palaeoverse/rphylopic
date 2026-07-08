@@ -11,7 +11,7 @@ vignette: >
 
 **Authors:** William Gearty & Lewis A. Jones
 
-**Last updated:** 2026-05-08
+**Last updated:** 2026-07-08
 
 
 
@@ -316,7 +316,7 @@ vertebrate_data
 ## 4            Homo_sapiens 9c6af553-390c-4bdd-baeb-6992cbc540b1
 ## 5             Lemur_catta 8a187391-82a3-4d9b-a402-3a310bf7dc38
 ## 6        Myotis_lucifugus                                 <NA>
-## 7              Sus_scrofa 3d8acaf6-4355-491e-8e86-4a411b53b98b
+## 7              Sus_scrofa 14a64a2f-166e-4bb4-b108-adc085cbcb7a
 ## 8  Megaptera_novaeangliae 012afb33-55c3-4fc6-9ae3-3a91fda32fd5
 ## 9              Bos_taurus dc5c561e-e030-444d-ba22-3d427b60e58a
 ## 10          Iguana_iguana 5dec03d9-66a2-4033-b1a9-6dbb3485199f
@@ -335,7 +335,7 @@ I'm also not a huge fan of the boar picture. Let's choose an alternative with `p
 
 
 ``` r
-# Pick a different boar image; we'll pick #2
+# Pick a different boar image; we'll pick #4
 boar_svg <- pick_phylopic("Sus scrofa", view = 5)
 # Extract the UUID
 vertebrate_data$uuid[vertebrate_data$species == "Sus_scrofa"] <-
@@ -357,7 +357,7 @@ Now let's go ahead and plot our phylogeny with the [ggtree](https://www.biocondu
 ``` r
 library(ggtree)
 # Plot the tree
-ggtree(vertebrate.tree, size = 1, layout = "circular")
+ggtree(vertebrate.tree, linewidth = 1, layout = "circular")
 ```
 
 <div class="figure">
@@ -371,7 +371,7 @@ Hmm...that's a bit boring. Let's add a geological timescale to the background us
 ``` r
 library(deeptime)
 # Plot the tree with a geological timescale in the background
-revts(ggtree(vertebrate.tree, size = 1)) +
+revts(ggtree(vertebrate.tree, linewidth = 1)) +
   scale_x_continuous(breaks = seq(-500, 0, 100),
                      labels = seq(500, 0, -100),
                      limits = c(-500, 0),
@@ -390,7 +390,7 @@ That's looking a lot prettier! Let's go ahead and add our silhouettes now. Note 
 
 
 ``` r
-revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
+revts(ggtree(vertebrate.tree, linewidth = 1)) %<+% vertebrate_data +
   geom_phylopic(aes(img = svg), height = 25) +
   scale_x_continuous(breaks = seq(-500, 0, 100),
                      labels = seq(500, 0, -100),
@@ -418,7 +418,7 @@ And now the finished product:
 
 
 ``` r
-revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
+revts(ggtree(vertebrate.tree, linewidth = 1)) %<+% vertebrate_data +
   geom_phylopic(aes(img = svg), height = 25) +
   scale_x_continuous(breaks = seq(-500, 0, 100),
                      labels = seq(500, 0, -100),

@@ -11,9 +11,6 @@ knit("./source/_b-advanced-ggplot.Rmd",
 knit("./source/_c-advanced-base.Rmd",
      "c-advanced-base.Rmd")
 
-library(devtools)
-build_vignettes()
-
 # x: vignette file name including file extension (e.g., "a-getting-started.Rmd")
 read_only <- function(x) {
   # Create file
@@ -32,3 +29,5 @@ read_only("c-advanced-base.Rmd")
 rm(read_only)
 
 setwd(old_wd)
+
+pkgdown::build_articles(preview = TRUE)

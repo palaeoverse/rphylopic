@@ -255,7 +255,7 @@ vertebrate_data$uuid[vertebrate_data$species == "Myotis_lucifugus"] <-
 I'm also not a huge fan of the boar picture. Let's choose an alternative with `pick_phylopic()`.
 
 ```{r eval = FALSE}
-# Pick a different boar image; we'll pick #2
+# Pick a different boar image; we'll pick #4
 boar_svg <- pick_phylopic("Sus scrofa", view = 5)
 # Extract the UUID
 vertebrate_data$uuid[vertebrate_data$species == "Sus_scrofa"] <-
@@ -278,7 +278,7 @@ Now let's go ahead and plot our phylogeny with the [ggtree](https://www.biocondu
 ```{r ggplot-phylo-plot-1, message = FALSE}
 library(ggtree)
 # Plot the tree
-ggtree(vertebrate.tree, size = 1, layout = "circular")
+ggtree(vertebrate.tree, linewidth = 1, layout = "circular")
 ```
 
 Hmm...that's a bit boring. Let's add a geological timescale to the background using `coord_geo_polar()` from the `{deeptime}` package. Note that we need to use the `revts()` function to reverse the time axis to work with `coord_geo_polar()`.
@@ -286,7 +286,7 @@ Hmm...that's a bit boring. Let's add a geological timescale to the background us
 ```{r ggplot-phylo-plot-2, message = FALSE}
 library(deeptime)
 # Plot the tree with a geological timescale in the background
-revts(ggtree(vertebrate.tree, size = 1)) +
+revts(ggtree(vertebrate.tree, linewidth = 1)) +
   scale_x_continuous(breaks = seq(-500, 0, 100),
                      labels = seq(500, 0, -100),
                      limits = c(-500, 0),
@@ -299,7 +299,7 @@ revts(ggtree(vertebrate.tree, size = 1)) +
 That's looking a lot prettier! Let's go ahead and add our silhouettes now. Note that we need to attach the `vertebrate_data` object with the `%<+%` operator from `{ggtree}`.
 
 ```{r ggplot-phylo-plot-3, message = FALSE, warning = FALSE}
-revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
+revts(ggtree(vertebrate.tree, linewidth = 1)) %<+% vertebrate_data +
   geom_phylopic(aes(img = svg), height = 25) +
   scale_x_continuous(breaks = seq(-500, 0, 100),
                      labels = seq(500, 0, -100),
@@ -320,7 +320,7 @@ vertebrate_data$svg[[8]] <- rotate_phylopic(img = vertebrate_data$svg[[8]])
 And now the finished product:
 
 ```{r ggplot-phylo-plot-4, message = FALSE, warning = FALSE}
-revts(ggtree(vertebrate.tree, size = 1)) %<+% vertebrate_data +
+revts(ggtree(vertebrate.tree, linewidth = 1)) %<+% vertebrate_data +
   geom_phylopic(aes(img = svg), height = 25) +
   scale_x_continuous(breaks = seq(-500, 0, 100),
                      labels = seq(500, 0, -100),
