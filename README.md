@@ -130,7 +130,7 @@ Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transform
 
 # Cheat sheet
 
-[![](man/figures/cheatsheet.png)](https://palaeoverse.org/images/rphylopic-cheatsheet.pdf)
+![](man/figures/cheatsheet.png)
 
 <p align="left">
 
