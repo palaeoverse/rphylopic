@@ -152,7 +152,7 @@ and Evolution, 14(11), 2700-2708. doi:
 
 # Cheat sheet
 
-[![](reference/figures/cheatsheet.png)](https://palaeoverse.org/images/rphylopic-cheatsheet.pdf)
+![](reference/figures/cheatsheet.png)
 
 ![](reference/figures/logo.png)
 

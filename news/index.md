@@ -19,6 +19,12 @@
   [`geom_phylopic()`](https://rphylopic.palaeoverse.org/reference/geom_phylopic.md)
   inside [ggraph](https://ggraph.data-imaginist.com) plots
 
+Deprecation:
+
+- The “ysize” and “size” arguments/aesthetics are now fully deprecated
+  in favor of “height” and “width” arguments/aesthetics. These
+  arguments/aesthetics will be removed in a future version of rphylopic.
+
 ## rphylopic 1.6.0
 
 CRAN release: 2025-11-18
