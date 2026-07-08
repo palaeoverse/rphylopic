@@ -47,9 +47,8 @@ add_phylopic_legend <- function(x, y = NULL, legend,
                                 color = NA, fill = "black",
                                 ...) {
   if (lifecycle::is_present(ysize)) {
-    lifecycle::deprecate_warn("1.5.0", "add_phylopic_legend(ysize)",
+    lifecycle::deprecate_stop("1.5.0", "add_phylopic_legend(ysize)",
                               "add_phylopic_legend(height)")
-    if (is.null(height)) height <- ysize
   }
   # Get supplied arguments
   args <- list(x = x, y = y, legend = legend, ...)

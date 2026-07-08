@@ -74,7 +74,7 @@
 #'   Note that png array objects can only be rotated by multiples of 90 degrees.
 #'   Also, outline colors do not currently work for png array objects.
 #' @importFrom ggplot2 annotate
-#' @importFrom lifecycle deprecated deprecate_warn is_present
+#' @importFrom lifecycle deprecated deprecate_stop is_present
 #' @export
 #' @examples \dontrun{
 #' # Put a silhouette behind a plot based on a taxonomic name
@@ -119,9 +119,8 @@ add_phylopic <- function(img = NULL, name = NULL, uuid = NULL, filter = NULL,
   }
 
   if (lifecycle::is_present(ysize)) {
-    lifecycle::deprecate_warn("1.5.0", "add_phylopic(ysize)",
+    lifecycle::deprecate_stop("1.5.0", "add_phylopic(ysize)",
                               "add_phylopic(height)")
-    if (is.null(height) || all(is.na(height))) height <- ysize
   }
 
   # Make all variables the same length

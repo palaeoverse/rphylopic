@@ -106,14 +106,9 @@ geom_phylopic <- function(mapping = NULL, data = NULL,
     dots$img <- list(dots$img)
   }
   if (!is.null(dots$size)) {
-    lifecycle::deprecate_warn("1.5.0",
+    lifecycle::deprecate_stop("1.5.0",
                               I("Using the `size` aesthetic in this geom"),
-                              I("the `height` and `width` aesthetics"),
-                              user_env = globalenv())
-    if (is.null(dots$height)) {
-      dots$height <- dots$size
-      dots$size <- NULL
-    }
+                              I("the `height` and `width` aesthetics"))
   }
   layer(
     data = data,
@@ -233,14 +228,9 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
     }
     # Inherit size as height if no height aesthetic and param exist
     if (!is.null(data$size)) {
-      lifecycle::deprecate_warn("1.5.0",
+      lifecycle::deprecate_stop("1.5.0",
                                 I("Using the `size` aesthetic in this geom"),
-                                I("the `height` and `width` aesthetics"),
-                                user_env = globalenv())
-      if (is.null(data$height) && is.null(params$height)) {
-        data$height <- data$size
-        data$size <- NULL
-      }
+                                I("the `height` and `width` aesthetics"))
     }
     # if fill isn't specified in the original data, copy over the colour column
     col_fill <- c("colour", "fill") %in% colnames(data) |
@@ -274,14 +264,9 @@ GeomPhylopic <- ggproto("GeomPhylopic", Geom,
       stop("`vjust` must be between 0 and 1.")
     }
     if (!is.null(data$size)) {
-      lifecycle::deprecate_warn("1.5.0",
+      lifecycle::deprecate_stop("1.5.0",
                                 I("Using the `size` aesthetic in this geom"),
-                                I("the `height` and `width` aesthetics"),
-                                user_env = globalenv())
-      if (is.null(data$height) && is.null(params$height)) {
-        data$height <- data$size
-        data$size <- NULL
-      }
+                                I("the `height` and `width` aesthetics"))
     }
     if (any(!is.na(data$height) & !is.na(data$width))) {
       stop("At least one of `height` or `width` must be NA.")

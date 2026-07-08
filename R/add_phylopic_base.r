@@ -77,7 +77,7 @@
 #' @importFrom grid grid.raster
 #' @importFrom grImport2 grid.picture
 #' @importFrom methods is slotNames
-#' @importFrom lifecycle deprecated deprecate_warn is_present
+#' @importFrom lifecycle deprecated deprecate_stop is_present
 #' @export
 #' @examples \dontrun{
 #' # single image
@@ -138,9 +138,8 @@ add_phylopic_base <- function(img = NULL, name = NULL, uuid = NULL,
     stop("`verbose` should be a logical value.")
   }
   if (lifecycle::is_present(ysize)) {
-    lifecycle::deprecate_warn("1.5.0", "add_phylopic_base(ysize)",
+    lifecycle::deprecate_stop("1.5.0", "add_phylopic_base(ysize)",
                               "add_phylopic_base(height)")
-    if (is.null(height)) height <- ysize
   }
   if (!is.null(height) && !is.null(width)) {
     stop("At least one of `height` or `width` must be NULL.")

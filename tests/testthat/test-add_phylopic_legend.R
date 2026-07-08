@@ -41,7 +41,7 @@ test_that("add_phylopic_legend works", {
                         col = "black", pt.bg = c("blue", "green"))
   })
 
-  lifecycle::expect_deprecated({
+  lifecycle::expect_defunct({
     plot(0:10, 0:10, type = "n", main = "Wolves")
     add_phylopic_base(uuid = uuids,
                       color = "black", fill = c("blue", "green"),

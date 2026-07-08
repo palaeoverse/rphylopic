@@ -50,7 +50,7 @@ test_that("geom_phylopic works", {
   expect_doppelganger("geom_phylopic with png", gg)
 
   # Errors and warnings
-  lifecycle::expect_deprecated({
+  lifecycle::expect_defunct({
     gg <- ggplot(df) +
       geom_phylopic(aes(x = x, y = y, uuid = uuid), size = 5)
     plot(gg)

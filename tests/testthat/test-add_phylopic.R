@@ -57,7 +57,7 @@ test_that("add_phylopic works", {
                  angle = angle, horizontal = hor, vertical = ver)
   expect_doppelganger("phylopics with alt height and width", p)
 
-  lifecycle::expect_deprecated({
+  lifecycle::expect_defunct({
     p <- ggplot(data.frame(cat.x = posx, cat.y = posy), aes(cat.x, cat.y)) +
       geom_blank() +
       add_phylopic(uuid = "23cd6aa4-9587-4a2e-8e26-de42885004c9",

@@ -52,7 +52,7 @@ test_that("add_phylopic_base works", {
   expect_warning(add_phylopic_base(uuid = "jkl;daf", filter = "by"))
 
   cat_svg <- get_phylopic("23cd6aa4-9587-4a2e-8e26-de42885004c9")
-  lifecycle::expect_deprecated({
+  lifecycle::expect_defunct({
     add_phylopic_base(cat_svg, ysize = .7)
   })
 
