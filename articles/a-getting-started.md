@@ -2,7 +2,7 @@
 
 **Authors:** Lewis A. Jones & William Gearty
 
-**Last updated:** 2024-10-02
+**Last updated:** 2026-07-08
 
 ## Introduction
 
@@ -56,8 +56,8 @@ citation("rphylopic")
 
     ## To cite rphylopic in publications, use the following citation:
     ## 
-    ##   Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and visualising
-    ##   PhyloPic silhouettes. Methods in Ecology and Evolution, 14(11), 2700-2708. doi:
+    ##   Gearty, W. and Jones, L.A. 2023. rphylopic: An R package for fetching, transforming, and
+    ##   visualising PhyloPic silhouettes. Methods in Ecology and Evolution, 14(11), 2700-2708. doi:
     ##   10.1111/2041-210X.14221.
     ## 
     ## A BibTeX entry for LaTeX users is
@@ -318,7 +318,7 @@ uuid <- get_uuid(name = "Nycticebus")
 get_attribution(uuid = uuid, text = TRUE)
 ```
 
-    ## Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023) and were added using the rphylopic R package ver. 1.5.0 (Gearty & Jones, 2023). Silhouette was made by Mareike C. Janiak, 2020 (Public Domain Mark 1.0). Silhouette was contributed by Mareike Janiak.
+    ## Organism silhouettes are from PhyloPic (https://www.phylopic.org/; T. Michael Keesey, 2023) and were added using the rphylopic R package ver. 1.7.0 (Gearty & Jones, 2023). Silhouette was made by Mareike C. Janiak, 2020 (Public Domain Mark 1.0). Silhouette was contributed by Mareike Janiak.
 
 ### Save an image
 
