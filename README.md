@@ -9,7 +9,7 @@
 [![LinkedIn](https://custom-icon-badges.demolab.com/badge/LinkedIn-0A66C2?logo=linkedin-white&logoColor=fff&label=Follow%20%40Palaeoverse)](https://linkedin.com/company/palaeoverse)
 <!-- badges: end -->
 
-<img src="https://images.phylopic.org/images/c65573fb-2659-46b9-b7a0-065232a2a08b/vector.svg"  width="150" height="150">
+<img src="https://images.phylopic.org/images/c65573fb-2659-46b9-b7a0-065232a2a08b/vector.svg"  width="150">
 
 The purpose of the `rphylopic` package is to allow users to add silhouettes of organisms to plots generated in base R and `ggplot2`. To do so, it uses silhouettes made available via the [PhyloPic website](http://phylopic.org/).
 
