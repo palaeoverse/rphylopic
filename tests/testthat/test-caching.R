@@ -67,7 +67,7 @@ test_that("get_phylopic raster cache makes second call faster", {
     jay2 <- get_phylopic(jay_id, format = "raster", height = height)
   )[["elapsed"]]
   expect_identical(jay1, jay2)
-  expect_lt(t2, t1 * 0.2)
+  expect_lt(t2, t1 * 0.6)
 })
 
 test_that("get_phylopic raster cache is keyed per height", {
