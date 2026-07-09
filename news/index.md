@@ -4,6 +4,8 @@
 
 ## rphylopic 1.7.0
 
+CRAN release: 2026-07-08
+
 - PhyloPic API responses and parsed images are now cached in a temporary
   in-memory R environment to speed up repeated calls
   ([\#123](https://github.com/palaeoverse/rphylopic/issues/123))
