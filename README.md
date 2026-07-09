@@ -5,7 +5,8 @@
 [![codecov](https://codecov.io/gh/palaeoverse/rphylopic/branch/main/graph/badge.svg?token=HQQO2CRIKT)](https://app.codecov.io/gh/palaeoverse-community/rphylopic)
 [![CRAN status](https://www.r-pkg.org/badges/version/rphylopic)](https://CRAN.R-project.org/package=rphylopic)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/rphylopic)](https://cran.r-project.org/package=rphylopic)
-[![Twitter URL](https://img.shields.io/twitter/follow/:ThePalaeoverse)](https://x.com/intent/follow?screen_name=ThePalaeoverse)
+[![Bluesky URL](https://img.shields.io/badge/Bluesky-0285FF?logo=bluesky&logoColor=fff&label=Follow%20%40palaeoverse)](https://bsky.app/profile/palaeoverse.bsky.social)
+[![LinkedIn](https://custom-icon-badges.demolab.com/badge/LinkedIn-0A66C2?logo=linkedin-white&logoColor=fff&label=Follow%20%40Palaeoverse)](https://linkedin.com/company/palaeoverse)
 <!-- badges: end -->
 
 <img src="https://images.phylopic.org/images/c65573fb-2659-46b9-b7a0-065232a2a08b/vector.svg"  width="150" height="150">
