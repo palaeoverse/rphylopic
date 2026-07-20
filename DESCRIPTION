@@ -57,6 +57,7 @@ Suggests:
     ggraph,
     devtools
 Config/testthat/edition: 3
+Config/Needs/website: palaeoverse/palaeoverse.template
 URL: https://rphylopic.palaeoverse.org,
      https://github.com/palaeoverse/rphylopic,
      https://palaeoverse.org
