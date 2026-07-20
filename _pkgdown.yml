@@ -1,9 +1,7 @@
 url: https://rphylopic.palaeoverse.org
 template:
   bootstrap: 5
-  bootswatch: flatly
-  bslib:
-    navbar-padding-y: 8px
+  package: palaeoverse.template
 
 authors:
   William Gearty:
