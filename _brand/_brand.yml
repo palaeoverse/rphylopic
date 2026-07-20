@@ -1,0 +1,56 @@
+meta:
+  name: Palaeoverse
+  link: https://palaeoverse.org
+
+logo:
+  images:
+    logo-image: logos/logo.png
+    logo-text: logos/logo-text.png
+    favicon: logos/favicon.png
+
+color:
+  palette:
+    very-light-blue: "#E0F2FA"
+    light-blue: "#BFE0E2"
+    mid-blue: "#98D3DC"
+    dark-blue: "#64BDD8"
+    light-pink: "#E4BEDB"
+    dark-pink: "#CDA6C5"
+    moss: "#96AB55"
+    light-green: "#56B367"
+    dark-green: "#0D725A"
+    red: "#D34C51"
+    light-peach: "#F18661"
+    dark-peach: "#DB755A"
+    yellow: "#FEC703"
+    light-orange: "#F39200"
+    dark-orange: "#ED8D3A"
+    light-beige: "#EACDB9"
+    dark-beige: "#B99E84"
+    brown: "#704C32"
+    cream: "#F5F5E7"
+    very-light-grey: "#EBEBEB"
+    light-grey: "#D9D9D9"
+    mid-grey: "#C6C5C4"
+    dark-grey: "#575756"
+    black: "#1D1D1B"
+    white: "#FFFFFF"
+  background: white
+  foreground: dark-grey
+  primary: light-blue
+  secondary: dark-green
+
+typography:
+  fonts:
+    - family: Lexend
+      source: google
+    - family: Roboto Mono
+      source: google
+  base:
+    family: Lexend
+    weight: 400
+  headings: Lexend
+  monospace: Roboto Mono
+  link:
+    color: dark-green
+    decoration: underline
