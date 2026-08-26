@@ -66,7 +66,7 @@ phy_POST <- function(path, body = list(), ...) {
   tryCatch({
     resp <- POST(url = pbase(), path = path, body = body,
                  add_headers(
-                   "Content-type" = "application/vnd.phylopic.v2+json"
+                   "Content-type" = "application/json"
                  ),
                  encode = "raw")
   }, error = function(e) {
